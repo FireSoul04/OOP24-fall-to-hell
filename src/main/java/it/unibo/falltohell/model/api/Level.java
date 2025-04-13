@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api;
 
-import it.unibo.falltohell.model.api.GameObject;
+import java.util.List;
 
 public interface Level {
     
