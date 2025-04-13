@@ -1,4 +1,6 @@
-package it.unibo.falltohell.model.api;
+package it.unibo.falltohell.model.api.gameobjects;
+
+import it.unibo.falltohell.model.api.GameObject;
 
 public interface Movable extends GameObject {
     
