@@ -1,4 +1,4 @@
-package it.unibo.bubbleboop.view;
+package it.unibo.bubbleboop.view.api;
 
 public interface GameWindow {
 
