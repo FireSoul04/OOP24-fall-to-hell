@@ -1,4 +1,4 @@
-package it.unibo.bubbleboop.model;
+package it.unibo.bubbleboop.model.api;
 
 public interface Game {
 
