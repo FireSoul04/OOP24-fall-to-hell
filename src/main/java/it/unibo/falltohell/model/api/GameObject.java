@@ -33,4 +33,10 @@ public interface GameObject {
      * @return the height of the game object in terms of tile size
      */
     double getHeightSize();
+
+    /**
+     * This function is called every collision with another game object.
+     * @param other game object collided with
+     */
+    void onCollide(GameObject other);
 }
