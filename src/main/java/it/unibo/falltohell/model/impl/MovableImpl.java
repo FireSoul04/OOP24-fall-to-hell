@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl;
 
-import it.unibo.falltohell.model.api.Vector2;
+import it.unibo.falltohell.model.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 public class MovableImpl extends GameObjectImpl implements Movable{
     private double speedX;
