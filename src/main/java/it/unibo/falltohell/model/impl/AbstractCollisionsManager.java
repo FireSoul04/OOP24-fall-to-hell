@@ -1,11 +1,11 @@
 package it.unibo.falltohell.model.impl;
 
-import it.unibo.falltohell.model.api.CollisionManager;
+import it.unibo.falltohell.model.api.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
 
 import java.util.List;
 
-public abstract class AbstractCollisionManager implements CollisionManager {
+public abstract class AbstractCollisionsManager implements CollisionsManager {
 
     @Override
     public void checkCollisions(List<GameObject> gameObjects) {
