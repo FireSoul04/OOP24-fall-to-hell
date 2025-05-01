@@ -23,6 +23,9 @@ public class BoxCollider implements Collider {
         return this.offset;
     }
 
+    /**
+     * @return size of the box
+     */
     public Dimensions getSize() {
         return this.size;
     }
