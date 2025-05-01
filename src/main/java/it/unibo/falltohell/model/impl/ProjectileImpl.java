@@ -1,11 +1,11 @@
 package it.unibo.falltohell.model.impl;
-import it.unibo.falltohell.model.api.Position;
+import it.unibo.falltohell.model.api.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 public class ProjectileImpl extends MovableImpl implements Projectile{
     private boolean hit;
     
-    public ProjectileImpl(Position position, double width, double height, double speedX, double speedY) {
-        super(position, width, height, speedX, speedY);
+    public ProjectileImpl(Vector2 vector2, double width, double height, double speedX, double speedY) {
+        super(vector2, width, height, speedX, speedY);
         this.hit = false;
     }
     

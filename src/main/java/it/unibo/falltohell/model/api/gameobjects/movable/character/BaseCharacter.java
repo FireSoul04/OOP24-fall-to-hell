@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.character;
 
-import it.unibo.falltohell.model.api.Position;
+import it.unibo.falltohell.model.api.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.Character;
 
@@ -19,7 +19,7 @@ public class BaseCharacter implements Character {
     }
 
     @Override
-    public Position getPosition() {
+    public Vector2 getPosition() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
     }
