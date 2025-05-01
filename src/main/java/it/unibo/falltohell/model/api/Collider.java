@@ -1,15 +1,11 @@
 package it.unibo.falltohell.model.api;
 
+import it.unibo.falltohell.model.util.Vector2;
+
 public interface Collider {
 
     /**
-     * @param other
-     * @return if this is colliding with another collider
+     * @return offset relative to the game object.
      */
-    boolean isColliding(Collider other);
-
-    /**
-     * @return the game object binded with this collider
-     */
-    GameObject getAttachedGameObject();
+    Vector2 getOffset();
 }
