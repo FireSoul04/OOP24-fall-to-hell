@@ -3,7 +3,7 @@ package it.unibo.falltohell.model.impl;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Position;
 
-public class GameObjectImpl {
+public class GameObjectImpl implements GameObject {
     private Position pos;
     private double width;
     private double height;
@@ -45,6 +45,10 @@ public class GameObjectImpl {
     
     public double getHeightSize() {
         return this.heightSize;
+    }
+    
+    public void setPosition(Position position) {
+        this.pos = position;
     }
 
 }
