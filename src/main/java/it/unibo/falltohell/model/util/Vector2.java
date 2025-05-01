@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.api;
+package it.unibo.falltohell.model.util;
 
 public record Vector2(double x, double y) {
 

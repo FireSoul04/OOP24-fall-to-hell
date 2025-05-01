@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.api;
 
+import it.unibo.falltohell.model.util.Vector2;
+
 public interface GameObject {
     
     static final double TILE_SIZE = 20.0;
