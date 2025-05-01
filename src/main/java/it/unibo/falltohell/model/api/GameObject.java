@@ -10,6 +10,11 @@ public interface GameObject {
      * @return current position of this game object
      */
     Vector2 getPosition();
+
+    /**
+     * @return collider attached to this game object.
+     */
+    Collider getCollider();
     
     /**
      * @return the width of the game object
