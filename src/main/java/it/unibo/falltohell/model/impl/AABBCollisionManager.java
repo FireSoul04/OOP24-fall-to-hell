@@ -10,7 +10,7 @@ import it.unibo.falltohell.model.util.Vector2;
 public class AABBCollisionManager extends AbstractCollisionManager {
 
     @Override
-    public boolean determineCollision(final GameObject g1, final GameObject g2) {
+    protected boolean determineCollision(final GameObject g1, final GameObject g2) {
         final Vector2 p1 = g1.getPosition();
         final Vector2 p2 = g2.getPosition();
 
