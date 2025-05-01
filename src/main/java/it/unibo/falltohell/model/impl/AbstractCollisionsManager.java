@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class AbstractCollisionsManager implements CollisionsManager {
 
     @Override
-    public void checkCollisions(List<GameObject> gameObjects) {
+    public void checkCollisions(final List<GameObject> gameObjects) {
         for (final GameObject g1 : gameObjects) {
             for (final GameObject g2 : gameObjects) {
                 if (g1 != g2 && g1.isSolid() && g2.isSolid()) {
