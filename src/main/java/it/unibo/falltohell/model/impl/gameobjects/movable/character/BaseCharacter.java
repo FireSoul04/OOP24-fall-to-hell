@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.movable.character;
+package it.unibo.falltohell.model.impl.gameobjects.movable.character;
 
 import it.unibo.falltohell.model.impl.MovableImpl;
 import it.unibo.falltohell.model.util.Vector2;
