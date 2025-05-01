@@ -22,7 +22,7 @@ public class GameObjectImpl implements GameObject {
         this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
     }
-    public GameObjectImpl(Vector2 position, double width, double height, boolean isSolid, Collider collider, {
+    public GameObjectImpl(Vector2 position, double width, double height, boolean isSolid, Collider collider) {
         this.pos = position;
         this.width = width;
         this.height = height;
