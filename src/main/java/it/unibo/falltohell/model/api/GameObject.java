@@ -33,4 +33,9 @@ public interface GameObject {
      * @return the height of the game object in terms of tile size
      */
     double getHeightSize();
+    /**
+     * @param position
+     *           the new position of this game object
+     */
+    void setPosition(Position position);
 }
