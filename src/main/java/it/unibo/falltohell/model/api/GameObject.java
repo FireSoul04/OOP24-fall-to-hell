@@ -7,7 +7,7 @@ public interface GameObject {
     /**
      * @return current position of this game object
      */
-    Position getPosition();
+    Vector2 getPosition();
     
     /**
      * @return the width of the game object
@@ -34,10 +34,10 @@ public interface GameObject {
      */
     double getHeightSize();
     /**
-     * @param position
+     * @param vector2
      *           the new position of this game object
      */
-    void setPosition(Position position);
+    void setPosition(Vector2 vector2);
 
     /**
      * This function is called every collision with another game object.
