@@ -38,4 +38,10 @@ public interface GameObject {
      *           the new position of this game object
      */
     void setPosition(Position position);
+
+    /**
+     * This function is called every collision with another game object.
+     * @param other game object collided with
+     */
+    void onCollide(GameObject other);
 }

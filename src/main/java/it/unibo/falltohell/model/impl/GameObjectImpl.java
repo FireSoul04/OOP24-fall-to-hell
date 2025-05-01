@@ -50,5 +50,9 @@ public class GameObjectImpl implements GameObject {
     public void setPosition(Position position) {
         this.pos = position;
     }
+    
+    public void onCollide(GameObject other) {
+        
+    }
 
 }
