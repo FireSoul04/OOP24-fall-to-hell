@@ -2,7 +2,7 @@ package it.unibo.falltohell.model.api;
 
 import java.util.List;
 
-public interface CollisionManager {
+public interface CollisionsManager {
 
     /**
      * Check if any collision of these game objects is happening using checkCollision's algorithm
