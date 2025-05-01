@@ -2,27 +2,28 @@ package it.unibo.falltohell.model.impl.colliders;
 
 import it.unibo.falltohell.model.api.Collider;
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.util.Dimensions;
+import it.unibo.falltohell.model.util.Vector2;
 
 public class BoxCollider implements Collider {
 
-    private final GameObject attachedGameObject;
+    private final Vector2 offset;
+    private final Dimensions size;
 
     /**
-     * Create a box collider binded with a game object.
-     * @param attachedGameObject
+     * Create a collider with a form of a box.
      */
-    public BoxCollider(final GameObject attachedGameObject) {
-        this.attachedGameObject = attachedGameObject;
+    public BoxCollider(final Vector2 offset, final Dimensions size) {
+        this.offset = offset;
+        this.size = size;
     }
 
     @Override
-    public boolean isColliding(final Collider other) {
-        // TODO Convex Polygon algorithm
-        return false;
+    public Vector2 getOffset() {
+        return this.offset;
     }
 
-    @Override
-    public GameObject getAttachedGameObject() {
-        return this.attachedGameObject;
+    public Dimensions getSize() {
+        return this.size;
     }
 }
