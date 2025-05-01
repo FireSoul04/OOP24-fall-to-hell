@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl;
 
-import it.unibo.falltohell.model.api.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.util.Vector2;
 
