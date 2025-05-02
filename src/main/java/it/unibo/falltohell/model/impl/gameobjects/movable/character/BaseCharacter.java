@@ -1,14 +1,14 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.character;
 
-import it.unibo.falltohell.model.impl.MovableImpl;
 import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.model.api.Collider;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.Character;
 
 public class BaseCharacter extends MovableImpl implements Character {
 
-    public BaseCharacter(Vector2 position) {
-        super(position, 20, 20, 20, 20);
+    public BaseCharacter(Vector2 position, Collider collider) {
+        super(position, 20, 20, 0, 0, collider);
     }
 
     @Override
