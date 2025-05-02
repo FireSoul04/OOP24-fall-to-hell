@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl;
+package it.unibo.falltohell.model.impl.gameobjects.movable.character;
 
 import it.unibo.falltohell.model.api.Collider;
 import it.unibo.falltohell.model.api.GameObject;
@@ -13,13 +13,14 @@ public class GameObjectImpl implements GameObject {
     private double widthSize;
     private double heightSize;
 
-    public GameObjectImpl(Vector2 position, double width, double height) {
+    public GameObjectImpl(Vector2 position, double width, double height, Collider collider) {
         this.pos = position;
         this.width = width;
         this.height = height;
         this.isSolid = true; // Default
         this.widthSize = width * GameObject.TILE_SIZE;
         this.heightSize = height * GameObject.TILE_SIZE;
+        this.collider = collider;
     }
     public GameObjectImpl(Vector2 position, double width, double height, boolean isSolid, Collider collider) {
         this.pos = position;
