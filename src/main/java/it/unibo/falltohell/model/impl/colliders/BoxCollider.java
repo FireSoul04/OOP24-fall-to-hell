@@ -5,6 +5,11 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
+/**
+ * This class gives a collider with a boxed shape.
+ *
+ * @author Davide Mancini
+ */
 public class BoxCollider implements Collider {
 
     private final Vector2 offset;
