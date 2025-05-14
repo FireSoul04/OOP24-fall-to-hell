@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api;
 
-import it.unibo.falltohell.model.api.gameobjects.movable.Enemy;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.util.Vector2;
 
 public interface EnemyFactory {
