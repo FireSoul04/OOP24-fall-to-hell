@@ -5,6 +5,9 @@
 build/
 bin/
 
+# Ignore vscode configurations
+.vscode/
+
 # Ignore Idea customizations
 .idea
 
