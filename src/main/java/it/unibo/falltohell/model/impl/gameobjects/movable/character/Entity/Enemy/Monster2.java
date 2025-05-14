@@ -36,7 +36,7 @@ public class Monster2 extends Enemy{
     }
 
     @Override
-    public void onCollide(GameObject other) {
+    public void onCollision(GameObject other) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'onCollide'");
     }

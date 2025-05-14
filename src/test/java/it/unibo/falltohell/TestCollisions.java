@@ -41,7 +41,7 @@ public class TestCollisions {
             10,
             new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
         ) {
-            public void onCollide(final GameObject other) {
+            public void onCollision(final GameObject other) {
                 collision = true;
             }
         };
@@ -53,7 +53,7 @@ public class TestCollisions {
             -10,
             new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
         ) {
-            public void onCollide(final GameObject other) {
+            public void onCollision(final GameObject other) {
                 collision = true;
             }
         };
