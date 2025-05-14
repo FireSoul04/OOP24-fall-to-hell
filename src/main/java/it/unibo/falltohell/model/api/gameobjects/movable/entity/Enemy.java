@@ -9,11 +9,15 @@ public abstract class Enemy implements Movable {
 
     protected float life;
     protected float damage;
+    protected double height;
+    protected double width;
     protected double xVelocity;
     protected double yVelocity;
     final protected Vector2 initialPos;
     protected Vector2 position;
     protected double timeNoAggro = 0;
+    protected double tileHeight;
+    protected double tileWidth;
 
     public Enemy(Vector2 initialCord)
     {
@@ -46,6 +50,22 @@ public abstract class Enemy implements Movable {
     }
     protected void setTimeNoAggro(double timeNoAggro) {
         this.timeNoAggro = timeNoAggro;
+    }
+    @Override
+    public double getWidth() {
+        return this.width;
+    }
+    @Override
+    public double getHeight() {
+        return this.height;
+    }
+    @Override
+    public double getWidthSize() {
+        return this.tileWidth;
+    }
+    @Override
+    public double getHeightSize() {
+        return this.tileHeight;
     }
     @Override
     public boolean isSolid(){
