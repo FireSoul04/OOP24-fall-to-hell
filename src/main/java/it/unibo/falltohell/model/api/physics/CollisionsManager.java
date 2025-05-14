@@ -1,4 +1,6 @@
-package it.unibo.falltohell.model.api;
+package it.unibo.falltohell.model.api.physics;
+
+import it.unibo.falltohell.model.api.GameObject;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.character;
 import it.unibo.falltohell.model.util.Vector2;
-import it.unibo.falltohell.model.api.Collider;
+import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Projectile;
 public class ProjectileImpl extends MovableImpl implements Projectile{
     private boolean hit;

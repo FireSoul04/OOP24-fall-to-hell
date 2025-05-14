@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity;
 
-import it.unibo.falltohell.model.api.Collider;
+import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.util.Vector2;
