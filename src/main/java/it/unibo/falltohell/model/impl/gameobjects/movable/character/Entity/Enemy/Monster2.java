@@ -8,34 +8,19 @@ import it.unibo.falltohell.model.util.Vector2;
 public class Monster2 extends Enemy{
     private static final double HEIGHT=10;
     private static final double WIDTH=10;
-    private static final double FULL_LIFE=10;
+    private static final float FULL_LIFE=10;
+    private static final float DAMAGE=10;
+    private static final double X_VEL=10;
+    private static final double Y_VEL=10;
 
     public Monster2(Vector2 initialCord) {
         super(initialCord);
-    }
-
-    @Override
-    public double getWidth() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getWidth'");
-    }
-
-    @Override
-    public double getHeight() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHeight'");
-    }
-
-    @Override
-    public double getWidthSize() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getWidthSize'");
-    }
-
-    @Override
-    public double getHeightSize() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getHeightSize'");
+        super.setLife(FULL_LIFE);
+        super.height=HEIGHT;
+        super.width=WIDTH;
+        super.setDamage(DAMAGE);
+        super.setSpeedX(X_VEL);
+        super.setSpeedY(Y_VEL);
     }
 
     @Override
@@ -58,8 +43,7 @@ public class Monster2 extends Enemy{
 
     @Override
     protected boolean isFull() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isFull'");
+        return this.life == FULL_LIFE;
     }
 
     @Override
@@ -74,6 +58,6 @@ public class Monster2 extends Enemy{
         throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
 
-
+    
     
 }
