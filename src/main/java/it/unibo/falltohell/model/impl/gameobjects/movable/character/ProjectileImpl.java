@@ -19,8 +19,8 @@ public class ProjectileImpl extends MovableImpl implements Projectile{
     }
     
     @Override
-    public void move(double deltaTime) {
-        super.move(deltaTime);
+    public void update(double deltaTime) {
+        super.update(deltaTime);
         // da finire
     }
 
