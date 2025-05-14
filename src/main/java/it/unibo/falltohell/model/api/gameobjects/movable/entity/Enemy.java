@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.Collider;
+import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.util.Vector2;
 
@@ -31,19 +33,24 @@ public abstract class Enemy implements Movable {
     protected Vector2 getInizialPos() {
         return this.initialPos;
     }
+    @Override
     public Vector2 getPosition() {
         return this.position;
     }
+    @Override
     public void setPosition(Vector2 position) {
         this.position = position;
     }
-    public double getTimeNoAggro() {
+    protected double getTimeNoAggro() {
         return timeNoAggro;
     }
-    public void setTimeNoAggro(double timeNoAggro) {
+    protected void setTimeNoAggro(double timeNoAggro) {
         this.timeNoAggro = timeNoAggro;
     }
-
+    @Override
+    public boolean isSolid(){
+        return true;
+    }
     @Override
     public double getSpeedX(){
         return this.xVelocity;
@@ -60,8 +67,14 @@ public abstract class Enemy implements Movable {
     public void setSpeedY(double speedY){
         this.yVelocity=speedY;
     }
+
+    @Override
+    public abstract Collider getCollider();
     @Override
     public abstract void update(double deltaTime);
+    @Override
+    public abstract void onCollide(GameObject other);
+
     /**
      * @return true if this enemy is full health, false when not
      */

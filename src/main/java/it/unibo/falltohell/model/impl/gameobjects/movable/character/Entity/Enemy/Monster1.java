@@ -6,51 +6,12 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.util.Vector2;
 
 public class Monster1 extends Enemy{
+    private static final double HEIGHT=20;
+    private static final double WIDTH=20;
+    private static final double FULL_LIFE=20;
 
-    public Monster1(Vector2 initialCords) {
-        //TODO Auto-generated constructor stub
-    }
-
-    @Override
-    public void update(double deltaTime) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    @Override
-    public double getSpeedX() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSpeedX'");
-    }
-
-    @Override
-    public double getSpeedY() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSpeedY'");
-    }
-
-    @Override
-    public void setSpeedX(double speedX) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSpeedX'");
-    }
-
-    @Override
-    public void setSpeedY(double speedY) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSpeedY'");
-    }
-
-    @Override
-    public Vector2 getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
-    }
-
-    @Override
-    public Collider getCollider() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCollider'");
+    public Monster1(Vector2 initialCord) {
+        super(initialCord);
     }
 
     @Override
@@ -66,12 +27,6 @@ public class Monster1 extends Enemy{
     }
 
     @Override
-    public boolean isSolid() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isSolid'");
-    }
-
-    @Override
     public double getWidthSize() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getWidthSize'");
@@ -84,9 +39,15 @@ public class Monster1 extends Enemy{
     }
 
     @Override
-    public void setPosition(Vector2 vector2) {
+    public Collider getCollider() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPosition'");
+        throw new UnsupportedOperationException("Unimplemented method 'getCollider'");
+    }
+
+    @Override
+    public void update(double deltaTime) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
@@ -94,5 +55,23 @@ public class Monster1 extends Enemy{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'onCollide'");
     }
-    
+
+    @Override
+    protected boolean isFull() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isFull'");
+    }
+
+    @Override
+    protected void attack() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'attack'");
+    }
+
+    @Override
+    protected void move(double deltaTime) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'move'");
+    }
+
 }
