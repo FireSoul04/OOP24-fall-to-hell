@@ -1,4 +1,4 @@
-public package it.unibo.falltohell;
+package it.unibo.falltohell;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +15,13 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.character.MovableImpl;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
-// TODO enhance code
+/**
+ * Test for collisions between gameobjects.
+ * This test covers both a dynamic game object moving to a static game object,
+ * two game objects going to each other and a game object that doesn't collide with a block.
+ *
+ * @author Davide Mancini
+ */
 public class TestCollisions {
     
     Level level;
