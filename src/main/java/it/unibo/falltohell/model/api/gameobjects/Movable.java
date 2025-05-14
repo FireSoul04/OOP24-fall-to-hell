@@ -7,7 +7,7 @@ public interface Movable extends GameObject {
     /**
      * @param deltaTime elapsed time between the current frame and the last one
      */
-    void move(double deltaTime);
+    void update(double deltaTime);
 
     double getSpeedX();
     
