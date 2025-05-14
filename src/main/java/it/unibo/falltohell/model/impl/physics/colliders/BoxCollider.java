@@ -5,7 +5,7 @@ import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * This class gives a collider with a boxed shape.
+ * Class for a collider with a boxed shape.
  *
  * @author Davide Mancini
  */
