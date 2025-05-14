@@ -62,6 +62,11 @@ public class TestCollisions {
         collision = false;
     }
 
+    /**
+     * Base method to test.
+     * Uses a timer to determine if a collision is going to happen it should between 2 seconds.
+     * If not, assert that it didn't collide.
+     */
     void baseCollisionTest() {
         final long time = System.currentTimeMillis();
         // If dummy doesn't collide within 2 seconds throws an exception
