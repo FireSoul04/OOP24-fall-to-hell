@@ -22,7 +22,7 @@ public abstract class Enemy implements Movable {
     public Enemy(Vector2 initialCord)
     {
         this.initialPos = initialCord;
-        this.position=this.initialPos;
+        this.setPosition(this.initialPos);
     }
 
     protected float getLife() {
