@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.api;
+package it.unibo.falltohell.model.api.physics;
 
 import it.unibo.falltohell.model.util.Vector2;
 

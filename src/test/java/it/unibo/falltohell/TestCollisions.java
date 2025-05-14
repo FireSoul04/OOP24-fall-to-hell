@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.LevelImpl;
-import it.unibo.falltohell.model.impl.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.impl.gameobjects.movable.character.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.character.MovableImpl;
 import it.unibo.falltohell.model.util.Dimensions;

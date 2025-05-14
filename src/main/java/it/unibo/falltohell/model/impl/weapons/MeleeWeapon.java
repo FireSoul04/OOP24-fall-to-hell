@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.weapons;
 
-import it.unibo.falltohell.model.api.Collider;
+import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.api.Weapon;
 
 /**

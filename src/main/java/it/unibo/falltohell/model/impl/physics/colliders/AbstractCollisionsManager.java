@@ -1,6 +1,6 @@
-package it.unibo.falltohell.model.impl;
+package it.unibo.falltohell.model.impl.physics.colliders;
 
-import it.unibo.falltohell.model.api.CollisionsManager;
+import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
 
 import java.util.List;

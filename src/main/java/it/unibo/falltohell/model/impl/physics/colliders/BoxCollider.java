@@ -1,6 +1,6 @@
-package it.unibo.falltohell.model.impl.colliders;
+package it.unibo.falltohell.model.impl.physics.colliders;
 
-import it.unibo.falltohell.model.api.Collider;
+import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 

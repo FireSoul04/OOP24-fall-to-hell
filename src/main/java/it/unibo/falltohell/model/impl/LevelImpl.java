@@ -5,8 +5,10 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.character.MovableImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.unibo.falltohell.model.impl.physics.colliders.AABBCollisionsManager;
 import it.unibo.falltohell.view.api.GameWindow;
-import it.unibo.falltohell.model.api.CollisionsManager;
+import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
 
 public class LevelImpl implements Level{
