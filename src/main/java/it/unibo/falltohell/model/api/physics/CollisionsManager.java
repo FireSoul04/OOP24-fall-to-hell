@@ -4,6 +4,11 @@ import it.unibo.falltohell.model.api.GameObject;
 
 import java.util.List;
 
+/**
+ * Class that check the collisions between a list of game objects.
+ *
+ * @author Davide Mancini
+ */
 public interface CollisionsManager {
 
     /**
