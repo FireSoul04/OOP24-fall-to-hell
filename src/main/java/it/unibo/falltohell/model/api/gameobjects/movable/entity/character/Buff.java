@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.api.gameobjects.movable.character;
+package it.unibo.falltohell.model.api.gameobjects.movable.entity.character;
 
 public interface Buff extends BuffDecorator {
 
