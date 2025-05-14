@@ -6,19 +6,23 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.character.MovableImpl;
 import java.util.ArrayList;
 import java.util.List;
 import it.unibo.falltohell.view.api.GameWindow;
+import it.unibo.falltohell.model.api.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
 
 public class LevelImpl implements Level{
     private final List<GameObject> gameObjects;
+    private final CollisionsManager collisionsManager;
     private final GameWindow view;
 
     public LevelImpl(final List<GameObject> gameObjects, final GameWindow view) {
         this.gameObjects = gameObjects;
         this.view = view;
+        this.collisionsManager = new AABBCollisionsManager();
     }
     public LevelImpl(final GameWindow view) {
         this.gameObjects = new ArrayList<>();
         this.view = view;
+        this.collisionsManager = new AABBCollisionsManager();
     }
     public void addGameObject(GameObject gameObject) {
         this.gameObjects.add(gameObject);
@@ -32,10 +36,11 @@ public class LevelImpl implements Level{
     public void update(double deltaTime){
         for(GameObject gameObject : this.gameObjects) {
             if(gameObject instanceof MovableImpl) {
-                ((MovableImpl) gameObject).move(deltaTime);
+                ((MovableImpl) gameObject).update(deltaTime);
             }
         }
-        this.view.render();
+        this.collisionsManager.checkCollisions(this.gameObjects);
+        // this.view.render();
     }
 
 }
