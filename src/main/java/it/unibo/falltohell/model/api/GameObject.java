@@ -50,5 +50,5 @@ public interface GameObject {
      * This function is called every collision with another game object.
      * @param other game object collided with
      */
-    void onCollide(GameObject other);
+    void onCollision(GameObject other);
 }
