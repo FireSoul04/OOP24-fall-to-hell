@@ -5,6 +5,11 @@ import it.unibo.falltohell.model.api.GameObject;
 
 import java.util.List;
 
+/**
+ * Base class for any type of collision manager.
+ *
+ * @author Davide Mancini
+ */
 public abstract class AbstractCollisionsManager implements CollisionsManager {
 
     @Override
@@ -15,7 +20,7 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
                     final boolean collided = this.determineCollision(g1, g2);
 
                     if (collided) {
-                        g1.onCollide(g2);
+                        g1.onCollision(g2);
                     }
                 }
             }

@@ -7,9 +7,15 @@ import it.unibo.falltohell.model.util.Vector2;
 
 /**
  * Collision manager that uses AABB (Aligned Axis Bounded Boxes) algorithm.
+ *
+ * @author Davide Mancini
  */
 public class AABBCollisionsManager extends AbstractCollisionsManager {
 
+    /**
+     * {@inheritDoc}
+     * Works only if both g1 and g2 has box colliders.
+     */
     @Override
     protected boolean determineCollision(final GameObject g1, final GameObject g2) {
         if (g1.getCollider() instanceof BoxCollider c1 && g2.getCollider() instanceof BoxCollider c2) {
