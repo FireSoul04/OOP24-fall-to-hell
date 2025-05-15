@@ -32,7 +32,7 @@ public class LevelImpl implements Level{
     public void update(double deltaTime){
         for(GameObject gameObject : this.gameObjects) {
             if(gameObject instanceof MovableImpl) {
-                ((MovableImpl) gameObject).move(deltaTime);
+                ((MovableImpl) gameObject).update(deltaTime);
             }
         }
         this.view.render();
