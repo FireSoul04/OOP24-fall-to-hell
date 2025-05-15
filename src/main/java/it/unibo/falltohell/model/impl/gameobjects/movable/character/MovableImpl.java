@@ -13,7 +13,7 @@ public class MovableImpl extends GameObjectImpl implements Movable{
         this.speedY = speedY;
     }
     
-    public void move(double deltaTime) {
+    public void update(double deltaTime) {
         Vector2 displacement = new Vector2(speedX, speedY).multiply(deltaTime);
         setPosition(getPosition().add(displacement));
         
