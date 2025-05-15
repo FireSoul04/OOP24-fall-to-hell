@@ -61,7 +61,7 @@ public class GameObjectImpl implements GameObject {
         this.pos = position;
     }
     
-    public void onCollide(GameObject other) {
+    public void onCollision(GameObject other) {
         
     }
 

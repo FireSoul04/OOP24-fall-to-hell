@@ -93,7 +93,7 @@ public abstract class Enemy implements Movable {
     @Override
     public abstract void update(double deltaTime);
     @Override
-    public abstract void onCollide(GameObject other);
+    public abstract void onCollision(GameObject other);
 
     /**
      * @return true if this enemy is full health, false when not
