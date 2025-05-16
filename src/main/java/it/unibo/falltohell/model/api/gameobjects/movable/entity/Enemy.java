@@ -7,17 +7,17 @@ import it.unibo.falltohell.model.util.Vector2;
 
 public abstract class Enemy implements Movable {
 
-    protected float life;
-    protected float damage;
-    protected double height;
-    protected double width;
-    protected double xVelocity;
-    protected double yVelocity;
-    final protected Vector2 initialPos;
-    protected Vector2 position;
-    protected double timeNoAggro = 0;
-    protected double tileHeight;
-    protected double tileWidth;
+    private float life;
+    private float damage;
+    private double height;
+    private double width;
+    private double xVelocity;
+    private double yVelocity;
+    final private Vector2 initialPos;
+    private Vector2 position;
+    private double timeNoAggro = 0;
+    private double tileHeight;
+    private double tileWidth;
 
     public Enemy(Vector2 initialCord)
     {
@@ -30,6 +30,9 @@ public abstract class Enemy implements Movable {
     }
     protected void setLife(float life) {
         this.life = life;
+    }
+    public float getDamage() {
+        return this.damage;
     }
     protected void setDamage(float damage) {
         this.damage = damage;
@@ -51,9 +54,15 @@ public abstract class Enemy implements Movable {
     protected void setTimeNoAggro(double timeNoAggro) {
         this.timeNoAggro = timeNoAggro;
     }
+    protected void setWidth(double w){
+        this.width = w;
+    }
     @Override
     public double getWidth() {
         return this.width;
+    }
+    protected void setHeight(double h){
+        this.height = h;
     }
     @Override
     public double getHeight() {

@@ -16,8 +16,8 @@ public class Monster1 extends Enemy{
     public Monster1(Vector2 initialCord) {
         super(initialCord);
         super.setLife(FULL_LIFE);
-        super.height=HEIGHT;
-        super.width=WIDTH;
+        super.setHeight(HEIGHT);
+        super.setWidth(WIDTH);
         super.setDamage(DAMAGE);
         super.setSpeedX(X_VEL);
         super.setSpeedY(Y_VEL);
@@ -42,7 +42,7 @@ public class Monster1 extends Enemy{
 
     @Override
     protected boolean isFull() {
-        return this.life == FULL_LIFE;
+        return super.getLife() == FULL_LIFE;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Monster1 extends Enemy{
 
     @Override
     protected void move(double deltaTime) {
-        super.setPosition(super.position.add(new Vector2(deltaTime*X_VEL, 0)));
+        super.setPosition(super.getPosition().add(new Vector2(deltaTime*X_VEL, 0)));
     }
 
 }
