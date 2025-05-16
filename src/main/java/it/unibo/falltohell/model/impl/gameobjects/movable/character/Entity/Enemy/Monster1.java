@@ -31,8 +31,7 @@ public class Monster1 extends Enemy{
 
     @Override
     public void update(double deltaTime) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        this.move(deltaTime);
     }
 
     @Override
@@ -54,8 +53,7 @@ public class Monster1 extends Enemy{
 
     @Override
     protected void move(double deltaTime) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+        super.setPosition(super.position.add(new Vector2(deltaTime*X_VEL, 0)));
     }
 
 }
