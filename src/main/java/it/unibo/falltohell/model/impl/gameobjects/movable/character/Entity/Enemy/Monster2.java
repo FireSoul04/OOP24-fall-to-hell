@@ -10,8 +10,9 @@ public class Monster2 extends Enemy{
     private static final double WIDTH=10;
     private static final float FULL_LIFE=10;
     private static final float DAMAGE=10;
-    private static final double X_VEL=10;
+    private static final double X_VEL=1;
     private static final double Y_VEL=10;
+    private static final double DISTANCE=10;
 
     public Monster2(Vector2 initialCord) {
         super(initialCord);
@@ -31,8 +32,7 @@ public class Monster2 extends Enemy{
 
     @Override
     public void update(double deltaTime) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        this.move(deltaTime);
     }
 
     @Override
@@ -54,8 +54,23 @@ public class Monster2 extends Enemy{
 
     @Override
     protected void move(double deltaTime) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
+
+        double direction = 1;
+
+        double other_X = deltaTime*X_VEL;
+        final double y = super.getPosition().y();
+
+        while(other_X > 0){
+            if(initialPos.distance(super.getPosition().add(new Vector2(other_X*direction, y)))<=(DISTANCE)){
+                super.setPosition(super.getPosition().add(new Vector2(other_X*direction, y)));
+                other_X=0;
+            }
+            else{
+                other_X=other_X-super.getPosition().distance(new Vector2(DISTANCE*direction,y));
+                super.setPosition(new Vector2((DISTANCE)*direction, y));
+                direction=direction * -1;
+            }
+        }
     }
 
     

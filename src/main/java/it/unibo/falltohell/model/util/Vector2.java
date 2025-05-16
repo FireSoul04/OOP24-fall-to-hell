@@ -70,6 +70,14 @@ public record Vector2(double x, double y) {
     public Vector2 subtract(final Vector2 v) {
         return this.add(v.invert());
     }
+
+    /**
+     * @param v
+     * @return the distance between two points
+     */
+    public double distance(final Vector2 v){
+        return Math.sqrt(Math.pow(this.x-v.x,2)+Math.pow(this.y-v.y,2));
+    }
 }
 
 
