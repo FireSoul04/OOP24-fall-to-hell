@@ -63,6 +63,7 @@ public abstract class Enemy implements Movable {
     }
     protected void setWidth(double w){
         this.width = w;
+        this.tileWidth = this.tileWidth * GameObject.TILE_SIZE;
     }
     @Override
     public double getWidth() {
@@ -70,6 +71,7 @@ public abstract class Enemy implements Movable {
     }
     protected void setHeight(double h){
         this.height = h;
+        this.tileHeight = this.tileHeight * GameObject.TILE_SIZE;
     }
     @Override
     public double getHeight() {
