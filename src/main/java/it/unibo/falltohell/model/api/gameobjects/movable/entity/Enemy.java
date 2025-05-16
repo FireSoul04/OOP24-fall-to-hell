@@ -34,7 +34,7 @@ public abstract class Enemy implements Movable {
     protected void setDamage(float damage) {
         this.damage = damage;
     }
-    protected Vector2 getInizialPos() {
+    protected Vector2 getInitialPos() {
         return this.initialPos;
     }
     @Override
