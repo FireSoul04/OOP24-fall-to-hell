@@ -7,8 +7,8 @@ import it.unibo.falltohell.model.util.Vector2;
 
 public abstract class Enemy implements Movable {
 
-    private float life;
-    private float damage;
+    private double life;
+    private double damage;
     private double height;
     private double width;
     private double xVelocity;
@@ -18,6 +18,7 @@ public abstract class Enemy implements Movable {
     private double timeNoAggro = 0;
     private double tileHeight;
     private double tileWidth;
+    private Collider collider;
 
     public Enemy(Vector2 initialCord)
     {
@@ -25,16 +26,19 @@ public abstract class Enemy implements Movable {
         this.setPosition(this.initialPos);
     }
 
-    protected float getLife() {
+    protected double getLife() {
         return this.life;
     }
-    protected void setLife(float life) {
+    protected void setLife(double life) {
         this.life = life;
     }
-    public float getDamage() {
+    protected void addLife(double life) {
+        this.life = this.life + life;
+    }
+    public double getDamage() {
         return this.damage;
     }
-    protected void setDamage(float damage) {
+    protected void setDamage(double damage) {
         this.damage = damage;
     }
     protected Vector2 getInitialPos() {
@@ -51,8 +55,11 @@ public abstract class Enemy implements Movable {
     protected double getTimeNoAggro() {
         return timeNoAggro;
     }
-    protected void setTimeNoAggro(double timeNoAggro) {
-        this.timeNoAggro = timeNoAggro;
+    protected void setZeroTimeNoAggro() {
+        this.timeNoAggro = 0;
+    }
+    protected void addTimeNoAggro(double timeNoAggro) {
+        this.timeNoAggro = this.timeNoAggro + timeNoAggro;
     }
     protected void setWidth(double w){
         this.width = w;
@@ -96,14 +103,28 @@ public abstract class Enemy implements Movable {
     public void setSpeedY(double speedY){
         this.yVelocity=speedY;
     }
-
+    protected void setCollider(Collider collider) {
+        this.collider = collider;
+    }
     @Override
-    public abstract Collider getCollider();
+    public Collider getCollider(){
+        return this.collider;
+    }
+
     @Override
     public abstract void update(double deltaTime);
     @Override
     public abstract void onCollision(GameObject other);
 
+    /**
+     * @return check if enemy is dead
+     */
+    protected boolean isDead(){
+        if(this.life <= 0){
+            return true;
+        }
+        return false;
+    }
     /**
      * @return true if this enemy is full health, false when not
      */
