@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.impl.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
