@@ -5,6 +5,11 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.util.Vector2;
 
+/**
+ * Abstract class for all Enemies, set the base enemy
+ * @author Sara Visani
+ */
+
 public abstract class Enemy implements Movable {
 
     private double life;
@@ -20,7 +25,7 @@ public abstract class Enemy implements Movable {
     private double tileWidth;
     private Collider collider;
 
-    public Enemy(Vector2 initialCord)
+    public Enemy(final Vector2 initialCord)
     {
         this.initialPos = initialCord;
         this.setPosition(this.initialPos);
@@ -29,16 +34,16 @@ public abstract class Enemy implements Movable {
     protected double getLife() {
         return this.life;
     }
-    protected void setLife(double life) {
+    protected void setLife(final double life) {
         this.life = life;
     }
-    protected void addLife(double life) {
+    protected void addLife(final double life) {
         this.life = this.life + life;
     }
     public double getDamage() {
         return this.damage;
     }
-    protected void setDamage(double damage) {
+    protected void setDamage(final double damage) {
         this.damage = damage;
     }
     protected Vector2 getInitialPos() {
@@ -49,7 +54,7 @@ public abstract class Enemy implements Movable {
         return this.position;
     }
     @Override
-    public void setPosition(Vector2 position) {
+    public void setPosition(final Vector2 position) {
         this.position = position;
     }
     protected double getTimeNoAggro() {
@@ -58,10 +63,10 @@ public abstract class Enemy implements Movable {
     protected void setZeroTimeNoAggro() {
         this.timeNoAggro = 0;
     }
-    protected void addTimeNoAggro(double timeNoAggro) {
+    protected void addTimeNoAggro(final double timeNoAggro) {
         this.timeNoAggro = this.timeNoAggro + timeNoAggro;
     }
-    protected void setWidth(double w){
+    protected void setWidth(final double w){
         this.width = w;
         this.tileWidth = this.tileWidth * GameObject.TILE_SIZE;
     }
@@ -69,7 +74,7 @@ public abstract class Enemy implements Movable {
     public double getWidth() {
         return this.width;
     }
-    protected void setHeight(double h){
+    protected void setHeight(final double h){
         this.height = h;
         this.tileHeight = this.tileHeight * GameObject.TILE_SIZE;
     }
@@ -105,7 +110,7 @@ public abstract class Enemy implements Movable {
     public void setSpeedY(double speedY){
         this.yVelocity=speedY;
     }
-    protected void setCollider(Collider collider) {
+    protected void setCollider(final Collider collider) {
         this.collider = collider;
     }
     @Override
@@ -114,9 +119,9 @@ public abstract class Enemy implements Movable {
     }
 
     @Override
-    public abstract void update(double deltaTime);
+    public abstract void update(final double deltaTime);
     @Override
-    public abstract void onCollision(GameObject other);
+    public abstract void onCollision(final GameObject other);
 
     /**
      * @return check if enemy is dead
@@ -139,5 +144,5 @@ public abstract class Enemy implements Movable {
      * characterizes the movement of the enemy
      * @param deltaTime elapsed time between the current frame and the last one
      */
-    protected abstract void move(double deltaTime);
+    protected abstract void move(final double deltaTime);
 }

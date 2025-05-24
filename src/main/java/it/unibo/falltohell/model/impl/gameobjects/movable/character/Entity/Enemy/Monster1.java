@@ -6,6 +6,11 @@ import it.unibo.falltohell.model.impl.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
+/**
+ * Implements abstract class Enemies, creates first type for enemies
+ * @author Sara Visani
+ */
+
 public class Monster1 extends Enemy{
     private static final double HEIGHT=20;
     private static final double WIDTH=20;
@@ -14,7 +19,7 @@ public class Monster1 extends Enemy{
     private static final double X_VEL=20;
     private static final double Y_VEL=20;
 
-    public Monster1(Vector2 initialCord) {
+    public Monster1(final Vector2 initialCord) {
         super(initialCord);
         super.setLife(FULL_LIFE);
         super.setHeight(HEIGHT);
@@ -26,12 +31,12 @@ public class Monster1 extends Enemy{
     }
 
     @Override
-    public void update(double deltaTime) {
+    public void update(final double deltaTime) {
         this.move(deltaTime);
     }
 
     @Override
-    public void onCollision(GameObject other) {
+    public void onCollision(final GameObject other) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'onCollide'");
     }
@@ -48,7 +53,7 @@ public class Monster1 extends Enemy{
     }
 
     @Override
-    protected void move(double deltaTime) {
+    protected void move(final double deltaTime) {
         super.setPosition(super.getPosition().add(new Vector2(deltaTime*X_VEL, super.getPosition().y())));
     }
 }
