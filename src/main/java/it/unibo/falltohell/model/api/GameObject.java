@@ -10,12 +10,16 @@ public interface GameObject {
     /**
      * @return current position of this game object
      */
+<<<<<<< HEAD
     Vector2 getPosition();
 
     /**
      * @return collider attached to this game object.
      */
     Collider getCollider();
+=======
+    Position getPosition();
+>>>>>>> 8ef51e0ccf9bb8342dda084d04f1dcc9de6301d9
     
     /**
      * @return the width of the game object
@@ -42,6 +46,7 @@ public interface GameObject {
      */
     double getHeightSize();
     /**
+<<<<<<< HEAD
      * @param vector2
      *           the new position of this game object
      */
@@ -52,4 +57,10 @@ public interface GameObject {
      * @param other game object collided with
      */
     void onCollision(GameObject other);
+=======
+     * @param position
+     *           the new position of this game object
+     */
+    void setPosition(Position position);
+>>>>>>> 8ef51e0ccf9bb8342dda084d04f1dcc9de6301d9
 }

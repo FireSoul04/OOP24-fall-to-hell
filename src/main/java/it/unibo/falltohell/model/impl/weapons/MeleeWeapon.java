@@ -1,6 +1,10 @@
 package it.unibo.falltohell.model.impl.weapons;
 
+<<<<<<< HEAD
 import it.unibo.falltohell.model.api.physics.Collider;
+=======
+import it.unibo.falltohell.model.api.Collider;
+>>>>>>> 8ef51e0ccf9bb8342dda084d04f1dcc9de6301d9
 import it.unibo.falltohell.model.api.Weapon;
 
 /**
