@@ -1,49 +1,56 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.character.entity.enemy;
 
-import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
+import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
+
+/**
+ * Implements abstract class Enemies, creates second type for enemies
+ * @author Sara Visani
+ */
 
 public class Monster2 extends Enemy{
     private static final double HEIGHT=10;
     private static final double WIDTH=10;
-    private static final float FULL_LIFE=10;
-    private static final float DAMAGE=10;
-    private static final double X_VEL=10;
+    private static final double FULL_LIFE=10;
+    private static final double DAMAGE=10;
+    private static final double X_VEL=1;
     private static final double Y_VEL=10;
+    private static final double DISTANCE=10;
+    private static final double NO_AGGRO=10;
 
-    public Monster2(Vector2 initialCord) {
+    public Monster2(final Vector2 initialCord) {
         super(initialCord);
         super.setLife(FULL_LIFE);
-        super.height=HEIGHT;
-        super.width=WIDTH;
+        super.setHeight(HEIGHT);
+        super.setWidth(WIDTH);
         super.setDamage(DAMAGE);
         super.setSpeedX(X_VEL);
         super.setSpeedY(Y_VEL);
+        super.setCollider(new BoxCollider(Vector2.zero(),new Dimensions(WIDTH, HEIGHT)));
     }
 
     @Override
-    public Collider getCollider() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCollider'");
+    public void update(final double deltaTime) {
+        
+        super.addTimeNoAggro(deltaTime);
+        if(this.isFull() && super.getTimeNoAggro() > NO_AGGRO){
+            super.addLife(this.getLife()*0.1);
+        }
+        this.move(deltaTime);
     }
 
     @Override
-    public void update(double deltaTime) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    @Override
-    public void onCollision(GameObject other) {
+    public void onCollision(final GameObject other) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'onCollide'");
     }
 
     @Override
     protected boolean isFull() {
-        return this.life == FULL_LIFE;
+        return super.getLife() == FULL_LIFE;
     }
 
     @Override
@@ -53,11 +60,22 @@ public class Monster2 extends Enemy{
     }
 
     @Override
-    protected void move(double deltaTime) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'move'");
-    }
+    protected void move(final double deltaTime) {
 
-    
-    
+        double direction = 1;
+        double other_X = deltaTime*X_VEL;
+        final double y = super.getPosition().y();
+
+        while(other_X > 0){
+            if(super.getInitialPos().distance(super.getPosition().add(new Vector2(other_X*direction, y)))<=(DISTANCE)){
+                super.setPosition(super.getPosition().add(new Vector2(other_X*direction, y)));
+                other_X=0;
+            }
+            else{
+                other_X=other_X-super.getPosition().distance(new Vector2(DISTANCE*direction,y));
+                super.setPosition(new Vector2((DISTANCE)*direction, y));
+                direction=direction * -1;
+            }
+        }
+    }
 }
