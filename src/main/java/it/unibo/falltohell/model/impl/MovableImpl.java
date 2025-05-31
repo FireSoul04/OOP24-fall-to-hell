@@ -15,11 +15,8 @@ public class MovableImpl extends GameObjectImpl implements Movable{
     }
     
     public void update(double deltaTime) {
-        Vector2 currentPos = getPosition();
-        double newX = (currentPos.x() + speedX) * deltaTime;
-        double newY = (currentPos.y() + speedY) * deltaTime; 
-        setPosition(new Vector2(newX, newY));
-        
+        Vector2 displacement = new Vector2(speedX, speedY).multiply(deltaTime);
+        setPosition(getPosition().add(displacement));
     }
     public double getSpeedX() {
         return speedX;
