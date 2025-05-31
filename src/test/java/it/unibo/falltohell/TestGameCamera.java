@@ -48,8 +48,8 @@ public class TestGameCamera {
 
         Vector2 cameraPos = camera.getCameraPosition();
 
-        assertEquals(maxX, cameraPos.x(), 0.0001, "Camera x non clampata correttamente");
-        assertEquals(maxY, cameraPos.y(), 0.0001, "Camera y non clampata correttamente");
+        assertEquals(maxX, cameraPos.x(), 0.0001, "Camera x not correctly clamped");
+        assertEquals(maxY, cameraPos.y(), 0.0001, "Camera y not correctly clamped");
     }
     @Test
     void testCameraAtTopLeftCorner() {

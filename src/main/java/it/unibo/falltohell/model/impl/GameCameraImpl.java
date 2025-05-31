@@ -1,7 +1,6 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.util.Vector2;
 import java.lang.Math;
 

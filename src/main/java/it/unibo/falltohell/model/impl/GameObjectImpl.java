@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.model.api.Level;
 
 public class GameObjectImpl implements GameObject {
     private Vector2 pos;
@@ -13,7 +14,7 @@ public class GameObjectImpl implements GameObject {
     private double heightSize;
     private Collider collider;
 
-    public GameObjectImpl(Vector2 position, double width, double height, Collider collider) {
+    public GameObjectImpl(Level level, Vector2 position, double width, double height, Collider collider) {
         this.pos = position;
         this.width = width;
         this.height = height;
@@ -21,8 +22,9 @@ public class GameObjectImpl implements GameObject {
         this.widthSize = width * GameObject.TILE_SIZE;
         this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
+        level.addGameObject(this);
     }
-    public GameObjectImpl(Vector2 position, double width, double height,boolean isSolid,Collider collider) {
+    public GameObjectImpl(Level level, Vector2 position, double width, double height,boolean isSolid,Collider collider) {
         this.pos = position;
         this.width = width;
         this.height = height;
@@ -30,6 +32,7 @@ public class GameObjectImpl implements GameObject {
         this.widthSize = width * GameObject.TILE_SIZE;
         this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
+        level.addGameObject(this);
     }
     public Vector2 getPosition(){
         return this.pos;
