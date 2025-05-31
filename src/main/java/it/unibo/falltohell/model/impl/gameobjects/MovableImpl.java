@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
+package it.unibo.falltohell.model.impl.gameobjects;
 
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
