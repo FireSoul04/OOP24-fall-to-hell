@@ -1,19 +1,20 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.character;
 
-import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.model.api.Level;
 
 public class GameObjectImpl implements GameObject {
     private Vector2 pos;
-    private Collider collider;
     private double width;
     private double height;
     private boolean isSolid;
     private double widthSize;
     private double heightSize;
+    private Collider collider;
 
-    public GameObjectImpl(Vector2 position, double width, double height, Collider collider) {
+    public GameObjectImpl(Level level, Vector2 position, double width, double height, Collider collider) {
         this.pos = position;
         this.width = width;
         this.height = height;
@@ -21,8 +22,9 @@ public class GameObjectImpl implements GameObject {
         this.widthSize = width * GameObject.TILE_SIZE;
         this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
+        level.addGameObject(this);
     }
-    public GameObjectImpl(Vector2 position, double width, double height, boolean isSolid, Collider collider) {
+    public GameObjectImpl(Level level, Vector2 position, double width, double height,boolean isSolid,Collider collider) {
         this.pos = position;
         this.width = width;
         this.height = height;
@@ -30,16 +32,11 @@ public class GameObjectImpl implements GameObject {
         this.widthSize = width * GameObject.TILE_SIZE;
         this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
+        level.addGameObject(this);
     }
     public Vector2 getPosition(){
         return this.pos;
     }
-
-    @Override
-    public Collider getCollider() {
-        return this.collider;
-    }
-
     public double getWidth(){
         return this.width;
     }
@@ -60,9 +57,10 @@ public class GameObjectImpl implements GameObject {
     public void setPosition(Vector2 position) {
         this.pos = position;
     }
-    
-    public void onCollision(GameObject other) {
+    public Collider getCollider(){
+        return this.collider;
+    }
+    public void onCollision(GameObject other){
         
     }
-
 }

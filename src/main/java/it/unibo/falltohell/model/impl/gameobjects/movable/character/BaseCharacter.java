@@ -1,25 +1,25 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.character;
 
-import it.unibo.falltohell.model.api.Position;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.Character;
+import it.unibo.falltohell.model.util.Vector2;
 
 // TODO remove the methods that needs to be inherited by movable when the interface gets an implementation
 
-public class BaseCharacter implements Character {
+public abstract class BaseCharacter implements Character {
 
     public BaseCharacter() {
 
     }
 
     @Override
-    public void move(final double deltaTime) {
+    public void update(final double deltaTime) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'move'");
     }
 
     @Override
-    public Position getPosition() {
+    public Vector2 getPosition() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
     }

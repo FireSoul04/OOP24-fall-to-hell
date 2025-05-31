@@ -34,7 +34,7 @@ public class TestCollisions {
     void init() {
         level = new LevelImpl(null);
         dummy1 = new MovableImpl(
-            Vector2.zero(),
+            level, Vector2.zero(),
             0,
             0,
             10,
@@ -46,7 +46,7 @@ public class TestCollisions {
             }
         };
         dummy2 = new MovableImpl(
-            Vector2.one().multiply(200),
+            level, Vector2.one().multiply(200),
             0,
             0,
             -10,
@@ -57,7 +57,7 @@ public class TestCollisions {
                 collision = true;
             }
         };
-        block = new GameObjectImpl(Vector2.one().multiply(100), 0, 0, true, new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
+        block = new GameObjectImpl(level, Vector2.one().multiply(100), 0, 0, true, new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
         };
         collision = false;
     }
