@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.character.entity.enemy;
 
+import it.unibo.falltohell.model.api.gameobjects.Block;
+import it.unibo.falltohell.model.api.gameobjects.Merchant;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
@@ -18,6 +21,7 @@ public class Monster1 extends Enemy{
     private static final double DAMAGE=20;
     private static final double X_VEL=20;
     private static final double Y_VEL=20;
+    private int direction = 1;
 
     public Monster1(final Vector2 initialCord) {
         super(initialCord);
@@ -32,13 +36,17 @@ public class Monster1 extends Enemy{
 
     @Override
     public void update(final double deltaTime) {
-        this.move(deltaTime);
+        this.move(deltaTime,1);
     }
 
     @Override
     public void onCollision(final GameObject other) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onCollide'");
+        if(other instanceof Character){
+            attack();
+        }
+        if((other instanceof Block)||(other instanceof Merchant)){
+            direction*=-1;
+        }
     }
 
     @Override
@@ -52,8 +60,9 @@ public class Monster1 extends Enemy{
         throw new UnsupportedOperationException("Unimplemented method 'attack'");
     }
 
-    @Override
-    protected void move(final double deltaTime) {
-        super.setPosition(super.getPosition().add(new Vector2(deltaTime*X_VEL, super.getPosition().y())));
+    
+    protected void move(final double deltaTime, int direction) {
+        super.setPosition(super.getPosition().add((new Vector2(deltaTime*X_VEL, super.getPosition().y())).multiply(direction)));
     }
+
 }
