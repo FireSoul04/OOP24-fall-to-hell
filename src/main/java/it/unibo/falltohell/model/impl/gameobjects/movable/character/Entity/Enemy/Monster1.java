@@ -42,7 +42,7 @@ public class Monster1 extends Enemy{
     @Override
     public void onCollision(final GameObject other) {
         if(other instanceof Character){
-            attack();
+            ((Character)other).setDamadLife(DAMAGE);
         }
         if((other instanceof Block)||(other instanceof Merchant)){
             this.direction*=-1;
@@ -60,7 +60,7 @@ public class Monster1 extends Enemy{
         throw new UnsupportedOperationException("Unimplemented method 'attack'");
     }
 
-    
+    @Override
     protected void move(final double deltaTime) {
         super.setPosition(super.getPosition().add((new Vector2(deltaTime*X_VEL*this.direction, super.getPosition().y()))));
     }

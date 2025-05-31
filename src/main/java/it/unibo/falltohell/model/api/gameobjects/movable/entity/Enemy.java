@@ -31,8 +31,11 @@ public abstract class Enemy implements Entity {
         this.setPosition(this.initialPos);
     }
 
-    protected double getLife() {
+    public double getLife() {
         return this.life;
+    }
+    public void setDamadLife(final double damage){
+        this.life-=damage;
     }
     protected void setLife(final double life) {
         this.life = life;
