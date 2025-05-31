@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.character;
 
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
-import it.unibo.falltohell.model.api.gameobjects.movable.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.util.Vector2;
 
 // TODO remove the methods that needs to be inherited by movable when the interface gets an implementation

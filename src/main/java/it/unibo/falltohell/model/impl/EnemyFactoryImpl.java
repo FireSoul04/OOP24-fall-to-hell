@@ -2,8 +2,8 @@ package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.EnemyFactory;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
-import it.unibo.falltohell.model.impl.gameobjects.movable.character.Entity.Enemy.Monster1;
-import it.unibo.falltohell.model.impl.gameobjects.movable.character.Entity.Enemy.Monster2;
+import it.unibo.falltohell.model.impl.gameobjects.movable.character.entity.enemy.Monster1;
+import it.unibo.falltohell.model.impl.gameobjects.movable.character.entity.enemy.Monster2;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
