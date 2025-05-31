@@ -1,11 +1,11 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.impl.gameobjects.movable.character.MovableImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unibo.falltohell.model.impl.gameobjects.movable.character.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;

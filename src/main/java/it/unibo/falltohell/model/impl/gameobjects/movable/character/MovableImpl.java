@@ -1,14 +1,16 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.character;
 
-import it.unibo.falltohell.model.util.Vector2;
-import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
+import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.GameObjectImpl;
+import it.unibo.falltohell.model.util.Vector2;
 public class MovableImpl extends GameObjectImpl implements Movable{
     private double speedX;
     private double speedY;
     
-    public MovableImpl(Vector2 vector2, double width, double height, double speedX, double speedY, Collider collider) {
-        super(vector2, width, height, collider);
+    public MovableImpl(Level level, Vector2 position, double width, double height, double speedX, double speedY,Collider collider) {
+        super(level, position, width, height, collider);
         this.speedX = speedX;
         this.speedY = speedY;
     }
@@ -16,7 +18,6 @@ public class MovableImpl extends GameObjectImpl implements Movable{
     public void update(double deltaTime) {
         Vector2 displacement = new Vector2(speedX, speedY).multiply(deltaTime);
         setPosition(getPosition().add(displacement));
-        
     }
     public double getSpeedX() {
         return speedX;
