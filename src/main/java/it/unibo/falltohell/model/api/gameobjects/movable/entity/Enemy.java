@@ -2,7 +2,7 @@ package it.unibo.falltohell.model.api.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.api.gameobjects.Movable;
+import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
@@ -10,7 +10,7 @@ import it.unibo.falltohell.model.util.Vector2;
  * @author Sara Visani
  */
 
-public abstract class Enemy implements Movable {
+public abstract class Enemy implements Entity {
 
     private double life;
     private double damage;
