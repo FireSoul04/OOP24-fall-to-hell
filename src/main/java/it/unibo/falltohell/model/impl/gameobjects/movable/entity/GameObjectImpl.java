@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.gameobjects.movable.character;
+package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.physics.Collider;
