@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.gameobjects.movable.character.Entity.Enemy;
+package it.unibo.falltohell.model.impl.gameobjects.movable.character.entity.enemy;
 
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.Merchant;
@@ -36,7 +36,7 @@ public class Monster1 extends Enemy{
 
     @Override
     public void update(final double deltaTime) {
-        this.move(deltaTime,1);
+        this.move(deltaTime);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Monster1 extends Enemy{
             attack();
         }
         if((other instanceof Block)||(other instanceof Merchant)){
-            direction*=-1;
+            this.direction*=-1;
         }
     }
 
@@ -61,8 +61,8 @@ public class Monster1 extends Enemy{
     }
 
     
-    protected void move(final double deltaTime, int direction) {
-        super.setPosition(super.getPosition().add((new Vector2(deltaTime*X_VEL, super.getPosition().y())).multiply(direction)));
+    protected void move(final double deltaTime) {
+        super.setPosition(super.getPosition().add((new Vector2(deltaTime*X_VEL*this.direction, super.getPosition().y()))));
     }
 
 }

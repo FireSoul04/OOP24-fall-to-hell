@@ -1,6 +1,9 @@
-package it.unibo.falltohell.model.impl.gameobjects.movable.character.Entity.Enemy;
+package it.unibo.falltohell.model.impl.gameobjects.movable.character.entity.enemy;
 
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.gameobjects.Block;
+import it.unibo.falltohell.model.api.gameobjects.Merchant;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
@@ -20,6 +23,7 @@ public class Monster2 extends Enemy{
     private static final double Y_VEL=10;
     private static final double DISTANCE=10;
     private static final double NO_AGGRO=10;
+    private int direction = 1;
 
     public Monster2(final Vector2 initialCord) {
         super(initialCord);
@@ -44,8 +48,12 @@ public class Monster2 extends Enemy{
 
     @Override
     public void onCollision(final GameObject other) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onCollide'");
+        if(other instanceof Character){
+            attack();
+        }
+        if((other instanceof Block)||(other instanceof Merchant)){
+            this.direction*=-1;
+        }
     }
 
     @Override
@@ -59,22 +67,20 @@ public class Monster2 extends Enemy{
         throw new UnsupportedOperationException("Unimplemented method 'attack'");
     }
 
-    @Override
     protected void move(final double deltaTime) {
 
-        double direction = 1;
         double other_X = deltaTime*X_VEL;
         final double y = super.getPosition().y();
 
         while(other_X > 0){
-            if(super.getInitialPos().distance(super.getPosition().add(new Vector2(other_X*direction, y)))<=(DISTANCE)){
-                super.setPosition(super.getPosition().add(new Vector2(other_X*direction, y)));
+            if(super.getInitialPos().distance(super.getPosition().add(new Vector2(other_X*this.direction, y)))<=(DISTANCE)){
+                super.setPosition(super.getPosition().add(new Vector2(other_X*this.direction, y)));
                 other_X=0;
             }
             else{
-                other_X=other_X-super.getPosition().distance(new Vector2(DISTANCE*direction,y));
-                super.setPosition(new Vector2((DISTANCE)*direction, y));
-                direction=direction * -1;
+                other_X=other_X-super.getPosition().distance(new Vector2(DISTANCE*this.direction,y));
+                super.setPosition(new Vector2((DISTANCE)*this.direction, y));
+                this.direction*= -1;
             }
         }
     }

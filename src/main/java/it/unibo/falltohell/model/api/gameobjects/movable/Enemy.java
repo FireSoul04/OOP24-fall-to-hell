@@ -143,7 +143,6 @@ public abstract class Enemy implements Movable {
     /**
      * characterizes the movement of the enemy
      * @param deltaTime elapsed time between the current frame and the last one
-     * @param direction direction of movement
      */
-    protected abstract void move(final double deltaTime, int direction);
+    protected abstract void move(final double deltaTime);
 }
