@@ -25,8 +25,8 @@ public class Monster2 extends Enemy{
     private static final double NO_AGGRO=10;
     private int direction = 1;
 
-    public Monster2(final Vector2 initialCord) {
-        super(initialCord);
+    public Monster2(final Vector2 initialCord,final Character character) {
+        super(initialCord, character);
         super.setLife(FULL_LIFE);
         super.setHeight(HEIGHT);
         super.setWidth(WIDTH);

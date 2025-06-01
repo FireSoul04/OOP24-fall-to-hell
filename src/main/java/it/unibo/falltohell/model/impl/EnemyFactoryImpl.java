@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Monster1;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Monster2;
 import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 /**
  * Implements abstract factory for Enemies, creates Enemies
@@ -14,13 +15,13 @@ import it.unibo.falltohell.model.util.Vector2;
 public class EnemyFactoryImpl implements EnemyFactory{
 
     @Override
-    public Enemy CreateMonster1(final Vector2 initialCords) {
-        return new Monster1(initialCords);
+    public Enemy CreateMonster1(final Vector2 initialCords,final Character character) {
+        return new Monster1(initialCords, character);
     }
 
     @Override
-    public Enemy CreateMonster2(final Vector2 initialCords) {
-        return new Monster2(initialCords);
+    public Enemy CreateMonster2(final Vector2 initialCords, final Character character) {
+        return new Monster2(initialCords, character);
     }
     
 }

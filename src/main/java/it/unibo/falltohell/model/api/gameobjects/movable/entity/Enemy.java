@@ -24,11 +24,13 @@ public abstract class Enemy implements Entity {
     private double tileHeight;
     private double tileWidth;
     private Collider collider;
+    private Character character;
 
-    public Enemy(final Vector2 initialCord)
+    public Enemy(final Vector2 initialCord,final Character character)
     {
         this.initialPos = initialCord;
         this.setPosition(this.initialPos);
+        this.character = character;
     }
 
     public double getLife() {
@@ -119,6 +121,16 @@ public abstract class Enemy implements Entity {
     @Override
     public Collider getCollider(){
         return this.collider;
+    }
+    protected Character getCharacter() {
+        return this.character;
+    }
+    /**
+     * Called to change the Player to follow
+     * @param character
+     */
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 
     @Override

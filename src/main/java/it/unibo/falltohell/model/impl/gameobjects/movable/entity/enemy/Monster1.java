@@ -23,8 +23,8 @@ public class Monster1 extends Enemy{
     private static final double Y_VEL=20;
     private int direction = 1;
 
-    public Monster1(final Vector2 initialCord) {
-        super(initialCord);
+    public Monster1(final Vector2 initialCord, final Character character) {
+        super(initialCord, character);
         super.setLife(FULL_LIFE);
         super.setHeight(HEIGHT);
         super.setWidth(WIDTH);
