@@ -128,7 +128,7 @@ public abstract class BaseEnemy implements Enemy {
     protected Character getCharacter() {
         return this.character;
     }
-   @Override
+    @Override
     public void setCharacter(final Character character) {
         this.character = character;
     }
