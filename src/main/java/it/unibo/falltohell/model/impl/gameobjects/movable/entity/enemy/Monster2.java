@@ -4,7 +4,7 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.Merchant;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
@@ -14,7 +14,7 @@ import it.unibo.falltohell.model.util.Vector2;
  * @author Sara Visani
  */
 
-public class Monster2 extends Enemy{
+public class Monster2 extends BaseEnemy{
     private static final double HEIGHT=10;
     private static final double WIDTH=10;
     private static final double FULL_LIFE=10;

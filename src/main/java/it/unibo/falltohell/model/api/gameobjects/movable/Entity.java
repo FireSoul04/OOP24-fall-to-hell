@@ -10,4 +10,8 @@ public interface Entity extends Movable{
     public void setDamadLife(final double damage);
 
     public double getLife();
+    /**
+     * @return if an Entity is dead
+     */
+    public boolean isDead();
 }
