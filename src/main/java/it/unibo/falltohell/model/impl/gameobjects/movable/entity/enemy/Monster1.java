@@ -19,7 +19,7 @@ public class Monster1 extends BaseEnemy{
     private static final double WIDTH=20;
     private static final double FULL_LIFE=20;
     private static final double DAMAGE=20;
-    private static final double X_VEL=20;
+    private static final double X_VEL=2;
     private static final double Y_VEL=20;
     private int direction = 1;
 
@@ -41,12 +41,7 @@ public class Monster1 extends BaseEnemy{
 
     @Override
     public void onCollision(final GameObject other) {
-        if(other instanceof Character){
-            ((Character)other).setDamadLife(DAMAGE);
-        }
-        if((other instanceof Block)||(other instanceof Merchant)){
-            this.direction*=-1;
-        }
+        this.direction*=-1;
     }
 
     @Override
@@ -62,7 +57,22 @@ public class Monster1 extends BaseEnemy{
 
     @Override
     protected void move(final double deltaTime) {
-        super.setPosition(super.getPosition().add((new Vector2(deltaTime*X_VEL*this.direction, super.getPosition().y()))));
+        final Vector2 chara = this.getCharacter().getPosition();
+        final double charX = this.getCharacter().getPosition().x();
+
+        if(chara.distance(super.getPosition())>70){
+            super.setPosition(super.getPosition().add((new Vector2(deltaTime*X_VEL*this.direction, super.getPosition().y()))));
+        }else{
+            if(charX-super.getPosition().x()>0){
+                if(this.direction>0){
+                    super.setPosition(super.getPosition().add((new Vector2(deltaTime*X_VEL, super.getPosition().y()))));
+                }
+            }else{
+                if(this.direction>0){
+                    super.setPosition(super.getPosition().add((new Vector2(-deltaTime*X_VEL, super.getPosition().y()))));
+                }
+            }
+        }
     }
 
 }
