@@ -36,7 +36,7 @@ public class TestEnemy2Movement {
     /*Testing Movement with Monster 2 to far away from Player*/
 
     @Test
-    void justMonster1(){
+    void justMonster2(){
         en1.update(0);
         assertEquals(en1.getPosition(),Vector2.zero());
         en1.update(10);
@@ -52,7 +52,7 @@ public class TestEnemy2Movement {
     }
 
     @Test
-    void justMonster1NotZeroPos(){
+    void justMonster2NotZeroPos(){
         en4.update(0);
         assertEquals(en4.getPosition(),new Vector2(10, 0));
         en4.update(10);
@@ -68,7 +68,7 @@ public class TestEnemy2Movement {
     }
 
     @Test
-    void justMonster1NotZeroNeg(){
+    void justMonster2NotZeroNeg(){
         en3.setCharacter(chara2);
         en3.update(0);
         assertEquals(en3.getPosition(),new Vector2(-40, 0));

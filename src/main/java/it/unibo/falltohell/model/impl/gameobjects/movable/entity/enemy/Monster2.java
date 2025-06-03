@@ -67,20 +67,31 @@ public class Monster2 extends BaseEnemy{
         throw new UnsupportedOperationException("Unimplemented method 'attack'");
     }
 
-    @Override
     protected void move(final double deltaTime) {
 
         double other_X = deltaTime*X_VEL;
         final double y = super.getPosition().y();
 
-        while(other_X > 0){
+        /*while(other_X > 0){
             if(super.getInitialPos().distance(super.getPosition().add(new Vector2(other_X*this.direction, y)))<=(DISTANCE)){
                 super.setPosition(super.getPosition().add(new Vector2(other_X*this.direction, y)));
                 other_X=0;
             }
             else{
-                other_X=other_X-super.getPosition().distance(new Vector2(DISTANCE*this.direction,y));
-                super.setPosition(new Vector2((DISTANCE)*this.direction, y));
+                other_X=other_X-super.getPosition().distance(new Vector2((super.getInitialPos().x()+DISTANCE)*this.direction,y));
+                super.setPosition(new Vector2((super.getInitialPos().x()+DISTANCE)*this.direction, y));
+                this.direction*= -1;
+            }
+        }*/
+
+        while(other_X > 0){
+            if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(other_X*this.direction),y))<=DISTANCE){
+                super.setPosition(super.getPosition().add(new Vector2(other_X*this.direction, 0)));
+                other_X=0;
+            }
+            else{
+                other_X -= Math.abs((super.getInitialPos().x()+DISTANCE*this.direction)-super.getPosition().x());
+                super.setPosition(new Vector2(super.getInitialPos().x()+DISTANCE*this.direction, y));
                 this.direction*= -1;
             }
         }
