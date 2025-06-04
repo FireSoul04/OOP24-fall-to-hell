@@ -87,7 +87,7 @@ public class TestEnemy2Movement {
     /*Testing Movement with Monster 2 with Player just close enough*/
 
     @Test
-    void Monster1EqualsCharacterNotReachable(){
+    void Monster2EqualsCharacterNotReachable(){
         en2.update(0);
         assertEquals(en2.getPosition(),new Vector2(-30, 0));
         en2.update(1);
@@ -105,7 +105,7 @@ public class TestEnemy2Movement {
     /*Testing Movement with Monster 2 with Player are close*/
 
     @Test
-    void Monster1CloseCharacterLimitReachable(){
+    void Monster2CloseCharacterLimitReachable(){
         en3.update(0);
         assertEquals(en3.getPosition(),new Vector2(-40, 0));
         en3.update(1);
@@ -121,7 +121,7 @@ public class TestEnemy2Movement {
     /*Testing Movement with Monster 2 with Player are close*/
 
     @Test
-    void Monster1CloseCharacterReachable(){
+    void Monster2CloseCharacterReachable(){
         en3.setCharacter(chara1_2);
         en3.update(0);
         assertEquals(en3.getPosition(),new Vector2(-40, 0));

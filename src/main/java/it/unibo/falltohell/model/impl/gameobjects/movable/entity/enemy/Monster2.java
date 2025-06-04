@@ -48,12 +48,7 @@ public class Monster2 extends BaseEnemy{
 
     @Override
     public void onCollision(final GameObject other) {
-        if(other instanceof Character){
-            ((Character)other).setDamadLife(DAMAGE);
-        }
-        if((other instanceof Block)||(other instanceof Merchant)){
-            this.direction*=-1;
-        }
+        this.direction*=-1;
     }
 
     @Override
@@ -71,6 +66,7 @@ public class Monster2 extends BaseEnemy{
 
         double other_X = deltaTime*X_VEL;
         final double y = super.getPosition().y();
+        final Vector2 chara = this.getCharacter().getPosition();
 
         /*while(other_X > 0){
             if(super.getInitialPos().distance(super.getPosition().add(new Vector2(other_X*this.direction, y)))<=(DISTANCE)){
@@ -85,14 +81,59 @@ public class Monster2 extends BaseEnemy{
         }*/
 
         while(other_X > 0){
-            if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(other_X*this.direction),y))<=DISTANCE){
-                super.setPosition(super.getPosition().add(new Vector2(other_X*this.direction, 0)));
-                other_X=0;
-            }
-            else{
-                other_X -= Math.abs((super.getInitialPos().x()+DISTANCE*this.direction)-super.getPosition().x());
-                super.setPosition(new Vector2(super.getInitialPos().x()+DISTANCE*this.direction, y));
-                this.direction*= -1;
+            if(chara.distance(super.getPosition())>20){
+                if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(other_X*this.direction),y))<=DISTANCE){
+                    super.setPosition(super.getPosition().add(new Vector2(other_X*this.direction, 0)));
+                    other_X=0;
+                }
+                else{
+                    other_X -= Math.abs((super.getInitialPos().x()+DISTANCE*this.direction)-super.getPosition().x());
+                    super.setPosition(new Vector2(super.getInitialPos().x()+DISTANCE*this.direction, y));
+                    this.direction*= -1;
+                }
+            }else{
+                if((chara.x()<=DISTANCE+super.getInitialPos().x())&&(chara.x()>=super.getInitialPos().x()-DISTANCE)){    
+                    if(chara.distance(super.getPosition())>super.getPosition().distance(new Vector2(super.getPosition().x()+other_X*this.direction,y))){
+                        if(chara.x()-super.getPosition().x()>0){
+                            if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(other_X),y))<=DISTANCE){
+                                super.setPosition(super.getPosition().add(new Vector2(other_X, 0)));
+                            }else{
+                                super.setPosition(new Vector2(super.getInitialPos().x()+DISTANCE, y));
+                            }
+                            other_X=0;
+                        }else{
+                            if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(-other_X),y))<=DISTANCE){
+                                super.setPosition(super.getPosition().add(new Vector2(-other_X, 0)));
+                            }else{
+                                super.setPosition(new Vector2(super.getInitialPos().x()-DISTANCE, y));
+                            }
+                            other_X=0;
+                        }
+                    }else{
+                        super.setPosition(chara);
+                        other_X = 0;
+                    }
+                }else{
+                    if(chara.x()-super.getPosition().x()>0){
+                        if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(other_X),y))<=DISTANCE){
+                        super.setPosition(super.getPosition().add(new Vector2(other_X, 0)));
+                        other_X=0;
+                        }else{
+                        super.setPosition(new Vector2(super.getInitialPos().x()+DISTANCE, y));
+                        other_X = 0;
+                        this.direction*= -1;
+                        }
+                    }else{
+                        if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(-other_X),y))<=DISTANCE){
+                        super.setPosition(super.getPosition().add(new Vector2(-other_X, 0)));
+                        other_X=0;
+                        }else{
+                        super.setPosition(new Vector2(super.getInitialPos().x()-DISTANCE, y));
+                        other_X = 0;
+                        this.direction*= -1;
+                        }
+                    }
+                }
             }
         }
     }
