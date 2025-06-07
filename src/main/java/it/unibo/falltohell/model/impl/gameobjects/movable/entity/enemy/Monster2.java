@@ -98,18 +98,10 @@ public class Monster2 extends BaseEnemy{
                 if((chara.x() <= DISTANCE+super.getInitialPos().x()) && (chara.x() >= super.getInitialPos().x()-DISTANCE)){
                     if(chara.distance(super.getPosition())>super.getPosition().distance(new Vector2(super.getPosition().x()+other_X*this.direction,y))){
                         if(chara.x()-super.getPosition().x()>0 && !(this.collided.isPresent() && this.collided.get().x() < super.getPosition().add(new Vector2(other_X,0)).x())){
-                            //if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(other_X),y))<=DISTANCE){
-                                super.setPosition(super.getPosition().add(new Vector2(other_X, 0)));
-                           /* }else{
-                                super.setPosition(new Vector2(super.getInitialPos().x()+DISTANCE, y));
-                            }*/
+                            super.setPosition(super.getPosition().add(new Vector2(other_X, 0)));
                             other_X=0;
                         }else if (!(this.collided.isPresent() && this.collided.get().x() > super.getPosition().add(new Vector2(-other_X,0)).x())){
-                            //if(super.getInitialPos().distance(new Vector2(super.getPosition().x()+(-other_X),y))<=DISTANCE){
-                                super.setPosition(super.getPosition().add(new Vector2(-other_X, 0)));
-                            /*}else{
-                                super.setPosition(new Vector2(super.getInitialPos().x()-DISTANCE, y));
-                            }*/
+                            super.setPosition(super.getPosition().add(new Vector2(-other_X, 0)));
                             other_X=0;
                         }else{
                             super.setPosition(this.collided.get());
