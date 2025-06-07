@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
-import it.unibo.falltohell.model.api.gameobjects.Block;
-import it.unibo.falltohell.model.api.gameobjects.Merchant;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;

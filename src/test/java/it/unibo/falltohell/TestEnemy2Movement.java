@@ -26,7 +26,7 @@ public class TestEnemy2Movement {
         fact = new EnemyFactoryImpl();
         chara1 = new TestCharacter(new Vector2(-50, 0));
         chara1_2 = new TestCharacter(new Vector2(-45, 0));
-        chara2 = new TestCharacter(new Vector2(100, 0));
+        chara2 = new TestCharacter(new Vector2(5, 0));
         en1 = fact.CreateMonster2(Vector2.zero(), chara1);
         en2 = fact.CreateMonster2(new Vector2(-30, 0), chara1);
         en3 = fact.CreateMonster2(new Vector2(-40, 0), chara1);
@@ -135,50 +135,49 @@ public class TestEnemy2Movement {
         assertEquals(en3.getPosition(),new Vector2(-45,0));
     }
 
-    /*Testing Movement with Monster 1 to far away from Player and hits wall*/
+    /*Testing Movement with Monster 2 to far away from Player and hits wall*/
 
     @Test
-    void hitsMonster1(){
-        en1.setCharacter(chara2);
+    void hitsMonster2(){
+        en1.update(5);
+        assertEquals(en1.getPosition(),new Vector2(5,0));
         en1.onCollision(chara1);
-        en1.update(10);
-        assertEquals(en1.getPosition(),new Vector2(-20,0));
         en1.update(30);
-        assertEquals(en1.getPosition(),new Vector2(-80,0));
-        en1.update(0);
-        assertEquals(en1.getPosition(),new Vector2(-80,0));
+        assertEquals(en1.getPosition(),new Vector2(5,0));
+        en1.update(20);
+        assertEquals(en1.getPosition(),new Vector2(-5,0));
     }
 
-    /*Testing Movement with Monster 1 just close enough and hits a wall*/
+    /*Testing Movement with Monster 2 just close enough and hits a wall*/
 
     @Test
-    void hitsMonster1EqualsCharacterNegative(){
-        en2.onCollision(chara1);
+    void hitsMonster2EqualsCharacterNegative(){
         en2.update(0);
         assertEquals(en2.getPosition(),new Vector2(-30, 0));
-        en2.update(10);
-        assertEquals(en2.getPosition(),new Vector2(-30,0));
+        en2.update(5);
+        assertEquals(en2.getPosition(),new Vector2(-35,0));
+        en2.onCollision(chara1);
         en2.update(30);
-        assertEquals(en2.getPosition(),new Vector2(-30,0));
+        assertEquals(en2.getPosition(),new Vector2(-35,0));
         en2.update(0);
-        assertEquals(en2.getPosition(),new Vector2(-30,0));
+        assertEquals(en2.getPosition(),new Vector2(-35,0));
         en2.update(10);
-        assertEquals(en2.getPosition(),new Vector2(-30,0));
+        assertEquals(en2.getPosition(),new Vector2(-35,0));
     }
 
-    /*Testing Movement with Monster 1 just close enough Player and hits wall*/
+    /*Testing Movement with Monster 2 just close enough Player and hits wall*/
 
     @Test
-    void hitsMonster1EqualsCharacterPositive(){
+    void hitsMonster2EqualsCharacterPositive(){
         en1.setCharacter(chara2);
-        en1.update(15);
-        assertEquals(en1.getPosition(),new Vector2(30,0));
+        en1.update(2);
+        assertEquals(en1.getPosition(),new Vector2(2,0));
         en1.onCollision(chara1);
         en1.update(10);
-        assertEquals(en1.getPosition(),new Vector2(30,0));
+        assertEquals(en1.getPosition(),new Vector2(2,0));
         en1.update(30);
-        assertEquals(en1.getPosition(),new Vector2(30,0));
+        assertEquals(en1.getPosition(),new Vector2(2,0));
         en1.update(0);
-        assertEquals(en1.getPosition(),new Vector2(30,0));
+        assertEquals(en1.getPosition(),new Vector2(2,0));
     }
 }

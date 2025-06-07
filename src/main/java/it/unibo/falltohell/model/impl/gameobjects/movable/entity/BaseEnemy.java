@@ -39,7 +39,7 @@ public abstract class BaseEnemy implements Enemy {
         return this.life;
     }
     @Override
-    public void setDamadLife(final double damage){
+    public void setDamagedLife(final double damage){
         this.life-=damage;
     }
     protected void setLife(final double life) {

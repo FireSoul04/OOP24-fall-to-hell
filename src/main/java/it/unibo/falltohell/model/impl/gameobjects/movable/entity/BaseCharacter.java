@@ -36,7 +36,7 @@ public abstract class BaseCharacter implements Character {
     }
 
     @Override
-    public void setDamadLife(double damage) {
+    public void setDamagedLife(double damage) {
         this.life-=damage;
     }
 
