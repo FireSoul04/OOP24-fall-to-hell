@@ -12,7 +12,7 @@ import java.util.TimerTask;
  */
 public class CustomTimerImpl implements CustomTimer {
     private Timer timer;
-    private final int duration;
+    private int elapsedTime;
     private boolean started;
     private boolean paused;
     private final TimerTask eventOnFinish;
@@ -20,12 +20,16 @@ public class CustomTimerImpl implements CustomTimer {
     public CustomTimerImpl(final int duration, final CustomTimerEvent event) {
         this.started = false;
         this.paused = false;
-        this.duration = duration;
         this.eventOnFinish = new TimerTask() {
             @Override
             public void run() {
-                event.execute();
-                started = false;
+                if (elapsedTime >= duration) {
+                    event.execute();
+                    started = false;
+                }
+                if (!paused) {
+                    elapsedTime++;
+                }
             }
         };
     }
@@ -34,7 +38,8 @@ public class CustomTimerImpl implements CustomTimer {
     public void start() {
         if (!this.started) {
             this.timer = new Timer();
-            this.timer.schedule(this.eventOnFinish, this.duration);
+            this.elapsedTime = 0;
+            this.timer.schedule(this.eventOnFinish, 0, 1);
             this.started = true;
         } else {
             throw new IllegalStateException("Cannot start a timer that is already running");
@@ -63,22 +68,16 @@ public class CustomTimerImpl implements CustomTimer {
 
     @Override
     public void pause() {
-        try {
-            if (!this.paused) {
-                this.timer.wait();
-                this.paused = true;
-            } else {
-                throw new IllegalStateException("Cannot pause a timer that is already paused");
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException("An interrupt has been occurred");
+        if (!this.paused && this.started) {
+            this.paused = true;
+        } else {
+            throw new IllegalStateException("Cannot pause a timer that is already paused");
         }
     }
 
     @Override
     public void resume() {
-        if (this.paused) {
-            this.timer.notify();
+        if (this.paused && this.started) {
             this.paused = false;
         } else {
             throw new IllegalStateException("Cannot resume a timer that is not paused");
