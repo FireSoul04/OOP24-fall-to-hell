@@ -24,6 +24,7 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 public class TestCollisions {
 
+    final static int STEPS = 500;
     boolean collision;
 
     @BeforeEach
@@ -33,13 +34,12 @@ public class TestCollisions {
 
     /**
      * Base method to test.
-     * Uses a timer to determine if a collision is going to happen it should between 2000 steps.
+     * Uses a number of steps to determine if a collision is going to happen.
      * If not, assert that it didn't collide.
      */
     void baseCollisionTest(final Level level) {
-        // Stops every 500 steps of the dummy
         int steps = 0;
-        while (steps < 500) {
+        while (steps < STEPS) {
             level.update(1.0);
             steps++;
         }
