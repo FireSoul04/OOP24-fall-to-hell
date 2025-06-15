@@ -1,4 +1,6 @@
 package it.unibo.falltohell.model.impl.physics.colliders;
 
-public record Collision() {
+import it.unibo.falltohell.model.util.Vector2;
+
+public record Collision(Vector2 direction) {
 }

@@ -63,4 +63,7 @@ public class GameObjectImpl implements GameObject {
     public void onCollision(GameObject other){
         
     }
+    public void onCollision(GameObject other, Vector2 direction){
+
+    }
 }

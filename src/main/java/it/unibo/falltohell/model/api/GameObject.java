@@ -52,4 +52,11 @@ public interface GameObject {
      * @param other game object collided with
      */
     void onCollision(GameObject other);
+
+    /**
+     * This function is called every collision with another game object.
+     * @param other game object collided with
+     * @param direction where the collision happened
+     */
+    void onCollision(GameObject other, Vector2 direction);
 }

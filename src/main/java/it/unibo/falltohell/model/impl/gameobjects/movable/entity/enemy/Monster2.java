@@ -53,6 +53,11 @@ public class Monster2 extends BaseEnemy{
     }
 
     @Override
+    public void onCollision(final GameObject other, final Vector2 direction) {
+
+    }
+
+    @Override
     protected boolean isFull() {
         return super.getLife() == FULL_LIFE;
     }
