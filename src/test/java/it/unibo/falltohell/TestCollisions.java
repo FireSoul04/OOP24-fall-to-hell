@@ -23,93 +23,107 @@ import it.unibo.falltohell.model.util.Vector2;
  * @author Davide Mancini
  */
 public class TestCollisions {
-    
-    Level level;
-    GameObject dummy1;
-    GameObject dummy2;
-    GameObject block;
+
     boolean collision;
 
     @BeforeEach
     void init() {
-        level = new LevelImpl(null);
-        dummy1 = new MovableImpl(
-            level, Vector2.zero(),
-            0,
-            0,
-            10,
-            10,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-            public void onCollision(final GameObject other) {
-                collision = true;
-            }
-        };
-        dummy2 = new MovableImpl(
-            level, Vector2.one().multiply(200),
-            0,
-            0,
-            -10,
-            -10,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-            public void onCollision(final GameObject other) {
-                collision = true;
-            }
-        };
-        block = new GameObjectImpl(level, Vector2.one().multiply(100), 0, 0, true, new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
-        };
         collision = false;
     }
 
     /**
      * Base method to test.
-     * Uses a timer to determine if a collision is going to happen it should between 2 seconds.
+     * Uses a timer to determine if a collision is going to happen it should between 2000 steps.
      * If not, assert that it didn't collide.
      */
-    void baseCollisionTest() {
-        final long time = System.currentTimeMillis();
-        // If dummy doesn't collide within 2 seconds throws an exception
-        while (System.currentTimeMillis() - time < 2000) {
+    void baseCollisionTest(final Level level) {
+        // Stops every 500 steps of the dummy
+        int steps = 0;
+        while (steps < 500) {
             level.update(1.0);
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            steps++;
         }
-        assertTrue(collision, "Dummy should collide in 2 seconds");
     }
 
     @Test
     void testGameDummyVsBlock() {
-        level.addGameObject(dummy1);
-        level.addGameObject(block);
-        baseCollisionTest();
+        final Level testGameDummyVsBlockLevel = new LevelImpl();
+        final GameObject dummy = new MovableImpl(
+            testGameDummyVsBlockLevel, Vector2.zero(),
+            0,
+            0,
+            10,
+            10,
+            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
+        ) {
+            public void onCollision(final GameObject other) {
+                collision = true;
+            }
+        };
+        final GameObject block = new GameObjectImpl(
+            testGameDummyVsBlockLevel,
+            Vector2.one().multiply(100),
+            0,
+            0,
+            true,
+            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
+        };
+        baseCollisionTest(testGameDummyVsBlockLevel);
+        assertTrue(collision, "Dummy should collide in 2 seconds");
     }
 
     @Test
     void testGameDummyVsGameDummy() {
-        level.addGameObject(dummy1);
-        level.addGameObject(dummy2);
-        baseCollisionTest();
+        final Level testGameDummyVsGameDummyLevel = new LevelImpl();
+        final GameObject dummy1 = new MovableImpl(
+            testGameDummyVsGameDummyLevel, Vector2.zero(),
+            0,
+            0,
+            10,
+            10,
+            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
+        ) {
+            public void onCollision(final GameObject other) {
+                collision = true;
+            }
+        };
+        final GameObject dummy2 = new MovableImpl(
+            testGameDummyVsGameDummyLevel, Vector2.one().multiply(200),
+            0,
+            0,
+            -10,
+            -10,
+            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
+        ) {
+        };
+        baseCollisionTest(testGameDummyVsGameDummyLevel);
+        assertTrue(collision, "Dummy should collide in 2 seconds");
     }
 
     @Test
     void testGameDummyShouldNotCollide() {
-        level.addGameObject(dummy1);
-        block.setPosition(block.getPosition().add(new Vector2(30, 0)));
-        level.addGameObject(block);
-        final long time = System.currentTimeMillis();
-        // If dummy does collide within 2 seconds throws an exception
-        while (System.currentTimeMillis() - time < 2000) {
-            level.update(1.0);
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        final Level testGameDummyShouldNotCollideLevel = new LevelImpl();
+        final GameObject dummy = new MovableImpl(
+            testGameDummyShouldNotCollideLevel, Vector2.zero(),
+            0,
+            0,
+            10,
+            10,
+            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
+        ) {
+            public void onCollision(final GameObject other) {
+                collision = true;
             }
-        }
+        };
+        final GameObject block = new GameObjectImpl(
+            testGameDummyShouldNotCollideLevel,
+            Vector2.one().multiply(100).add(new Vector2(30, 0)),
+            0,
+            0,
+            true,
+            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
+        };
+        baseCollisionTest(testGameDummyShouldNotCollideLevel);
         assertFalse(collision, "Dummy should not collide");
     }
 }
