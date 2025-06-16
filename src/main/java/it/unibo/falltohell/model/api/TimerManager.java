@@ -26,7 +26,7 @@ public interface TimerManager {
     void pauseTimer(String name);
 
     /**
-     * Method to pause all timers
+     * Method to pause all timers if not already paused
      */
     void pauseAllTimers();
 
@@ -37,7 +37,7 @@ public interface TimerManager {
     void resumeTimer(String name);
 
     /**
-     * Method to resume all timers
+     * Method to resume all timers if not already resumed
      */
     void resumeAllTimers();
 
