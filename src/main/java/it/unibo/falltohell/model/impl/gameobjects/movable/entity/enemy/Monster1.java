@@ -3,8 +3,6 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
-import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
@@ -22,14 +20,11 @@ public class Monster1 extends BaseEnemy{
     private int direction = 1;
 
     public Monster1(final Vector2 initialCord, final Character character) {
-        super(initialCord, character);
+        super(initialCord,WIDTH,HEIGHT,X_VEL,Y_VEL,character);
         super.setLife(FULL_LIFE);
-        super.setHeight(HEIGHT);
-        super.setWidth(WIDTH);
         super.setDamage(DAMAGE);
         super.setSpeedX(X_VEL);
         super.setSpeedY(Y_VEL);
-        super.setCollider(new BoxCollider(Vector2.zero(),new Dimensions(WIDTH, HEIGHT)));
     }
 
     @Override
