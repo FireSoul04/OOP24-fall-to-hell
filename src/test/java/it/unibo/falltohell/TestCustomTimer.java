@@ -16,10 +16,12 @@ import org.junit.jupiter.api.Test;
 class TestCustomTimer {
 
     private CustomTimer timer;
+    private boolean test;
 
     @BeforeEach
     void initialization() {
-        timer = new CustomTimerImpl(1000, () -> System.out.println("Evento"));
+        this.timer = new CustomTimerImpl(1000, () -> this.test = true);
+        this.test = false;
     }
 
     @Test
@@ -114,5 +116,16 @@ class TestCustomTimer {
         } catch (final IllegalStateException e) {
 
         }
+    }
+
+    @Test
+    void testCorrectExecutionOfEvent() {
+        this.timer.start();
+        try {
+            Thread.sleep(1000);
+        } catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        assertTrue(this.test, "The event is not executed as expected");
     }
 }
