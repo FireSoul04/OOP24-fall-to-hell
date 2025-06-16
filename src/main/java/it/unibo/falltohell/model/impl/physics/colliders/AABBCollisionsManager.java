@@ -38,7 +38,7 @@ public class AABBCollisionsManager extends AbstractCollisionsManager {
     }
 
     private Vector2 getDirection(final Vector2 p1, final Vector2 p2) {
-        final Vector2 direction = p1.subtract(p2);
+        final Vector2 direction = p2.subtract(p1);
         if (Math.abs(direction.x()) >= Math.abs(direction.y())) {
             return new Vector2(Math.signum(direction.x()), 0);
         } else {
