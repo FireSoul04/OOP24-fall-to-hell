@@ -12,5 +12,5 @@ public interface Collider {
     /**
      * @return offset relative to the game object.
      */
-    Vector2 getOffset();
+    Vector2 offset();
 }
