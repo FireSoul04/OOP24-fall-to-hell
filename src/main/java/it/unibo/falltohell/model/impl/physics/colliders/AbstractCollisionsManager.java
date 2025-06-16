@@ -13,11 +13,14 @@ import java.util.Optional;
  */
 public abstract class AbstractCollisionsManager implements CollisionsManager {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void checkCollisions(final List<GameObject> gameObjects) {
         for (final GameObject g1 : gameObjects) {
             for (final GameObject g2 : gameObjects) {
-                if (g1 != g2 && g1.isSolid() && g2.isSolid()) {
+                if (!g1.equals(g2) && g1.isSolid() && g2.isSolid()) {
                     final Optional<Collision> collision = this.determineCollision(g1, g2);
 
                     if (collision.isPresent()) {
