@@ -8,29 +8,9 @@ import it.unibo.falltohell.model.util.Vector2;
  * Class for a collider with a boxed shape.
  *
  * @author Davide Mancini
+ *
+ * @param offset where the collider is placed relative to the game object attached to
+ * @param size of the box
  */
-public class BoxCollider implements Collider {
-
-    private final Vector2 offset;
-    private final Dimensions size;
-
-    /**
-     * Create a collider with a form of a box.
-     */
-    public BoxCollider(final Vector2 offset, final Dimensions size) {
-        this.offset = offset;
-        this.size = size;
-    }
-
-    @Override
-    public Vector2 getOffset() {
-        return this.offset;
-    }
-
-    /**
-     * @return size of the box
-     */
-    public Dimensions getSize() {
-        return this.size;
-    }
+public record BoxCollider(Vector2 offset, Dimensions size) implements Collider {
 }
