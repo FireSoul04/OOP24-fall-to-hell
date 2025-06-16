@@ -5,6 +5,7 @@ package it.unibo.falltohell.model.api;
  * @author Martina Malagoli
  */
 public interface CustomTimer {
+
     /**
      * Method to start the timer
      */
@@ -17,7 +18,7 @@ public interface CustomTimer {
     boolean isStarted();
 
     /**
-     * Method to check if a timer is paused
+     * Method to check if the timer is paused
      * @return if the timer is paused
      */
     boolean isPaused();
