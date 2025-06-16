@@ -9,13 +9,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TestCustomTimer {
+/**
+ * Class to test if the TimeCustomImpl class works as expected.
+ * @author Martina Malagoli
+ */
+class TestCustomTimer {
 
-    CustomTimer timer;
+    private CustomTimer timer;
 
     @BeforeEach
-    void init(){
-        timer = new CustomTimerImpl(1000, ()-> System.out.println("Evento"));
+    void initialization() {
+        timer = new CustomTimerImpl(1000, () -> System.out.println("Evento"));
     }
 
     @Test
@@ -30,7 +34,7 @@ public class TestCustomTimer {
         try {
             this.timer.start();
             Assertions.fail("The timer should not be started when it is already running");
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
 
         }
     }
@@ -47,7 +51,7 @@ public class TestCustomTimer {
         try {
             this.timer.stop();
             Assertions.fail("The timer should not be stopped when it is already not running");
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
 
         }
     }
@@ -63,19 +67,20 @@ public class TestCustomTimer {
     void testExceptionTimerPauseIfNotStarted() {
         try {
             this.timer.pause();
-            Assertions.fail("The timer should not be paused when it is already not running");
-        } catch (IllegalStateException e) {
+            Assertions.fail("The timer should not be paused when it is not running yet");
+        } catch (final IllegalStateException e) {
 
         }
     }
 
+    @Test
     void testExceptionTimerPauseIfAlreadyPaused() {
         this.timer.start();
         this.timer.pause();
         try {
             this.timer.pause();
-            Assertions.fail("The timer should not be paused when it is already not running");
-        } catch (IllegalStateException e) {
+            Assertions.fail("The timer should not be paused when it is already paused");
+        } catch (final IllegalStateException e) {
 
         }
     }
@@ -92,8 +97,8 @@ public class TestCustomTimer {
     void testExceptionTimerResumeIfNotStarted() {
         try {
             this.timer.resume();
-            Assertions.fail("The timer should not be paused when it is already not running");
-        } catch (IllegalStateException e) {
+            Assertions.fail("The timer should not be resumed when it is not running yet");
+        } catch (final IllegalStateException e) {
 
         }
     }
@@ -105,8 +110,8 @@ public class TestCustomTimer {
         this.timer.resume();
         try {
             this.timer.resume();
-            Assertions.fail("The timer should not be paused when it is already not running");
-        } catch (IllegalStateException e) {
+            Assertions.fail("The timer should not be resumed when it is already running");
+        } catch (final IllegalStateException e) {
 
         }
     }
