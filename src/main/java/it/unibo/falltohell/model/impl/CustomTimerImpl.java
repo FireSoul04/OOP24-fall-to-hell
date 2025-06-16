@@ -7,17 +7,24 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A timer that works as a cooldown but can be paused and resumed anytime
+ * A timer that works as a cooldown but can be paused and resumed anytime.
  * @author Martina Malagoli
  */
 public class CustomTimerImpl implements CustomTimer {
+
     private Timer timer;
     private int elapsedTime;
     private boolean started;
     private boolean paused;
     private final TimerTask eventOnFinish;
 
+    /**
+     * Initialization of the new CustomTimer.
+     * @param duration of the timer
+     * @param event is what has to happen when the timer ends
+     */
     public CustomTimerImpl(final int duration, final CustomTimerEvent event) {
+        this.timer = new Timer();
         this.started = false;
         this.paused = false;
         this.eventOnFinish = new TimerTask() {
@@ -34,6 +41,9 @@ public class CustomTimerImpl implements CustomTimer {
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start() {
         if (!this.started) {
@@ -46,16 +56,25 @@ public class CustomTimerImpl implements CustomTimer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isStarted() {
         return this.started;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isPaused() {
         return this.paused;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void stop() {
         if (this.started) {
@@ -66,6 +85,9 @@ public class CustomTimerImpl implements CustomTimer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void pause() {
         if (!this.paused && this.started) {
@@ -75,6 +97,9 @@ public class CustomTimerImpl implements CustomTimer {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void resume() {
         if (this.paused && this.started) {
