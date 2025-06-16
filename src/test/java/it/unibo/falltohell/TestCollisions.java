@@ -13,7 +13,11 @@ import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test for collisions between gameobjects.
@@ -22,203 +26,150 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Davide Mancini
  */
-public class TestCollisions {
+class TestCollisions {
 
-    final static int STEPS = 500;
-    Vector2 direction;
-    boolean collision;
+    private static final int STEPS = 500;
 
+    private final Level fakeLevel = new LevelImpl();
+
+    private boolean collision;
+    private Vector2 direction;
+
+    private final Movable dummy1 = new MovableImpl(
+            fakeLevel,
+            Vector2.zero(),
+            0,
+            0,
+            1,
+            1,
+            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
+        ) {
+        @Override
+        public void onCollision(final GameObject other, final Vector2 dir) {
+            collision = true;
+            direction = dir;
+        }
+    };
+    private final GameObject dummy2 = new MovableImpl(
+        fakeLevel,
+        Vector2.zero(),
+        0,
+        0,
+        -1,
+        -1,
+        new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
+    ) {
+    };
+    private final GameObject block = new GameObjectImpl(
+        fakeLevel,
+        new Vector2(200, 200),
+        0,
+        0,
+        true,
+        new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
+    };
+
+    /**
+     * Before every test, the game objects are added to a fake level because every game object
+     * are added inside the level passed inside the constructor.
+     * The tests want to add manually the game objects needed, so every test has its level.
+     */
     @BeforeEach
-    void init() {
+    void initialize() {
         collision = false;
         direction = Vector2.zero();
+        dummy1.setPosition(Vector2.zero());
     }
 
     /**
      * Base method to test.
      * Uses a number of steps to determine if a collision is going to happen.
-     * If not, assert that it didn't collide.
+     * If it happens, collision and direction are set accordingly.
+     * @param level where it needs to check collisions
      */
     void baseCollisionTest(final Level level) {
         int steps = 0;
-        while (steps < STEPS) {
+        while (steps < STEPS && !collision) {
             level.update(1.0);
+            // TODO change println to a logging system
+            /* System.out.println("dummy1: " + dummy1.getPosition());
+               System.out.println("dummy2: " + dummy2.getPosition());
+               System.out.println("block: " + block.getPosition());
+               System.out.println(collision);
+               System.out.println(direction);
+            */
             steps++;
         }
     }
 
     @Test
     void testGameDummyVsBlock() {
-        final Level testGameDummyVsBlockLevel = new LevelImpl();
-        final GameObject dummy = new MovableImpl(
-            testGameDummyVsBlockLevel, Vector2.zero(),
-            0,
-            0,
-            10,
-            10,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-            public void onCollision(final GameObject other) {
-                collision = true;
-            }
-        };
-        final GameObject block = new GameObjectImpl(
-            testGameDummyVsBlockLevel,
-            Vector2.one().multiply(100),
-            0,
-            0,
-            true,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
-        };
-        baseCollisionTest(testGameDummyVsBlockLevel);
+        final Vector2 blockPosition = new Vector2(STEPS / 2.0, STEPS / 2.0);
+        block.setPosition(blockPosition);
+        baseCollisionTest(new LevelImpl(List.of(dummy1, block)));
         assertTrue(collision, "Dummy should collide in 2 seconds");
     }
 
     @Test
     void testGameDummyVsGameDummy() {
-        final Level testGameDummyVsGameDummyLevel = new LevelImpl();
-        final GameObject dummy1 = new MovableImpl(
-            testGameDummyVsGameDummyLevel, Vector2.zero(),
-            0,
-            0,
-            10,
-            10,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-            public void onCollision(final GameObject other) {
-                collision = true;
-            }
-        };
-        final GameObject dummy2 = new MovableImpl(
-            testGameDummyVsGameDummyLevel, Vector2.one().multiply(200),
-            0,
-            0,
-            -10,
-            -10,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-        };
-        baseCollisionTest(testGameDummyVsGameDummyLevel);
+        dummy2.setPosition(new Vector2(STEPS / 2.0, STEPS / 2.0));
+        baseCollisionTest(new LevelImpl(List.of(dummy1, dummy2)));
         assertTrue(collision, "Dummy should collide in 2 seconds");
     }
 
     @Test
     void testGameDummyShouldNotCollide() {
-        final Level testGameDummyShouldNotCollideLevel = new LevelImpl();
-        final GameObject dummy = new MovableImpl(
-            testGameDummyShouldNotCollideLevel, Vector2.zero(),
-            0,
-            0,
-            10,
-            10,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-            public void onCollision(final GameObject other) {
-                collision = true;
-            }
-        };
-        final GameObject block = new GameObjectImpl(
-            testGameDummyShouldNotCollideLevel,
-            Vector2.one().multiply(100).add(new Vector2(30, 0)),
-            0,
-            0,
-            true,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
-        };
-        baseCollisionTest(testGameDummyShouldNotCollideLevel);
+        final Vector2 blockPosition = new Vector2(STEPS / 2.0 + 50, STEPS / 2.0);
+        block.setPosition(blockPosition);
+        baseCollisionTest(new LevelImpl(List.of(dummy1, block)));
         assertFalse(collision, "Dummy should not collide");
     }
 
     @Test
     void testCollisionDirectionX() {
-        final Level testCollisionDirectionXLevel = new LevelImpl();
-        final Movable dummy = new MovableImpl(
-            testCollisionDirectionXLevel, Vector2.zero(),
-            0,
-            0,
-            10,
-            0,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-            public void onCollision(final GameObject other, final Vector2 dir) {
-                direction = dir;
-            }
-        };
-        final GameObject block = new GameObjectImpl(
-            testCollisionDirectionXLevel,
-            new Vector2(STEPS / 2.0, 0),
-            0,
-            0,
-            true,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
-        };
+        dummy1.setSpeedX(1);
+        dummy1.setSpeedY(0);
+        block.setPosition(new Vector2(STEPS / 2.0, 0));
+        final Level testCollisionDirectionXLevel = new LevelImpl(List.of(dummy1, block));
         baseCollisionTest(testCollisionDirectionXLevel);
         assertEquals(direction, Vector2.right(), "Collision direction should be right");
+        dummy1.setPosition(new Vector2(STEPS, 0));
+        collision = false;
         direction = Vector2.zero();
-        dummy.setSpeedX(dummy.getSpeedX() * -1);
+        dummy1.setSpeedX(dummy1.getSpeedX() * -1);
         baseCollisionTest(testCollisionDirectionXLevel);
         assertEquals(direction, Vector2.left(), "Collision direction should be left");
     }
 
     @Test
     void testCollisionDirectionY() {
-        final Level testCollisionDirectionYLevel = new LevelImpl();
-        final Movable dummy = new MovableImpl(
-            testCollisionDirectionYLevel, Vector2.zero(),
-            0,
-            0,
-            0,
-            10,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-            public void onCollision(final GameObject other, final Vector2 dir) {
-                direction = dir;
-            }
-        };
-        final GameObject block = new GameObjectImpl(
-            testCollisionDirectionYLevel,
-            new Vector2(0, STEPS / 2.0),
-            0,
-            0,
-            true,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
-        };
+        dummy1.setSpeedX(0);
+        dummy1.setSpeedY(1);
+        block.setPosition(new Vector2(0, STEPS / 2.0));
+        final Level testCollisionDirectionYLevel = new LevelImpl(List.of(dummy1, block));
         baseCollisionTest(testCollisionDirectionYLevel);
         assertEquals(direction, Vector2.down(), "Collision direction should be down");
+        dummy1.setPosition(new Vector2(0, STEPS));
+        collision = false;
         direction = Vector2.zero();
-        dummy.setSpeedY(dummy.getSpeedY() * -1);
+        dummy1.setSpeedY(dummy1.getSpeedY() * -1);
         baseCollisionTest(testCollisionDirectionYLevel);
         assertEquals(direction, Vector2.up(), "Collision direction should be up");
     }
 
     @Test
     void testCollisionDirectionXandY() {
-        final Level testCollisionDirectionXandYLevel = new LevelImpl();
-        final Movable dummy = new MovableImpl(
-            testCollisionDirectionXandYLevel, Vector2.zero(),
-            0,
-            0,
-            10,
-            10,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
-        ) {
-            public void onCollision(final GameObject other, final Vector2 dir) {
-                direction = dir;
-            }
-        };
-        final GameObject block = new GameObjectImpl(
-            testCollisionDirectionXandYLevel,
-            new Vector2(STEPS / 2.0, STEPS / 2.0),
-            0,
-            0,
-            true,
-            new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
-        };
+        dummy1.setSpeedX(1);
+        dummy1.setSpeedY(1);
+        block.setPosition(new Vector2(STEPS / 2.0, STEPS / 2.0));
+        final Level testCollisionDirectionXandYLevel = new LevelImpl(List.of(dummy1, block));
         baseCollisionTest(testCollisionDirectionXandYLevel);
         assertEquals(direction, Vector2.right(), "Collision direction should be right");
+        dummy1.setPosition(new Vector2(STEPS, STEPS));
+        collision = false;
         direction = Vector2.zero();
-        dummy.setSpeedX(dummy.getSpeedX() * -1);
-        dummy.setSpeedY(dummy.getSpeedY() * -1);
+        dummy1.setSpeedX(dummy1.getSpeedX() * -1);
+        dummy1.setSpeedY(dummy1.getSpeedY() * -1);
         baseCollisionTest(testCollisionDirectionXandYLevel);
         assertEquals(direction, Vector2.left(), "Collision direction should be left");
     }
