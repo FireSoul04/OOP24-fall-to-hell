@@ -1,5 +1,17 @@
 package it.unibo.falltohell.model.util;
 
+/**
+ * Class for representing a vector2 as a point in the 2d plane.
+ *
+ * @author Davide Mancini
+ * @author Martina Malagoli
+ * @author Sara Visani
+ * @author Lorenzo Casadei
+ * @author Daniele Mastroianni
+ *
+ * @param x
+ * @param y
+ */
 public record Vector2(double x, double y) {
 
     /**
@@ -8,7 +20,7 @@ public record Vector2(double x, double y) {
     public static Vector2 zero() {
         return new Vector2(0.0, 0.0);
     }
-    
+
     /**
      * @return a vector with all zeros as coordinates
      */
@@ -65,7 +77,7 @@ public record Vector2(double x, double y) {
      * @return the product of this vector and a scalar a
      */
     public Vector2 multiply(final double a) {
-        return new Vector2(this.x*a, this.y*a);
+        return new Vector2(this.x * a, this.y * a);
     }
 
     /**
@@ -73,7 +85,7 @@ public record Vector2(double x, double y) {
      * @return the division of this vector and a scalar a
      */
     public Vector2 divide(final double a) {
-        return this.multiply(1/a);
+        return this.multiply(1 / a);
     }
 
     /**
@@ -103,10 +115,7 @@ public record Vector2(double x, double y) {
      * @param v
      * @return the distance between two points
      */
-    public double distance(final Vector2 v){
-        return Math.sqrt(Math.pow(this.x-v.x,2)+Math.pow(this.y-v.y,2));
+    public double distance(final Vector2 v) {
+        return Math.sqrt(Math.pow(this.x - v.x, 2) + Math.pow(this.y - v.y, 2));
     }
 }
-
-
-    
