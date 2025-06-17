@@ -124,7 +124,7 @@ class TestCustomTimer {
         try {
             Thread.sleep(1100);
         } catch (final InterruptedException e) {
-            throw new RuntimeException(e);
+
         }
         assertTrue(this.test, "The event is not executed as expected");
     }
