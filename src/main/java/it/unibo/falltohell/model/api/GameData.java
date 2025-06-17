@@ -5,15 +5,20 @@ public interface GameData {
     /**
      * @param amount of points to be added
      */
-    void addPoints(int amount);
+    void addPoints(long amount);
 
     /**
      * @param amount of point to be removed
      */
-    void removePoints(int amount);
+    void removePoints(long amount);
     
     /**
      * @return the player current points
      */
-    int getPoints();
+    long getPoints();
+
+    /**
+     * @param newCharacter to be changed into
+     */
+    void changeCurrentCharacter(Character newCharacter);
 }

@@ -41,4 +41,10 @@ public interface TimerManager {
      */
     void resumeAllTimers();
 
+    /**
+     * Method to restart a timer
+     * @param name of the timer to be restarted
+     */
+    void restart(String name);
+
 }

@@ -80,4 +80,12 @@ public class TimerManagerImpl implements TimerManager {
             }
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void restart(final String name) {
+        this.timers.get(name).start();
+    }
 }
