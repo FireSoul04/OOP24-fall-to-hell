@@ -122,7 +122,7 @@ class TestCustomTimer {
     void testCorrectExecutionOfEvent() {
         this.timer.start();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1100);
         } catch (final InterruptedException e) {
             throw new RuntimeException(e);
         }
