@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.util.Vector2;
@@ -16,7 +17,8 @@ public class Monster2 extends BaseEnemy{
     private static final double HEIGHT=10;
     private static final double WIDTH=10;
     private static final double FULL_LIFE=10;
-    private static final double DAMAGE=10;
+    private static final double DAMAGE_P=10; //Physical damage
+    private static final double DAMAGE_A=10; //Damage of projectile
     private static final double X_VEL=1;
     private static final double Y_VEL=10;
     private static final double DISTANCE=10;
@@ -27,7 +29,7 @@ public class Monster2 extends BaseEnemy{
     public Monster2(final Vector2 initialCord,final Character character) {
         super(initialCord,WIDTH,HEIGHT,X_VEL,Y_VEL,character);
         super.setLife(FULL_LIFE);
-        super.setDamage(DAMAGE);
+        super.setDamage(DAMAGE_P);
         super.setSpeedX(X_VEL);
         super.setSpeedY(Y_VEL);
     }
@@ -44,12 +46,19 @@ public class Monster2 extends BaseEnemy{
 
     @Override
     public void onCollision(final GameObject other) {
+        //TODO ask for info
         this.collided = Optional.of(super.getPosition());
     }
 
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-
+        if(other instanceof Block){
+            if(direction.y() != 0){
+                this.collided = Optional.of(super.getPosition());
+            }
+        }else if(other instanceof Character){
+            this.getCharacter().setDamagedLife(DAMAGE_P);
+        }
     }
 
     @Override

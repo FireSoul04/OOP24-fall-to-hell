@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
+import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
@@ -34,12 +35,19 @@ public class Monster1 extends BaseEnemy{
 
     @Override
     public void onCollision(final GameObject other) {
+        //TODO ask for info
         this.direction*=-1;
     }
 
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-
+        if(other instanceof Block){
+            if(direction.y() != 0){
+                this.direction*=-1;
+            }
+        }else if(other instanceof Character){
+            attack();
+        }
     }
 
     @Override
@@ -49,8 +57,7 @@ public class Monster1 extends BaseEnemy{
 
     @Override
     protected void attack() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'attack'");
+        this.getCharacter().setDamagedLife(DAMAGE);
     }
 
     @Override
