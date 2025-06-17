@@ -20,7 +20,7 @@ public class CustomTimerImpl implements CustomTimer {
 
     /**
      * Initialization of the new CustomTimer.
-     * @param duration of the timer
+     * @param duration of the timer in milliseconds
      * @param event is what has to happen when the timer ends
      */
     public CustomTimerImpl(final int duration, final CustomTimerEvent event) {
