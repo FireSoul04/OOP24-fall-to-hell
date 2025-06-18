@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.api.gameobjects.movable.entity.character;
+package it.unibo.falltohell.model.api.gameobjects.movable.entity.weapons;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 

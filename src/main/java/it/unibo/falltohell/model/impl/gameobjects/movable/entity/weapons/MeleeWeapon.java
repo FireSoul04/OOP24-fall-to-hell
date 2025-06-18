@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.weapons;
+package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.api.Weapon;

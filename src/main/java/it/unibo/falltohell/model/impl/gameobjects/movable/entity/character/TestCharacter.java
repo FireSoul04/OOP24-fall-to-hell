@@ -1,5 +1,6 @@
-package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
+package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
 import it.unibo.falltohell.model.util.Vector2;
 
 //TODO eliminate this class when character is implemented 

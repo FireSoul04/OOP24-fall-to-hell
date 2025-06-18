@@ -4,7 +4,7 @@ import it.unibo.falltohell.model.api.EnemyFactory;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.TestCharacter;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.TestCharacter;
 import it.unibo.falltohell.model.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
