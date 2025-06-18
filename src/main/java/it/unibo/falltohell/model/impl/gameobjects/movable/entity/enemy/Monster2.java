@@ -5,6 +5,7 @@ import java.util.Optional;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.util.Vector2;
 
@@ -26,9 +27,11 @@ public class Monster2 extends BaseEnemy{
     private static final double X_VEL_A=1;
     private static final double Y_VEL_A=10;
     private static final double DISTANCE=10;
-    private static final double NO_AGGRO=10;
+    private static final int NO_AGGRO=10;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
+    private String attack = "attack";
+    
 
     public Monster2(final Vector2 initialCord,final Character character) {
         super(initialCord,WIDTH,HEIGHT,X_VEL,Y_VEL,character);
@@ -36,16 +39,20 @@ public class Monster2 extends BaseEnemy{
         super.setDamage(DAMAGE);
         super.setSpeedX(X_VEL);
         super.setSpeedY(Y_VEL);
+
+        super.getTm().addTimer(super.getNo_aggro(), new CustomTimerImpl(NO_AGGRO, () -> {if(this.isFull() && super.getTimeNoAggro() > NO_AGGRO){
+                                                                        if(super.getLife()+super.getLife()*0.1>FULL_LIFE){
+                                                                            super.setLife(FULL_LIFE);
+                                                                        }else{
+                                                                            super.addLife(super.getLife()*0.1);
+                                                                        }
+                                                                        super.getTm().restart(super.getNo_aggro());
+                                                                    };}));
+        super.getTm().addTimer(attack, new CustomTimerImpl(4000, () -> {this.attack(); super.getTm().restart(attack);}));
     }
 
     @Override
     public void update(final double deltaTime) {
-        
-        super.addTimeNoAggro(deltaTime);
-        if(this.isFull() && super.getTimeNoAggro() > NO_AGGRO){
-            super.addLife(this.getLife()*0.1);
-        }
-        //this.attack();       TODO when ranged attack implemented
         this.move(deltaTime);
     }
 

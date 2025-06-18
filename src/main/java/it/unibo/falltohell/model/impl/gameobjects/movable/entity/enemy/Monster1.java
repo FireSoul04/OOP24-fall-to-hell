@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.util.Vector2;
 
@@ -18,6 +19,7 @@ public class Monster1 extends BaseEnemy{
     private static final double DAMAGE=20;
     private static final double X_VEL=2;
     private static final double Y_VEL=20;
+    private static final int NO_AGGRO=10;
     private int direction = 1;
 
     public Monster1(final Vector2 initialCord, final Character character) {
@@ -26,6 +28,14 @@ public class Monster1 extends BaseEnemy{
         super.setDamage(DAMAGE);
         super.setSpeedX(X_VEL);
         super.setSpeedY(Y_VEL);
+        super.getTm().addTimer(super.getNo_aggro(), new CustomTimerImpl(NO_AGGRO, () -> {if(this.isFull() && super.getTimeNoAggro() > NO_AGGRO){
+                                                                        if(super.getLife()+super.getLife()*0.1>FULL_LIFE){
+                                                                            super.setLife(FULL_LIFE);
+                                                                        }else{
+                                                                            super.addLife(super.getLife()*0.1);
+                                                                        }
+                                                                        super.getTm().restart(super.getNo_aggro());
+                                                                    };}));
     }
 
     @Override

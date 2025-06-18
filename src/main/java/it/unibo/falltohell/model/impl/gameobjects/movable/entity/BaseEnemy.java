@@ -1,9 +1,11 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.impl.LevelImpl;
+import it.unibo.falltohell.model.impl.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.util.Dimensions;
@@ -21,6 +23,9 @@ public abstract class BaseEnemy extends MovableImpl implements Enemy {
     final private Vector2 initialPos;
     private double timeNoAggro = 0;
     private Character character;
+    private TimerManager tm = new TimerManagerImpl();
+    private final String no_aggro = "no_aggro";
+
 
     public BaseEnemy(final Vector2 initialCord,final double width,final double height,final double speedX,final double speedY,final Character character)
     {
@@ -61,6 +66,12 @@ public abstract class BaseEnemy extends MovableImpl implements Enemy {
     }
     protected void addTimeNoAggro(final double timeNoAggro) {
         this.timeNoAggro = this.timeNoAggro + timeNoAggro;
+    }
+    protected final TimerManager getTm() {
+        return tm;
+    }
+    protected String getNo_aggro() {
+        return no_aggro;
     }
     @Override
     public boolean isSolid(){
