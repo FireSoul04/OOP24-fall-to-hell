@@ -6,7 +6,11 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
+import it.unibo.falltohell.model.impl.LevelImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.ProjectileImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
+import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
@@ -80,8 +84,9 @@ public class Monster2 extends BaseEnemy{
 
     @Override
     protected void attack() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'attack'");
+        if(this.getCharacter().getPosition().distance(super.getPosition())<20){
+            new ProjectileImpl(new LevelImpl(), super.getPosition().subtract(new Vector2(0,HEIGHT+1)), WIDTH_A, HEIGHT_A, X_VEL_A, Y_VEL_A, new BoxCollider(Vector2.zero(),new Dimensions(WIDTH_A, HEIGHT_A)));
+        }
     }
 
     protected void move(final double deltaTime) {
