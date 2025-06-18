@@ -16,11 +16,15 @@ import it.unibo.falltohell.model.util.Vector2;
 public class Monster2 extends BaseEnemy{
     private static final double HEIGHT=10;
     private static final double WIDTH=10;
+    private static final double HEIGHT_A=10;
+    private static final double WIDTH_A=10;
     private static final double FULL_LIFE=10;
-    private static final double DAMAGE_P=10; //Physical damage
+    private static final double DAMAGE=10; //Physical damage
     private static final double DAMAGE_A=10; //Damage of projectile
     private static final double X_VEL=1;
     private static final double Y_VEL=10;
+    private static final double X_VEL_A=1;
+    private static final double Y_VEL_A=10;
     private static final double DISTANCE=10;
     private static final double NO_AGGRO=10;
     private int direction = 1;
@@ -29,7 +33,7 @@ public class Monster2 extends BaseEnemy{
     public Monster2(final Vector2 initialCord,final Character character) {
         super(initialCord,WIDTH,HEIGHT,X_VEL,Y_VEL,character);
         super.setLife(FULL_LIFE);
-        super.setDamage(DAMAGE_P);
+        super.setDamage(DAMAGE);
         super.setSpeedX(X_VEL);
         super.setSpeedY(Y_VEL);
     }
@@ -41,6 +45,7 @@ public class Monster2 extends BaseEnemy{
         if(this.isFull() && super.getTimeNoAggro() > NO_AGGRO){
             super.addLife(this.getLife()*0.1);
         }
+        //this.attack();       TODO when ranged attack implemented
         this.move(deltaTime);
     }
 
@@ -57,7 +62,7 @@ public class Monster2 extends BaseEnemy{
                 this.collided = Optional.of(super.getPosition());
             }
         }else if(other instanceof Character){
-            this.getCharacter().setDamagedLife(DAMAGE_P);
+            this.getCharacter().setDamagedLife(DAMAGE);
         }
     }
 
