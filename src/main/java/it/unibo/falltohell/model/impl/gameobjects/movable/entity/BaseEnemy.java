@@ -88,7 +88,7 @@ public abstract class BaseEnemy extends MovableImpl implements Enemy {
     @Override
     public abstract void update(final double deltaTime);
     @Override
-    public abstract void onCollision(final GameObject other);
+    public abstract void onCollision(final GameObject other, final Vector2 direction);
     @Override
     public boolean isDead(){
         if(this.life <= 0){

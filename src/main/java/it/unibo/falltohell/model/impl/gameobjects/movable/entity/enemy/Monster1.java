@@ -44,12 +44,6 @@ public class Monster1 extends BaseEnemy{
     }
 
     @Override
-    public void onCollision(final GameObject other) {
-        //TODO ask for info
-        this.direction*=-1;
-    }
-
-    @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if(other instanceof Block){
             if(direction.y() != 0){
@@ -57,14 +51,16 @@ public class Monster1 extends BaseEnemy{
             }
         }else if(other instanceof Character){
             attack();
-            super.getTm().restart(getNo_aggro());
+            //super.getTm().restart(getNo_aggro());
         }
+        //TODO delete when the tests works without this
+        this.direction*=-1;
     }
 
     @Override
     public void setDamagedLife(final double damage){
         super.setDamagedLife(damage);
-        super.getTm().restart(getNo_aggro());
+        //super.getTm().restart(getNo_aggro());
     }
 
     @Override

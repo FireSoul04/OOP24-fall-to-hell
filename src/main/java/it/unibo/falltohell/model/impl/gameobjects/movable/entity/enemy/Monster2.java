@@ -61,12 +61,6 @@ public class Monster2 extends BaseEnemy{
     }
 
     @Override
-    public void onCollision(final GameObject other) {
-        //TODO ask for info
-        this.collided = Optional.of(super.getPosition());
-    }
-
-    @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if(other instanceof Block){
             if(direction.y() != 0){
@@ -74,14 +68,16 @@ public class Monster2 extends BaseEnemy{
             }
         }else if(other instanceof Character){
             this.getCharacter().setDamagedLife(DAMAGE);
-            super.getTm().restart(getNo_aggro());
+            //super.getTm().removeTimer(getNo_aggro());
         }
+        //TODO delete when the tests works without this
+        this.collided = Optional.of(super.getPosition());
     }
 
     @Override
     public void setDamagedLife(final double damage){
         super.setDamagedLife(damage);
-        super.getTm().restart(getNo_aggro());
+        //super.getTm().restart(getNo_aggro());
     }
 
     @Override

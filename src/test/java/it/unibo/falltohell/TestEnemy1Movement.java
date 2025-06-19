@@ -80,7 +80,7 @@ public class TestEnemy1Movement {
     @Test
     void hitsMonster1(){
         en1.setCharacter(chara2);
-        en1.onCollision(chara1);
+        en1.onCollision(chara1, Vector2.zero());
         en1.update(10);
         assertEquals(en1.getPosition(),new Vector2(-20,0));
         en1.update(30);
@@ -93,7 +93,7 @@ public class TestEnemy1Movement {
 
     @Test
     void hitsMonster1EqualsCharacterNegative(){
-        en2.onCollision(chara1);
+        en2.onCollision(chara1, Vector2.zero());
         en2.update(0);
         assertEquals(en2.getPosition(),new Vector2(-30, 0));
         en2.update(10);
@@ -113,7 +113,7 @@ public class TestEnemy1Movement {
         en1.setCharacter(chara2);
         en1.update(15);
         assertEquals(en1.getPosition(),new Vector2(30,0));
-        en1.onCollision(chara1);
+        en1.onCollision(chara1, Vector2.zero());
         en1.update(10);
         assertEquals(en1.getPosition(),new Vector2(30,0));
         en1.update(30);

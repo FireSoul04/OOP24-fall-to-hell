@@ -141,7 +141,7 @@ public class TestEnemy2Movement {
     void hitsMonster2(){
         en1.update(5);
         assertEquals(en1.getPosition(),new Vector2(5,0));
-        en1.onCollision(chara1);
+        en1.onCollision(chara1, Vector2.zero());
         en1.update(30);
         assertEquals(en1.getPosition(),new Vector2(5,0));
         en1.update(20);
@@ -156,7 +156,7 @@ public class TestEnemy2Movement {
         assertEquals(en2.getPosition(),new Vector2(-30, 0));
         en2.update(5);
         assertEquals(en2.getPosition(),new Vector2(-35,0));
-        en2.onCollision(chara1);
+        en2.onCollision(chara1, Vector2.zero());
         en2.update(30);
         assertEquals(en2.getPosition(),new Vector2(-35,0));
         en2.update(0);
@@ -172,7 +172,7 @@ public class TestEnemy2Movement {
         en1.setCharacter(chara2);
         en1.update(2);
         assertEquals(en1.getPosition(),new Vector2(2,0));
-        en1.onCollision(chara1);
+        en1.onCollision(chara1, Vector2.zero());
         en1.update(10);
         assertEquals(en1.getPosition(),new Vector2(2,0));
         en1.update(30);
