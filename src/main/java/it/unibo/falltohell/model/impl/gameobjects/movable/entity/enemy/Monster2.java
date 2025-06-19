@@ -45,13 +45,13 @@ public class Monster2 extends BaseEnemy{
         super.setSpeedY(Y_VEL);
 
         super.getTm().addTimer(super.getNo_aggro(), new CustomTimerImpl(NO_AGGRO, () -> {if(this.isFull() && super.getTimeNoAggro() > NO_AGGRO){
-                                                                        if(super.getLife()+super.getLife()*0.1>FULL_LIFE){
-                                                                            super.setLife(FULL_LIFE);
-                                                                        }else{
-                                                                            super.addLife(super.getLife()*0.1);
-                                                                        }
-                                                                        super.getTm().restart(super.getNo_aggro());
-                                                                    };}));
+                                                                                            if(super.getLife()+super.getLife()*0.1>FULL_LIFE){
+                                                                                                super.setLife(FULL_LIFE);
+                                                                                            }else{
+                                                                                                super.addLife(super.getLife()*0.1);
+                                                                                            }
+                                                                                        }
+                                                                                        super.getTm().restart(super.getNo_aggro());}));
         super.getTm().addTimer(attack, new CustomTimerImpl(4000, () -> {this.attack(); super.getTm().restart(attack);}));
     }
 
@@ -74,7 +74,14 @@ public class Monster2 extends BaseEnemy{
             }
         }else if(other instanceof Character){
             this.getCharacter().setDamagedLife(DAMAGE);
+            super.getTm().restart(getNo_aggro());
         }
+    }
+
+    @Override
+    public void setDamagedLife(final double damage){
+        super.setDamagedLife(damage);
+        super.getTm().restart(getNo_aggro());
     }
 
     @Override
