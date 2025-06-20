@@ -50,9 +50,9 @@ public class Monster2 extends BaseEnemy{
                                                                         }else{
                                                                             super.addLife(super.getLife()*0.1);
                                                                         }
-                                                                        super.getTm().restart(super.getNo_aggro());
+                                                                        super.getTm().restartTimer(super.getNo_aggro());
                                                                     };}));
-        super.getTm().addTimer(attack, new CustomTimerImpl(4000, () -> {this.attack(); super.getTm().restart(attack);}));
+        super.getTm().addTimer(attack, new CustomTimerImpl(4000, () -> {this.attack(); super.getTm().restartTimer(attack);}));
     }
 
     @Override
