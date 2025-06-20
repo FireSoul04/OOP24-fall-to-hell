@@ -13,7 +13,7 @@ import java.util.TimerTask;
 public class CustomTimerImpl implements CustomTimer {
 
     private Timer timer;
-    private int elapsedTime;
+    private long elapsedTime;
     private boolean started;
     private boolean paused;
     private final TimerTask eventOnFinish;
@@ -23,7 +23,7 @@ public class CustomTimerImpl implements CustomTimer {
      * @param duration of the timer in milliseconds
      * @param event is what has to happen when the timer ends
      */
-    public CustomTimerImpl(final int duration, final CustomTimerEvent event) {
+    public CustomTimerImpl(final long duration, final CustomTimerEvent event) {
         this.timer = new Timer();
         this.started = false;
         this.paused = false;
