@@ -45,24 +45,31 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     protected Vector2 getInitialPos() {
         return this.initialPos;
     }
+
     protected double getTimeNoAggro() {
         return timeNoAggro;
     }
+    
     protected void setZeroTimeNoAggro() {
         this.timeNoAggro = 0;
     }
+
     protected void addTimeNoAggro(final double timeNoAggro) {
         this.timeNoAggro = this.timeNoAggro + timeNoAggro;
     }
+
     protected final TimerManager getTm() {
         return tm;
     }
+
     protected String getNo_aggro() {
         return no_aggro;
     }
+
     protected Character getCharacter() {
         return this.character;
     }
+
     @Override
     public void setCharacter(final Character character) {
         this.character = character;
@@ -70,6 +77,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     @Override
     public abstract void update(final double deltaTime);
+
     @Override
     public abstract void onCollision(final GameObject other, final Vector2 direction);
     
@@ -77,10 +85,12 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @return true if this enemy is full health, false when not
      */
     protected abstract boolean isFull();
+
     /**
      * type of attack of the enemy
      */
     protected abstract void attack();
+
     /**
      * characterizes the movement of the enemy
      * @param deltaTime elapsed time between the current frame and the last one

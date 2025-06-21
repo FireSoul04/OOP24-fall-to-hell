@@ -27,7 +27,7 @@ public class EntityImpl extends MovableImpl implements Entity {
 
     @Override
     public void setDamagedLife(final double damage){
-        this.life-=damage;
+        this.life -= damage;
     }
 
     protected void setLife(final double life) {
