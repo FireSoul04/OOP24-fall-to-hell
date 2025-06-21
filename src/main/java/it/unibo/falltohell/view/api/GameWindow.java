@@ -1,5 +1,14 @@
 package it.unibo.falltohell.view.api;
 
+/**
+ * Interface of the main window for the game.
+ *
+ * @author Davide Mancini
+ * @author Martina Malagoli
+ * @author Sara Visani
+ * @author Lorenzo Casadei
+ * @author Daniele Mastroianni
+ */
 public interface GameWindow {
 
     /**
@@ -21,4 +30,14 @@ public interface GameWindow {
      * @return the height of the window
      */
     int getHeight();
+
+    /**
+     * @return percentage of current width
+     */
+    double getScaleX();
+
+    /**
+     * @return percentage of current height
+     */
+    double getScaleY();
 }

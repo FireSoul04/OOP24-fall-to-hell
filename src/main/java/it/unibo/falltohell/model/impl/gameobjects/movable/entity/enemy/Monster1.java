@@ -35,7 +35,7 @@ public class Monster1 extends BaseEnemy{
                                                                                                 super.addLife(super.getLife()*0.1);
                                                                                             }
                                                                                         }
-                                                                                        super.getTm().restart(super.getNo_aggro());}));
+                                                                                        super.getTm().restartTimer(super.getNo_aggro());}));
     }
 
     @Override

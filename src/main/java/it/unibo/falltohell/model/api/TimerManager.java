@@ -45,6 +45,12 @@ public interface TimerManager {
      * Method to restart a timer
      * @param name of the timer to be restarted
      */
-    void restart(String name);
+    void restartTimer(String name);
+
+    /**
+     * Method to stop a timer
+     * @param name of the timer to be stopped
+     */
+    void stopTimer(String name);
 
 }

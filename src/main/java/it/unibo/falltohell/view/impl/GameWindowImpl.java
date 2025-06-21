@@ -1,43 +1,105 @@
 package it.unibo.falltohell.view.impl;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import it.unibo.falltohell.view.api.GameWindow;
 
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
+/**
+ * Swing implementation of the main window for the game.
+ *
+ * @author Davide Mancini
+ * @author Martina Malagoli
+ * @author Sara Visani
+ * @author Lorenzo Casadei
+ * @author Daniele Mastroianni
+ */
 public class GameWindowImpl implements GameWindow {
 
-    private JFrame mainFrame;
+    private final SwingGameRenderer renderer;
+	private final int width;
+    private final int height;
 
-    private int width;
-    private int height;
+    private double scaleX;
+    private double scaleY;
 
     public GameWindowImpl(final int width, final int height) {
+        super();
         this.width = width;
         this.height = height;
-        this.init();
+        this.scaleX = 1.0;
+        this.scaleY = 1.0;
+        this.renderer = new SwingGameRenderer(this);
+        this.init(width, height);
     }
 
-    private void init() {
-        this.mainFrame = new JFrame("Bubble Boop");
-        this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.mainFrame.setSize(width, height);
-        this.mainFrame.setVisible(true);
-        this.mainFrame.pack();
+    private void init(final int width, final int height) {
+	    JFrame mainFrame = new JFrame("FTH");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(width, height);
+        mainFrame.getContentPane().add(this.renderer);
+        mainFrame.getContentPane()
+            .setPreferredSize(new Dimension((int) (width * this.scaleX), (int) (height * this.scaleY)));
+        mainFrame.setVisible(true);
+        mainFrame.pack();
+        mainFrame.setMinimumSize(mainFrame.getSize());
+        mainFrame.addComponentListener(new ComponentAdapter() {
+            public void componentResized(final ComponentEvent e) {
+                final Dimension d = ((JFrame) e.getComponent()).getContentPane().getSize();
+                scaleX = d.getWidth() / (double) width;
+                scaleY = d.getHeight() / (double) height;
+            }
+        });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void render() {
-
+        this.renderer.render();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void clear() {
-        
+        this.renderer.clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getHeight() {
-        return height;
+        return this.height;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getScaleX() {
+        return this.scaleX;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getScaleY() {
+        return this.scaleY;
     }
 }

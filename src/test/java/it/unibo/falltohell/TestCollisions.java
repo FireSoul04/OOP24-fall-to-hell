@@ -14,6 +14,7 @@ import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -91,13 +92,6 @@ class TestCollisions {
         int steps = 0;
         while (steps < STEPS && !collision) {
             level.update(1.0);
-            // TODO change println to a logging system
-            /* System.out.println("dummy1: " + dummy1.getPosition());
-               System.out.println("dummy2: " + dummy2.getPosition());
-               System.out.println("block: " + block.getPosition());
-               System.out.println(collision);
-               System.out.println(direction);
-            */
             steps++;
         }
     }

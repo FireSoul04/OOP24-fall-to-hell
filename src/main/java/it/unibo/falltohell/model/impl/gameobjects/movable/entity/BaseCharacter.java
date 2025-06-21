@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -9,21 +10,57 @@ import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
-// TODO remove the methods that needs to be inherited by movable when the interface gets an implementation
-
+/**
+ * Base class for a character.
+ * Every character has different parameters for life, attack, attack speed, speed, mana.
+ *
+ * @author Davide Mancini
+ */
 public abstract class BaseCharacter extends MovableImpl implements Character {
 
+    // TODO: Update when statistics are used inside of entity
     private double life=100;
+    private boolean canInteract;
 
     // TODO: It needs to use a real level where it should be added automatically
+    /**
+     * Base constructor for a new character.
+     * @param position
+     */
     public BaseCharacter(final Vector2 position) {
         super(new LevelImpl(), position, 0, 0, 0, 0, new BoxCollider(Vector2.zero(), new Dimensions(0, 0)));
+        this.canInteract = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void interact(Interactable interactable) {
-        // TODO Auto-generated method stub
-        
+    public void update(final double deltaTime) {
+        super.update(deltaTime);
+        this.canInteract = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * Check if player is colliding with an interactable.
+     */
+    @Override
+    public void onCollision(final GameObject other, final Vector2 direction) {
+        if (other instanceof Interactable) {
+            this.canInteract = true;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void interact(final Interactable interactable) {
+        // TODO: Add an event (like key press) that when it happen the player will interact with the object
+        if (this.canInteract) {
+            interactable.interact();
+        }
     }
 
     @Override

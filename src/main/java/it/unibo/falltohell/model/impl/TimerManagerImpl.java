@@ -85,7 +85,15 @@ public class TimerManagerImpl implements TimerManager {
      * {@inheritDoc}
      */
     @Override
-    public void restart(final String name) {
+    public void restartTimer(final String name) {
         this.timers.get(name).start();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stopTimer(final String name) {
+        this.timers.get(name).stop();
     }
 }

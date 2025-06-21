@@ -6,9 +6,13 @@ import it.unibo.falltohell.model.impl.GameImpl;
 import it.unibo.falltohell.view.api.GameWindow;
 import it.unibo.falltohell.view.impl.GameWindowImpl;
 
+import java.util.logging.Logger;
+
 public class GameControllerImpl implements GameController {
 
     private static final double MAX_UPDATES = 60.0;
+
+    private final Logger logger;
     
     private enum GameState {
         RUNNING,
@@ -25,37 +29,30 @@ public class GameControllerImpl implements GameController {
         this.model = new GameImpl();
         this.view = new GameWindowImpl(240, 240);
         this.state = GameState.START;
+        this.logger = Logger.getLogger("GameLogger");
     }
 
     @Override
     public void run() {
         final double ns = 1.0E9 / MAX_UPDATES;
         double deltaTime = 0.0;
-        int updates = 0;
         int frames = 0;
         long lastTime = System.nanoTime();
-        long frameRateStartTime = System.nanoTime();
         while (!this.isOver()) {
             try {
                 Thread.sleep(frames - (long)(frames - 100 / 60));
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                this.logger.severe("Sleep interrupted: " + e);
+            }
             final long now = System.nanoTime();
             deltaTime = deltaTime + ((now - lastTime) / ns);
             lastTime = now;
             while (deltaTime >= 1.0) {
                 this.update(deltaTime);
-                updates++;
                 deltaTime--;
             }
             this.render();
             frames++;
-            final long frameRateEndTime = System.nanoTime() - frameRateStartTime;
-            if (frameRateEndTime > 1.0) {
-                System.out.println(updates + " ups, " + frames + " fps");
-                updates = 0;
-                frames = 0;
-                frameRateStartTime = System.nanoTime();
-            }
         }
     }
 
