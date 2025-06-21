@@ -1,7 +1,7 @@
 package it.unibo.falltohell.view.api;
 
 /**
- * Swing implementation of the main window for the game.
+ * Interface of the main window for the game.
  *
  * @author Davide Mancini
  * @author Martina Malagoli
