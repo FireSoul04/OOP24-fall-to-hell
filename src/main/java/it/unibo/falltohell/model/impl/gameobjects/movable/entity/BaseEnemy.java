@@ -1,10 +1,10 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
-import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.TimerManagerImpl;
-import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
@@ -16,45 +16,32 @@ import it.unibo.falltohell.model.util.Vector2;
  * @author Sara Visani
  */
 
-public abstract class BaseEnemy extends MovableImpl implements Enemy {
+public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
-    private double life;
-    private double damage;
     final private Vector2 initialPos;
+    private double damage;
     private double timeNoAggro = 0;
     private Character character;
     private TimerManager tm = new TimerManagerImpl();
     private final String no_aggro = "no_aggro";
 
 
-    public BaseEnemy(final Vector2 initialCord,final double width,final double height,final double speedX,final double speedY,final Character character)
+    public BaseEnemy(final Level level, final Vector2 initialCord,final double width,final double height,final double speedX,final double speedY,final Character character,final double life, final double damage)
     {
-        super(new LevelImpl(), initialCord, width, height, speedX, speedY, new BoxCollider(Vector2.zero(), new Dimensions(width, height)));
+        super(level, initialCord, width, height, speedX, speedY, new BoxCollider(Vector2.zero(), new Dimensions(width, height)), life);
         this.initialPos = initialCord;
-        this.setPosition(this.initialPos);
         this.character = character;
+        this.damage = damage;
     }
 
-    @Override
-    public double getLife() {
-        return this.life;
-    }
-    @Override
-    public void setDamagedLife(final double damage){
-        this.life-=damage;
-    }
-    protected void setLife(final double life) {
-        this.life = life;
-    }
-    protected void addLife(final double life) {
-        this.life = this.life + life;
-    }
     protected double getDamage() {
         return this.damage;
     }
+
     protected void setDamage(final double damage) {
         this.damage = damage;
     }
+
     protected Vector2 getInitialPos() {
         return this.initialPos;
     }
@@ -73,10 +60,6 @@ public abstract class BaseEnemy extends MovableImpl implements Enemy {
     protected String getNo_aggro() {
         return no_aggro;
     }
-    @Override
-    public boolean isSolid(){
-        return true;
-    }
     protected Character getCharacter() {
         return this.character;
     }
@@ -89,13 +72,7 @@ public abstract class BaseEnemy extends MovableImpl implements Enemy {
     public abstract void update(final double deltaTime);
     @Override
     public abstract void onCollision(final GameObject other, final Vector2 direction);
-    @Override
-    public boolean isDead(){
-        if(this.life <= 0){
-            return true;
-        }
-        return false;
-    }
+    
     /**
      * @return true if this enemy is full health, false when not
      */

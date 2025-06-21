@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
@@ -37,8 +38,8 @@ public class Monster2 extends BaseEnemy{
     private String attack = "attack";
     
 
-    public Monster2(final Vector2 initialCord,final Character character) {
-        super(initialCord,WIDTH,HEIGHT,X_VEL,Y_VEL,character);
+    public Monster2(final Level level, final Vector2 initialCord,final Character character) {
+        super(level,initialCord,WIDTH,HEIGHT,X_VEL,Y_VEL,character,FULL_LIFE,DAMAGE);
         super.setLife(FULL_LIFE);
         super.setDamage(DAMAGE);
         super.setSpeedX(X_VEL);
