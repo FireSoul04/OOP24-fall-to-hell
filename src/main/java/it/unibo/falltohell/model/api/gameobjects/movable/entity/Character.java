@@ -20,7 +20,7 @@ public interface Character extends Entity {
         DRUID,
         FIGHTER
     }
-    
+
     /**
      * @param interactable object to be interacted with
      */
