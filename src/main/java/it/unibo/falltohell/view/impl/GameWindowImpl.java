@@ -17,34 +17,36 @@ import java.awt.event.ComponentEvent;
  * @author Lorenzo Casadei
  * @author Daniele Mastroianni
  */
-public class GameWindowImpl extends JPanel implements GameWindow {
+public class GameWindowImpl implements GameWindow {
 
-    private JFrame mainFrame;
-
-    private int width;
-    private int height;
+    private final SwingGameRenderer renderer;
+	private final int width;
+    private final int height;
 
     private double scaleX;
     private double scaleY;
 
     public GameWindowImpl(final int width, final int height) {
         super();
+        this.width = width;
+        this.height = height;
         this.scaleX = 1.0;
         this.scaleY = 1.0;
+        this.renderer = new SwingGameRenderer(this);
         this.init(width, height);
     }
 
     private void init(final int width, final int height) {
-        this.mainFrame = new JFrame("FTH");
-        this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.mainFrame.setSize(width, height);
-        this.mainFrame.getContentPane().add(this);
-        this.mainFrame.getContentPane()
+	    JFrame mainFrame = new JFrame("FTH");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(width, height);
+        mainFrame.getContentPane().add(this.renderer);
+        mainFrame.getContentPane()
             .setPreferredSize(new Dimension((int) (width * this.scaleX), (int) (height * this.scaleY)));
-        this.mainFrame.setVisible(true);
-        this.mainFrame.pack();
-        this.mainFrame.setMinimumSize(this.mainFrame.getSize());
-        this.mainFrame.addComponentListener(new ComponentAdapter() {
+        mainFrame.setVisible(true);
+        mainFrame.pack();
+        mainFrame.setMinimumSize(mainFrame.getSize());
+        mainFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(final ComponentEvent e) {
                 final Dimension d = ((JFrame) e.getComponent()).getContentPane().getSize();
                 scaleX = d.getWidth() / (double) width;
@@ -56,31 +58,48 @@ public class GameWindowImpl extends JPanel implements GameWindow {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void render() {
-        this.repaint();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void clear() {
-        
+        this.renderer.render();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
+    public void clear() {
+        this.renderer.clear();
+    }
 
-        final Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.BLACK);
-        g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-        g2.scale(this.scaleX, this.scaleY);
-        g2.setColor(Color.WHITE);
-        g2.fillRect(50, 50, 50, 50);
-        g2.fillRect(this.getWidth() - 100, this.getHeight() - 100, 50, 50);
-        g2.dispose();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getHeight() {
+        return this.height;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getScaleX() {
+        return this.scaleX;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getScaleY() {
+        return this.scaleY;
     }
 }

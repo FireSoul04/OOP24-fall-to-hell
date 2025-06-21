@@ -30,4 +30,14 @@ public interface GameWindow {
      * @return the height of the window
      */
     int getHeight();
+
+    /**
+     * @return percentage of current width
+     */
+    double getScaleX();
+
+    /**
+     * @return percentage of current height
+     */
+    double getScaleY();
 }
