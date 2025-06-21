@@ -10,6 +10,7 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 
 public interface EnemyFactory {
+    
     /**
      * @param level level where the enemy is
      * @param initialCords where the monster is created
@@ -17,6 +18,7 @@ public interface EnemyFactory {
      * @return the monster type 1
      */
     Enemy CreateMonster1(final Level level, final Vector2 initialCords, final Character character);
+
     /**
      * @param level level where the enemy is
      * @param initialCords where the monster is created
