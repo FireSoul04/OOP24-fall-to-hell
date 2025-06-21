@@ -11,15 +11,17 @@ import it.unibo.falltohell.model.util.Vector2;
 
 public interface EnemyFactory {
     /**
+     * @param level level where the enemy is
      * @param initialCords where the monster is created
-     * @param character the player charater in the level
+     * @param character the player character in the level
      * @return the monster type 1
      */
-    Enemy CreateMonster1(final Vector2 initialCords, final Character character);
+    Enemy CreateMonster1(final Level level, final Vector2 initialCords, final Character character);
     /**
+     * @param level level where the enemy is
      * @param initialCords where the monster is created
-     * @param character the player charater in the level
+     * @param character the player character in the level
      * @return the monster type 2
      */
-    Enemy CreateMonster2(final Vector2 initialCords, final Character character);
+    Enemy CreateMonster2(final Level level, final Vector2 initialCords, final Character character);
 }
