@@ -4,6 +4,15 @@ import javax.swing.JFrame;
 
 import it.unibo.falltohell.view.api.GameWindow;
 
+/**
+ * Swing implementation of the main window for the game.
+ *
+ * @author Davide Mancini
+ * @author Martina Malagoli
+ * @author Sara Visani
+ * @author Lorenzo Casadei
+ * @author Daniele Mastroianni
+ */
 public class GameWindowImpl implements GameWindow {
 
     private JFrame mainFrame;
@@ -25,18 +34,30 @@ public class GameWindowImpl implements GameWindow {
         this.mainFrame.pack();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void render() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void clear() {
         
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int getHeight() {
         return height;
     }
