@@ -10,10 +10,6 @@ import java.awt.*;
  * Swing implementation of the renderer for the game.
  *
  * @author Davide Mancini
- * @author Martina Malagoli
- * @author Sara Visani
- * @author Lorenzo Casadei
- * @author Daniele Mastroianni
  */
 public class SwingGameRenderer extends JPanel implements GameRenderer {
 
