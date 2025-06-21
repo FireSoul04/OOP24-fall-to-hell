@@ -27,7 +27,7 @@ public class GameWindowImpl implements GameWindow {
     }
 
     private void init() {
-        this.mainFrame = new JFrame("Bubble Boop");
+        this.mainFrame = new JFrame("FTH");
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainFrame.setSize(width, height);
         this.mainFrame.setVisible(true);
