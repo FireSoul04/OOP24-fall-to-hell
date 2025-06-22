@@ -18,7 +18,6 @@ import it.unibo.falltohell.model.util.Vector2;
  * Implements abstract class Enemies, creates second type for enemies
  * @author Sara Visani
  */
-
 public class Monster2 extends BaseEnemy{
     private static final double HEIGHT = 10;
     private static final double WIDTH = 10;
@@ -41,7 +40,7 @@ public class Monster2 extends BaseEnemy{
     public Monster2(final Level level, final Vector2 initialCord,final Character character) {
         super(level, initialCord, WIDTH, HEIGHT, X_VEL, Y_VEL, character, FULL_LIFE, DAMAGE);
 
-        super.getTm().addTimer(super.getNo_aggro(), new CustomTimerImpl(NO_AGGRO, () -> {if(this.isFull() && super.getTimeNoAggro() > NO_AGGRO){
+        super.getTm().addTimer(super.getNo_aggro(), new CustomTimerImpl(NO_AGGRO, () -> {if(this.isFull()){
                                                                         if(super.getLife()+super.getLife()*0.1>FULL_LIFE){
                                                                             super.setLife(FULL_LIFE);
                                                                         }else{
@@ -52,11 +51,17 @@ public class Monster2 extends BaseEnemy{
         super.getTm().addTimer(attack, new CustomTimerImpl(4000, () -> {this.attack(); super.getTm().restartTimer(attack);}));
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public void update(final double deltaTime) {
         this.move(deltaTime);
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if(other instanceof Block){
@@ -71,17 +76,26 @@ public class Monster2 extends BaseEnemy{
         this.collided = Optional.of(super.getPosition());
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public void setDamagedLife(final double damage){
         super.setDamagedLife(damage);
         //super.getTm().restart(getNo_aggro());
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     protected boolean isFull() {
         return super.getLife() == FULL_LIFE;
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     protected void attack() {
         if(this.getCharacter().getPosition().distance(super.getPosition())<20){
@@ -89,6 +103,10 @@ public class Monster2 extends BaseEnemy{
         }
     }
 
+    /*
+     * {@inheritDoc}
+     */
+    @Override
     protected void move(final double deltaTime) {
 
         double other_X = deltaTime*X_VEL;

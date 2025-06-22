@@ -15,12 +15,10 @@ import it.unibo.falltohell.model.util.Vector2;
  * Abstract class for all Enemies, set the base enemy
  * @author Sara Visani
  */
-
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     final private Vector2 initialPos;
     private double damage;
-    private double timeNoAggro = 0;
     private Character character;
     private TimerManager tm = new TimerManagerImpl();
     private final String no_aggro = "no_aggro";
@@ -46,18 +44,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         return this.initialPos;
     }
 
-    protected double getTimeNoAggro() {
-        return timeNoAggro;
-    }
-    
-    protected void setZeroTimeNoAggro() {
-        this.timeNoAggro = 0;
-    }
-
-    protected void addTimeNoAggro(final double timeNoAggro) {
-        this.timeNoAggro = this.timeNoAggro + timeNoAggro;
-    }
-
     protected final TimerManager getTm() {
         return tm;
     }
@@ -70,14 +56,23 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         return this.character;
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public void setCharacter(final Character character) {
         this.character = character;
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public abstract void update(final double deltaTime);
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public abstract void onCollision(final GameObject other, final Vector2 direction);
     
