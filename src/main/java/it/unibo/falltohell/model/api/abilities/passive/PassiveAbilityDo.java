@@ -8,5 +8,9 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
  */
 public interface PassiveAbilityDo {
     
+    /**
+     * What the ability needs to do
+     * @param character that undergoes the ability
+     */
     public void carryOut(final Character character);
 }
