@@ -14,6 +14,10 @@ import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.util.Vector2;
 
+/**
+ * Implementation of ActiveAbility
+ * @author Sara Visani
+ */
 public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility{
     final double damage;
     final ActiveAbilityUpdate attack;
@@ -38,9 +42,9 @@ public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility{
     }
 
     /**
-     * Called when collided. Standard hits Monster and get stopped by blocks and other elements that arent Character or Projectile
+     * Called when collided. Standard hits Monster and get stopped by blocks and other elements that aren't Character or Projectile
      * If that isn't the case it use the implementation passed by the constructor
-     * @param other gameobject collided with
+     * @param other gameobjects collided with
      */
     @Override
     public void onCollision(final GameObject other){

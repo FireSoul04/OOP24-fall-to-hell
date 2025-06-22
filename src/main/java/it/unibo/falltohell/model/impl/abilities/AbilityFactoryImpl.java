@@ -7,9 +7,15 @@ import it.unibo.falltohell.model.api.abilities.Ability;
 import it.unibo.falltohell.model.api.abilities.AbilityFactory;
 import it.unibo.falltohell.model.api.abilities.ActiveAbilityUpdate;
 import it.unibo.falltohell.model.api.abilities.OptionalCollision;
+import it.unibo.falltohell.model.api.abilities.PassiveAbilityDo;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.util.Vector2;
 
+/**
+ * Implementation of the interface AbilityFactory
+ * @author Sara Visani
+ */
 public class AbilityFactoryImpl implements AbilityFactory{
 
     /*
@@ -20,10 +26,12 @@ public class AbilityFactoryImpl implements AbilityFactory{
         return new ActiveAbilityImpl(level, position, damage, collider, velocity, attack, collided);
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
-    public Ability createPassiveAbility() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createPassiveAbility'");
+    public Ability createPassiveAbility(final Character character,final PassiveAbilityDo lambda) {
+        return new PassiveAbilityImpl(character, lambda);
     }
     
 }

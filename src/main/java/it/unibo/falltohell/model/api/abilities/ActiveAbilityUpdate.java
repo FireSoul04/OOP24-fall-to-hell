@@ -2,6 +2,10 @@ package it.unibo.falltohell.model.api.abilities;
 
 import it.unibo.falltohell.model.util.Vector2;
 
+/**
+ * Interface for lambda of how Active ability updates
+ * @author Sara Visani
+ */
 public interface ActiveAbilityUpdate {
     
     /**
