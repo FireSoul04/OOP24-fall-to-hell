@@ -13,6 +13,17 @@ import it.unibo.falltohell.model.util.Vector2;
 
 public interface AbilityFactory {
     
+    /**
+     * mrthod to create an active ability
+     * @param level level where is it
+     * @param position position of the cast
+     * @param damage damage of the ability
+     * @param collider collider of the ability
+     * @param velocity Vector2(velocity X, velocity y)
+     * @param attack lambda needed for the type of movement, attack. it has two parameters velocity and deltaTime
+     * @param collided this lambda is optional. give optional null if you want standard implementation of OnCollision
+     * @return active ability
+     */
     Ability createActiveAbility(final Level level, final Vector2 position, final double damage, final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack, final Optional<OptionalCollision> collided);
 
     Ability createPassiveAbility();

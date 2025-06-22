@@ -12,6 +12,9 @@ import it.unibo.falltohell.model.util.Vector2;
 
 public class AbilityFactoryImpl implements AbilityFactory{
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public Ability createActiveAbility(final Level level, final Vector2 position, final double damage, final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack, final Optional<OptionalCollision> collided) {
         return new ActiveAbilityImpl(level, position, damage, collider, velocity, attack, collided);
