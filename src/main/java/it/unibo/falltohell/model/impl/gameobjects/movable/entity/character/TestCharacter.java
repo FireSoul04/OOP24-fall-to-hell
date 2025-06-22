@@ -10,5 +10,9 @@ public class TestCharacter extends BaseCharacter{
     public TestCharacter(Vector2 position) {
         super(position);
     }
-    
+
+    @Override
+    public CharacterID getCharacterID() {
+        return null;
+    }
 }

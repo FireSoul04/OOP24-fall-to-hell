@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.util.Vector2;
@@ -22,31 +23,25 @@ public class Monster1 extends BaseEnemy{
     private static final int NO_AGGRO=10;
     private int direction = 1;
 
-    public Monster1(final Vector2 initialCord, final Character character) {
-        super(initialCord,WIDTH,HEIGHT,X_VEL,Y_VEL,character);
+    public Monster1(final Level level, final Vector2 initialCord, final Character character) {
+        super(level,initialCord,WIDTH,HEIGHT,X_VEL,Y_VEL,character,FULL_LIFE,DAMAGE);
         super.setLife(FULL_LIFE);
         super.setDamage(DAMAGE);
         super.setSpeedX(X_VEL);
         super.setSpeedY(Y_VEL);
         super.getTm().addTimer(super.getNo_aggro(), new CustomTimerImpl(NO_AGGRO, () -> {if(this.isFull() && super.getTimeNoAggro() > NO_AGGRO){
-                                                                        if(super.getLife()+super.getLife()*0.1>FULL_LIFE){
-                                                                            super.setLife(FULL_LIFE);
-                                                                        }else{
-                                                                            super.addLife(super.getLife()*0.1);
-                                                                        }
-                                                                        super.getTm().restartTimer(super.getNo_aggro());
-                                                                    };}));
+                                                                                            if(super.getLife()+super.getLife()*0.1>FULL_LIFE){
+                                                                                                super.setLife(FULL_LIFE);
+                                                                                            }else{
+                                                                                                super.addLife(super.getLife()*0.1);
+                                                                                            }
+                                                                                        }
+                                                                                        super.getTm().restartTimer(super.getNo_aggro());}));
     }
 
     @Override
     public void update(final double deltaTime) {
         this.move(deltaTime);
-    }
-
-    @Override
-    public void onCollision(final GameObject other) {
-        //TODO ask for info
-        this.direction*=-1;
     }
 
     @Override
@@ -57,7 +52,16 @@ public class Monster1 extends BaseEnemy{
             }
         }else if(other instanceof Character){
             attack();
+            //super.getTm().restart(getNo_aggro());
         }
+        //TODO delete when the tests works without this
+        this.direction*=-1;
+    }
+
+    @Override
+    public void setDamagedLife(final double damage){
+        super.setDamagedLife(damage);
+        //super.getTm().restart(getNo_aggro());
     }
 
     @Override

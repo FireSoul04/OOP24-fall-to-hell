@@ -4,10 +4,6 @@ package it.unibo.falltohell.view.api;
  * Interface of the renderer for the game.
  *
  * @author Davide Mancini
- * @author Martina Malagoli
- * @author Sara Visani
- * @author Lorenzo Casadei
- * @author Daniele Mastroianni
  */
 public interface GameRenderer {
 
