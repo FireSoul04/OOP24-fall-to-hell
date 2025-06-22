@@ -14,7 +14,6 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
  * Interface for factory for all type of abilities
  * @author Sara Visani
  */
-
 public interface AbilityFactory {
     
     /**
