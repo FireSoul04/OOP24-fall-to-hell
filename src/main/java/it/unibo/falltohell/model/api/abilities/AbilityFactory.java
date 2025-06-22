@@ -3,6 +3,9 @@ package it.unibo.falltohell.model.api.abilities;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityUpdate;
+import it.unibo.falltohell.model.api.abilities.active.OptionalCollision;
+import it.unibo.falltohell.model.api.abilities.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;

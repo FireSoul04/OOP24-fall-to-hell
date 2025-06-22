@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.abilities.ActiveAbility;
-import it.unibo.falltohell.model.api.abilities.ActiveAbilityUpdate;
-import it.unibo.falltohell.model.api.abilities.OptionalCollision;
+import it.unibo.falltohell.model.api.abilities.active.ActiveAbility;
+import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityUpdate;
+import it.unibo.falltohell.model.api.abilities.active.OptionalCollision;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;

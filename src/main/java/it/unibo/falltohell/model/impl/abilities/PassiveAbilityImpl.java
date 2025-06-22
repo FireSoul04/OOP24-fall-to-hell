@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.impl.abilities;
 
-import it.unibo.falltohell.model.api.abilities.PassiveAbility;
-import it.unibo.falltohell.model.api.abilities.PassiveAbilityDo;
+import it.unibo.falltohell.model.api.abilities.passive.PassiveAbility;
+import it.unibo.falltohell.model.api.abilities.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 /**
