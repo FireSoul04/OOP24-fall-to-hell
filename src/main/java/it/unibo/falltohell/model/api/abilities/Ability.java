@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.api.abilities;
 
 /**
- * Implements abstract class Enemies, creates second type for enemies
+ * Interface for all type of abilities
  * @author Sara Visani
  */
 
