@@ -19,17 +19,13 @@ import it.unibo.falltohell.model.util.Vector2;
  * @author Sara Visani
  */
 public class Monster2 extends BaseEnemy{
-    private static final double HEIGHT = 10;
-    private static final double WIDTH = 10;
-    private static final double HEIGHT_A = 10;
-    private static final double WIDTH_A = 10;
+    private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
+    private static final Dimensions DIMENSIONS_ARROW = new Dimensions(10, 10);
     private static final double FULL_LIFE = 10;
     private static final double DAMAGE = 10; //Physical damage
     private static final double DAMAGE_A = 10; //Damage of projectile
-    private static final double X_VEL = 1;
-    private static final double Y_VEL = 10;
-    private static final double X_VEL_A = 1;
-    private static final double Y_VEL_A = 10;
+    private static final Vector2 VELOCITY = new Vector2(1, 10);
+    private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
     private static final double DISTANCE = 10;
     private static final int NO_AGGRO = 10;
     private int direction = 1;

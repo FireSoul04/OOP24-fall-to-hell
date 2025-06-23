@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable;
 
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.util.Vector2;
@@ -13,34 +14,35 @@ import it.unibo.falltohell.model.util.Vector2;
 
 public class EntityImpl extends MovableImpl implements Entity {
 
-    private double life;
+    private Statistics stats;
 
-    public EntityImpl(final Level level,final Vector2 position,final double width,final double height,final double speedX,final double speedY,final Collider collider,final double life) {
-        super(level, position, width, height, speedX, speedY, collider);
-        this.life = life;
+    public EntityImpl(final Level level,final Vector2 position, final Collider collider, final Statistics stats) {
+        super(level, position, stats.getDimensions().width(), stats.getDimensions().height(), stats.getSpeed().x(), stats.getSpeed().y(), collider);
+        this.stats = stats;
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
-    public double getLife() {
-        return this.life;
+    public Statistics getStats() {
+        return this.stats;
     }
 
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public void setDamagedLife(final double damage){
-        this.life -= damage;
+        this.stats.subLife(damage);
     }
 
-    protected void setLife(final double life) {
-        this.life = life;
-    }
-
-    protected void addLife(final double life) {
-        this.life = this.life + life;
-    }
-
+    /*
+     * {@inheritDoc}
+     */
     @Override
     public boolean isDead(){
-        if(this.life <= 0){
+        if(this.stats.getLife() <= 0){
             return true;
         }
         return false;

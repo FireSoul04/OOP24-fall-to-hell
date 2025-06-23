@@ -1,13 +1,12 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
-import it.unibo.falltohell.model.impl.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
@@ -17,43 +16,9 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
-    final private Vector2 initialPos;
-    private double damage;
-    private Character character;
-    private TimerManager tm = new TimerManagerImpl();
-    private final String no_aggro = "no_aggro";
-
-
-    public BaseEnemy(final Level level, final Vector2 initialCord,final double width,final double height,final double speedX,final double speedY,final Character character,final double life, final double damage)
+    public BaseEnemy(final Level level, final BaseEnemyStatistics stats)
     {
-        super(level, initialCord, width, height, speedX, speedY, new BoxCollider(Vector2.zero(), new Dimensions(width, height)), life);
-        this.initialPos = initialCord;
-        this.character = character;
-        this.damage = damage;
-    }
-
-    protected double getDamage() {
-        return this.damage;
-    }
-
-    protected void setDamage(final double damage) {
-        this.damage = damage;
-    }
-
-    protected Vector2 getInitialPos() {
-        return this.initialPos;
-    }
-
-    protected final TimerManager getTm() {
-        return tm;
-    }
-
-    protected String getNo_aggro() {
-        return no_aggro;
-    }
-
-    protected Character getCharacter() {
-        return this.character;
+        super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), new Dimensions(stats.getDimensions().width(), stats.getDimensions().height())), stats);
     }
 
     /*
@@ -61,7 +26,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     public void setCharacter(final Character character) {
-        this.character = character;
+        BaseEnemyStatistics stats = (BaseEnemyStatistics)super.getStats();
+        stats.setCharacter(character);
     }
 
     /*

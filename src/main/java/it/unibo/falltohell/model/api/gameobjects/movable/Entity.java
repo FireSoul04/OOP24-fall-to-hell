@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.api.gameobjects.movable;
 
 import it.unibo.falltohell.model.api.gameobjects.Movable;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 
 /**
  * Abstract class for all Enemies, set the base enemy
@@ -8,13 +9,18 @@ import it.unibo.falltohell.model.api.gameobjects.Movable;
  */
 
 public interface Entity extends Movable{
+
+    /**
+     * @return statistics of an Entity
+     */
+    public Statistics getStats();
+
     /**
      * Called from other entities to notify that the attack has hitted
      * @param damage
      */
     public void setDamagedLife(final double damage);
 
-    public double getLife();
     /**
      * @return if an Entity is dead
      */
