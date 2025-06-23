@@ -7,9 +7,4 @@ import it.unibo.falltohell.model.api.abilities.Ability;
  * @author Sara Visani
  */
 public interface PassiveAbility extends Ability{
-
-    /**
-     * Execute the passive ability
-     */
-    public void carryOut();
 }

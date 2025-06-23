@@ -31,7 +31,12 @@ public class AbilityFactoryImpl implements AbilityFactory{
      */
     @Override
     public Ability createPassiveAbility(final Character character,final PassiveAbilityDo lambda) {
-        return new PassiveAbilityImpl(character, lambda);
+        return new StatisticPassiveAbilityImpl(character, lambda);
     }
-    
+
+    @Override
+    public Ability createMethodPassiveAbility(final Character character) {
+        //TODO
+        return null;
+    }
 }

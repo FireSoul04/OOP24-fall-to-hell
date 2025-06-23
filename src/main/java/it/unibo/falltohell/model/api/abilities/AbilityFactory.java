@@ -36,4 +36,11 @@ public interface AbilityFactory {
      * @return passive ability
      */
     Ability createPassiveAbility(final Character character,final PassiveAbilityDo lambda);
+
+    /**
+     * TODO
+     * @param character
+     * @return
+     */
+    Ability createMethodPassiveAbility(final Character character);
 }
