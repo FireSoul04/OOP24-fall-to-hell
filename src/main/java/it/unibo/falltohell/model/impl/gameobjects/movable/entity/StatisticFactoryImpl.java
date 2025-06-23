@@ -6,7 +6,8 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.StatisticsFactor
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.BaseEnemyStatisticsImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.CharacterStatisticsImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.LongRangedEnemyStatisticsImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.RestrictedEnemyStatisticsImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.RestrictedBaseEnemyStatisticsImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.RestrictedLongRangeEnemyStatisticsImpl;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
@@ -50,7 +51,7 @@ public class StatisticFactoryImpl implements StatisticsFactory{
     @Override
     public Statistics createGroundRestrictedEnemyStatistic(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final int noAggro, final Character character, final double distance) {
-        return (Statistics)new RestrictedEnemyStatisticsImpl(this.createBaseEnemyStatistic(life, attack, speed, dimension, position, noAggro, character), distance);
+        return new RestrictedBaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, distance);
     }
 
     /*
@@ -60,7 +61,7 @@ public class StatisticFactoryImpl implements StatisticsFactory{
     public Statistics createLongRangeRestrictedStatistic(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final int noAggro, final Character character, final double projectileAttack,
             final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance) {
-        return (Statistics)new RestrictedEnemyStatisticsImpl(this.createLongRangeEnemyStatistic(life, attack, speed, dimension, position, noAggro, character, projectileAttack, projectileVelocity, projectileDimensions), distance);
+        return new RestrictedLongRangeEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, projectileAttack, projectileVelocity, projectileDimensions, distance);
     }
     
 }
