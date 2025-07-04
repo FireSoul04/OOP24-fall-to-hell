@@ -14,7 +14,6 @@ public class Sprite implements Drawable {
     private boolean mirrored;
     private boolean visible;
     private final GameObject gameObject;
-
     
     /**
      * Default initialization of the Sprite class.
