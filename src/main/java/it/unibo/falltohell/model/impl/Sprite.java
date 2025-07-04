@@ -15,6 +15,7 @@ public class Sprite implements Drawable {
     private boolean visible;
     private final GameObject gameObject;
 
+    
     /**
      * Default initialization of the Sprite class.
      * @param gameObject is the game object associated with this drawable object
