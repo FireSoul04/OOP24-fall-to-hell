@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.api;
 
+import it.unibo.falltohell.model.util.Vector2;
+
 /**
  * Interface to handle information about the rendering of a drawable object.
  * @author Martina Malagoli
@@ -28,4 +30,10 @@ public interface Drawable {
      * @return if a drawable object is visible
      */
     boolean isVisible();
+
+    /**
+     * @return the current position of the game object associated
+     * with the drawable object.
+     */
+    Vector2 getPosition();
 }
