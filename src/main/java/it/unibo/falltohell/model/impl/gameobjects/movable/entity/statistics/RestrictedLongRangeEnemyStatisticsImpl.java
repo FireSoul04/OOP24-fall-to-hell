@@ -15,7 +15,17 @@ public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStati
     final double distance;
 
     /**
-     * Create new statistics with the parameters specified.
+     * 
+     * @param life
+     * @param attack
+     * @param speed
+     * @param dimension
+     * @param position
+     * @param noAggro
+     * @param character
+     * @param projectileAttack
+     * @param projectileVelocity
+     * @param projectileDimensions
      * @param distance
      */
     public RestrictedLongRangeEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimension, final Vector2 position, final int noAggro, final Character character, final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance){
@@ -23,7 +33,7 @@ public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStati
         this.distance = distance;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

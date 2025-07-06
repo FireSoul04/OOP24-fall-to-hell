@@ -39,7 +39,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         this.character = character;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -47,7 +47,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         return this.initialPosition;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -55,7 +55,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         return this.fullLife;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -63,7 +63,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         return this.tm;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -71,7 +71,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         return "no_aggro";
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -79,7 +79,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         return this.noAggro;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -87,7 +87,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         return this.character;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

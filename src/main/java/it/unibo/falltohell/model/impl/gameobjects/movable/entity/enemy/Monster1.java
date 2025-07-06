@@ -40,7 +40,7 @@ public class Monster1 extends BaseEnemy{
                                                                                         this.stats.getTm().restartTimer(this.stats.getNo_aggroName());}));
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -48,7 +48,7 @@ public class Monster1 extends BaseEnemy{
         this.move(deltaTime);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -65,7 +65,7 @@ public class Monster1 extends BaseEnemy{
         this.direction *= -1;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -74,7 +74,7 @@ public class Monster1 extends BaseEnemy{
         //super.getTm().restart(getNo_aggro());
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -82,7 +82,7 @@ public class Monster1 extends BaseEnemy{
         return this.stats.getLife() == this.stats.getFullLife();
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -90,7 +90,7 @@ public class Monster1 extends BaseEnemy{
         this.stats.getCharacter().setDamagedLife(this.stats.getAttack());
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

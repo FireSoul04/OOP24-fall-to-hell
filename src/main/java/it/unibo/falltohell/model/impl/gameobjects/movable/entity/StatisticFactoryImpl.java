@@ -21,7 +21,7 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 public class StatisticFactoryImpl implements StatisticsFactory{
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -30,7 +30,7 @@ public class StatisticFactoryImpl implements StatisticsFactory{
         return new CharacterStatisticsImpl(life, attack, speed, dimensions, mana, attackSpeed);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -39,7 +39,7 @@ public class StatisticFactoryImpl implements StatisticsFactory{
         return new BaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -49,7 +49,7 @@ public class StatisticFactoryImpl implements StatisticsFactory{
         return new LongRangedEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, projectileAttack, projectileVelocity, projectileDimensions);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -58,7 +58,7 @@ public class StatisticFactoryImpl implements StatisticsFactory{
         return new RestrictedBaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, distance);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

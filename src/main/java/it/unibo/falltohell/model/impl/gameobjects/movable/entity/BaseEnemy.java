@@ -15,27 +15,39 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
+    private BaseEnemyStatistics stats;
+
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats)
     {
         super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
+        this.stats = (BaseEnemyStatistics)super.getStats();
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
     public void setCharacter(final Character character) {
-        BaseEnemyStatistics stats = (BaseEnemyStatistics)super.getStats();
-        stats.setCharacter(character);
+        this.stats.setCharacter(character);
     }
 
-    /*
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setDamagedLife(final double damage){
+        super.setDamagedLife(damage);
+        this.stats.getTm().stopTimer(stats.getNo_aggroName());
+        this.stats.getTm().restartTimer(stats.getNo_aggroName());
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public abstract void update(final double deltaTime);
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

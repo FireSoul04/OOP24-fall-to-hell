@@ -22,7 +22,7 @@ public class StatisticPassiveAbilityImpl implements StatisticPassiveAbility{
         this.event = lambda;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     public void carryOut(){

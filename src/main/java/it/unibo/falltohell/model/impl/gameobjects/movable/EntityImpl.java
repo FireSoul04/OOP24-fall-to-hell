@@ -21,7 +21,7 @@ public class EntityImpl extends MovableImpl implements Entity {
         this.stats = stats;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -29,7 +29,7 @@ public class EntityImpl extends MovableImpl implements Entity {
         return this.stats;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -37,7 +37,7 @@ public class EntityImpl extends MovableImpl implements Entity {
         this.stats.subLife(damage);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

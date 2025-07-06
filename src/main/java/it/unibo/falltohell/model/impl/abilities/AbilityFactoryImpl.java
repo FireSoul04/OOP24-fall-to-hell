@@ -20,7 +20,7 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 public class AbilityFactoryImpl implements AbilityFactory{
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -28,7 +28,7 @@ public class AbilityFactoryImpl implements AbilityFactory{
         return new ActiveAbilityImpl(level, position, damage, collider, velocity, attack, collided);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

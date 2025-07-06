@@ -37,7 +37,7 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
         this.projectileDimensions = projectileDimensions;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -45,7 +45,7 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
         return this.projectileAttack;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -53,7 +53,7 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
         return this.projectileVelocity;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -61,7 +61,7 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
         return this.projectileDimensions;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

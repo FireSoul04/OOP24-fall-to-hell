@@ -32,28 +32,28 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
 		this.attackSpeed = attackSpeed;
 	}
 
-	/*
+	/**
      * {@inheritDoc}
      */
 	public double getMana() {
 		return this.mana;
 	}
 
-	/*
+	/**
      * {@inheritDoc}
      */
 	public void setMana(final double mana) {
 		this.mana = mana;
 	}
 
-	/*
+	/**
      * {@inheritDoc}
      */
 	public Vector2 getAttackSpeed() {
 		return this.attackSpeed;
 	}
 
-	/*
+	/**
      * {@inheritDoc}
      */
 	public void setAttackSpeed(final Vector2 attackSpeed) {

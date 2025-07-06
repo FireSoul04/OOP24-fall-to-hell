@@ -53,7 +53,7 @@ public class Monster2 extends BaseEnemy{
         this.stats.getTm().addTimer(attack, new CustomTimerImpl(4000, () -> {this.attack(); this.stats.getTm().restartTimer(attack);}));
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -61,7 +61,7 @@ public class Monster2 extends BaseEnemy{
         this.move(deltaTime);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -78,7 +78,7 @@ public class Monster2 extends BaseEnemy{
         this.collided = Optional.of(super.getPosition());
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -87,7 +87,7 @@ public class Monster2 extends BaseEnemy{
         //super.getTm().restart(getNo_aggro());
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -95,7 +95,7 @@ public class Monster2 extends BaseEnemy{
         return this.stats.getLife() == FULL_LIFE;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -105,7 +105,7 @@ public class Monster2 extends BaseEnemy{
         }
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

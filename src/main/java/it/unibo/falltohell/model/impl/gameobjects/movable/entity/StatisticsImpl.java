@@ -30,7 +30,7 @@ public class StatisticsImpl implements Statistics{
         this.dimensions = dimension;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -38,7 +38,7 @@ public class StatisticsImpl implements Statistics{
 		return this.life;
 	}
 
-    /*
+    /**
      * {@inheritDoc}
      */
 	@Override
@@ -46,7 +46,7 @@ public class StatisticsImpl implements Statistics{
 		this.life = life;
 	}
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -54,7 +54,7 @@ public class StatisticsImpl implements Statistics{
         this.life = this.life + life;
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -62,7 +62,7 @@ public class StatisticsImpl implements Statistics{
         this.addLife(-life);
     }
 
-    /*
+    /**
      * {@inheritDoc}
      */
 	@Override
@@ -70,7 +70,7 @@ public class StatisticsImpl implements Statistics{
 		return this.attack;
 	}
 
-    /*
+    /**
      * {@inheritDoc}
      */
 	@Override
@@ -78,7 +78,7 @@ public class StatisticsImpl implements Statistics{
 		this.attack = attack;
 	}
 
-    /*
+    /**
      * {@inheritDoc}
      */
 	@Override
@@ -86,7 +86,7 @@ public class StatisticsImpl implements Statistics{
 		return this.speed;
 	}
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -94,7 +94,7 @@ public class StatisticsImpl implements Statistics{
 		this.speed = speed;
 	}
 
-    /*
+    /**
      * {@inheritDoc}
      */
     @Override

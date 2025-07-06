@@ -8,13 +8,27 @@ import it.unibo.falltohell.model.util.Vector2;
 public class RestrictedBaseEnemyStatisticsImpl extends BaseEnemyStatisticsImpl implements RestrictedBaseEnemyStatistics{
 
     final private double distance;
-
+ 
+    /**
+     * 
+     * @param life
+     * @param attack
+     * @param speed
+     * @param dimension
+     * @param position
+     * @param noAggro
+     * @param character
+     * @param distance
+     */
     public RestrictedBaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimension,
             final Vector2 position, final int noAggro, final Character character, final double distance) {
         super(life, attack, speed, dimension, position, noAggro, character);
         this.distance = distance;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getDistance() {
         return this.distance;
