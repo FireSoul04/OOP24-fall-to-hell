@@ -3,8 +3,11 @@ package it.unibo.falltohell.model.api.abilities;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.api.abilities.active.ActiveAbility;
 import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityUpdate;
 import it.unibo.falltohell.model.api.abilities.active.OptionalCollision;
+import it.unibo.falltohell.model.api.abilities.passive.MethodPassiveAbility;
+import it.unibo.falltohell.model.api.abilities.passive.PassiveAbility;
 import it.unibo.falltohell.model.api.abilities.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.util.Vector2;
@@ -27,7 +30,7 @@ public interface AbilityFactory {
      * @param collided this lambda is optional. give optional null if you want standard implementation of OnCollision
      * @return active ability
      */
-    Ability createActiveAbility(final Level level, final Vector2 position, final double damage, final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack, final Optional<OptionalCollision> collided);
+    ActiveAbility createActiveAbility(final Level level, final Vector2 position, final double damage, final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack, final Optional<OptionalCollision> collided);
 
     /**
      * method to create a passive ability
@@ -35,12 +38,12 @@ public interface AbilityFactory {
      * @param lambda what needs to be done
      * @return passive ability
      */
-    Ability createPassiveAbility(final Character character,final PassiveAbilityDo lambda);
+    PassiveAbility createPassiveAbility(final Character character,final PassiveAbilityDo lambda);
 
     /**
      * TODO
      * @param character
      * @return
      */
-    Ability createMethodPassiveAbility(final Character character);
+    MethodPassiveAbility createMethodPassiveAbility(final Character character);
 }

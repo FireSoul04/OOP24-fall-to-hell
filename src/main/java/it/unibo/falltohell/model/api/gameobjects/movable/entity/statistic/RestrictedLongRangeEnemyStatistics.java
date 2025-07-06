@@ -5,7 +5,7 @@ package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic;
  *
  * @author Sara Visani
  */
-public interface RestrictedEnemyStatistics{
+public interface RestrictedLongRangeEnemyStatistics extends LongRangeEnemyStatistics{
     
     /**
      * @return the maximum distance that the enemy can do

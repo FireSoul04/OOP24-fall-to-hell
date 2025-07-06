@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.*;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
@@ -19,7 +20,7 @@ public interface StatisticsFactory {
      * @param attackSpeed
      * @return the character statistic
      */
-    public Statistics createCharacterStatistic(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final Vector2 attackSpeed);
+    public CharacterStatistics createCharacterStatistic(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final Vector2 attackSpeed);
 
     /**
      * @param life
@@ -31,7 +32,7 @@ public interface StatisticsFactory {
      * @param character
      * @return base enemy statistic
      */
-    public Statistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension, final Vector2 position, final int noAggro, final Character character);
+    public BaseEnemyStatistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension, final Vector2 position, final int noAggro, final Character character);
 
     /**
      * @param life
@@ -46,7 +47,7 @@ public interface StatisticsFactory {
      * @param projectileDimensions
      * @return special or long range attack enemy
      */
-    public Statistics createLongRangeEnemyStatistic(final double life, final double attack, final Vector2 speed, final Dimensions dimension, final Vector2 position,final int noAggro, final Character character, final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions);
+    public LongRangeEnemyStatistics createLongRangeEnemyStatistic(final double life, final double attack, final Vector2 speed, final Dimensions dimension, final Vector2 position,final int noAggro, final Character character, final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions);
 
     /**
      * @param life
@@ -59,7 +60,7 @@ public interface StatisticsFactory {
      * @param distance
      * @return base enemy with restricted movement statistic
      */
-    public Statistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension, final Vector2 position, final int noAggro, final Character character, final double distance);
+    public RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension, final Vector2 position, final int noAggro, final Character character, final double distance);
 
     /**
      * @param life
@@ -75,5 +76,5 @@ public interface StatisticsFactory {
      * @param distance
      * @return special or long range attack enemy with restricted movement statistic
      */
-    public Statistics createLongRangeRestrictedStatistic(final double life, final double attack, final Vector2 speed, final Dimensions dimension, final Vector2 position,final int noAggro, final Character character, final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance);
+    public RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(final double life, final double attack, final Vector2 speed, final Dimensions dimension, final Vector2 position,final int noAggro, final Character character, final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance);
 }

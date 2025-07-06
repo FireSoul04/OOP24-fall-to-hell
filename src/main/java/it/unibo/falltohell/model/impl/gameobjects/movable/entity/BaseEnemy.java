@@ -7,7 +7,6 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
-import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
@@ -18,7 +17,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats)
     {
-        super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), new Dimensions(stats.getDimensions().width(), stats.getDimensions().height())), stats);
+        super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
     }
 
     /*

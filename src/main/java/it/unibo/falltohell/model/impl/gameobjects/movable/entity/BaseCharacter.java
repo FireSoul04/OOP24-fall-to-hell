@@ -4,6 +4,7 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
@@ -25,8 +26,8 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * Base constructor for a new character.
      * @param position
      */
-    public BaseCharacter(final Level level, final Vector2 position, final double life) {
-        super(level, position, 0, 0, 0, 0, new BoxCollider(Vector2.zero(), new Dimensions(0, 0)), life);
+    public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats) {
+        super(level, position, new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
         this.canInteract = false;
     }
 

@@ -6,10 +6,12 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.ProjectileImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
@@ -28,23 +30,27 @@ public class Monster2 extends BaseEnemy{
     private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
     private static final double DISTANCE = 10;
     private static final int NO_AGGRO = 10;
+
+    final private RestrictedLongRangeEnemyStatistics stats;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
     private String attack = "attack";
     
 
     public Monster2(final Level level, final Vector2 initialCord,final Character character) {
-        super(level, initialCord, WIDTH, HEIGHT, X_VEL, Y_VEL, character, FULL_LIFE, DAMAGE);
+        super(level, new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS, initialCord, NO_AGGRO, character, DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE));
 
-        super.getTm().addTimer(super.getNo_aggro(), new CustomTimerImpl(NO_AGGRO, () -> {if(this.isFull()){
-                                                                        if(super.getLife()+super.getLife()*0.1>FULL_LIFE){
-                                                                            super.setLife(FULL_LIFE);
+        stats = (RestrictedLongRangeEnemyStatistics)super.getStats();
+
+        this.stats.getTm().addTimer(this.stats.getNo_aggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {if(this.isFull()){
+                                                                        if(this.stats.getLife()+this.stats.getLife()*0.1>FULL_LIFE){
+                                                                            this.stats.setLife(FULL_LIFE);
                                                                         }else{
-                                                                            super.addLife(super.getLife()*0.1);
+                                                                            this.stats.addLife(this.stats.getLife()*0.1);
                                                                         }
-                                                                        super.getTm().restartTimer(super.getNo_aggro());
+                                                                        this.stats.getTm().restartTimer(this.stats.getNo_aggroName());
                                                                     };}));
-        super.getTm().addTimer(attack, new CustomTimerImpl(4000, () -> {this.attack(); super.getTm().restartTimer(attack);}));
+        this.stats.getTm().addTimer(attack, new CustomTimerImpl(4000, () -> {this.attack(); this.stats.getTm().restartTimer(attack);}));
     }
 
     /*
@@ -65,7 +71,7 @@ public class Monster2 extends BaseEnemy{
                 this.collided = Optional.of(super.getPosition());
             }
         }else if(other instanceof Character){
-            this.getCharacter().setDamagedLife(DAMAGE);
+            this.stats.getCharacter().setDamagedLife(DAMAGE);
             //super.getTm().removeTimer(getNo_aggro());
         }
         //TODO delete when the tests works without this
@@ -86,7 +92,7 @@ public class Monster2 extends BaseEnemy{
      */
     @Override
     protected boolean isFull() {
-        return super.getLife() == FULL_LIFE;
+        return this.stats.getLife() == FULL_LIFE;
     }
 
     /*
@@ -94,8 +100,8 @@ public class Monster2 extends BaseEnemy{
      */
     @Override
     protected void attack() {
-        if(this.getCharacter().getPosition().distance(super.getPosition())<20){
-            new ProjectileImpl(new LevelImpl(), super.getPosition().subtract(new Vector2(0,HEIGHT + 1)), WIDTH_A, HEIGHT_A, X_VEL_A, Y_VEL_A, new BoxCollider(Vector2.zero(),new Dimensions(WIDTH_A, HEIGHT_A)));
+        if(this.stats.getCharacter().getPosition().distance(super.getPosition())<20){
+            new ProjectileImpl(new LevelImpl(), super.getPosition().subtract(new Vector2(0,this.stats.getDimensions().width() + 1)), this.stats.getProjectileDimensions().width(), this.stats.getProjectileDimensions().height(), this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(), new BoxCollider(Vector2.zero(),this.stats.getProjectileDimensions()));
         }
     }
 
@@ -105,13 +111,13 @@ public class Monster2 extends BaseEnemy{
     @Override
     protected void move(final double deltaTime) {
 
-        double other_X = deltaTime*X_VEL;
+        double other_X = deltaTime*this.stats.getSpeed().x();
         final double y = super.getPosition().y();
-        final Vector2 chara = this.getCharacter().getPosition();
+        final Vector2 chara = this.stats.getCharacter().getPosition();
 
         while(other_X > 0){
             if(chara.distance(super.getPosition())>20){
-                if(super.getInitialPos().distance(new Vector2(super.getPosition().x() + (other_X * this.direction), y)) <= DISTANCE){
+                if(this.stats.getInitialPos().distance(new Vector2(super.getPosition().x() + (other_X * this.direction), y)) <= this.stats.getDistance()){
                     if(this.collided.isPresent() && super.getPosition().add(new Vector2(other_X * this.direction, 0)).x() > this.collided.get().x()){
                         if(super.getPosition() != this.collided.get()){
                             other_X -= super.getPosition().distance(this.collided.get());
@@ -130,12 +136,12 @@ public class Monster2 extends BaseEnemy{
                         }
                         this.direction *= -1;
                     }
-                    other_X -= Math.abs((super.getInitialPos().x() + DISTANCE * this.direction) - super.getPosition().x());
-                    super.setPosition(new Vector2(super.getInitialPos().x() + DISTANCE * this.direction, y));
+                    other_X -= Math.abs((this.stats.getInitialPos().x() + this.stats.getDistance() * this.direction) - super.getPosition().x());
+                    super.setPosition(new Vector2(this.stats.getInitialPos().x() + this.stats.getDistance() * this.direction, y));
                     this.direction*= -1;
                 }
             }else{
-                if((chara.x() <= DISTANCE+super.getInitialPos().x()) && (chara.x() >= super.getInitialPos().x() - DISTANCE)){
+                if((chara.x() <= this.stats.getDistance() + this.stats.getInitialPos().x()) && (chara.x() >= this.stats.getInitialPos().x() - this.stats.getDistance())){
                     if(chara.distance(super.getPosition()) > super.getPosition().distance(new Vector2(super.getPosition().x() + other_X * this.direction, y))){
                         if(chara.x() - super.getPosition().x() > 0 && !(this.collided.isPresent() && this.collided.get().x() < super.getPosition().add(new Vector2(other_X, 0)).x())){
                             super.setPosition(super.getPosition().add(new Vector2(other_X, 0)));
@@ -156,11 +162,11 @@ public class Monster2 extends BaseEnemy{
                     }
                 }else{
                     if(chara.x() - super.getPosition().x() > 0){
-                        if(super.getInitialPos().distance(new Vector2(super.getPosition().x() + other_X, y)) <= DISTANCE && !(this.collided.isPresent() && super.getPosition().add(new Vector2(other_X, 0)).x() > this.collided.get().x())){
+                        if(this.stats.getInitialPos().distance(new Vector2(super.getPosition().x() + other_X, y)) <= this.stats.getDistance() && !(this.collided.isPresent() && super.getPosition().add(new Vector2(other_X, 0)).x() > this.collided.get().x())){
                             super.setPosition(super.getPosition().add(new Vector2(other_X, 0)));
                             other_X = 0;
-                        }else if (!(this.collided.isPresent() && this.collided.get().x() < super.getInitialPos().x() + DISTANCE)){
-                            super.setPosition(new Vector2(super.getInitialPos().x() + DISTANCE, y));
+                        }else if (!(this.collided.isPresent() && this.collided.get().x() < this.stats.getInitialPos().x() + this.stats.getDistance())){
+                            super.setPosition(new Vector2(this.stats.getInitialPos().x() + this.stats.getDistance(), y));
                             other_X = 0;
                             this.direction *= -1;
                         }else{
@@ -168,11 +174,11 @@ public class Monster2 extends BaseEnemy{
                             other_X = 0;
                         }
                     }else{
-                        if(super.getInitialPos().distance(new Vector2(super.getPosition().x() - other_X, y)) <= DISTANCE && !(this.collided.isPresent() && super.getPosition().add(new Vector2(- other_X, 0)).x() > this.collided.get().x())){
+                        if(this.stats.getInitialPos().distance(new Vector2(super.getPosition().x() - other_X, y)) <= this.stats.getDistance() && !(this.collided.isPresent() && super.getPosition().add(new Vector2(- other_X, 0)).x() > this.collided.get().x())){
                             super.setPosition(super.getPosition().add(new Vector2(- other_X, 0)));
                             other_X = 0;
-                        }else if (!(this.collided.isPresent() && this.collided.get().x() > super.getInitialPos().x() - DISTANCE)){
-                            super.setPosition(new Vector2(super.getInitialPos().x() - DISTANCE, y));
+                        }else if (!(this.collided.isPresent() && this.collided.get().x() > this.stats.getInitialPos().x() - this.stats.getDistance())){
+                            super.setPosition(new Vector2(this.stats.getInitialPos().x() - this.stats.getDistance(), y));
                             other_X = 0;
                             this.direction *= -1;
                         }else{

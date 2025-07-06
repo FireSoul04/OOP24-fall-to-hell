@@ -7,7 +7,7 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.BaseEnemyStatisticsImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
@@ -22,11 +22,13 @@ public class Monster1 extends BaseEnemy{
     private static final Vector2 VELOCITY = new Vector2(2, 20);
     private static final int NO_AGGRO = 10;
 
-    private BaseEnemyStatistics stats = (BaseEnemyStatistics)super.getStats();
+    private BaseEnemyStatistics stats;
     private int direction = 1;
 
     public Monster1(final Level level, final Vector2 initialCord, final Character character) {
-        super(level, new BaseEnemyStatisticsImpl(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS, initialCord, NO_AGGRO, character));
+        super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS, initialCord, NO_AGGRO, character));
+
+        this.stats = (BaseEnemyStatistics)super.getStats();
 
         this.stats.getTm().addTimer(this.stats.getNo_aggroName(), new CustomTimerImpl(NO_AGGRO, () -> {if(this.isFull()){
                                                                                             if(this.stats.getLife()+this.stats.getLife()*0.1>this.stats.getFullLife()){

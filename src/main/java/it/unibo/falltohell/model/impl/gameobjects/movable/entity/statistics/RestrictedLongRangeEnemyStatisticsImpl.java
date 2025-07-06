@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics;
 
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedEnemyStatistics;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
@@ -10,7 +10,7 @@ import it.unibo.falltohell.model.util.Vector2;
  *
  * @author Sara Visani
  */
-public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStatisticsImpl implements RestrictedEnemyStatistics{
+public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStatisticsImpl implements RestrictedLongRangeEnemyStatistics{
 
     final double distance;
 
