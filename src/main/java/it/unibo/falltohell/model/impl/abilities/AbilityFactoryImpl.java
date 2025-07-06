@@ -8,8 +8,8 @@ import it.unibo.falltohell.model.api.abilities.active.ActiveAbility;
 import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityUpdate;
 import it.unibo.falltohell.model.api.abilities.active.OptionalCollision;
 import it.unibo.falltohell.model.api.abilities.passive.MethodPassiveAbility;
-import it.unibo.falltohell.model.api.abilities.passive.PassiveAbility;
 import it.unibo.falltohell.model.api.abilities.passive.PassiveAbilityDo;
+import it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.util.Vector2;
@@ -32,7 +32,7 @@ public class AbilityFactoryImpl implements AbilityFactory{
      * {@inheritDoc}
      */
     @Override
-    public PassiveAbility createPassiveAbility(final Character character,final PassiveAbilityDo lambda) {
+    public StatisticPassiveAbility createPassiveAbility(final Character character,final PassiveAbilityDo lambda) {
         return new StatisticPassiveAbilityImpl(character, lambda);
     }
 
