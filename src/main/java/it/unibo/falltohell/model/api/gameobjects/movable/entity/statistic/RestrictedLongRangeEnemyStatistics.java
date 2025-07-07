@@ -16,5 +16,5 @@ public interface RestrictedLongRangeEnemyStatistics extends LongRangeEnemyStatis
      * 
      * @return the maximum movement distance
      */
-    public double getDistance();
+    double getDistance();
 }

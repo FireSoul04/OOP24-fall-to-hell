@@ -19,5 +19,5 @@ public interface ActiveAbilityUpdate {
      * @param velocity  the current velocity of the ability, see {@link Vector2}
      * @param deltaTime the time elapsed since the last update, in seconds
      */
-    public void attack(final Vector2 velocity, final double deltaTime);
+    void attack(Vector2 velocity, double deltaTime);
 }

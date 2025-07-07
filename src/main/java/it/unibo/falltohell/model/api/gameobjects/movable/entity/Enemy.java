@@ -23,5 +23,5 @@ public interface Enemy extends Entity {
      * 
      * @param character the character instance to target
      */
-    public void setCharacter(final Character character);
+    void setCharacter(Character character);
 }

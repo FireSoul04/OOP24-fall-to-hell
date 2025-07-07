@@ -17,5 +17,5 @@ public interface RestrictedBaseEnemyStatistics extends BaseEnemyStatistics {
      * 
      * @return the maximum allowed movement distance
      */
-    public double getDistance();
+    double getDistance();
 }

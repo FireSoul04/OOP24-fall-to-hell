@@ -30,8 +30,8 @@ public interface StatisticsFactory {
      * @param attackSpeed the attack speed as a {@link Vector2}
      * @return a new instance of {@link CharacterStatistics}
      */
-    public CharacterStatistics createCharacterStatistic(final double life, final double attack, final Vector2 speed,
-            final Dimensions dimensions, final double mana, final Vector2 attackSpeed);
+    CharacterStatistics createCharacterStatistic(double life, double attack, Vector2 speed,
+            Dimensions dimensions, double mana, Vector2 attackSpeed);
 
     /**
      * Creates a {@link BaseEnemyStatistics} instance for a base enemy type.
@@ -46,8 +46,8 @@ public interface StatisticsFactory {
      * @param character the character owning or related to this statistic
      * @return a new instance of {@link BaseEnemyStatistics}
      */
-    public BaseEnemyStatistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
-            final Vector2 position, final int noAggro, final Character character);
+    BaseEnemyStatistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
+            Vector2 position, int noAggro, Character character);
 
     /**
      * Creates a {@link LongRangeEnemyStatistics} instance for enemies with long
@@ -67,10 +67,10 @@ public interface StatisticsFactory {
      * @param projectileDimensions the size of the projectile as {@link Dimensions}
      * @return a new instance of {@link LongRangeEnemyStatistics}
      */
-    public LongRangeEnemyStatistics createLongRangeEnemyStatistic(final double life, final double attack,
-            final Vector2 speed, final Dimensions dimension, final Vector2 position, final int noAggro,
-            final Character character, final double projectileAttack, final Vector2 projectileVelocity,
-            final Dimensions projectileDimensions);
+    LongRangeEnemyStatistics createLongRangeEnemyStatistic(double life, double attack,
+            Vector2 speed, Dimensions dimension, Vector2 position, int noAggro,
+            Character character, double projectileAttack, Vector2 projectileVelocity,
+            Dimensions projectileDimensions);
 
     /**
      * Creates a {@link RestrictedBaseEnemyStatistics} instance for enemies with
@@ -87,9 +87,9 @@ public interface StatisticsFactory {
      * @param distance  the restricted movement distance
      * @return a new instance of {@link RestrictedBaseEnemyStatistics}
      */
-    public RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed,
-            Dimensions dimension, final Vector2 position, final int noAggro, final Character character,
-            final double distance);
+    RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed,
+            Dimensions dimension, Vector2 position, int noAggro, Character character,
+            double distance);
 
     /**
      * Creates a {@link RestrictedLongRangeEnemyStatistics} instance for enemies
@@ -110,8 +110,8 @@ public interface StatisticsFactory {
      * @param distance             the restricted movement distance
      * @return a new instance of {@link RestrictedLongRangeEnemyStatistics}
      */
-    public RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(final double life, final double attack,
-            final Vector2 speed, final Dimensions dimension, final Vector2 position, final int noAggro,
-            final Character character, final double projectileAttack, final Vector2 projectileVelocity,
-            final Dimensions projectileDimensions, final double distance);
+    RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(double life, double attack,
+            Vector2 speed, Dimensions dimension, Vector2 position, int noAggro,
+            Character character, double projectileAttack, Vector2 projectileVelocity,
+            Dimensions projectileDimensions, double distance);
 }

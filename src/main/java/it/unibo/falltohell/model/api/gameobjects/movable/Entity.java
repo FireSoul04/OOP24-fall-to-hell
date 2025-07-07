@@ -19,7 +19,7 @@ public interface Entity extends Movable {
      * 
      * @return the {@link Statistics} associated with this entity
      */
-    public Statistics getStats();
+    Statistics getStats();
 
     /**
      * Notifies the entity that it has taken damage.
@@ -28,7 +28,7 @@ public interface Entity extends Movable {
      * 
      * @param damage the amount of damage dealt to this entity
      */
-    public void setDamagedLife(final double damage);
+    void setDamagedLife(double damage);
 
     /**
      * Checks if the entity is dead.
@@ -36,5 +36,5 @@ public interface Entity extends Movable {
      * 
      * @return {@code true} if the entity is dead; {@code false} otherwise
      */
-    public boolean isDead();
+    boolean isDead();
 }

@@ -37,9 +37,9 @@ public interface AbilityFactory {
      *                 {@link Optional#empty()} for default collision handling
      * @return a new {@link ActiveAbility} instance
      */
-    ActiveAbility createActiveAbility(final Level level, final Vector2 position, final double damage,
-            final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack,
-            final Optional<OptionalCollision> collided);
+    ActiveAbility createActiveAbility(Level level, Vector2 position, double damage,
+            Collider collider, Vector2 velocity, ActiveAbilityUpdate attack,
+            Optional<OptionalCollision> collided);
 
     /**
      * Creates a passive ability.
@@ -50,7 +50,7 @@ public interface AbilityFactory {
      *                  {@link PassiveAbilityDo}
      * @return a new {@link StatisticPassiveAbility} instance
      */
-    StatisticPassiveAbility createPassiveAbility(final Character character, final PassiveAbilityDo lambda);
+    StatisticPassiveAbility createPassiveAbility(Character character, PassiveAbilityDo lambda);
 
     /**
      * Creates a method-based passive ability associated with the given character.
@@ -60,5 +60,5 @@ public interface AbilityFactory {
      *                  ability
      * @return a new {@link MethodPassiveAbility} instance
      */
-    MethodPassiveAbility createMethodPassiveAbility(final Character character);
+    MethodPassiveAbility createMethodPassiveAbility(Character character);
 }

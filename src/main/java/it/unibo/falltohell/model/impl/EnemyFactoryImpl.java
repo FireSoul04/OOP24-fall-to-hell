@@ -13,14 +13,19 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
  * 
  * @author Sara Visani
  */
-
 public class EnemyFactoryImpl implements EnemyFactory {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Enemy CreateMonster1(final Level level, final Vector2 initialCords, final Character character) {
         return new Monster1(level, initialCords, character);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Enemy CreateMonster2(final Level level, final Vector2 initialCords, final Character character) {
         return new Monster2(level, initialCords, character);

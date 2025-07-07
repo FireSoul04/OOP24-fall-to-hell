@@ -18,7 +18,7 @@ public interface Statistics {
      * 
      * @return the entity's current life
      */
-    public double getLife();
+    double getLife();
 
     /**
      * Sets the life points of the entity.
@@ -26,7 +26,7 @@ public interface Statistics {
      * 
      * @param life the new life value to be set
      */
-    public void setLife(final double life);
+    void setLife(double life);
 
     /**
      * Adds a specified amount to the entity's current life.
@@ -34,7 +34,7 @@ public interface Statistics {
      * 
      * @param life the amount of life to add
      */
-    public void addLife(final double life);
+    void addLife(double life);
 
     /**
      * Subtracts a specified amount from the entity's current life.
@@ -42,7 +42,7 @@ public interface Statistics {
      * 
      * @param life the amount of life to subtract
      */
-    public void subLife(final double life);
+    void subLife(double life);
 
     /**
      * Returns the current attack power of the entity.
@@ -50,7 +50,7 @@ public interface Statistics {
      * 
      * @return the attack value
      */
-    public double getAttack();
+    double getAttack();
 
     /**
      * Sets the attack power of the entity.
@@ -58,7 +58,7 @@ public interface Statistics {
      * 
      * @param attack the new attack value to be set
      */
-    public void setAttack(final double attack);
+    void setAttack(double attack);
 
     /**
      * Returns the current movement speed of the entity.
@@ -66,7 +66,7 @@ public interface Statistics {
      * 
      * @return the speed as a {@link Vector2}
      */
-    public Vector2 getSpeed();
+    Vector2 getSpeed();
 
     /**
      * Sets the movement speed of the entity.
@@ -74,7 +74,7 @@ public interface Statistics {
      * 
      * @param speed the new speed value as a {@link Vector2}
      */
-    public void setSpeed(final Vector2 speed);
+    void setSpeed(Vector2 speed);
 
     /**
      * Returns the physical size of the entity.
@@ -82,5 +82,5 @@ public interface Statistics {
      * 
      * @return the entity's {@link Dimensions}
      */
-    public Dimensions getDimensions();
+    Dimensions getDimensions();
 }

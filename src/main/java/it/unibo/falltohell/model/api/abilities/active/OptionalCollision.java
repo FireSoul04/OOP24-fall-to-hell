@@ -20,5 +20,5 @@ public interface OptionalCollision {
      * 
      * @param other the {@link GameObject} that the ability has collided with
      */
-    public void collided(final GameObject other);
+    void collided(GameObject other);
 }

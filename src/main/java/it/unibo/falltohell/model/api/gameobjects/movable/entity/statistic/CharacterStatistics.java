@@ -24,7 +24,7 @@ public interface CharacterStatistics extends Statistics {
 	 * 
 	 * @return the current mana value
 	 */
-	public double getMana();
+	double getMana();
 
 	/**
 	 * Updates the mana of the entity.
@@ -32,7 +32,7 @@ public interface CharacterStatistics extends Statistics {
 	 * 
 	 * @param mana the new mana value
 	 */
-	public void setMana(final double mana);
+	void setMana(double mana);
 
 	/**
 	 * Returns the current attack speed vector of the entity.
@@ -41,7 +41,7 @@ public interface CharacterStatistics extends Statistics {
 	 * 
 	 * @return the attack speed as a {@link Vector2}
 	 */
-	public Vector2 getAttackSpeed();
+	Vector2 getAttackSpeed();
 
 	/**
 	 * Updates the attack speed of the entity.
@@ -49,5 +49,5 @@ public interface CharacterStatistics extends Statistics {
 	 * 
 	 * @param attackSpeed the new attack speed value
 	 */
-	public void setAttackSpeed(final Vector2 attackSpeed);
+	void setAttackSpeed(Vector2 attackSpeed);
 }
