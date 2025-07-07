@@ -23,33 +23,36 @@ import it.unibo.falltohell.model.util.Vector2;
 /**
  * Implementation of the {@link AbilityFactory} interface.
  * <p>
- * This factory creates active and passive abilities and manages 
+ * This factory creates active and passive abilities and manages
  * a registry mapping {@link Character} subclasses to their
  * respective {@link MethodPassiveAbility} creators.
  * </p>
+ * 
  * @author Sara Visani
  */
-public class AbilityFactoryImpl implements AbilityFactory{
+public class AbilityFactoryImpl implements AbilityFactory {
 
     private final MethodPassiveAbilityRegistry registry = new MethodPassiveAbilityRegistry();
 
     /**
-     * Registers supported {@link Character} subclasses with their 
+     * Registers supported {@link Character} subclasses with their
      * corresponding {@link MethodPassiveAbility} creators.
      */
     public AbilityFactoryImpl() {
         registry.register(TestCharacter.class,
-            character -> new MethodPassiveAbilityTest1(character));
+                character -> new MethodPassiveAbilityTest1(character));
 
         registry.register(TestCharacter2.class,
-            character -> new MethodPassiveAbilityTest2(character));
+                character -> new MethodPassiveAbilityTest2(character));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbility createActiveAbility(final Level level, final Vector2 position, final double damage, final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack, final Optional<OptionalCollision> collided) {
+    public ActiveAbility createActiveAbility(final Level level, final Vector2 position, final double damage,
+            final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack,
+            final Optional<OptionalCollision> collided) {
         return new ActiveAbilityImpl(level, position, damage, collider, velocity, attack, collided);
     }
 
@@ -57,7 +60,7 @@ public class AbilityFactoryImpl implements AbilityFactory{
      * {@inheritDoc}
      */
     @Override
-    public StatisticPassiveAbility createPassiveAbility(final Character character,final PassiveAbilityDo lambda) {
+    public StatisticPassiveAbility createPassiveAbility(final Character character, final PassiveAbilityDo lambda) {
         return new StatisticPassiveAbilityImpl(character, lambda);
     }
 

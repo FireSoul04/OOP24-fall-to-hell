@@ -28,15 +28,17 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     private BaseEnemyStatistics stats;
 
     /**
-     * Constructs a base enemy entity with the given {@link Level} and {@link BaseEnemyStatistics}.
+     * Constructs a base enemy entity with the given {@link Level} and
+     * {@link BaseEnemyStatistics}.
      * <p>
+     * 
      * @param level the level the enemy belongs to
-     * @param stats the statistical data defining the enemy's behavior and characteristics
+     * @param stats the statistical data defining the enemy's behavior and
+     *              characteristics
      */
-    public BaseEnemy(final Level level, final BaseEnemyStatistics stats)
-    {
+    public BaseEnemy(final Level level, final BaseEnemyStatistics stats) {
         super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
-        this.stats = (BaseEnemyStatistics)super.getStats();
+        this.stats = (BaseEnemyStatistics) super.getStats();
     }
 
     /**
@@ -54,7 +56,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * </p>
      */
     @Override
-    public void setDamagedLife(final double damage){
+    public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
         this.stats.getTm().stopTimer(stats.getNo_aggroName());
         this.stats.getTm().restartTimer(stats.getNo_aggroName());
@@ -71,11 +73,13 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     public abstract void onCollision(final GameObject other, final Vector2 direction);
-    
+
     /**
      * Checks whether the enemy is currently at full health.
      * <p>
-     * @return {@code true} if the enemy is at maximum health, {@code false} otherwise
+     * 
+     * @return {@code true} if the enemy is at maximum health, {@code false}
+     *         otherwise
      */
     protected abstract boolean isFull();
 
@@ -87,6 +91,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     /**
      * Defines how the enemy moves each frame.
      * <p>
+     * 
      * @param deltaTime time elapsed since the last update, in seconds
      */
     protected abstract void move(final double deltaTime);

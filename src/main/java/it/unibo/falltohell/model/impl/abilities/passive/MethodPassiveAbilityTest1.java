@@ -6,23 +6,27 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Implementation of {@link MethodPassiveAbility} representing a test passive ability
+ * Implementation of {@link MethodPassiveAbility} representing a test passive
+ * ability
  * linked to a specific {@link Character}.
  * <p>
- * This ability overrides the {@link #update(double)} and {@link #onCollision(GameObject, Vector2)} methods
+ * This ability overrides the {@link #update(double)} and
+ * {@link #onCollision(GameObject, Vector2)} methods
  * to provide custom behavior.
  * </p>
  * 
  * @author Sara Visani
  */
-public class MethodPassiveAbilityTest1 implements MethodPassiveAbility{
+public class MethodPassiveAbilityTest1 implements MethodPassiveAbility {
 
     private final Character character;
 
     /**
      * Constructs a MethodPassiveAbilityTest1 for the specified {@link Character}.
      * <p>
-     * @param character the {@link Character} instance this ability is associated with
+     * 
+     * @param character the {@link Character} instance this ability is associated
+     *                  with
      */
     public MethodPassiveAbilityTest1(final Character character2) {
         this.character = character2;
@@ -33,6 +37,7 @@ public class MethodPassiveAbilityTest1 implements MethodPassiveAbility{
      * <p>
      * Custom update logic for the ability.
      * </p>
+     * 
      * @param deltaTime time elapsed since last update
      */
     @Override
@@ -45,7 +50,8 @@ public class MethodPassiveAbilityTest1 implements MethodPassiveAbility{
      * <p>
      * Custom logic executed on collision with another {@link GameObject}.
      * </p>
-     * @param other the other {@link GameObject} involved in the collision
+     * 
+     * @param other    the other {@link GameObject} involved in the collision
      * @param position the position where the collision occurred
      */
     @Override

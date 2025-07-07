@@ -11,11 +11,12 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 @FunctionalInterface
 public interface ActiveAbilityUpdate {
-    
+
     /**
      * Defines the behavior of the active ability during an update.
      * <p>
-     * @param velocity the current velocity of the ability, see {@link Vector2}
+     * 
+     * @param velocity  the current velocity of the ability, see {@link Vector2}
      * @param deltaTime the time elapsed since the last update, in seconds
      */
     public void attack(final Vector2 velocity, final double deltaTime);

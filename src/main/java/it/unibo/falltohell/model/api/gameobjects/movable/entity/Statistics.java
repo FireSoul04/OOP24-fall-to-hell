@@ -13,22 +13,25 @@ import it.unibo.falltohell.model.util.Vector2;
 public interface Statistics {
 
     /**
-	 * Returns the current life points of the entity.
+     * Returns the current life points of the entity.
      * <p>
+     * 
      * @return the entity's current life
-	 */
-	public double getLife();
+     */
+    public double getLife();
 
-	/**
-	 * Sets the life points of the entity.
+    /**
+     * Sets the life points of the entity.
      * <p>
+     * 
      * @param life the new life value to be set
-	 */
-	public void setLife(final double life);
+     */
+    public void setLife(final double life);
 
     /**
      * Adds a specified amount to the entity's current life.
      * <p>
+     * 
      * @param life the amount of life to add
      */
     public void addLife(final double life);
@@ -36,41 +39,47 @@ public interface Statistics {
     /**
      * Subtracts a specified amount from the entity's current life.
      * <p>
+     * 
      * @param life the amount of life to subtract
      */
     public void subLife(final double life);
 
-	/**
-	 * Returns the current attack power of the entity.
+    /**
+     * Returns the current attack power of the entity.
      * <p>
+     * 
      * @return the attack value
-	 */
-	public double getAttack();
+     */
+    public double getAttack();
 
-	/**
-	 * Sets the attack power of the entity.
+    /**
+     * Sets the attack power of the entity.
      * <p>
+     * 
      * @param attack the new attack value to be set
-	 */
-	public void setAttack(final double attack);
+     */
+    public void setAttack(final double attack);
 
-	/**
-	 * Returns the current movement speed of the entity.
+    /**
+     * Returns the current movement speed of the entity.
      * <p>
+     * 
      * @return the speed as a {@link Vector2}
-	 */
-	public Vector2 getSpeed();
+     */
+    public Vector2 getSpeed();
 
-	/**
-	 * Sets the movement speed of the entity.
+    /**
+     * Sets the movement speed of the entity.
      * <p>
+     * 
      * @param speed the new speed value as a {@link Vector2}
-	 */
-	public void setSpeed(final Vector2 speed);
+     */
+    public void setSpeed(final Vector2 speed);
 
     /**
      * Returns the physical size of the entity.
      * <p>
+     * 
      * @return the entity's {@link Dimensions}
      */
     public Dimensions getDimensions();
