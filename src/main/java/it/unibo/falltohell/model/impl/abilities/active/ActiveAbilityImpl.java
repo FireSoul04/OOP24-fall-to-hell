@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.abilities;
+package it.unibo.falltohell.model.impl.abilities.active;
 
 import java.util.Optional;
 
@@ -15,7 +15,8 @@ import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Implementation of ActiveAbility
+ * Implementation of {@link ActiveAbility}.
+ * Represents an active ability that can move, deal damage, and react to collisions.
  * @author Sara Visani
  */
 public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility{
@@ -25,13 +26,17 @@ public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility{
     final Optional<OptionalCollision> collided;
 
     /**
-     * @param level level where is it
-     * @param position position of the cast
-     * @param damage damage of the ability
-     * @param collider collider of the ability
-     * @param velocity Vector2(velocity X, velocity y)
-     * @param attack lambda needed for the type of movement, attack. it has two parameters velocity and deltaTime
-     * @param collided this lambda is optional. give optional null if you want standard implementation of OnCollision
+     * Constructs an ActiveAbilityImpl instance.
+     * <p>
+     * @param level the {@link Level} where this ability exists
+     * @param position the initial position of the ability
+     * @param damage the damage dealt by this ability
+     * @param collider the {@link Collider} used for collision detection
+     * @param velocity the initial {@link Vector2} velocity (x and y components)
+     * @param attack the lambda implementing the behavior for movement and attack, 
+     *               receives velocity and delta time parameters
+     * @param collided an optional lambda for custom collision handling; if empty,
+     *                 default collision logic is used
      */
     public ActiveAbilityImpl(final Level level, final Vector2 position, final double damage, final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack, final Optional<OptionalCollision> collided){
         super(level, position, 0,0, velocity.x(), velocity.y(), collider);
@@ -42,9 +47,16 @@ public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility{
     }
 
     /**
-     * Called when collided. Standard hits Monster and get stopped by blocks and other elements that aren't Character or Projectile
-     * If that isn't the case it use the implementation passed by the constructor
-     * @param other gameobjects collided with
+     * Called when this ability collides with another {@link GameObject}.
+     * <p>
+     * Default behavior:
+     * <ul>
+     *   <li>If the collided object is an {@link Enemy}, apply damage and remove this ability from the level.</li>
+     *   <li>If the collided object is neither a {@link Character} nor a {@link Projectile}, remove this ability.</li>
+     * </ul>
+     * If a custom collision handler lambda is present, it will be invoked instead.
+     * </p>
+     * @param other the other {@link GameObject} this ability collided with
      */
     @Override
     public void onCollision(final GameObject other){
@@ -62,8 +74,10 @@ public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility{
     }
 
     /**
-     * lambda passed by in the constructor
-     * @param deltaTime
+     * Updates this ability's state.
+     * Delegates to the {@link ActiveAbilityUpdate} lambda passed during construction.
+     * <p>
+     * @param deltaTime the time elapsed since the last update, in seconds
      */
     @Override
     public void update(final double deltaTime){

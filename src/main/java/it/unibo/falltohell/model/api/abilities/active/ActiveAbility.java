@@ -4,7 +4,9 @@ import it.unibo.falltohell.model.api.abilities.Ability;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 
 /**
- * Interface for Active type of abilities
+ * Interface representing active types of abilities.
+ * Extends {@link Ability} and {@link Movable}, indicating
+ * that active abilities are abilities that have movement behavior.
  * @author Sara Visani
  */
 public interface ActiveAbility extends Ability, Movable{

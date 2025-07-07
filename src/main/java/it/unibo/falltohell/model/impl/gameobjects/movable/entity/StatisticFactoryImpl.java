@@ -16,7 +16,9 @@ import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Class implementations for factory of statistics
+ * Factory implementation for creating various types of {@link CharacterStatistics} and enemy statistics.
+ * Implements the {@link StatisticsFactory} interface to encapsulate the instantiation logic of different statistic types.
+ *
  * @author Sara Visani
  */
 public class StatisticFactoryImpl implements StatisticsFactory{

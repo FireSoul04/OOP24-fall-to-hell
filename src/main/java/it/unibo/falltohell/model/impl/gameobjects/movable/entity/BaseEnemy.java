@@ -10,13 +10,29 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEn
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Abstract class for all Enemies, set the base enemy
+ * Abstract base class for all {@link Enemy} implementations.
+ * <p>
+ * Sets up the fundamental structure for enemy behavior, including movement,
+ * collision, attacking logic, and stat management.
+ * </p>
+ *
+ * @see Enemy
+ * @see BaseEnemyStatistics
+ * @see BoxCollider
+ * @see Character
+ * @see Vector2
  * @author Sara Visani
  */
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     private BaseEnemyStatistics stats;
 
+    /**
+     * Constructs a base enemy entity with the given {@link Level} and {@link BaseEnemyStatistics}.
+     * <p>
+     * @param level the level the enemy belongs to
+     * @param stats the statistical data defining the enemy's behavior and characteristics
+     */
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats)
     {
         super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
@@ -33,6 +49,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Also restarts the no-aggro timer upon being damaged.
+     * </p>
      */
     @Override
     public void setDamagedLife(final double damage){
@@ -54,18 +73,21 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     public abstract void onCollision(final GameObject other, final Vector2 direction);
     
     /**
-     * @return true if this enemy is full health, false when not
+     * Checks whether the enemy is currently at full health.
+     * <p>
+     * @return {@code true} if the enemy is at maximum health, {@code false} otherwise
      */
     protected abstract boolean isFull();
 
     /**
-     * type of attack of the enemy
+     * Executes the attack behavior specific to the enemy.
      */
     protected abstract void attack();
 
     /**
-     * characterizes the movement of the enemy
-     * @param deltaTime elapsed time between the current frame and the last one
+     * Defines how the enemy moves each frame.
+     * <p>
+     * @param deltaTime time elapsed since the last update, in seconds
      */
     protected abstract void move(final double deltaTime);
 }

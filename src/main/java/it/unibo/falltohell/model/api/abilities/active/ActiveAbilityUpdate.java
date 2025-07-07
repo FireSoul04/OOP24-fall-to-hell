@@ -3,15 +3,20 @@ package it.unibo.falltohell.model.api.abilities.active;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Interface for lambda of how Active ability updates
+ * Functional interface representing the update logic of an active ability.
+ * Defines how the ability should behave during each update cycle
+ * This interface is typically implemented using a lambda expression.
+ *
  * @author Sara Visani
  */
+@FunctionalInterface
 public interface ActiveAbilityUpdate {
     
     /**
-     * lambda for build pattern of the ability
-     * @param velocity of the ability
-     * @param deltaTime time passed since last update
+     * Defines the behavior of the active ability during an update.
+     * <p>
+     * @param velocity the current velocity of the ability, see {@link Vector2}
+     * @param deltaTime the time elapsed since the last update, in seconds
      */
     public void attack(final Vector2 velocity, final double deltaTime);
 }

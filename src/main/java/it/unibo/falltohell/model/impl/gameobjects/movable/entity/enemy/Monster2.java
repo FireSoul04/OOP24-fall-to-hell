@@ -17,7 +17,11 @@ import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Implements abstract class Enemies, creates second type for enemies
+ * Concrete implementation of a long-range enemy type.
+ * Extends {@link BaseEnemy} to provide specific behaviors for Monster2 enemies.
+ * <p>
+ * This class manages movement, attacks, collision behavior, and health regeneration timers.
+ * </p>
  * @author Sara Visani
  */
 public class Monster2 extends BaseEnemy{
@@ -36,7 +40,13 @@ public class Monster2 extends BaseEnemy{
     private Optional<Vector2> collided = Optional.empty();
     private String attack = "attack";
     
-
+    /**
+     * Constructs a new Monster2 enemy instance.
+     * <p>
+     * @param level the {@link Level} this enemy belongs to
+     * @param initialCord the initial position of the enemy in the level
+     * @param character the {@link Character} this enemy targets or is associated with
+     */
     public Monster2(final Level level, final Vector2 initialCord,final Character character) {
         super(level, new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS, initialCord, NO_AGGRO, character, DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE));
 

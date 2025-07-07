@@ -12,7 +12,11 @@ import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Implements abstract class Enemies, creates first type for enemies
+ * Concrete implementation of {@link BaseEnemy}, representing a specific type of enemy called Monster1.
+ * This enemy has predefined stats like life, damage, velocity, and reacts to collisions with blocks and characters.
+ * <p>
+ * Includes a regeneration timer for life when not aggressive.</p>
+ * </p>
  * @author Sara Visani
  */
 public class Monster1 extends BaseEnemy{
@@ -25,6 +29,14 @@ public class Monster1 extends BaseEnemy{
     private BaseEnemyStatistics stats;
     private int direction = 1;
 
+    /**
+     * Constructs a Monster1 enemy in the specified {@link Level} at a given position.
+     * It also registers a regeneration timer on the enemy's stats.
+     * <p>
+     * @param level the game {@link Level} where this enemy exists
+     * @param initialCord the initial {@link Vector2} position of the enemy
+     * @param character the {@link Character} instance this enemy is linked to or targets
+     */
     public Monster1(final Level level, final Vector2 initialCord, final Character character) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS, initialCord, NO_AGGRO, character));
 

@@ -6,44 +6,65 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Interface for all enemies
+ * Interface for all enemy statistics.
+ * <p>
+ * Extends {@link Statistics} and defines additional data and behavior for enemy entities,
+ * such as initial position, health, and aggro control.
+ *
+ * @see Character
+ * @see TimerManager
+ * @see Vector2
  *
  * @author Sara Visani
  */
 public interface BaseEnemyStatistics extends Statistics{
 
     /**
-     * @return starting coordinates
+     * Gets the enemy's initial spawn coordinates.
+     * <p>
+     * @return the initial {@link Vector2} position
      */
     public Vector2 getInitialPos();
 
     /**
-     * @return the maximum life
+     * Gets the full (maximum) life of the enemy.
+     * <p>
+     * @return the max life value
      */
     public double getFullLife();
 
     /**
-     * @return the timer manager of the enemy
+     * Returns the {@link TimerManager} used to manage time-based behaviors like aggro.
+     * <p>
+     * @return the timer manager
      */
     public TimerManager getTm();
 
     /**
-     * @return return the name of the timer
+     * Gets the name identifier for the no-aggro timer.
+     * <p>
+     * @return the timer name as a {@link String}
      */
     public String getNo_aggroName();
 
     /**
-     * @return return the time of duration of the timer
+     * Gets the duration (in ticks or seconds) of the no-aggro state.
+     * <p>
+     * @return the no-aggro time duration
      */
     public int getNoAggro();
 
     /**
-     * @return return the character that the enemy follow
+     * Gets the current {@link Character} that this enemy is targeting.
+     * <p>
+     * @return the followed character
      */
     public Character getCharacter();
 
     /**
-     * @param character change the charater the enemy follow
+     * Sets the {@link Character} that this enemy should follow.
+     * <p>
+     * @param character the character to follow
      */
     public void setCharacter(final Character character);
 }

@@ -9,7 +9,8 @@ import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
 /**
- * Class containing every statistic of an enemy that attacks physically and has no restrictions.
+ * Implementation of {@link BaseEnemyStatistics} containing all statistics
+ * of an enemy that attacks physically without restrictions.
  *
  * @author Sara Visani
  */
@@ -22,14 +23,15 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     private Character character;
 
     /**
-     * Create new statistics with the parameters specified.
-     * @param life
-     * @param attack
-     * @param speed
-     * @param dimension
-     * @param position
-     * @param noAggro
-     * @param character
+     * Constructs new enemy statistics with the specified parameters.
+     * <p>
+     * @param life the total life points of the enemy
+     * @param attack the attack power
+     * @param speed the movement speed as a {@link Vector2}
+     * @param dimension the physical dimensions of the enemy {@link Dimensions}
+     * @param position the initial position as a {@link Vector2}
+     * @param noAggro an integer representing the aggro state (no aggro)
+     * @param character the associated {@link Character} instance
      */
     public BaseEnemyStatisticsImpl(double life, double attack, Vector2 speed, Dimensions dimension, final Vector2 position, final int noAggro, final Character character) {
         super(life, attack, speed, dimension);
