@@ -30,22 +30,14 @@ public class Lotawiec extends BaseEnemy {
     private LongRangeEnemyStatistics stats;
     private int direction = 1;
 
-
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character) {
-        super(level, new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS, initialCord, Optional.empty(), character, Optional.empty(), Optional.empty(), DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME));
+        super(level,
+                new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
+                        initialCord, Optional.empty(), character, Optional.empty(), Optional.empty(), DAMAGE_A,
+                        VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME));
 
         stats = (LongRangeEnemyStatistics) super.getStats();
 
-        this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {
-            if (this.isFull()) {
-                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > FULL_LIFE) {
-                    this.stats.setLife(FULL_LIFE);
-                } else {
-                    this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
-                }
-                this.stats.getTm().restartTimer(this.stats.getNoAggroName());
-            }
-        }));
         this.stats.getTm().addTimer(this.stats.getAttackName(), new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
             this.attack();
             this.stats.getTm().restartTimer(this.stats.getAttackName());

@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.util.Dimensions;
@@ -16,11 +15,18 @@ import it.unibo.falltohell.model.util.Vector2;
 
 /**
  * Concrete implementation of {@link BaseEnemy}, representing a specific type of
- * enemy called Monster1.
- * This enemy has predefined stats like life, damage, velocity, and reacts to
- * collisions with blocks and characters.
+ * enemy: a {@code Centaur}.
  * <p>
- * Includes a regeneration timer for life when not aggressive.
+ * This enemy has predefined statistics such as:
+ * <ul>
+ * <li>{@link #FULL_LIFE}</li>
+ * <li>{@link #DAMAGE}</li>
+ * <li>{@link #VELOCITY}</li>
+ * <li>{@link #DIMENSIONS}</li>
+ * <li>others specified into {@link #stats}</li>
+ * </ul>
+ * It can detect and attack a {@link Character} and regenerates health when not
+ * in combat.
  * </p>
  *
  * @author Sara Visani
@@ -35,32 +41,23 @@ public class Centaur extends BaseEnemy {
     private int direction = 1;
 
     /**
-     * Constructs a Monster1 enemy in the specified {@link Level} at a given
-     * position.
-     * It also registers a regeneration timer on the enemy's stats.
+     * Constructs a {@link Centaur} enemy in the given {@link Level} at a given
+     * {@link Vector2} position,
+     * and associates it with a target {@link Character}.
      * <p>
+     * Also registers a custom regeneration timer based on the enemy's aggression
+     * state.
+     * </p>
      *
-     * @param level       the game {@link Level} where this enemy exists
+     * @param level       the game {@link Level} where the enemy exists
      * @param initialCord the initial {@link Vector2} position of the enemy
-     * @param character   the {@link Character} instance this enemy is linked to or
-     *                    targets
+     * @param character   the target {@link Character} this enemy reacts to
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                 initialCord, Optional.empty(), character, Optional.empty(), Optional.empty()));
 
         this.stats = (BaseEnemyStatistics) super.getStats();
-
-        this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {
-            if (this.isFull()) {
-                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > this.stats.getFullLife()) {
-                    this.stats.setLife(this.stats.getFullLife());
-                } else {
-                    this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
-                }
-            }
-            this.stats.getTm().restartTimer(this.stats.getNoAggroName());
-        }));
     }
 
     /**
@@ -85,15 +82,6 @@ public class Centaur extends BaseEnemy {
         }
         // TODO delete when the tests works without this
         this.direction *= -1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDamagedLife(final double damage) {
-        super.setDamagedLife(damage);
-        // super.getTm().restart(getNo_aggro());
     }
 
     /**
