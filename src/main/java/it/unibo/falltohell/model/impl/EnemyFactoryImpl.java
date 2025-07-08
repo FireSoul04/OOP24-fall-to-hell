@@ -3,8 +3,10 @@ package it.unibo.falltohell.model.impl;
 import it.unibo.falltohell.model.api.EnemyFactory;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Monster1;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Monster2;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Centaur;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Imp;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Lotawiec;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Tengu;
 import it.unibo.falltohell.model.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
@@ -29,16 +31,32 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * {@inheritDoc}
      */
     @Override
-    public Enemy createMonster1(final Level level, final Vector2 initialCords, final Character character) {
-        return new Monster1(level, initialCords, character);
+    public Enemy createCentaur(final Level level, final Vector2 initialCords, final Character character) {
+        return new Centaur(level, initialCords, character);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Enemy createMonster2(final Level level, final Vector2 initialCords, final Character character) {
-        return new Monster2(level, initialCords, character);
+    public Enemy createTengu(final Level level, final Vector2 initialCords, final Character character) {
+        return new Tengu(level, initialCords, character);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Enemy createImp(Level level, Vector2 initialCords, Character character) {
+        return new Imp(level, initialCords, character);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Enemy createLotawiec(Level level, Vector2 initialCords, Character character) {
+        return new Lotawiec(level, initialCords, character);
     }
 
 }

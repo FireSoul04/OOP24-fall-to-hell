@@ -6,72 +6,43 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedBaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.LevelImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.ProjectileImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
 
-/**
- * Concrete implementation of a long-range enemy type.
- * Extends {@link BaseEnemy} to provide specific behaviors for Monster2 enemies.
- * <p>
- * This class manages movement, attacks, collision behavior, and health
- * regeneration timers.
- * </p>
- *
- * @author Sara Visani
- */
-public class Monster2 extends BaseEnemy {
+public class Imp extends BaseEnemy {
+
     private static final double CHAR_DISTANCE = 20;
-    private static final int ATTACK_TIME = 4000;
     private static final double REGEN_STAT = 0.1;
     private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
-    private static final Dimensions DIMENSIONS_ARROW = new Dimensions(10, 10);
     private static final double FULL_LIFE = 10;
-    private static final double DAMAGE = 10; // Physical damage
-    private static final double DAMAGE_A = 10; // Damage of projectile
+    private static final double DAMAGE = 10;
     private static final Vector2 VELOCITY = new Vector2(1, 10);
-    private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
     private static final double DISTANCE = 10;
 
-    private final RestrictedLongRangeEnemyStatistics stats;
+    private final RestrictedBaseEnemyStatistics stats;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
 
-    /**
-     * Constructs a new Monster2 enemy instance.
-     * <p>
-     *
-     * @param level       the {@link Level} this enemy belongs to
-     * @param initialCord the initial position of the enemy in the level
-     * @param character   the {@link Character} this enemy targets or is associated
-     *                    with
-     */
-    public Monster2(final Level level, final Vector2 initialCord, final Character character) {
-        super(level, new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY,
-                DIMENSIONS, initialCord, Optional.empty(), character, Optional.of(REGEN_STAT),
-                Optional.of(CHAR_DISTANCE), DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME));
 
-        stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
+    public Imp(final Level level, final Vector2 initialCord, final Character character) {
+        super(level, new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
+                initialCord, Optional.empty(), character, Optional.of(REGEN_STAT), Optional.of(CHAR_DISTANCE), DISTANCE));
+
+        this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
 
         this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {
             if (this.isFull()) {
-                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > FULL_LIFE) {
-                    this.stats.setLife(FULL_LIFE);
+                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > this.stats.getFullLife()) {
+                    this.stats.setLife(this.stats.getFullLife());
                 } else {
                     this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
                 }
-                this.stats.getTm().restartTimer(this.stats.getNoAggroName());
             }
-        }));
-        this.stats.getTm().addTimer(this.stats.getAttackName(), new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
-            this.attack();
-            this.stats.getTm().restartTimer(this.stats.getAttackName());
+            this.stats.getTm().restartTimer(this.stats.getNoAggroName());
         }));
     }
 
@@ -93,8 +64,7 @@ public class Monster2 extends BaseEnemy {
                 this.collided = Optional.of(super.getPosition());
             }
         } else if (other instanceof Character) {
-            this.stats.getCharacter().setDamagedLife(DAMAGE);
-            // super.getTm().removeTimer(getNo_aggro());
+            this.attack();
         }
         // TODO delete when the tests works without this
         this.collided = Optional.of(super.getPosition());
@@ -113,13 +83,7 @@ public class Monster2 extends BaseEnemy {
      */
     @Override
     protected void attack() {
-        if (this.stats.getCharacter().getPosition().distance(super.getPosition()) < CHAR_DISTANCE) {
-            new ProjectileImpl(new LevelImpl(),
-                    super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
-                    this.stats.getProjectileDimensions().width(), this.stats.getProjectileDimensions().height(),
-                    this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(),
-                    new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()));
-        }
+        this.stats.getCharacter().setDamagedLife(this.stats.getAttack());
     }
 
     /**
@@ -133,7 +97,7 @@ public class Monster2 extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
 
         while (otherX > 0) {
-            if (chara.distance(super.getPosition()) > CHAR_DISTANCE) {
+            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
                 if (this.stats.getInitialPos()
                         .distance(new Vector2(super.getPosition().x() + (otherX * this.direction), y)) <= this.stats
                                 .getDistance()) {

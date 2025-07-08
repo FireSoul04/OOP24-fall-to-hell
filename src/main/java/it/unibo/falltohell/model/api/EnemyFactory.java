@@ -26,7 +26,7 @@ public interface EnemyFactory {
      * @param character    the {@link Character} the enemy will interact with
      * @return a new instance of monster type 1 as an {@link Enemy}
      */
-    Enemy createMonster1(Level level, Vector2 initialCords, Character character);
+    Enemy createCentaur(Level level, Vector2 initialCords, Character character);
 
     /**
      * Creates an instance of monster type 2.
@@ -37,5 +37,9 @@ public interface EnemyFactory {
      * @param character    the {@link Character} the enemy will interact with
      * @return a new instance of monster type 2 as an {@link Enemy}
      */
-    Enemy createMonster2(Level level, Vector2 initialCords, Character character);
+    Enemy createTengu(Level level, Vector2 initialCords, Character character);
+
+    Enemy createImp(Level level, Vector2 initialCords, Character character);
+
+    Enemy createLotawiec(Level level, Vector2 initialCords, Character character);
 }

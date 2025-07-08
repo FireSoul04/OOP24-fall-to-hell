@@ -25,7 +25,7 @@ import it.unibo.falltohell.model.util.Vector2;
  *
  * @author Sara Visani
  */
-public class Monster1 extends BaseEnemy {
+public class Centaur extends BaseEnemy {
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 20;
@@ -45,7 +45,7 @@ public class Monster1 extends BaseEnemy {
      * @param character   the {@link Character} instance this enemy is linked to or
      *                    targets
      */
-    public Monster1(final Level level, final Vector2 initialCord, final Character character) {
+    public Centaur(final Level level, final Vector2 initialCord, final Character character) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                 initialCord, Optional.empty(), character, Optional.empty(), Optional.empty()));
 
@@ -82,7 +82,6 @@ public class Monster1 extends BaseEnemy {
             }
         } else if (other instanceof Character) {
             attack();
-            // super.getTm().restart(getNo_aggro());
         }
         // TODO delete when the tests works without this
         this.direction *= -1;
