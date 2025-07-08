@@ -9,18 +9,18 @@ import it.unibo.falltohell.model.util.Vector2;
  * Implementation of {@link RestrictedBaseEnemyStatistics} extending
  * {@link BaseEnemyStatisticsImpl}.
  * Adds a restricted distance property for enemy statistics.
- * 
+ *
  * @author Sara Visani
  */
 public class RestrictedBaseEnemyStatisticsImpl extends BaseEnemyStatisticsImpl
         implements RestrictedBaseEnemyStatistics {
 
-    final private double distance;
+    private final double distance;
 
     /**
      * Constructs a new {@code RestrictedBaseEnemyStatisticsImpl} instance.
      * <p>
-     * 
+     *
      * @param life      the life points of the character
      * @param attack    the attack value
      * @param speed     the speed as a {@link Vector2} object

@@ -31,7 +31,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * Constructs a base enemy entity with the given {@link Level} and
      * {@link BaseEnemyStatistics}.
      * <p>
-     * 
+     *
      * @param level the level the enemy belongs to
      * @param stats the statistical data defining the enemy's behavior and
      *              characteristics
@@ -58,26 +58,26 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     @Override
     public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
-        this.stats.getTm().stopTimer(stats.getNo_aggroName());
-        this.stats.getTm().restartTimer(stats.getNo_aggroName());
+        this.stats.getTm().stopTimer(stats.getNoAggroName());
+        this.stats.getTm().restartTimer(stats.getNoAggroName());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public abstract void update(final double deltaTime);
+    public abstract void update(double deltaTime);
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public abstract void onCollision(final GameObject other, final Vector2 direction);
+    public abstract void onCollision(GameObject other, Vector2 direction);
 
     /**
      * Checks whether the enemy is currently at full health.
      * <p>
-     * 
+     *
      * @return {@code true} if the enemy is at maximum health, {@code false}
      *         otherwise
      */
@@ -91,8 +91,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     /**
      * Defines how the enemy moves each frame.
      * <p>
-     * 
+     *
      * @param deltaTime time elapsed since the last update, in seconds
      */
-    protected abstract void move(final double deltaTime);
+    protected abstract void move(double deltaTime);
 }

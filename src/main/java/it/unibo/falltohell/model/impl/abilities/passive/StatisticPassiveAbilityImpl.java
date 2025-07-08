@@ -11,18 +11,18 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
  * It uses a {@link PassiveAbilityDo} functional interface to define
  * the behavior executed when the passive ability is carried out.
  * </p>
- * 
+ *
  * @author Sara Visani
  */
 public class StatisticPassiveAbilityImpl implements StatisticPassiveAbility {
 
-    final private Character character;
-    final private PassiveAbilityDo event;
+    private final Character character;
+    private final PassiveAbilityDo event;
 
     /**
      * Constructs a new StatisticPassiveAbilityImpl.
      * <p>
-     * 
+     *
      * @param character the {@link Character} that holds this passive ability
      * @param lambda    the {@link PassiveAbilityDo} that defines the behavior of
      *                  this passive ability
@@ -35,6 +35,7 @@ public class StatisticPassiveAbilityImpl implements StatisticPassiveAbility {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void carryOut() {
         this.event.carryOut(this.character);
     }

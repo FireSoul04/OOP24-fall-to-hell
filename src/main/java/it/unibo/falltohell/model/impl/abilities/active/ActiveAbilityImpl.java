@@ -18,19 +18,19 @@ import it.unibo.falltohell.model.util.Vector2;
  * Implementation of {@link ActiveAbility}.
  * Represents an active ability that can move, deal damage, and react to
  * collisions.
- * 
+ *
  * @author Sara Visani
  */
 public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility {
-    final double damage;
-    final ActiveAbilityUpdate attack;
-    final Level level;
-    final Optional<OptionalCollision> collided;
+    private final double damage;
+    private final ActiveAbilityUpdate attack;
+    private final Level level;
+    private final Optional<OptionalCollision> collided;
 
     /**
      * Constructs an ActiveAbilityImpl instance.
      * <p>
-     * 
+     *
      * @param level    the {@link Level} where this ability exists
      * @param position the initial position of the ability
      * @param damage   the damage dealt by this ability
@@ -62,7 +62,7 @@ public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility {
      * </ul>
      * If a custom collision handler lambda is present, it will be invoked instead.
      * </p>
-     * 
+     *
      * @param other the other {@link GameObject} this ability collided with
      */
     @Override
@@ -85,7 +85,7 @@ public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility {
      * Delegates to the {@link ActiveAbilityUpdate} lambda passed during
      * construction.
      * <p>
-     * 
+     *
      * @param deltaTime the time elapsed since the last update, in seconds
      */
     @Override

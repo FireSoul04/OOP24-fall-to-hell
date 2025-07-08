@@ -8,7 +8,7 @@ import it.unibo.falltohell.model.util.Vector2;
  * Specifically, it allows overriding the {@link #update(double)} and {@link #onCollision(GameObject, Vector2)} methods.
  * @author Sara Visani
  */
-public interface MethodPassiveAbility extends PassiveAbility{
+public interface MethodPassiveAbility extends PassiveAbility {
 
     /**
      * Updates the state of the passive ability.

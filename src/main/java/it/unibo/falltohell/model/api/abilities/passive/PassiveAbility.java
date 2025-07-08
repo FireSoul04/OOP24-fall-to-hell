@@ -11,5 +11,5 @@ import it.unibo.falltohell.model.api.abilities.Ability;
  * @see it.unibo.falltohell.model.api.abilities.passive.MethodPassiveAbility
  * @see it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility
  */
-public interface PassiveAbility extends Ability{
+public interface PassiveAbility extends Ability {
 }

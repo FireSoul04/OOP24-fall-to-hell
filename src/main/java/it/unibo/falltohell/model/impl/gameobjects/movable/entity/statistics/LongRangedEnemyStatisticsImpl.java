@@ -14,14 +14,14 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl implements LongRangeEnemyStatistics {
 
-    final double projectileAttack;
-    final Vector2 projectileVelocity;
-    final Dimensions projectileDimensions;
+    private final double projectileAttack;
+    private final Vector2 projectileVelocity;
+    private final Dimensions projectileDimensions;
 
     /**
      * Creates new statistics with the parameters specified.
      * <p>
-     * 
+     *
      * @param life                 the life points of the enemy
      * @param attack               the attack damage value
      * @param speed                the movement speed as a {@link Vector2} vector

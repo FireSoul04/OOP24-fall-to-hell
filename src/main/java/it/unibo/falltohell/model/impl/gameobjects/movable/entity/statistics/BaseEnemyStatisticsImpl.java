@@ -16,16 +16,16 @@ import it.unibo.falltohell.model.util.Vector2;
  */
 public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemyStatistics {
 
-    final private Vector2 initialPosition;
-    final private double fullLife;
-    final private int noAggro;
-    final private TimerManager tm = new TimerManagerImpl();
+    private final Vector2 initialPosition;
+    private final double fullLife;
+    private final int noAggro;
+    private final TimerManager tm = new TimerManagerImpl();
     private Character character;
 
     /**
      * Constructs new enemy statistics with the specified parameters.
      * <p>
-     * 
+     *
      * @param life      the total life points of the enemy
      * @param attack    the attack power
      * @param speed     the movement speed as a {@link Vector2}
@@ -34,7 +34,8 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      * @param noAggro   an integer representing the aggro state (no aggro)
      * @param character the associated {@link Character} instance
      */
-    public BaseEnemyStatisticsImpl(double life, double attack, Vector2 speed, Dimensions dimension,
+    public BaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
+            final Dimensions dimension,
             final Vector2 position, final int noAggro, final Character character) {
         super(life, attack, speed, dimension);
         this.initialPosition = position;
@@ -71,7 +72,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      * {@inheritDoc}
      */
     @Override
-    public String getNo_aggroName() {
+    public String getNoAggroName() {
         return "no_aggro";
     }
 
@@ -95,7 +96,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      * {@inheritDoc}
      */
     @Override
-    public void setCharacter(Character character) {
+    public void setCharacter(final Character character) {
         this.character = character;
     }
 }

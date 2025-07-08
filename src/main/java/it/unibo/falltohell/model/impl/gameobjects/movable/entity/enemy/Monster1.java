@@ -19,11 +19,12 @@ import it.unibo.falltohell.model.util.Vector2;
  * <p>
  * Includes a regeneration timer for life when not aggressive.
  * </p>
- * </p>
- * 
+ *
  * @author Sara Visani
  */
 public class Monster1 extends BaseEnemy {
+    private static final int CHAR_DISTANCE = 70;
+    private static final double REGEN_STAT = 0.1;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 20;
@@ -38,7 +39,7 @@ public class Monster1 extends BaseEnemy {
      * position.
      * It also registers a regeneration timer on the enemy's stats.
      * <p>
-     * 
+     *
      * @param level       the game {@link Level} where this enemy exists
      * @param initialCord the initial {@link Vector2} position of the enemy
      * @param character   the {@link Character} instance this enemy is linked to or
@@ -50,15 +51,15 @@ public class Monster1 extends BaseEnemy {
 
         this.stats = (BaseEnemyStatistics) super.getStats();
 
-        this.stats.getTm().addTimer(this.stats.getNo_aggroName(), new CustomTimerImpl(NO_AGGRO, () -> {
+        this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(NO_AGGRO, () -> {
             if (this.isFull()) {
-                if (this.stats.getLife() + this.stats.getLife() * 0.1 > this.stats.getFullLife()) {
+                if (this.stats.getLife() + this.stats.getLife() * REGEN_STAT > this.stats.getFullLife()) {
                     this.stats.setLife(this.stats.getFullLife());
                 } else {
-                    this.stats.addLife(this.stats.getLife() * 0.1);
+                    this.stats.addLife(this.stats.getLife() * REGEN_STAT);
                 }
             }
-            this.stats.getTm().restartTimer(this.stats.getNo_aggroName());
+            this.stats.getTm().restartTimer(this.stats.getNoAggroName());
         }));
     }
 
@@ -120,7 +121,7 @@ public class Monster1 extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
         final double charX = this.stats.getCharacter().getPosition().x();
 
-        if (chara.distance(super.getPosition()) > 70) {
+        if (chara.distance(super.getPosition()) > CHAR_DISTANCE) {
             super.setPosition(super.getPosition().add(
                     (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction, super.getPosition().y()))));
         } else {

@@ -10,19 +10,19 @@ import it.unibo.falltohell.model.util.Vector2;
  * extending {@link LongRangedEnemyStatisticsImpl}.
  * Represents statistics for a restricted long range enemy with a limited
  * engagement distance.
- * 
+ *
  * @author Sara Visani
  */
 public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStatisticsImpl
         implements RestrictedLongRangeEnemyStatistics {
 
-    final double distance;
+    private final double distance;
 
     /**
      * Constructs a new {@code RestrictedLongRangeEnemyStatisticsImpl} with the
      * specified parameters.
      * <p>
-     * 
+     *
      * @param life                 the amount of life points
      * @param attack               the attack power
      * @param speed                the movement speed as a {@link Vector2}

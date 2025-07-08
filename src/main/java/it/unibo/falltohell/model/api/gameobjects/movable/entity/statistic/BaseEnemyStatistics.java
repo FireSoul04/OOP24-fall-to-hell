@@ -23,7 +23,7 @@ public interface BaseEnemyStatistics extends Statistics {
     /**
      * Gets the enemy's initial spawn coordinates.
      * <p>
-     * 
+     *
      * @return the initial {@link Vector2} position
      */
     Vector2 getInitialPos();
@@ -31,7 +31,7 @@ public interface BaseEnemyStatistics extends Statistics {
     /**
      * Gets the full (maximum) life of the enemy.
      * <p>
-     * 
+     *
      * @return the max life value
      */
     double getFullLife();
@@ -40,7 +40,7 @@ public interface BaseEnemyStatistics extends Statistics {
      * Returns the {@link TimerManager} used to manage time-based behaviors like
      * aggro.
      * <p>
-     * 
+     *
      * @return the timer manager
      */
     TimerManager getTm();
@@ -48,15 +48,15 @@ public interface BaseEnemyStatistics extends Statistics {
     /**
      * Gets the name identifier for the no-aggro timer.
      * <p>
-     * 
+     *
      * @return the timer name as a {@link String}
      */
-    String getNo_aggroName();
+    String getNoAggroName();
 
     /**
      * Gets the duration (in ticks or seconds) of the no-aggro state.
      * <p>
-     * 
+     *
      * @return the no-aggro time duration
      */
     int getNoAggro();
@@ -64,7 +64,7 @@ public interface BaseEnemyStatistics extends Statistics {
     /**
      * Gets the current {@link Character} that this enemy is targeting.
      * <p>
-     * 
+     *
      * @return the followed character
      */
     Character getCharacter();
@@ -72,7 +72,7 @@ public interface BaseEnemyStatistics extends Statistics {
     /**
      * Sets the {@link Character} that this enemy should follow.
      * <p>
-     * 
+     *
      * @param character the character to follow
      */
     void setCharacter(Character character);

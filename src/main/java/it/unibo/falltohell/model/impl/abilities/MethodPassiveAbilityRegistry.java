@@ -28,7 +28,7 @@ public class MethodPassiveAbilityRegistry {
      * Registers a {@link MethodPassiveAbilityCreator} for a specific subclass of
      * {@link Character}.
      * <p>
-     * 
+     *
      * @param characterClass the {@link Class} object representing the subclass of
      *                       {@link Character} to associate with the creator
      * @param creator        the {@link MethodPassiveAbilityCreator} responsible for
@@ -43,7 +43,7 @@ public class MethodPassiveAbilityRegistry {
      * Creates a {@link MethodPassiveAbility} instance for the given
      * {@link Character}, if supported.
      * <p>
-     * 
+     *
      * @param character the {@link Character} instance for which the
      *                  {@link MethodPassiveAbility} should be created
      * @return the {@link MethodPassiveAbility} associated with the character's
@@ -52,7 +52,7 @@ public class MethodPassiveAbilityRegistry {
      *                                  in this registry
      */
     public MethodPassiveAbility createAbility(final Character character) {
-        MethodPassiveAbilityCreator creator = this.registry.get(character.getClass());
+        final MethodPassiveAbilityCreator creator = this.registry.get(character.getClass());
         if (creator == null) {
             throw new IllegalArgumentException("Unsupported character type: " + character.getClass().getSimpleName());
         }

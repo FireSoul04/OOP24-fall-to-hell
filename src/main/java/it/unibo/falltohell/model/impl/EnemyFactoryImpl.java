@@ -9,8 +9,8 @@ import it.unibo.falltohell.model.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 /**
- * Implements abstract factory for Enemies, creates Enemies
- * 
+ * Implements abstract factory for Enemies, creates Enemies.
+ *
  * @author Sara Visani
  */
 public class EnemyFactoryImpl implements EnemyFactory {
@@ -19,7 +19,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * {@inheritDoc}
      */
     @Override
-    public Enemy CreateMonster1(final Level level, final Vector2 initialCords, final Character character) {
+    public Enemy createMonster1(final Level level, final Vector2 initialCords, final Character character) {
         return new Monster1(level, initialCords, character);
     }
 
@@ -27,7 +27,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * {@inheritDoc}
      */
     @Override
-    public Enemy CreateMonster2(final Level level, final Vector2 initialCords, final Character character) {
+    public Enemy createMonster2(final Level level, final Vector2 initialCords, final Character character) {
         return new Monster2(level, initialCords, character);
     }
 
