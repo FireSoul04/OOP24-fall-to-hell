@@ -1,6 +1,9 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
+
+import java.util.Optional;
+
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.util.Dimensions;
 import it.unibo.falltohell.model.util.Vector2;
@@ -29,22 +32,32 @@ public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStati
      * @param dimension            the dimensions of the enemy as a
      *                             {@link Dimensions}
      * @param position             the starting position as a {@link Vector2}
-     * @param noAggro              the no-aggro delay or count (game-specific
-     *                             meaning)
+     * @param noAggro              optional override for an integer representing the
+     *                             aggro state (no aggro). If
+     *                             {@link Optional#empty()}, default is used.
      * @param character            the associated {@link Character} entity
+     * @param regen                optional override for the health regeneration
+     *                             rate. If {@link Optional#empty()}, default is
+     *                             used.
+     * @param senseDistance        optional override for sensing distance. If
+     *                             {@link Optional#empty()}, default is used.
      * @param projectileAttack     the damage dealt by projectiles
      * @param projectileVelocity   the velocity of projectiles as a {@link Vector2}
      * @param projectileDimensions the dimensions of the projectiles as a
      *                             {@link Dimensions}
      * @param distance             the maximum distance the enemy can engage (aggro
      *                             range)
+     * @param timeAttack           the cooldown time between attacks in ticks (or
+     *                             milliseconds)
      */
     public RestrictedLongRangeEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
-            final Dimensions dimension, final Vector2 position, final int noAggro, final Character character,
-            final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions,
-            final double distance) {
-        super(life, attack, speed, dimension, position, noAggro, character, projectileAttack, projectileVelocity,
-                projectileDimensions);
+            final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
+            final Character character,
+            final Optional<Double> regen, final Optional<Double> senseDistance, final double projectileAttack,
+            final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance,
+            final int timeAttack) {
+        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, projectileAttack,
+                projectileVelocity, projectileDimensions, timeAttack);
         this.distance = distance;
     }
 

@@ -23,7 +23,7 @@ public interface LongRangeEnemyStatistics extends BaseEnemyStatistics {
     /**
      * Returns the damage value of the projectile attack.
      * <p>
-     * 
+     *
      * @return the current projectile attack damage
      */
     double getProjectileAttack();
@@ -31,7 +31,7 @@ public interface LongRangeEnemyStatistics extends BaseEnemyStatistics {
     /**
      * Returns the projectile's movement speed.
      * <p>
-     * 
+     *
      * @return a {@link Vector2} representing the speed of the projectile
      */
     Vector2 getProjectileSpeed();
@@ -39,7 +39,7 @@ public interface LongRangeEnemyStatistics extends BaseEnemyStatistics {
     /**
      * Returns the dimensions (width and height) of the projectile.
      * <p>
-     * 
+     *
      * @return a {@link Dimensions} object representing projectile size
      */
     Dimensions getProjectileDimensions();
@@ -47,8 +47,15 @@ public interface LongRangeEnemyStatistics extends BaseEnemyStatistics {
     /**
      * Returns the internal name used for the projectile's attack timer.
      * <p>
-     * 
+     *
      * @return a {@link String} identifying the attack timer name
      */
     String getAttackName();
+
+    /**
+     * Gets the cooldown or timing associated with the projectile attack.
+     *
+     * @return the time between attacks in game ticks or milliseconds
+     */
+    int getTimeAttack();
 }

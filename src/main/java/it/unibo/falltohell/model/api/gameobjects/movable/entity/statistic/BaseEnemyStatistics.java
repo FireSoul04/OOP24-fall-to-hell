@@ -12,6 +12,7 @@ import it.unibo.falltohell.model.util.Vector2;
  * entities,
  * such as initial position, health, and aggro control.
  *
+ * @see Statistics
  * @see Character
  * @see TimerManager
  * @see Vector2
@@ -76,4 +77,20 @@ public interface BaseEnemyStatistics extends Statistics {
      * @param character the character to follow
      */
     void setCharacter(Character character);
+
+    /**
+     * Returns the regeneration rate of the enemy (if applicable).
+     * <p>
+     *
+     * @return the regeneration value
+     */
+    double getRegen();
+
+    /**
+     * Gets the enemy's sensing distance (e.g., detection range).
+     * <p>
+     *
+     * @return the sense distance
+     */
+    double getSenseDistance();
 }

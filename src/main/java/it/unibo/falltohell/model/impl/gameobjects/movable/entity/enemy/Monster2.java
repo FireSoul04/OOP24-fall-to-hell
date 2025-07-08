@@ -27,7 +27,7 @@ import it.unibo.falltohell.model.util.Vector2;
  * @author Sara Visani
  */
 public class Monster2 extends BaseEnemy {
-    private static final int CHAR_DISTANCE = 20;
+    private static final double CHAR_DISTANCE = 20;
     private static final int ATTACK_TIME = 4000;
     private static final double REGEN_STAT = 0.1;
     private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
@@ -38,12 +38,10 @@ public class Monster2 extends BaseEnemy {
     private static final Vector2 VELOCITY = new Vector2(1, 10);
     private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
     private static final double DISTANCE = 10;
-    private static final int NO_AGGRO = 10;
 
     private final RestrictedLongRangeEnemyStatistics stats;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
-    private String attack = "attack";
 
     /**
      * Constructs a new Monster2 enemy instance.
@@ -56,23 +54,24 @@ public class Monster2 extends BaseEnemy {
      */
     public Monster2(final Level level, final Vector2 initialCord, final Character character) {
         super(level, new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY,
-                DIMENSIONS, initialCord, NO_AGGRO, character, DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE));
+                DIMENSIONS, initialCord, Optional.empty(), character, Optional.of(REGEN_STAT),
+                Optional.of(CHAR_DISTANCE), DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME));
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
         this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {
             if (this.isFull()) {
-                if (this.stats.getLife() + this.stats.getLife() * REGEN_STAT > FULL_LIFE) {
+                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > FULL_LIFE) {
                     this.stats.setLife(FULL_LIFE);
                 } else {
-                    this.stats.addLife(this.stats.getLife() * REGEN_STAT);
+                    this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
                 }
                 this.stats.getTm().restartTimer(this.stats.getNoAggroName());
             }
         }));
-        this.stats.getTm().addTimer(attack, new CustomTimerImpl(ATTACK_TIME, () -> {
+        this.stats.getTm().addTimer(this.stats.getAttackName(), new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
             this.attack();
-            this.stats.getTm().restartTimer(attack);
+            this.stats.getTm().restartTimer(this.stats.getAttackName());
         }));
     }
 
@@ -99,15 +98,6 @@ public class Monster2 extends BaseEnemy {
         }
         // TODO delete when the tests works without this
         this.collided = Optional.of(super.getPosition());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDamagedLife(final double damage) {
-        super.setDamagedLife(damage);
-        // super.getTm().restart(getNo_aggro());
     }
 
     /**

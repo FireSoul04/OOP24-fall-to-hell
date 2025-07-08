@@ -3,6 +3,9 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
+
+import java.util.Optional;
+
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
@@ -23,13 +26,10 @@ import it.unibo.falltohell.model.util.Vector2;
  * @author Sara Visani
  */
 public class Monster1 extends BaseEnemy {
-    private static final int CHAR_DISTANCE = 70;
-    private static final double REGEN_STAT = 0.1;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 20;
     private static final Vector2 VELOCITY = new Vector2(2, 20);
-    private static final int NO_AGGRO = 10;
 
     private BaseEnemyStatistics stats;
     private int direction = 1;
@@ -47,16 +47,16 @@ public class Monster1 extends BaseEnemy {
      */
     public Monster1(final Level level, final Vector2 initialCord, final Character character) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, NO_AGGRO, character));
+                initialCord, Optional.empty(), character, Optional.empty(), Optional.empty()));
 
         this.stats = (BaseEnemyStatistics) super.getStats();
 
-        this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(NO_AGGRO, () -> {
+        this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {
             if (this.isFull()) {
-                if (this.stats.getLife() + this.stats.getLife() * REGEN_STAT > this.stats.getFullLife()) {
+                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > this.stats.getFullLife()) {
                     this.stats.setLife(this.stats.getFullLife());
                 } else {
-                    this.stats.addLife(this.stats.getLife() * REGEN_STAT);
+                    this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
                 }
             }
             this.stats.getTm().restartTimer(this.stats.getNoAggroName());
@@ -121,7 +121,7 @@ public class Monster1 extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
         final double charX = this.stats.getCharacter().getPosition().x();
 
-        if (chara.distance(super.getPosition()) > CHAR_DISTANCE) {
+        if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
             super.setPosition(super.getPosition().add(
                     (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction, super.getPosition().y()))));
         } else {
