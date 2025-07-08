@@ -14,12 +14,14 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
  * Concrete implementation of the {@link EnemyFactory} interface.
  * <p>
  * This class is responsible for creating specific {@link Enemy} instances,
- * such as {@link Monster1} and {@link Monster2}.
+ * such as {@link Centaur}, {@link Imp}, {@link Lotawiec} and {@link Tengu}.
  * </p>
  *
  * @see Enemy
- * @see Monster1
- * @see Monster2
+ * @see Centaur
+ * @see Imp
+ * @see Lotawiec
+ * @see Tengu
  * @see Level
  * @see Character
  *
