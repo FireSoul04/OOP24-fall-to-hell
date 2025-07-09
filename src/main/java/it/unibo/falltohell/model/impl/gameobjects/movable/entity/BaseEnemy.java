@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.api.GameObject;
@@ -39,6 +40,17 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats) {
         super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
+
+        this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {
+            if (this.isFull()) {
+                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > this.stats.getFullLife()) {
+                    this.stats.setLife(this.stats.getFullLife());
+                } else {
+                    this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
+                }
+            }
+            this.stats.getTm().restartTimer(this.stats.getNoAggroName());
+        }));
     }
 
     /**

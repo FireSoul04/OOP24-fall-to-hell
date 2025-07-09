@@ -59,16 +59,6 @@ public class Tengu extends BaseEnemy {
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
-        this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {
-            if (this.isFull()) {
-                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > FULL_LIFE) {
-                    this.stats.setLife(FULL_LIFE);
-                } else {
-                    this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
-                }
-                this.stats.getTm().restartTimer(this.stats.getNoAggroName());
-            }
-        }));
         this.stats.getTm().addTimer(this.stats.getAttackName(), new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
             this.attack();
             this.stats.getTm().restartTimer(this.stats.getAttackName());

@@ -59,4 +59,8 @@ public interface GameObject {
      * @param direction where the collision happened
      */
     void onCollision(GameObject other, Vector2 direction);
+    /**
+     * @return the level this game object belongs to
+     */
+    Level getLevel();
 }
