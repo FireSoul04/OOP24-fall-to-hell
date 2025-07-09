@@ -20,6 +20,8 @@ import java.awt.event.ComponentEvent;
  */
 public class GameWindowImpl implements GameWindow {
 
+    private static final double INITIAL_SCREEN_RATIO = 2.0 / 3.0;
+
     private final SwingGameRenderer renderer;
 	private final int width;
     private final int height;
@@ -32,11 +34,19 @@ public class GameWindowImpl implements GameWindow {
         this.height = height;
         this.scale = Vector2.one();
         this.renderer = new SwingGameRenderer(this);
-        this.init(width, height);
+        this.initializeWindow(width, height);
     }
 
-    private void init(final int width, final int height) {
+    private void initializeWindow(final int width, final int height) {
 	    final JFrame mainFrame = new JFrame("FTH");
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.scale = new Vector2(screenSize.getWidth() / width, screenSize.getHeight() / height)
+            .multiply(INITIAL_SCREEN_RATIO);
+        final Point startPosition = new Point(
+            (int) (screenSize.getWidth() - width * this.scale.x()) / 2,
+            (int) (screenSize.getHeight() - height * this.scale.y()) / 2
+        );
+        mainFrame.setLocation(startPosition);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(width, height);
         mainFrame.getContentPane().add(this.renderer);
