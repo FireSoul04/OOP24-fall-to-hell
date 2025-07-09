@@ -8,6 +8,7 @@ import it.unibo.falltohell.util.Vector2;
  * Class containing implementation for statistics
  *
  * @author Davide Mancini
+ * @author Sara Visani
  */
 public class StatisticsImpl implements Statistics{
     
