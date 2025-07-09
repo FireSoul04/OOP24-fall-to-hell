@@ -15,6 +15,10 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
 
 	private final GameWindow window;
 
+	/**
+	 * Create a renderer implemented with Java Swing.
+	 * @param window of the game
+	 */
 	public SwingGameRenderer(final GameWindow window) {
 		super();
 		this.window = window;
