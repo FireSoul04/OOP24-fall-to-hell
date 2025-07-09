@@ -7,7 +7,7 @@ package it.unibo.falltohell.util;
  * @author Martina Malagoli
  * @author Sara Visani
  * @author Lorenzo Casadei
- * @author Daniele Mastroianni
+
  *
  * @param x
  * @param y

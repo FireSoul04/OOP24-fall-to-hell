@@ -15,7 +15,6 @@ import java.awt.event.ComponentEvent;
  * @author Martina Malagoli
  * @author Sara Visani
  * @author Lorenzo Casadei
- * @author Daniele Mastroianni
  */
 public class GameWindowImpl implements GameWindow {
 

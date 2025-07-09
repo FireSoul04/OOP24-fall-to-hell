@@ -7,7 +7,6 @@ package it.unibo.falltohell.view.api;
  * @author Martina Malagoli
  * @author Sara Visani
  * @author Lorenzo Casadei
- * @author Daniele Mastroianni
  */
 public interface GameWindow {
 
