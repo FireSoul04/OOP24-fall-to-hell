@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
@@ -85,6 +86,22 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     public abstract void onCollision(GameObject other, Vector2 direction);
+
+    /**
+     * {@inheritDoc}
+     * TODO Game data e passive for druid
+     */
+    @Override
+    public boolean isDead() {
+        if (this.stats.getLife() <= 0) {
+            if (this.stats.getCharacter() instanceof Druid) {
+                ((Druid) this.stats.getCharacter()).addKill();
+            }
+            super.getLevel().removeGameObject(this);
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Checks whether the enemy is currently at full health.
