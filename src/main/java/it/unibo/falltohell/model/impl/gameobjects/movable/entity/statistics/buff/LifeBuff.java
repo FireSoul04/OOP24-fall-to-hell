@@ -26,7 +26,7 @@ public class LifeBuff extends BaseBuff{
      */
     @Override
     public void apply() {
-        super.getCharacterStatistics().addLife(buffAmount);
+        super.getCharacterStatistics().addTemporaryLife(buffAmount);
     }
 
     /**
@@ -34,6 +34,6 @@ public class LifeBuff extends BaseBuff{
      */
     @Override
     public void remove() {
-        super.getCharacterStatistics().subLife(buffAmount);
+        super.getCharacterStatistics().subTemporaryLife(buffAmount);
     }
 }
