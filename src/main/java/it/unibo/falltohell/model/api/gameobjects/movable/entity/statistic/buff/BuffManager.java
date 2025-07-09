@@ -1,0 +1,14 @@
+package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff;
+
+/**
+ * Interface to handle the addition and removal of buffs to the character.
+ * @author Martina Malagoli
+ */
+public interface BuffManager {
+
+    /**
+     * @param buff to be added to the current character and to be handled by the buff manager
+     */
+    void addBuff(Buff buff);
+
+}

@@ -18,36 +18,84 @@ import it.unibo.falltohell.util.Vector2;
  */
 public interface CharacterStatistics extends Statistics {
 
-	/**
-	 * Returns the current mana of the entity.
-	 * <p>
-	 *
-	 * @return the current mana value
-	 */
-	double getMana();
+    /**
+     * Gets the initial mana of the entity.
+     * <p>
+     *
+     * @return the initial mana value
+     */
+    double getInitialMana();
 
-	/**
-	 * Updates the mana of the entity.
-	 * <p>
-	 *
-	 * @param mana the new mana value
-	 */
-	void setMana(double mana);
+    /**
+     * Returns the current mana of the entity.
+     * <p>
+     *
+     * @return the current mana value
+     */
+    double getMana();
 
-	/**
-	 * Returns the current attack speed vector of the entity.
-	 * This may influence how quickly the entity can perform attacks.
-	 * <p>
-	 *
-	 * @return the attack speed as a {@link Vector2}
-	 */
-	Vector2 getAttackSpeed();
+    /**
+     * Updates the mana of the entity.
+     * <p>
+     *
+     * @param mana the new mana value
+     */
+    void setMana(double mana);
 
-	/**
-	 * Updates the attack speed of the entity.
-	 * <p>
-	 *
-	 * @param attackSpeed the new attack speed value
-	 */
-	void setAttackSpeed(Vector2 attackSpeed);
+    /**
+     * Adds a specified amount to the entity's current Mana.
+     * <p>
+     *
+     * @param mana the amount of life to Mana
+     */
+    void addMana(double mana);
+
+    /**
+     * Subtracts a specified amount from the entity's current Mana.
+     * <p>
+     *
+     * @param mana the amount of Mana to subtract
+     */
+    void subMana(double mana);
+
+    /**
+     * Gets the initial attack speed of the entity.
+     * <p>
+     *
+     * @return the initial attack speed value
+     */
+    double getInitialAttackSpeed();
+
+    /**
+     * Returns the current attack speed of the entity.
+     * This may influence how quickly the entity can perform attacks.
+     * <p>
+     *
+     * @return the attack speed
+     */
+    double getAttackSpeed();
+
+    /**
+     * Updates the attack speed of the entity.
+     * <p>
+     *
+     * @param attackSpeed the new attack speed value
+     */
+    void setAttackSpeed(double attackSpeed);
+
+    /**
+     * Adds a specified amount to the entity's current AttackSpeed.
+     * <p>
+     *
+     * @param attackSpeed the amount of AttackSpeed to add
+     */
+    void addAttackSpeed(double attackSpeed);
+
+    /**
+     * Subtracts a specified amount from the entity's current AttackSpeed.
+     * <p>
+     *
+     * @param attackSpeed the amount of AttackSpeed to subtract
+     */
+    void subAttackSpeed(double attackSpeed);
 }

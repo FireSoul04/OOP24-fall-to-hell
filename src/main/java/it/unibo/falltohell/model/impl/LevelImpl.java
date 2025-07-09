@@ -1,10 +1,12 @@
 package it.unibo.falltohell.model.impl;
 
+import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
@@ -21,15 +23,19 @@ public class LevelImpl implements Level{
 
     private final List<GameObject> gameObjects;
     private final CollisionsManager collisionsManager;
-    
+    private final TimerManager timerManager;
+    private final GameData gameData;
+
     /**
      * Constructs a new LevelImpl with a given list of game objects.
      *
      * @param gameObjects the initial list of game objects in the level
      */
-    public LevelImpl(final List<GameObject> gameObjects) {
+    public LevelImpl(final List<GameObject> gameObjects, final GameData gameData) {
         this.gameObjects = gameObjects;
         this.collisionsManager = new AABBCollisionsManager();
+        this.timerManager = new TimerManagerImpl();
+        this.gameData = gameData;
     }
     /**
      * Constructs a new empty LevelImpl.
@@ -37,6 +43,8 @@ public class LevelImpl implements Level{
     public LevelImpl() {
         this.gameObjects = new ArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
+        this.timerManager = new TimerManagerImpl();
+        this.gameData = new GameDataImpl();
     }
     /**
      * Adds a game object to the level.
@@ -77,4 +85,19 @@ public class LevelImpl implements Level{
         
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TimerManager getTimerManager() {
+        return this.timerManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameData getGameData() {
+        return this.gameData;
+    }
 }
