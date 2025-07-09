@@ -7,7 +7,8 @@ import it.unibo.falltohell.util.Vector2;
  * Interface defining the basic statistics shared by entities in the game,
  * such as life, attack, speed, and dimensions.
  *
- * @author Davide Mancini, Sara Visani
+ * @author Davide Mancini
+ * @author Sara Visani
  * @see it.unibo.falltohell.model.api.gameobjects.movable.Entity
  */
 public interface Statistics {
