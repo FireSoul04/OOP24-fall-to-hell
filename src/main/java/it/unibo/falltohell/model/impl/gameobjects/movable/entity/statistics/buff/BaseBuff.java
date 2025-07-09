@@ -15,8 +15,11 @@ public abstract class BaseBuff implements Buff {
      * Initialization of the BaseBuff class.
      * @param characterStatistics is the set of statistics associated with the character
      */
-    public BaseBuff(final CharacterStatistics characterStatistics) {
+    public BaseBuff(final CharacterStatistics characterStatistics, final double multiplier) {
         this.characterStatistics = characterStatistics;
+        if (multiplier <= 0 && multiplier > 1) {
+            throw new IllegalArgumentException("The multiplier should be between the values of 0 and 1");
+        }
     }
 
     /**
