@@ -26,7 +26,7 @@ public class ManaBuff extends BaseBuff {
      */
     @Override
     public void apply() {
-        super.getCharacterStatistics().addMana(buffAmount);
+        super.getCharacterStatistics().addTemporaryMana(buffAmount);
     }
 
     /**
@@ -34,6 +34,6 @@ public class ManaBuff extends BaseBuff {
      */
     @Override
     public void remove() {
-        super.getCharacterStatistics().subMana(buffAmount);
+        super.getCharacterStatistics().subTemporaryMana(buffAmount);
     }
 }
