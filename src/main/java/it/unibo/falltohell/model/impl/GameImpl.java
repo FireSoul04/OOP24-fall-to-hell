@@ -23,14 +23,6 @@ public class GameImpl implements Game {
 		this.level = new LevelImpl();
 	}
 
-	/**
-     * {@inheritDoc}
-     */
-    @Override
-    public void init() {
-        
-    }
-
     /**
      * {@inheritDoc}
      */
