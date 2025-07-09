@@ -14,11 +14,22 @@ public interface Character extends Entity {
      * Identifier for the type of character.
      */
     enum CharacterID {
+        /**
+         * Rogue character.
+         */
         ROGUE,
+        /**
+         * Caster character.
+         */
         CASTER,
+        /**
+         * Archer character.
+         */
         ARCHER,
+        /**
+         * Druid character.
+         */
         DRUID,
-        FIGHTER
     }
 
     /**

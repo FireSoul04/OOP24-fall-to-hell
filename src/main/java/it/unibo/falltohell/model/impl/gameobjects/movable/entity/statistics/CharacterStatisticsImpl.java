@@ -11,52 +11,54 @@ import it.unibo.falltohell.util.Vector2;
  *
  * @author Davide Mancini
  */
-public class CharacterStatisticsImpl extends StatisticsImpl implements CharacterStatistics{
+public class CharacterStatisticsImpl extends StatisticsImpl implements CharacterStatistics {
 
-	private double mana;
-	private Vector2 attackSpeed;
+    private double mana;
+    private Vector2 attackSpeed;
 
-	/**
-	 * Create new statistics with the parameters specified.
-	 * @param life
-	 * @param attack
-	 * @param speed
-	 * @param dimensions
-	 * @param mana
-	 * @param attackSpeed
-	 */
-	public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final Vector2 attackSpeed) {
-		
-		super(life,attack,speed,dimensions);
-		this.mana = mana;
-		this.attackSpeed = attackSpeed;
-	}
+    /**
+     * Create new statistics with the parameters specified.
+     *
+     * @param life
+     * @param attack
+     * @param speed
+     * @param dimensions
+     * @param mana
+     * @param attackSpeed
+     */
+    public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed,
+                                   final Dimensions dimensions, final double mana, final Vector2 attackSpeed) {
 
-	/**
+        super(life, attack, speed, dimensions);
+        this.mana = mana;
+        this.attackSpeed = attackSpeed;
+    }
+
+    /**
      * {@inheritDoc}
      */
-	public double getMana() {
-		return this.mana;
-	}
+    public double getMana() {
+        return this.mana;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	public void setMana(final double mana) {
-		this.mana = mana;
-	}
+    public void setMana(final double mana) {
+        this.mana = mana;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	public Vector2 getAttackSpeed() {
-		return this.attackSpeed;
-	}
+    public Vector2 getAttackSpeed() {
+        return this.attackSpeed;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	public void setAttackSpeed(final Vector2 attackSpeed) {
-		this.attackSpeed = attackSpeed;
-	}
+    public void setAttackSpeed(final Vector2 attackSpeed) {
+        this.attackSpeed = attackSpeed;
+    }
 }

@@ -19,6 +19,7 @@ import it.unibo.falltohell.util.Vector2;
 public abstract class BaseCharacter extends EntityImpl implements Character {
 
     private static final int MAX_JUMP_HEIGHT = 10;
+    private static final Vector2 JUMP_ACCELERATION_STEP = new Vector2(0.0, -0.125);
 
     private final GameEventManager<String> input;
     private final Vector2 jumpAcceleration;
@@ -28,14 +29,17 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
 
     /**
      * Base constructor for a new character.
+     *
+     * @param level
      * @param position
+     * @param stats
      */
     public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats) {
         super(level, position, new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
         this.canInteract = false;
         this.onGround = false;
         this.currentJumpHeight = 0;
-        this.jumpAcceleration = new Vector2(0.0, -0.125);
+        this.jumpAcceleration = JUMP_ACCELERATION_STEP;
         this.input = new GameEventManager<>();
 
         this.input.addCondition("MoveLeft", () -> false);
@@ -49,6 +53,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * Moves the character left or right based on the direction read by the input.
      * How fast it moves depends on current speed.
      * If both direction are read at the same time, the character remains still.
+     *
      * @param deltaTime
      */
     private void move(final double deltaTime) {
@@ -64,7 +69,8 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     }
 
     /**
-     * If the character is on ground it can jump until it reach max jump height or jump less than max height if the jump key is released.
+     * If the character is on ground it can jump until it reach max jump height or jump less than max height if the
+     * jump key is released.
      */
     private void jump() {
         if (this.input.checkCondition("Jump")

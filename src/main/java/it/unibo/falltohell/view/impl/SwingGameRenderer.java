@@ -3,8 +3,10 @@ package it.unibo.falltohell.view.impl;
 import it.unibo.falltohell.view.api.GameRenderer;
 import it.unibo.falltohell.view.api.GameWindow;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * Swing implementation of the renderer for the game.
@@ -17,6 +19,7 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
 
 	/**
 	 * Create a renderer implemented with Java Swing.
+	 *
 	 * @param window of the game
 	 */
 	public SwingGameRenderer(final GameWindow window) {

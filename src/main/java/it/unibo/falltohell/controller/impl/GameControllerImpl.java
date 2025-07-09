@@ -19,7 +19,10 @@ import java.util.logging.Logger;
  */
 public class GameControllerImpl implements GameController {
 
-    private static final double MAX_UPDATES = 60.0;
+    /**
+     * How many frames per seconds the game will run.
+     */
+    private static final double MAX_FRAMES = 60.0;
     private static final int WIDTH = 640;
     private static final int HEIGHT = 360;
 
@@ -51,21 +54,22 @@ public class GameControllerImpl implements GameController {
     }
 
     /**
-     * Game loop with a capped 60 frames per second.
+     * Game loop with a capped MAX_FRAMES per second.
      * It uses the difference between the current frame and the past frame to calculate a factor, called deltaTime.
      * This factor is used to make the game run at the same speed regardless of the hardware.
      * To make this possible, every object moving in the game has to use deltaTime.
      */
     @Override
     public void run() {
-        final double ns = 1.0E9 / MAX_UPDATES;
+        final double ns = 1.0E9 / MAX_FRAMES;
+        final double sleepTime = 100 / MAX_FRAMES;
         double deltaTime = 0.0;
         int frames = 0;
         long lastTime = System.nanoTime();
         while (!this.isOver()) {
             try {
-                Thread.sleep(frames - (long)(frames - 100 / 60));
-            } catch (InterruptedException e) {
+                Thread.sleep(frames - (long) (frames - sleepTime));
+            } catch (final InterruptedException e) {
                 this.logger.severe("Sleep interrupted: " + e);
             }
             final long now = System.nanoTime();

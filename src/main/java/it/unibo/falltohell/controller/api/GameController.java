@@ -1,7 +1,7 @@
 package it.unibo.falltohell.controller.api;
 
 /**
- * Interface for a MVC controller dedicated to a game.
+ * Interface for an MVC controller dedicated to a game.
  *
  * @author Davide Mancini
  * @author Martina Malagoli
@@ -9,9 +9,9 @@ package it.unibo.falltohell.controller.api;
  * @author Lorenzo Casadei
  */
 public interface GameController {
-    
     /**
-     * Game loop, runs at MAX_UPDATES per seconds and handles the rendering and lets the game work on multiple platforms at the same speed.
+     * Game loop, runs at MAX_UPDATES per seconds and handles the rendering and lets the game work on multiple
+     * platforms at the same speed.
      */
     void run();
 
