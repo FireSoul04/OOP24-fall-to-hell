@@ -1,22 +1,40 @@
 package it.unibo.falltohell.model.api.gameobjects.movable;
 
 import it.unibo.falltohell.model.api.gameobjects.Movable;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 
 /**
- * Abstract class for all Enemies, set the base enemy
+ * Interface representing a movable game entity, such as an enemy and character.
+ * It extends {@link Movable} to inherit movement capabilities.
+ * Provides access to {@link Statistics} and life management.
+ * 
  * @author Sara Visani
  */
 
-public interface Entity extends Movable{
-    /**
-     * Called from other entities to notify that the attack has hitted
-     * @param damage
-     */
-    public void setDamagedLife(final double damage);
+public interface Entity extends Movable {
 
-    public double getLife();
     /**
-     * @return if an Entity is dead
+     * Gets the statistics of this entity.
+     * <p>
+     * 
+     * @return the {@link Statistics} associated with this entity
      */
-    public boolean isDead();
+    Statistics getStats();
+
+    /**
+     * Notifies the entity that it has taken damage.
+     * This method is called by other entities when an attack hits.
+     * <p>
+     * 
+     * @param damage the amount of damage dealt to this entity
+     */
+    void setDamagedLife(double damage);
+
+    /**
+     * Checks if the entity is dead.
+     * <p>
+     * 
+     * @return {@code true} if the entity is dead; {@code false} otherwise
+     */
+    boolean isDead();
 }

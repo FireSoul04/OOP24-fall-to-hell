@@ -4,6 +4,7 @@ import it.unibo.falltohell.model.api.EnemyFactory;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
+import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.TestCharacter;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +25,9 @@ public class TestEnemy1Movement {
         fact = new EnemyFactoryImpl();
         chara1 = new TestCharacter(new Vector2(-100, 0));
         chara2 = new TestCharacter(new Vector2(100, 0));
-        en1 = fact.CreateMonster1(Vector2.zero(), chara1);
-        en2 = fact.CreateMonster1(new Vector2(-30, 0), chara1);
-        en3 = fact.CreateMonster1(new Vector2(-40, 0), chara1);
+        en1 = fact.CreateMonster1(new LevelImpl(), Vector2.zero(), chara1);
+        en2 = fact.CreateMonster1(new LevelImpl(), new Vector2(-30, 0), chara1);
+        en3 = fact.CreateMonster1(new LevelImpl(), new Vector2(-40, 0), chara1);
     }
 
     /*Testing Movement with Monster 1 to far away from Player*/
