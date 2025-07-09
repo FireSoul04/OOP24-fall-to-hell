@@ -1,0 +1,43 @@
+package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff;
+
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
+
+/**
+ * Class that represents a buff associated with the life statistic.
+ * @author Martina Malagoli
+ */
+public class LifeBuff extends BaseBuff{
+
+    private final double buffAmount;
+
+    /**
+     * Initialization of the LifeBuff class.
+     * @param characterStatistics is the set of statistics associated with the character
+     * @param multiplier is the value used to compute the buff amount that should be
+     *                   between 0 and 1
+     */
+    public LifeBuff(final CharacterStatistics characterStatistics, final double multiplier) {
+        super(characterStatistics);
+        if (multiplier > 0 && multiplier <= 1) {
+            this.buffAmount = super.getCharacterStatistics().getLife() * multiplier;
+        } else {
+            throw new IllegalArgumentException("The multiplier should be between the values of 0 and 1");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void apply() {
+        super.getCharacterStatistics().addLife(buffAmount);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove() {
+        super.getCharacterStatistics().subLife(buffAmount);
+    }
+}
