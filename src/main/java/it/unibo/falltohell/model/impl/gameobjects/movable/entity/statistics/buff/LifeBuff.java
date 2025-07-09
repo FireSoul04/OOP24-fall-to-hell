@@ -17,12 +17,8 @@ public class LifeBuff extends BaseBuff{
      *                   between 0 and 1
      */
     public LifeBuff(final CharacterStatistics characterStatistics, final double multiplier) {
-        super(characterStatistics);
-        if (multiplier > 0 && multiplier <= 1) {
-            this.buffAmount = super.getCharacterStatistics().getLife() * multiplier;
-        } else {
-            throw new IllegalArgumentException("The multiplier should be between the values of 0 and 1");
-        }
+        super(characterStatistics, multiplier);
+        this.buffAmount = super.getCharacterStatistics().getFullLife() * multiplier;
     }
 
     /**
