@@ -3,6 +3,15 @@ package it.unibo.falltohell.model.impl;
 import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.api.Level;
 
+/**
+ * Implementation of the logic of the game.
+ * This class initialize all logic relevant parameters, like the current level.
+ *
+ * @author Davide Mancini
+ * @author Martina Malagoli
+ * @author Sara Visani
+ * @author Lorenzo Casadei
+ */
 public class GameImpl implements Game {
 
     private final Level level;
