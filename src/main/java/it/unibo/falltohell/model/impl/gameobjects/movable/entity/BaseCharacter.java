@@ -17,10 +17,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public abstract class BaseCharacter extends EntityImpl implements Character {
 
-    // TODO: Update when statistics are used inside of entity
     private boolean canInteract;
 
-    // TODO: It needs to use a real level where it should be added automatically
     /**
      * Base constructor for a new character.
      * @param position
