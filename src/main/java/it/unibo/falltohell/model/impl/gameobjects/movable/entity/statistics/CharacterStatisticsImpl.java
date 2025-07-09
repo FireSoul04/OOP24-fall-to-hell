@@ -14,7 +14,7 @@ import it.unibo.falltohell.util.Vector2;
 public class CharacterStatisticsImpl extends StatisticsImpl implements CharacterStatistics{
 
 	private double mana;
-	private Vector2 attackSpeed;
+	private double attackSpeed;
 
 	/**
 	 * Create new statistics with the parameters specified.
@@ -25,8 +25,8 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
 	 * @param mana
 	 * @param attackSpeed
 	 */
-	public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final Vector2 attackSpeed) {
-		
+	public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final double attackSpeed) {
+
 		super(life,attack,speed,dimensions);
 		this.mana = mana;
 		this.attackSpeed = attackSpeed;
@@ -49,14 +49,46 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
 	/**
      * {@inheritDoc}
      */
-	public Vector2 getAttackSpeed() {
+	@Override
+	public void addMana(double mana) {
+		this.mana += mana;
+	}
+
+	/**
+     * {@inheritDoc}
+     */
+	@Override
+	public void subMana(double mana) {
+		this.addMana(-mana);
+	}
+
+	/**
+     * {@inheritDoc}
+     */
+	public double getAttackSpeed() {
 		return this.attackSpeed;
 	}
 
 	/**
      * {@inheritDoc}
      */
-	public void setAttackSpeed(final Vector2 attackSpeed) {
+	public void setAttackSpeed(final double attackSpeed) {
 		this.attackSpeed = attackSpeed;
+	}
+
+	/**
+     * {@inheritDoc}
+     */
+	@Override
+	public void addAttackSpeed(double attackSpeed) {
+		this.attackSpeed += attackSpeed;
+	}
+
+	/**
+     * {@inheritDoc}
+     */
+	@Override
+	public void subAttackSpeed(double attackSpeed) {
+		this.addAttackSpeed(-attackSpeed);
 	}
 }

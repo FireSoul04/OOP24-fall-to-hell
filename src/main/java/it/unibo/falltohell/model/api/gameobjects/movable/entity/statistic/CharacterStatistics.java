@@ -21,7 +21,7 @@ public interface CharacterStatistics extends Statistics {
 	/**
 	 * Returns the current mana of the entity.
 	 * <p>
-	 * 
+	 *
 	 * @return the current mana value
 	 */
 	double getMana();
@@ -29,25 +29,57 @@ public interface CharacterStatistics extends Statistics {
 	/**
 	 * Updates the mana of the entity.
 	 * <p>
-	 * 
+	 *
 	 * @param mana the new mana value
 	 */
 	void setMana(double mana);
 
 	/**
+     * Adds a specified amount to the entity's current Mana.
+     * <p>
+     *
+     * @param mana the amount of life to Mana
+     */
+    void addMana(double mana);
+
+    /**
+     * Subtracts a specified amount from the entity's current Mana.
+     * <p>
+     *
+     * @param mana the amount of Mana to subtract
+     */
+    void subMana(double mana);
+
+	/**
 	 * Returns the current attack speed vector of the entity.
 	 * This may influence how quickly the entity can perform attacks.
 	 * <p>
-	 * 
+	 *
 	 * @return the attack speed as a {@link Vector2}
 	 */
-	Vector2 getAttackSpeed();
+	double getAttackSpeed();
 
 	/**
 	 * Updates the attack speed of the entity.
 	 * <p>
-	 * 
+	 *
 	 * @param attackSpeed the new attack speed value
 	 */
-	void setAttackSpeed(Vector2 attackSpeed);
+	void setAttackSpeed(double attackSpeed);
+
+	/**
+     * Adds a specified amount to the entity's current AttackSpeed.
+     * <p>
+     *
+     * @param attackSpeed the amount of AttackSpeed to add
+     */
+    void addAttackSpeed(double attackSpeed);
+
+    /**
+     * Subtracts a specified amount from the entity's current AttackSpeed.
+     * <p>
+     *
+     * @param attackSpeed the amount of AttackSpeed to subtract
+     */
+    void subAttackSpeed(double attackSpeed);
 }

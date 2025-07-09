@@ -20,7 +20,7 @@ public class TestCharacter extends BaseCharacter{
     final private MethodPassiveAbility mPa = this.factory.createMethodPassiveAbility(this);
 
     public TestCharacter(final Level level, final Vector2 position) {
-        super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10), new Dimensions(10, 10), 10, new Vector2(10, 10)));
+        super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10), new Dimensions(10, 10), 10, 10));
         this.stats = (CharacterStatistics)super.getStats();
     }
 

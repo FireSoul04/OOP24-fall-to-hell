@@ -30,14 +30,6 @@ public interface BaseEnemyStatistics extends Statistics {
     Vector2 getInitialPos();
 
     /**
-     * Gets the full (maximum) life of the enemy.
-     * <p>
-     *
-     * @return the max life value
-     */
-    double getFullLife();
-
-    /**
      * Returns the {@link TimerManager} used to manage time-based behaviors like
      * aggro.
      * <p>
