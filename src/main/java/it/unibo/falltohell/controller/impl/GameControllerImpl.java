@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 public class GameControllerImpl implements GameController {
 
     private static final double MAX_UPDATES = 60.0;
+    private static final int WIDTH = 640;
+    private static final int HEIGHT = 360;
 
     private final Logger logger;
 
@@ -43,7 +45,7 @@ public class GameControllerImpl implements GameController {
      */
     public GameControllerImpl() {
         this.model = new GameImpl();
-        this.view = new GameWindowImpl(240, 240);
+        this.view = new GameWindowImpl(WIDTH, HEIGHT);
         this.state = GameState.START;
         this.logger = Logger.getLogger("GameLogger");
     }
