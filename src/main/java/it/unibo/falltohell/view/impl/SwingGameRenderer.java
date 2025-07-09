@@ -50,7 +50,7 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
 		final Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.BLACK);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-		g2.scale(this.window.getScaleX(), this.window.getScaleY());
+		g2.scale(this.window.getScale().x(), this.window.getScale().y());
 
 		// Two rectangles are drawn for debugging purpose only
 		g2.setColor(Color.WHITE);
