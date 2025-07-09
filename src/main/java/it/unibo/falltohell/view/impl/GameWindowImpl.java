@@ -36,7 +36,7 @@ public class GameWindowImpl implements GameWindow {
     }
 
     private void init(final int width, final int height) {
-	    JFrame mainFrame = new JFrame("FTH");
+	    final JFrame mainFrame = new JFrame("FTH");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(width, height);
         mainFrame.getContentPane().add(this.renderer);
