@@ -18,6 +18,38 @@ import it.unibo.falltohell.util.Vector2;
  */
 public interface CharacterStatistics extends Statistics {
 
+	/**
+	 * Returns the current temporary life of the entity.
+	 * <p>
+	 *
+	 * @return the current temporary life value
+	 */
+	double getTemporaryLife();
+
+	/**
+	 * Updates the temporary life of the entity.
+	 * <p>
+	 *
+	 * @param temporaryLife the new temporary life value
+	 */
+	void setTemporaryLife(double temporaryLife);
+
+	/**
+	 * Adds a specified amount to the entity's current temporary life.
+	 * <p>
+	 *
+	 * @param temporaryLife the amount of life to temporary life
+	 */
+	void addTemporaryLife(double temporaryLife);
+
+	/**
+	 * Subtracts a specified amount from the entity's current temporary life.
+	 * <p>
+	 *
+	 * @param temporaryLife the amount of temporary life to subtract
+	 */
+	void subTemporaryLife(double temporaryLife);
+
     /**
      * Gets the initial mana of the entity.
      * <p>
