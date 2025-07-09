@@ -5,8 +5,10 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.BuffManager;
 import it.unibo.falltohell.model.impl.GameEventManager;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.BuffManagerImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
@@ -22,6 +24,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private static final Vector2 JUMP_ACCELERATION_STEP = new Vector2(0.0, -0.125);
 
     private final GameEventManager<String> input;
+    private final BuffManager buffManager;
     private final Vector2 jumpAcceleration;
     private int currentJumpHeight;
     private boolean onGround;
@@ -41,6 +44,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.currentJumpHeight = 0;
         this.jumpAcceleration = JUMP_ACCELERATION_STEP;
         this.input = new GameEventManager<>();
+        this.buffManager = new BuffManagerImpl(level.getTimerManager());
 
         this.input.addCondition("MoveLeft", () -> false);
         this.input.addCondition("MoveRight", () -> true);
@@ -121,5 +125,12 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         if (this.canInteract) {
             interactable.interact();
         }
+    }
+
+    /**
+     * @return buff manager of the character
+     */
+    protected BuffManager getBuffManager() {
+        return this.buffManager;
     }
 }
