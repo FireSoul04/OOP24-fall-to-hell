@@ -68,11 +68,11 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public void update(final double deltaTime) {
-
+        this.model.getLevel().update(deltaTime);
     }
 
     @Override
     public void render() {
-
+        this.view.render();
     }
 }
