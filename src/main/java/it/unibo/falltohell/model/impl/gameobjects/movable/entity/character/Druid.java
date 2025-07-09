@@ -31,15 +31,15 @@ public class Druid extends BaseCharacter {
                     break;
                 case 3:
                     this.stats.addLife(10 * 0.2);
-                    this.stats.setMana(10 * 0.1);
+                    this.stats.addMana(10 * 0.1);
                     break;
                 case 4:
                     this.stats.addLife(10 * 0.25);
-                    this.stats.setMana(10 * 0.15);
+                    this.stats.addMana(10 * 0.15);
                     break;
                 case 5:
                     this.stats.addLife(10 * 0.30);
-                    this.stats.setMana(10 * 0.20);
+                    this.stats.addMana(10 * 0.20);
                     this.setZeroKill();
                     break;
                 default:
