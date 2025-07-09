@@ -20,7 +20,17 @@ public interface Level {
     void removeGameObject(GameObject gameObject);
     
     /**
-     * @param deltaTime 
+     * @param deltaTime the time elapsed since the last update (in seconds)
      */
     void update(double deltaTime);
+
+    /**
+     * @return the timer manager of the level
+     */
+    TimerManager getTimerManager();
+
+    /**
+     * @return the game data of the level
+     */
+    GameData getGameData();
 }
