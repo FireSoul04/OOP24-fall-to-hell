@@ -6,7 +6,7 @@ import it.unibo.falltohell.util.Vector2;
 /**
  * Interface representing the statistics specific to characters.
  * <p>
- * Extends {@link Statistics} and provides additional attributes such as mana
+ * Extends {@link Statistics} and provides additional attributes such as temporary life, mana
  * and attack speed.
  * These values are updatable and relevant to gameplay mechanics such as ability
  * casting and attack timing.
