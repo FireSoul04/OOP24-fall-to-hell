@@ -3,7 +3,14 @@ package it.unibo.falltohell.model.impl;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.model.util.Vector2;
 import java.lang.Math;
-
+/**
+ * Implementation of the {@link GameCamera} interface.
+ * <p>
+ * Represents the camera that follows the player within the game level.
+ * The camera smoothly follows the player position, is clamped within the level boundaries,
+ * and exposes methods to retrieve its position and visible area size.
+ * </p>
+ */
 public class GameCameraImpl implements GameCamera{
     private Vector2 cameraPosition;
     private final double cameraWidth;
@@ -30,21 +37,30 @@ public class GameCameraImpl implements GameCamera{
         this.levelWidth = levelWidth;
         this.levelHeight = levelHeight;
     }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vector2 getCameraPosition() {
         return this.cameraPosition;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getCameraWidth() {
         return this.cameraWidth;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getCameraHeight() {
         return this.cameraHeight;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateCamera(Vector2 playerPosition, double deltaTime) {
         Vector2 targetPosition = new Vector2(
