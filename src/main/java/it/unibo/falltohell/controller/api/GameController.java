@@ -1,5 +1,13 @@
 package it.unibo.falltohell.controller.api;
 
+/**
+ * Interface for a MVC controller dedicated to a game.
+ *
+ * @author Davide Mancini
+ * @author Martina Malagoli
+ * @author Sara Visani
+ * @author Lorenzo Casadei
+ */
 public interface GameController {
     
     /**
