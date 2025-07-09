@@ -2,6 +2,8 @@ package it.unibo.falltohell.view.impl;
 
 import javax.swing.*;
 
+import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.GameWindow;
 
 import java.awt.*;
@@ -22,15 +24,13 @@ public class GameWindowImpl implements GameWindow {
 	private final int width;
     private final int height;
 
-    private double scaleX;
-    private double scaleY;
+    private Vector2 scale;
 
     public GameWindowImpl(final int width, final int height) {
         super();
         this.width = width;
         this.height = height;
-        this.scaleX = 1.0;
-        this.scaleY = 1.0;
+        this.scale = Vector2.one();
         this.renderer = new SwingGameRenderer(this);
         this.init(width, height);
     }
@@ -41,15 +41,14 @@ public class GameWindowImpl implements GameWindow {
         mainFrame.setSize(width, height);
         mainFrame.getContentPane().add(this.renderer);
         mainFrame.getContentPane()
-            .setPreferredSize(new Dimension((int) (width * this.scaleX), (int) (height * this.scaleY)));
+            .setPreferredSize(new Dimension((int) (width * this.scale.x()), (int) (height * this.scale.y())));
         mainFrame.setVisible(true);
         mainFrame.pack();
         mainFrame.setMinimumSize(mainFrame.getSize());
         mainFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(final ComponentEvent e) {
                 final Dimension d = ((JFrame) e.getComponent()).getContentPane().getSize();
-                scaleX = d.getWidth() / (double) width;
-                scaleY = d.getHeight() / (double) height;
+                scale = new Vector2(d.getWidth() / (double) width, d.getHeight() / (double) height);
             }
         });
     }
@@ -90,15 +89,15 @@ public class GameWindowImpl implements GameWindow {
      * {@inheritDoc}
      */
     @Override
-    public double getScaleX() {
-        return this.scaleX;
+    public Dimensions getDimensions() {
+        return new Dimensions(width, height);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public double getScaleY() {
-        return this.scaleY;
+    public Vector2 getScale() {
+        return this.scale;
     }
 }

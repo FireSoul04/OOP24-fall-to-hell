@@ -1,5 +1,8 @@
 package it.unibo.falltohell.view.api;
 
+import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
+
 /**
  * Interface of the main window for the game.
  *
@@ -31,12 +34,12 @@ public interface GameWindow {
     int getHeight();
 
     /**
-     * @return percentage of current width
+     * @return the dimensions of the window
      */
-    double getScaleX();
+    Dimensions getDimensions();
 
     /**
-     * @return percentage of current height
+     * @return percentage of current width and height
      */
-    double getScaleY();
+    Vector2 getScale();
 }
