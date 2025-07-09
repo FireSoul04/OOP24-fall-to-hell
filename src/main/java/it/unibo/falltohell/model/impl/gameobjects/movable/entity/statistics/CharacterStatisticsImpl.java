@@ -18,6 +18,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
     private final double initialAttackSpeed;
     private double temporaryLife;
     private double mana;
+    private double temporaryMana;
     private double attackSpeed;
 
     /**
@@ -34,6 +35,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
 
         super(life, attack, speed, dimensions);
         this.temporaryLife = 0;
+        this.temporaryMana = 0;
         this.initialMana = mana;
         this.mana = mana;
         this.initialAttackSpeed = attackSpeed;
@@ -108,6 +110,38 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
     @Override
     public void subMana(double mana) {
         this.addMana(-mana);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getTemporaryMana() {
+        return this.temporaryMana;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTemporaryMana(double temporaryMana) {
+        this.temporaryMana = temporaryMana;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addTemporaryMana(double temporaryMana) {
+        this.temporaryMana = this.temporaryMana + temporaryMana;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void subTemporaryMana(double temporaryMana) {
+        this.addTemporaryMana(-temporaryMana);
     }
 
     /**
