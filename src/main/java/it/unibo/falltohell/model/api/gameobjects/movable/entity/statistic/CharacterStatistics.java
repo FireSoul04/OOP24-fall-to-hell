@@ -6,7 +6,7 @@ import it.unibo.falltohell.util.Vector2;
 /**
  * Interface representing the statistics specific to characters.
  * <p>
- * Extends {@link Statistics} and provides additional attributes such as temporary life, mana
+ * Extends {@link Statistics} and provides additional attributes such as temporary life, mana, temporary mana
  * and attack speed.
  * These values are updatable and relevant to gameplay mechanics such as ability
  * casting and attack timing.
@@ -38,7 +38,7 @@ public interface CharacterStatistics extends Statistics {
 	 * Adds a specified amount to the entity's current temporary life.
 	 * <p>
 	 *
-	 * @param temporaryLife the amount of life to temporary life
+	 * @param temporaryLife the amount of temporary life to add
 	 */
 	void addTemporaryLife(double temporaryLife);
 
@@ -78,7 +78,7 @@ public interface CharacterStatistics extends Statistics {
      * Adds a specified amount to the entity's current Mana.
      * <p>
      *
-     * @param mana the amount of life to Mana
+     * @param mana the amount of Mana to add
      */
     void addMana(double mana);
 
@@ -89,6 +89,38 @@ public interface CharacterStatistics extends Statistics {
      * @param mana the amount of Mana to subtract
      */
     void subMana(double mana);
+
+    /**
+     * Returns the current temporary mana of the entity.
+     * <p>
+     *
+     * @return the current temporary mana value
+     */
+    double getTemporaryMana();
+
+    /**
+     * Updates the temporary mana of the entity.
+     * <p>
+     *
+     * @param temporaryMana the new temporary mana value
+     */
+    void setTemporaryMana(double temporaryMana);
+
+    /**
+     * Adds a specified amount to the entity's current temporary mana.
+     * <p>
+     *
+     * @param temporaryMana the amount of temporary mana to add
+     */
+    void addTemporaryMana(double temporaryMana);
+
+    /**
+     * Subtracts a specified amount from the entity's current temporary mana.
+     * <p>
+     *
+     * @param temporaryMana the amount of temporary mana to subtract
+     */
+    void subTemporaryMana(double temporaryMana);
 
     /**
      * Gets the initial attack speed of the entity.

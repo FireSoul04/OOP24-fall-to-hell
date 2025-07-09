@@ -89,7 +89,7 @@ public interface Statistics {
      * Subtracts a specified amount from the entity's current attack.
      * <p>
      *
-     * @param life the amount of life to subtract
+     * @param attack the amount of life to subtract
      */
     void subAttack(double attack);
 
