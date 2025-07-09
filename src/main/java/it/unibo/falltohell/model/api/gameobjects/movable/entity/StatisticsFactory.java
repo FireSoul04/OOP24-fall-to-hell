@@ -47,11 +47,11 @@ public interface StatisticsFactory {
          * @param speed       the speed represented as a {@link Vector2}
          * @param dimensions  the size of the character as {@link Dimensions}
          * @param mana        the mana points of the character
-         * @param attackSpeed the attack speed as a {@link Vector2}
+         * @param attackSpeed the attack speed value
          * @return a new instance of {@link CharacterStatistics}
          */
         CharacterStatistics createCharacterStatistic(double life, double attack, Vector2 speed,
-                        Dimensions dimensions, double mana, Vector2 attackSpeed);
+                        Dimensions dimensions, double mana, double attackSpeed);
 
         /**
          * Creates a {@link BaseEnemyStatistics} instance for a base enemy type.

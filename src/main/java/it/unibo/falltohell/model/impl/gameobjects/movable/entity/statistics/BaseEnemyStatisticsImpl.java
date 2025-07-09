@@ -29,7 +29,6 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     static private int STANDARD_NO_AGGRO = 1000;
 
     private final Vector2 initialPosition;
-    private final double fullLife;
     private final int noAggro;
     private final double regen;
     private final double senseDistance;
@@ -59,7 +58,6 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
             final Character character, final Optional<Double> regen, final Optional<Double> senseDistance) {
         super(life, attack, speed, dimension);
         this.initialPosition = position;
-        this.fullLife = life;
         this.noAggro = noAggro.filter(a -> a >= 0).orElse(STANDARD_NO_AGGRO);
         this.character = character;
         this.regen = regen.filter(r -> r >= 0.05 && r <= 0.9).orElse(STANDARD_REGEN);
@@ -72,14 +70,6 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     @Override
     public Vector2 getInitialPos() {
         return this.initialPosition;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getFullLife() {
-        return this.fullLife;
     }
 
     /**

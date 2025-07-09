@@ -32,7 +32,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
      */
     @Override
     public CharacterStatistics createCharacterStatistic(final double life, final double attack, final Vector2 speed,
-            final Dimensions dimensions, final double mana, final Vector2 attackSpeed) {
+            final Dimensions dimensions, final double mana, final double attackSpeed) {
         return new CharacterStatisticsImpl(life, attack, speed, dimensions, mana, attackSpeed);
     }
 

@@ -10,11 +10,14 @@ import it.unibo.falltohell.util.Vector2;
  * @author Davide Mancini
  */
 public class StatisticsImpl implements Statistics{
-    
+
+    private final double fullLife;
+    private final double initialAttack;
+    private final Vector2 initialSpeed;
     private double life;
 	private double attack;
 	private Vector2 speed;
-    final private Dimensions dimensions;
+    private final Dimensions dimensions;
 
     /**
      * Create new statistics with the parameters specified.
@@ -24,10 +27,21 @@ public class StatisticsImpl implements Statistics{
      * @param dimension
      */
     protected StatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimension){
+        this.fullLife = life;
         this.life = life;
+        this.initialAttack = attack;
         this.attack = attack;
+        this.initialSpeed = speed;
         this.speed = speed;
         this.dimensions = dimension;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getFullLife() {
+        return this.fullLife;
     }
 
     /**
@@ -65,6 +79,14 @@ public class StatisticsImpl implements Statistics{
     /**
      * {@inheritDoc}
      */
+    @Override
+    public double getInitialAttack() {
+        return this.initialAttack;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public double getAttack() {
 		return this.attack;
@@ -81,6 +103,30 @@ public class StatisticsImpl implements Statistics{
     /**
      * {@inheritDoc}
      */
+    @Override
+    public void addAttack(double attack) {
+        this.attack += attack;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void subAttack(double attack) {
+        this.addAttack(-attack);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Vector2 getInitialSpeed() {
+        return this.initialSpeed;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public Vector2 getSpeed() {
 		return this.speed;
@@ -93,6 +139,22 @@ public class StatisticsImpl implements Statistics{
 	public void setSpeed(final Vector2 speed) {
 		this.speed = speed;
 	}
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addSpeed(double speedX, double speedY) {
+        this.speed.add(new Vector2(speedX, speedY));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void subSpeed(double speedX, double speedY) {
+        this.addSpeed(-speedX, -speedY);
+    }
 
     /**
      * {@inheritDoc}

@@ -13,7 +13,7 @@ import it.unibo.falltohell.util.Vector2;
  * It extends {@link MovableImpl} and stores a reference to {@link Statistics}
  * to manage
  * entity attributes like health, speed, and dimensions.
- * 
+ *
  * @author Sara Visani
  */
 
@@ -24,7 +24,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     /**
      * Constructs an {@code EntityImpl} with the given parameters.
      * <p>
-     * 
+     *
      * @param level    the {@link Level} where the entity exists
      * @param position the {@link Vector2} position of the entity
      * @param collider the {@link Collider} used for physics and collision
@@ -59,6 +59,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     @Override
     public boolean isDead() {
         if (this.stats.getLife() <= 0) {
+            super.getLevel().removeGameObject(this);
             return true;
         }
         return false;
