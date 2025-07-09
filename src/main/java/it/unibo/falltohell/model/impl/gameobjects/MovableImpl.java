@@ -4,7 +4,7 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Vector2;
 public class MovableImpl extends GameObjectImpl implements Movable{
     private double speedX;
     private double speedY;

@@ -2,7 +2,7 @@ package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Vector2;
 
 /**
  * Class that represents the sprite associated to a specific drawable object and

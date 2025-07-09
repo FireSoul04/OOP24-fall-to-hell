@@ -10,11 +10,10 @@ import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
-import it.unibo.falltohell.model.util.Dimensions;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;

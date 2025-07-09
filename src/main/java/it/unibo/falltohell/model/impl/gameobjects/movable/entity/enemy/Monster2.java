@@ -11,8 +11,8 @@ import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.ProjectileImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
-import it.unibo.falltohell.model.util.Dimensions;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
 
 /**
  * Implements abstract class Enemies, creates second type for enemies

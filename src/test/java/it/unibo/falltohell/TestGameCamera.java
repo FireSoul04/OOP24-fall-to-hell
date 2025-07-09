@@ -1,7 +1,7 @@
 package it.unibo.falltohell;
 
 import it.unibo.falltohell.model.impl.GameCameraImpl;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

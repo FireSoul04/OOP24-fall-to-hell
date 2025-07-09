@@ -8,8 +8,8 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
-import it.unibo.falltohell.model.util.Dimensions;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
 
 /**
  * Abstract class for all Enemies, set the base enemy

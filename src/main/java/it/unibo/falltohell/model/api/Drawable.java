@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api;
 
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Vector2;
 
 /**
  * Interface to handle information about the rendering of a drawable object.

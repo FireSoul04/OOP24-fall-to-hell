@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Vector2;
 import java.lang.Math;
 
 public class GameCameraImpl implements GameCamera{

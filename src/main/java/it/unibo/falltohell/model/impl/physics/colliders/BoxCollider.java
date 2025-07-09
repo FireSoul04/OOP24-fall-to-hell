@@ -1,8 +1,8 @@
 package it.unibo.falltohell.model.impl.physics.colliders;
 
 import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.util.Dimensions;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
 
 /**
  * Class for a collider with a boxed shape.

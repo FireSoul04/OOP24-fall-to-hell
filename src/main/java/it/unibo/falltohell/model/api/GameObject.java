@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.api;
 
 import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Vector2;
 
 public interface GameObject {
     

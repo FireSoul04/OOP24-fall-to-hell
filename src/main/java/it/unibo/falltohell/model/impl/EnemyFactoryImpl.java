@@ -4,7 +4,7 @@ import it.unibo.falltohell.model.api.EnemyFactory;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Monster1;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Monster2;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 /**

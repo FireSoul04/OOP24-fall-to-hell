@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.util;
+package it.unibo.falltohell.util;
 
 /**
  * Class for representing a vector2 as a point in the 2d plane.

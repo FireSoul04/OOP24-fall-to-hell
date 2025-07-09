@@ -9,8 +9,8 @@ import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.SavePoint;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
-import it.unibo.falltohell.model.util.Dimensions;
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

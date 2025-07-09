@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.util;
+package it.unibo.falltohell.util;
 
 /**
  * Class for representing dimensions of a rectangle.

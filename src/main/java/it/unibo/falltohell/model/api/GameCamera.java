@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api;
 
-import it.unibo.falltohell.model.util.Vector2;
+import it.unibo.falltohell.util.Vector2;
 /**
  * Represents a game camera that follows the player and determines the visible area of the level
  */
