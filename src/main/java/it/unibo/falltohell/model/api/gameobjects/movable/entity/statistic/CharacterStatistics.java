@@ -19,6 +19,14 @@ import it.unibo.falltohell.util.Vector2;
 public interface CharacterStatistics extends Statistics {
 
 	/**
+     * Gets the initial mana of the entity.
+     * <p>
+     *
+     * @return the initial mana value
+     */
+    double getInitialMana();
+
+	/**
 	 * Returns the current mana of the entity.
 	 * <p>
 	 *
@@ -51,11 +59,19 @@ public interface CharacterStatistics extends Statistics {
     void subMana(double mana);
 
 	/**
-	 * Returns the current attack speed vector of the entity.
+     * Gets the initial attack speed of the entity.
+     * <p>
+     *
+     * @return the initial attack speed value
+     */
+    double getInitialAttackSpeed();
+
+	/**
+	 * Returns the current attack speed of the entity.
 	 * This may influence how quickly the entity can perform attacks.
 	 * <p>
 	 *
-	 * @return the attack speed as a {@link Vector2}
+	 * @return the attack speed
 	 */
 	double getAttackSpeed();
 

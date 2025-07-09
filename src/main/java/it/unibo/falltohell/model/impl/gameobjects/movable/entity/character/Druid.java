@@ -24,22 +24,22 @@ public class Druid extends BaseCharacter {
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
             switch (this.kills) {
                 case 1:
-                    this.stats.addLife(10 * 0.1);
+                    this.stats.addLife(this.stats.getFullLife() * 0.1);
                     break;
                 case 2:
-                    this.stats.addLife(10 * 0.15);
+                    this.stats.addLife(this.stats.getFullLife() * 0.15);
                     break;
                 case 3:
-                    this.stats.addLife(10 * 0.2);
-                    this.stats.addMana(10 * 0.1);
+                    this.stats.addLife(this.stats.getFullLife() * 0.2);
+                    this.stats.addMana(this.stats.getInitialMana() * 0.1);
                     break;
                 case 4:
-                    this.stats.addLife(10 * 0.25);
-                    this.stats.addMana(10 * 0.15);
+                    this.stats.addLife(this.stats.getFullLife() * 0.25);
+                    this.stats.addMana(this.stats.getInitialMana() * 0.15);
                     break;
                 case 5:
-                    this.stats.addLife(10 * 0.30);
-                    this.stats.addMana(10 * 0.20);
+                    this.stats.addLife(this.stats.getFullLife() * 0.30);
+                    this.stats.addMana(this.stats.getInitialMana() * 0.20);
                     this.setZeroKill();
                     break;
                 default:

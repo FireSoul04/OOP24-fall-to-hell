@@ -13,7 +13,7 @@ import it.unibo.falltohell.util.Vector2;
 public interface Statistics {
 
     /**
-     * Gets the full (maximum) life of the enemy.
+     * Gets the full (maximum) life of the entity.
      * <p>
      *
      * @return the max life value
@@ -53,6 +53,14 @@ public interface Statistics {
     void subLife(double life);
 
     /**
+     * Gets the initial attack of the entity.
+     * <p>
+     *
+     * @return the initial attack value
+     */
+    double getInitialAttack();
+
+    /**
      * Returns the current attack power of the entity.
      * <p>
      *
@@ -83,6 +91,14 @@ public interface Statistics {
      * @param life the amount of life to subtract
      */
     void subAttack(double attack);
+
+    /**
+     * Gets the initial speed of the entity.
+     * <p>
+     *
+     * @return the initial speed value
+     */
+    Vector2 getInitialSpeed();
 
     /**
      * Returns the current movement speed of the entity.

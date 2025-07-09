@@ -13,6 +13,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class CharacterStatisticsImpl extends StatisticsImpl implements CharacterStatistics{
 
+	private final double initialMana;
+	private final double initialAttackSpeed;
 	private double mana;
 	private double attackSpeed;
 
@@ -28,8 +30,18 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
 	public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final double attackSpeed) {
 
 		super(life,attack,speed,dimensions);
+		this.initialMana = mana;
 		this.mana = mana;
+		this.initialAttackSpeed = attackSpeed;
 		this.attackSpeed = attackSpeed;
+	}
+
+	/**
+     * {@inheritDoc}
+     */
+	@Override
+	public double getInitialMana() {
+		return this.initialMana;
 	}
 
 	/**
@@ -60,6 +72,14 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
 	@Override
 	public void subMana(double mana) {
 		this.addMana(-mana);
+	}
+
+	/**
+     * {@inheritDoc}
+     */
+	@Override
+	public double getInitialAttackSpeed() {
+		return this.initialAttackSpeed;
 	}
 
 	/**
