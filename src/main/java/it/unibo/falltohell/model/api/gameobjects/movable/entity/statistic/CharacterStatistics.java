@@ -6,19 +6,51 @@ import it.unibo.falltohell.util.Vector2;
 /**
  * Interface representing the statistics specific to characters.
  * <p>
- * Extends {@link Statistics} and provides additional attributes such as mana
+ * Extends {@link Statistics} and provides additional attributes such as temporary life, mana
  * and attack speed.
  * These values are updatable and relevant to gameplay mechanics such as ability
  * casting and attack timing.
  *
+ * @author Davide Mancini
+ * @author Sara Visani
  * @see Statistics
  * @see Vector2
- *
- * @author Davide Mancini, Sara Visani
  */
 public interface CharacterStatistics extends Statistics {
 
 	/**
+	 * Returns the current temporary life of the entity.
+	 * <p>
+	 *
+	 * @return the current temporary life value
+	 */
+	double getTemporaryLife();
+
+	/**
+	 * Updates the temporary life of the entity.
+	 * <p>
+	 *
+	 * @param temporaryLife the new temporary life value
+	 */
+	void setTemporaryLife(double temporaryLife);
+
+	/**
+	 * Adds a specified amount to the entity's current temporary life.
+	 * <p>
+	 *
+	 * @param temporaryLife the amount of life to temporary life
+	 */
+	void addTemporaryLife(double temporaryLife);
+
+	/**
+	 * Subtracts a specified amount from the entity's current temporary life.
+	 * <p>
+	 *
+	 * @param temporaryLife the amount of temporary life to subtract
+	 */
+	void subTemporaryLife(double temporaryLife);
+
+    /**
      * Gets the initial mana of the entity.
      * <p>
      *
@@ -26,23 +58,23 @@ public interface CharacterStatistics extends Statistics {
      */
     double getInitialMana();
 
-	/**
-	 * Returns the current mana of the entity.
-	 * <p>
-	 *
-	 * @return the current mana value
-	 */
-	double getMana();
+    /**
+     * Returns the current mana of the entity.
+     * <p>
+     *
+     * @return the current mana value
+     */
+    double getMana();
 
-	/**
-	 * Updates the mana of the entity.
-	 * <p>
-	 *
-	 * @param mana the new mana value
-	 */
-	void setMana(double mana);
+    /**
+     * Updates the mana of the entity.
+     * <p>
+     *
+     * @param mana the new mana value
+     */
+    void setMana(double mana);
 
-	/**
+    /**
      * Adds a specified amount to the entity's current Mana.
      * <p>
      *
@@ -58,7 +90,7 @@ public interface CharacterStatistics extends Statistics {
      */
     void subMana(double mana);
 
-	/**
+    /**
      * Gets the initial attack speed of the entity.
      * <p>
      *
@@ -66,24 +98,24 @@ public interface CharacterStatistics extends Statistics {
      */
     double getInitialAttackSpeed();
 
-	/**
-	 * Returns the current attack speed of the entity.
-	 * This may influence how quickly the entity can perform attacks.
-	 * <p>
-	 *
-	 * @return the attack speed
-	 */
-	double getAttackSpeed();
+    /**
+     * Returns the current attack speed of the entity.
+     * This may influence how quickly the entity can perform attacks.
+     * <p>
+     *
+     * @return the attack speed
+     */
+    double getAttackSpeed();
 
-	/**
-	 * Updates the attack speed of the entity.
-	 * <p>
-	 *
-	 * @param attackSpeed the new attack speed value
-	 */
-	void setAttackSpeed(double attackSpeed);
+    /**
+     * Updates the attack speed of the entity.
+     * <p>
+     *
+     * @param attackSpeed the new attack speed value
+     */
+    void setAttackSpeed(double attackSpeed);
 
-	/**
+    /**
      * Adds a specified amount to the entity's current AttackSpeed.
      * <p>
      *

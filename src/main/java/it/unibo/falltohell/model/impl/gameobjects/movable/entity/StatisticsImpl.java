@@ -5,28 +5,30 @@ import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Class containing implementation for statistics
+ * Class containing implementation for statistics.
  *
  * @author Davide Mancini
+ * @author Sara Visani
  */
-public class StatisticsImpl implements Statistics{
+public class StatisticsImpl implements Statistics {
 
     private final double fullLife;
     private final double initialAttack;
     private final Vector2 initialSpeed;
     private double life;
-	private double attack;
-	private Vector2 speed;
+    private double attack;
+    private Vector2 speed;
     private final Dimensions dimensions;
 
     /**
      * Create new statistics with the parameters specified.
+     *
      * @param life
      * @param attack
      * @param speed
      * @param dimension
      */
-    protected StatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimension){
+    protected StatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimension) {
         this.fullLife = life;
         this.life = life;
         this.initialAttack = attack;
@@ -48,17 +50,17 @@ public class StatisticsImpl implements Statistics{
      * {@inheritDoc}
      */
     @Override
-	public double getLife() {
-		return this.life;
-	}
+    public double getLife() {
+        return this.life;
+    }
 
     /**
      * {@inheritDoc}
      */
-	@Override
-	public void setLife(final double life) {
-		this.life = life;
-	}
+    @Override
+    public void setLife(final double life) {
+        this.life = life;
+    }
 
     /**
      * {@inheritDoc}
@@ -72,7 +74,7 @@ public class StatisticsImpl implements Statistics{
      * {@inheritDoc}
      */
     @Override
-    public void subLife(final double life){
+    public void subLife(final double life) {
         this.addLife(-life);
     }
 
@@ -87,18 +89,18 @@ public class StatisticsImpl implements Statistics{
     /**
      * {@inheritDoc}
      */
-	@Override
-	public double getAttack() {
-		return this.attack;
-	}
+    @Override
+    public double getAttack() {
+        return this.attack;
+    }
 
     /**
      * {@inheritDoc}
      */
-	@Override
-	public void setAttack(final double attack) {
-		this.attack = attack;
-	}
+    @Override
+    public void setAttack(final double attack) {
+        this.attack = attack;
+    }
 
     /**
      * {@inheritDoc}
@@ -127,18 +129,18 @@ public class StatisticsImpl implements Statistics{
     /**
      * {@inheritDoc}
      */
-	@Override
-	public Vector2 getSpeed() {
-		return this.speed;
-	}
+    @Override
+    public Vector2 getSpeed() {
+        return this.speed;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-	public void setSpeed(final Vector2 speed) {
-		this.speed = speed;
-	}
+    public void setSpeed(final Vector2 speed) {
+        this.speed = speed;
+    }
 
     /**
      * {@inheritDoc}

@@ -10,105 +10,141 @@ import it.unibo.falltohell.util.Vector2;
  * Every statistic is updatable.
  *
  * @author Davide Mancini
+ * @author Sara Visani
  */
-public class CharacterStatisticsImpl extends StatisticsImpl implements CharacterStatistics{
+public class CharacterStatisticsImpl extends StatisticsImpl implements CharacterStatistics {
 
-	private final double initialMana;
-	private final double initialAttackSpeed;
-	private double mana;
-	private double attackSpeed;
+    private final double initialMana;
+    private final double initialAttackSpeed;
+    private double temporaryLife;
+    private double mana;
+    private double attackSpeed;
 
-	/**
-	 * Create new statistics with the parameters specified.
-	 * @param life
-	 * @param attack
-	 * @param speed
-	 * @param dimensions
-	 * @param mana
-	 * @param attackSpeed
-	 */
-	public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final double attackSpeed) {
+    /**
+     * Create new statistics with the parameters specified.
+     *
+     * @param life
+     * @param attack
+     * @param speed
+     * @param dimensions
+     * @param mana
+     * @param attackSpeed
+     */
+    public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final double attackSpeed) {
 
-		super(life,attack,speed,dimensions);
-		this.initialMana = mana;
-		this.mana = mana;
-		this.initialAttackSpeed = attackSpeed;
-		this.attackSpeed = attackSpeed;
-	}
+        super(life, attack, speed, dimensions);
+        this.temporaryLife = 0;
+        this.initialMana = mana;
+        this.mana = mana;
+        this.initialAttackSpeed = attackSpeed;
+        this.attackSpeed = attackSpeed;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	@Override
-	public double getInitialMana() {
-		return this.initialMana;
-	}
+    @Override
+    public double getTemporaryLife() {
+        return this.temporaryLife;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	public double getMana() {
-		return this.mana;
-	}
+    @Override
+    public void setTemporaryLife(double temporaryLife) {
+        this.temporaryLife = temporaryLife;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	public void setMana(final double mana) {
-		this.mana = mana;
-	}
+    @Override
+    public void addTemporaryLife(double temporaryLife) {
+        this.temporaryLife = this.temporaryLife + temporaryLife;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	@Override
-	public void addMana(double mana) {
-		this.mana += mana;
-	}
+    @Override
+    public void subTemporaryLife(double temporaryLife) {
+        this.addTemporaryLife(-temporaryLife);
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	@Override
-	public void subMana(double mana) {
-		this.addMana(-mana);
-	}
+    @Override
+    public double getInitialMana() {
+        return this.initialMana;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	@Override
-	public double getInitialAttackSpeed() {
-		return this.initialAttackSpeed;
-	}
+    public double getMana() {
+        return this.mana;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	public double getAttackSpeed() {
-		return this.attackSpeed;
-	}
+    public void setMana(final double mana) {
+        this.mana = mana;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	public void setAttackSpeed(final double attackSpeed) {
-		this.attackSpeed = attackSpeed;
-	}
+    @Override
+    public void addMana(double mana) {
+        this.mana += mana;
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	@Override
-	public void addAttackSpeed(double attackSpeed) {
-		this.attackSpeed += attackSpeed;
-	}
+    @Override
+    public void subMana(double mana) {
+        this.addMana(-mana);
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
-	@Override
-	public void subAttackSpeed(double attackSpeed) {
-		this.addAttackSpeed(-attackSpeed);
-	}
+    @Override
+    public double getInitialAttackSpeed() {
+        return this.initialAttackSpeed;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public double getAttackSpeed() {
+        return this.attackSpeed;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setAttackSpeed(final double attackSpeed) {
+        this.attackSpeed = attackSpeed;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addAttackSpeed(double attackSpeed) {
+        this.attackSpeed += attackSpeed;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void subAttackSpeed(double attackSpeed) {
+        this.addAttackSpeed(-attackSpeed);
+    }
 }
