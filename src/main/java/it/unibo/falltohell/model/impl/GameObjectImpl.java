@@ -13,8 +13,10 @@ public class GameObjectImpl implements GameObject {
     private double widthSize;
     private double heightSize;
     private Collider collider;
+    private Level level;
+    
 
-    public GameObjectImpl(Level level, Vector2 position, double width, double height, Collider collider) {
+    public GameObjectImpl(Level lv, Vector2 position, double width, double height, Collider collider) {
         this.pos = position;
         this.width = width;
         this.height = height;
@@ -22,9 +24,10 @@ public class GameObjectImpl implements GameObject {
         this.widthSize = width * GameObject.TILE_SIZE;
         this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
-        level.addGameObject(this);
+        lv.addGameObject(this);
+        this.level = lv;
     }
-    public GameObjectImpl(Level level, Vector2 position, double width, double height,boolean isSolid,Collider collider) {
+    public GameObjectImpl(Level lv, Vector2 position, double width, double height, boolean isSolid, Collider collider) {
         this.pos = position;
         this.width = width;
         this.height = height;
@@ -32,7 +35,8 @@ public class GameObjectImpl implements GameObject {
         this.widthSize = width * GameObject.TILE_SIZE;
         this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
-        level.addGameObject(this);
+        lv.addGameObject(this);
+        this.level = lv;
     }
     public Vector2 getPosition(){
         return this.pos;
@@ -65,5 +69,8 @@ public class GameObjectImpl implements GameObject {
     }
     public void onCollision(GameObject other, Vector2 direction){
 
+    }
+    public Level getLevel(){
+        return this.level;
     }
 }

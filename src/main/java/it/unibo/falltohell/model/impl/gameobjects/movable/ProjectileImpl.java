@@ -26,14 +26,21 @@ public class ProjectileImpl extends MovableImpl implements Projectile{
     public void update(double deltaTime) {
         if (!hit) {
             super.update(deltaTime);
+            this.onUpdate(deltaTime);
         }
+    }
+    protected void onUpdate(double deltaTime) {
+        // Default: do nothing
     }
     @Override
     public void onCollision(GameObject other) {
         if (other != this && other.isSolid() && !hit) {
             this.hit = true;
-            
+            this.onProjectileHit(other);
         }
+    }
+    protected void onProjectileHit(GameObject other) {
+        // Default: do nothing
     }
 
 }
