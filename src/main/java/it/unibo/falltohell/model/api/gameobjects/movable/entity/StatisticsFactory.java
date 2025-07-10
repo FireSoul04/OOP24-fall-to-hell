@@ -136,4 +136,6 @@ public interface StatisticsFactory {
          */
         RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
                         Vector2 position,  Character character, long points, ParamBuilderOptional optionalParams,double projectileAttack,Vector2 projectileVelocity, Dimensions projectileDimensions, double distance, int timeAttack);
+
+        ParamBuilderOptional createOptional();
 }

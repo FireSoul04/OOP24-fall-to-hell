@@ -53,9 +53,11 @@ public class Tengu extends BaseEnemy {
      *                    with
      */
     public Tengu(final Level level, final Vector2 initialCord, final Character character) {
-        super(level, new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY,
-                DIMENSIONS, initialCord, Optional.empty(), character, Optional.of(REGEN_STAT),
-                Optional.of(CHAR_DISTANCE), 10, DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME));
+        super(level,
+                new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
+                        initialCord, character, 10, new StatisticFactoryImpl()
+                                .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
+                        DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME));
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 

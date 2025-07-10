@@ -11,6 +11,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.builde
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.CharacterStatBuilder;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.GroundEnemyStatBuilderImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.LongRangeStatBuilderImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.ParamBuilderOptionalImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.RestrictedGrEnStatImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.RestrictedLongRangeBuilderImpl;
 import it.unibo.falltohell.util.Dimensions;
@@ -156,6 +157,14 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                 }
 
                 return builder.build();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public ParamBuilderOptional createOptional(){
+                return new ParamBuilderOptionalImpl();
         }
 
 }
