@@ -59,10 +59,12 @@ public class Tengu extends BaseEnemy {
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
-        this.stats.getTm().addTimer(this.stats.getAttackName(), new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
+        final String name = this.stats.getAttackName() + super.getCountAttack();
+        super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
             this.attack();
-            this.stats.getTm().restartTimer(this.stats.getAttackName());
+            super.getLevel().getTimerManager().restartTimer(name);
         }));
+        super.incrementCountAttack();
     }
 
     /**
