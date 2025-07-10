@@ -14,6 +14,7 @@ import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -33,6 +34,7 @@ class TestCollisions {
     private final Level fakeLevel = new LevelImpl();
 
     private boolean collision;
+    private boolean exitedCollision;
     private Vector2 direction;
 
     private final Movable dummy1 = new MovableImpl(
@@ -48,6 +50,10 @@ class TestCollisions {
         public void onCollision(final GameObject other, final Vector2 dir) {
             collision = true;
             direction = dir;
+        }
+        @Override
+        public void onCollisionExit(GameObject other, Vector2 direction) {
+            exitedCollision = true;
         }
     };
     private final GameObject dummy2 = new MovableImpl(
@@ -77,6 +83,7 @@ class TestCollisions {
     @BeforeEach
     void initialize() {
         collision = false;
+        exitedCollision = false;
         direction = Vector2.zero();
         dummy1.setPosition(Vector2.zero());
     }
@@ -86,10 +93,11 @@ class TestCollisions {
      * Uses a number of steps to determine if a collision is going to happen.
      * If it happens, collision and direction are set accordingly.
      * @param level where it needs to check collisions
+     * @param additionalStopCondition if a test needs an additional condition for concluding early
      */
-    void baseCollisionTest(final Level level) {
+    void baseCollisionTest(final Level level, final Supplier<Boolean> additionalStopCondition) {
         int steps = 0;
-        while (steps < STEPS && !collision) {
+        while (steps < STEPS && additionalStopCondition.get()) {
             level.update(1.0);
             steps++;
         }
@@ -102,8 +110,9 @@ class TestCollisions {
         block.setPosition(blockPosition);
         level.addGameObject(dummy1);
         level.addGameObject(block);
-        baseCollisionTest(level);
+        baseCollisionTest(level, () -> true);
         assertTrue(collision, "Dummy should collide in 500 steps");
+        assertTrue(exitedCollision, "Dummy should have exited collision");
     }
 
     @Test
@@ -112,8 +121,9 @@ class TestCollisions {
         dummy2.setPosition(new Vector2(STEPS / 2.0, STEPS / 2.0));
         level.addGameObject(dummy1);
         level.addGameObject(dummy2);
-        baseCollisionTest(level);
+        baseCollisionTest(level, () -> true);
         assertTrue(collision, "Dummy should collide in 500 steps");
+        assertTrue(exitedCollision, "Dummy should have exited collision");
     }
 
     @Test
@@ -123,8 +133,9 @@ class TestCollisions {
         block.setPosition(blockPosition);
         level.addGameObject(dummy1);
         level.addGameObject(block);
-        baseCollisionTest(level);
+        baseCollisionTest(level, () -> true);
         assertFalse(collision, "Dummy should not collide");
+        assertFalse(exitedCollision, "Dummy should have never collided");
     }
 
     @Test
@@ -135,13 +146,13 @@ class TestCollisions {
         final Level testCollisionDirectionXLevel = new LevelImpl();
         testCollisionDirectionXLevel.addGameObject(dummy1);
         testCollisionDirectionXLevel.addGameObject(block);
-        baseCollisionTest(testCollisionDirectionXLevel);
+        baseCollisionTest(testCollisionDirectionXLevel, () -> !collision);
         assertEquals(direction, Vector2.right(), "Collision direction should be right");
         dummy1.setPosition(new Vector2(STEPS, 0));
         collision = false;
         direction = Vector2.zero();
         dummy1.setSpeedX(dummy1.getSpeedX() * -1);
-        baseCollisionTest(testCollisionDirectionXLevel);
+        baseCollisionTest(testCollisionDirectionXLevel, () -> !collision);
         assertEquals(direction, Vector2.left(), "Collision direction should be left");
     }
 
@@ -153,13 +164,13 @@ class TestCollisions {
         final Level testCollisionDirectionYLevel = new LevelImpl();
         testCollisionDirectionYLevel.addGameObject(dummy1);
         testCollisionDirectionYLevel.addGameObject(block);
-        baseCollisionTest(testCollisionDirectionYLevel);
+        baseCollisionTest(testCollisionDirectionYLevel, () -> !collision);
         assertEquals(direction, Vector2.down(), "Collision direction should be down");
         dummy1.setPosition(new Vector2(0, STEPS));
         collision = false;
         direction = Vector2.zero();
         dummy1.setSpeedY(dummy1.getSpeedY() * -1);
-        baseCollisionTest(testCollisionDirectionYLevel);
+        baseCollisionTest(testCollisionDirectionYLevel, () -> !collision);
         assertEquals(direction, Vector2.up(), "Collision direction should be up");
     }
 
@@ -171,14 +182,14 @@ class TestCollisions {
         final Level testCollisionDirectionXandYLevel = new LevelImpl();
         testCollisionDirectionXandYLevel.addGameObject(dummy1);
         testCollisionDirectionXandYLevel.addGameObject(block);
-        baseCollisionTest(testCollisionDirectionXandYLevel);
+        baseCollisionTest(testCollisionDirectionXandYLevel, () -> !collision);
         assertEquals(direction, Vector2.right(), "Collision direction should be right");
         dummy1.setPosition(new Vector2(STEPS, STEPS));
         collision = false;
         direction = Vector2.zero();
         dummy1.setSpeedX(dummy1.getSpeedX() * -1);
         dummy1.setSpeedY(dummy1.getSpeedY() * -1);
-        baseCollisionTest(testCollisionDirectionXandYLevel);
+        baseCollisionTest(testCollisionDirectionXandYLevel, () -> !collision);
         assertEquals(direction, Vector2.left(), "Collision direction should be left");
     }
 }
