@@ -128,9 +128,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     }
 
     /**
-     * @return buff manager of the character
+     * {@inheritDoc}
      */
-    protected BuffManager getBuffManager() {
+    @Override
+    public BuffManager getBuffManager() {
         return this.buffManager;
     }
 }
