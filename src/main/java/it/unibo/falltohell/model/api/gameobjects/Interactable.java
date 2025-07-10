@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.api.gameobjects;
 
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 /**
  * Game object that the player can interact with.
@@ -11,5 +12,5 @@ public interface Interactable extends GameObject {
     /**
      * Method to permit the interaction between the player and this object.
      */
-    void interact();
+    void interact(Character character);
 }
