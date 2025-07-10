@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity;
 
-import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.BuffManager;
 
@@ -34,9 +33,9 @@ public interface Character extends Entity {
     }
 
     /**
-     * @param interactable object to be interacted with
+     * If character is touching an interactable object, it can interact with it.
      */
-    void interact(Interactable interactable);
+    void interact();
 
     /**
      * @return this character id

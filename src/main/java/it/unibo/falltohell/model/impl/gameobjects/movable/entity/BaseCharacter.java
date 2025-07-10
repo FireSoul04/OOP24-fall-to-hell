@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
@@ -11,6 +12,8 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.BuffManagerImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
+
+import java.util.Optional;
 
 /**
  * Base class for a character.
@@ -24,11 +27,12 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private static final Vector2 JUMP_ACCELERATION_STEP = new Vector2(0.0, -0.125);
 
     private final GameEventManager<String> input;
+    private final CharacterStatistics stats;
     private final BuffManager buffManager;
     private final Vector2 jumpAcceleration;
     private int currentJumpHeight;
     private boolean onGround;
-    private boolean canInteract;
+    private Optional<Interactable> interactingObject;
 
     /**
      * Base constructor for a new character.
@@ -39,18 +43,20 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats) {
         super(level, position, new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
-        this.canInteract = false;
         this.onGround = false;
         this.currentJumpHeight = 0;
         this.jumpAcceleration = JUMP_ACCELERATION_STEP;
+        this.stats = stats;
         this.input = new GameEventManager<>();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
+        this.interactingObject = Optional.empty();
 
         this.input.addCondition("MoveLeft", () -> false);
         this.input.addCondition("MoveRight", () -> true);
         this.input.addCondition("MoveUp", () -> false);
         this.input.addCondition("MoveDown", () -> false);
         this.input.addCondition("Jump", () -> false);
+        this.input.addCondition("Interact", () -> false);
     }
 
     /**
@@ -97,7 +103,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     @Override
     public void update(final double deltaTime) {
         this.input.update();
-        this.canInteract = false;
         this.move(deltaTime);
     }
 
@@ -107,12 +112,26 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other.isSolid() && direction.equals(Vector2.up())) {
+        if (other instanceof Block && direction.equals(Vector2.up())) {
             this.currentJumpHeight = 0;
             this.onGround = true;
         }
+        if (other instanceof Interactable interactable) {
+            this.interactingObject = Optional.of(interactable);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * Notify if the character is leaving the ground and check if player is leaving an interactable.
+     */
+    @Override
+    public void onCollisionExit(final GameObject other, final Vector2 direction) {
+        if (other instanceof Block && direction.equals(Vector2.up())) {
+            this.onGround = false;
+        }
         if (other instanceof Interactable) {
-            this.canInteract = true;
+            this.interactingObject = Optional.empty();
         }
     }
 
@@ -120,10 +139,9 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * {@inheritDoc}
      */
     @Override
-    public void interact(final Interactable interactable) {
-        // TODO: Add an event (like key press) that when it happen the player will interact with the object
-        if (this.canInteract) {
-            interactable.interact();
+    public void interact() {
+        if (this.input.checkCondition("Interact")) {
+            this.interactingObject.ifPresent(i -> i.interact());
         }
     }
 
