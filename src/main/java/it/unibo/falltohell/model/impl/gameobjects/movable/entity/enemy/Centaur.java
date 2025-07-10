@@ -4,6 +4,8 @@ import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 
+import java.util.Optional;
+
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
@@ -37,6 +39,7 @@ public class Centaur extends BaseEnemy {
 
     private BaseEnemyStatistics stats;
     private int direction = 1;
+    private Optional<Vector2> collided = Optional.empty();
 
     /**
      * Constructs a {@link Centaur} enemy in the given {@link Level} at a given
@@ -73,7 +76,11 @@ public class Centaur extends BaseEnemy {
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof Block) {
             if (direction.y() != 0) {
-                this.direction *= -1;
+                if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
+                    this.collided = Optional.ofNullable(direction);
+                } else {
+                    this.direction *= -1;
+                }
             }
         } else if (other instanceof Character) {
             attack();
@@ -103,25 +110,38 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     protected void move(final double deltaTime) {
-        final Vector2 chara = this.stats.getCharacter().getPosition();
-        final double charX = this.stats.getCharacter().getPosition().x();
+        final Vector2 character = this.stats.getCharacter().getPosition();
+        final double characterX = this.stats.getCharacter().getPosition().x();
+        final int characterDirection;
 
-        if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
-            super.setPosition(super.getPosition().add(
-                    (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction, super.getPosition().y()))));
-        } else {
-            if (charX - super.getPosition().x() > 0) {
-                if (this.direction > 0) {
-                    super.setPosition(super.getPosition()
-                            .add((new Vector2(deltaTime * this.stats.getSpeed().x(), super.getPosition().y()))));
-                }
+        if (character.distance(super.getPosition()) > this.stats.getSenseDistance()) {
+            if (this.collided.isEmpty()) {
+                super.setPosition(super.getPosition().add(
+                        (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction,
+                                super.getPosition().y()))));
             } else {
-                if (this.direction > 0) {
-                    super.setPosition(super.getPosition()
-                            .add((new Vector2(-deltaTime * this.stats.getSpeed().x(), super.getPosition().y()))));
+                final double jumpDirection = this.collided.get().x();
+                super.setPosition(super.getPosition().add(
+                        (new Vector2(2 * deltaTime / 3 * super.getPosition().x(),
+                                deltaTime / 3 * this.stats.getSpeed().y() * jumpDirection))));
+            }
+        } else {
+            if (characterX - super.getPosition().x() > 0) {
+                characterDirection = 1;
+            } else {
+                characterDirection = -1;
+            }
+            if (this.direction > 0) {
+                if (this.collided.isEmpty()) {
+                    super.setPosition(super.getPosition().add(
+                            (new Vector2(characterDirection * deltaTime * this.stats.getSpeed().x(),
+                                    super.getPosition().y()))));
+                } else {
+                    super.setPosition(super.getPosition().add(
+                            (new Vector2(characterDirection * 2 * deltaTime / 3 * super.getPosition().x(),
+                                    deltaTime / 3 * this.stats.getSpeed().y()))));
                 }
             }
         }
     }
-
 }
