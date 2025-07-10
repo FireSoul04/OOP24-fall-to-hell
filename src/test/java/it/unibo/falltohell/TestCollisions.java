@@ -103,7 +103,7 @@ class TestCollisions {
         level.addGameObject(dummy1);
         level.addGameObject(block);
         baseCollisionTest(level);
-        assertTrue(collision, "Dummy should collide in 2 seconds");
+        assertTrue(collision, "Dummy should collide in 500 steps");
     }
 
     @Test
@@ -113,7 +113,7 @@ class TestCollisions {
         level.addGameObject(dummy1);
         level.addGameObject(dummy2);
         baseCollisionTest(level);
-        assertTrue(collision, "Dummy should collide in 2 seconds");
+        assertTrue(collision, "Dummy should collide in 500 steps");
     }
 
     @Test
