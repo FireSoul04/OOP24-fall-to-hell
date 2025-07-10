@@ -3,7 +3,9 @@ package it.unibo.falltohell.model.impl.physics.colliders;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -12,6 +14,12 @@ import java.util.Optional;
  * @author Davide Mancini
  */
 public abstract class AbstractCollisionsManager implements CollisionsManager {
+
+    /**
+     * Every frame this map saves if a game object is colliding so the next frame
+     * the collisions manager knows if this game object left a collision
+     */
+    private final Map<GameObject, Optional<Collision>> lastFrameCollisions = new HashMap<>();
 
     /**
      * {@inheritDoc}
@@ -27,7 +35,12 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
                         // Notifies for both onCollision with direction and without
                         g1.onCollision(g2);
                         g1.onCollision(g2, collision.get().direction());
+                    } else {
+                        // If there is not a collision, but in the last frame was a collision
+                        this.lastFrameCollisions.get(g1).ifPresent(t -> g1.onCollisionExit(g2, t.direction()));
                     }
+                    this.lastFrameCollisions.clear();
+                    this.lastFrameCollisions.put(g1, collision);
                 }
             }
         }

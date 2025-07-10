@@ -59,6 +59,14 @@ public interface GameObject {
      * @param direction where the collision happened
      */
     void onCollision(GameObject other, Vector2 direction);
+
+    /**
+     * This function is called every time this game object stopped colliding with another.
+     * @param other game object was colliding with
+     * @param direction where the collision happened
+     */
+    void onCollisionExit(GameObject other, Vector2 direction);
+
     /**
      * @return the level this game object belongs to
      */

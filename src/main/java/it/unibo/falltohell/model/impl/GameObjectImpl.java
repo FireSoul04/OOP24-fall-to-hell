@@ -126,6 +126,12 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    public void onCollisionExit(GameObject other, Vector2 direction){
+
+    }
+    /**
+     * {@inheritDoc}
+     */
     public Level getLevel(){
         return this.level;
     }
