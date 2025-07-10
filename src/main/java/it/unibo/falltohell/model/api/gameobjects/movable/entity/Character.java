@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.api.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.BuffManager;
 
 /**
  * Interface for a character.
@@ -41,4 +42,9 @@ public interface Character extends Entity {
      * @return this character id
      */
     CharacterID getCharacterID();
+
+    /**
+     * @return buff manager of the character
+     */
+    BuffManager getBuffManager();
 }
