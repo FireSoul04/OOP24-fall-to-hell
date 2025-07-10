@@ -129,4 +129,12 @@ public class GameObjectImpl implements GameObject {
     public Level getLevel(){
         return this.level;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update() {
+
+    }
 }
