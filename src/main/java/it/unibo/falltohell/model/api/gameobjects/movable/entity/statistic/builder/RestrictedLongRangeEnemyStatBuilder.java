@@ -2,9 +2,8 @@ package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.build
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
 
-public interface RestrictedLongRangeEnemyStatBuilder extends LongRangeEnemyStatBuilder<RestrictedLongRangeEnemyStatBuilder>{
+public interface RestrictedLongRangeEnemyStatBuilder{
     public RestrictedLongRangeEnemyStatBuilder withDistance(double distance);
 
-    @Override
     public RestrictedLongRangeEnemyStatistics build();
 }

@@ -2,9 +2,8 @@ package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.build
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedBaseEnemyStatistics;
 
-public interface RestrictedGroundEnemyStatBuilder extends GroundEnemyStatBuilder<RestrictedGroundEnemyStatBuilder>{
+public interface RestrictedGroundEnemyStatBuilder{
     public RestrictedGroundEnemyStatBuilder withDistance(double distance);
 
-    @Override
     public RestrictedBaseEnemyStatistics build();
 }

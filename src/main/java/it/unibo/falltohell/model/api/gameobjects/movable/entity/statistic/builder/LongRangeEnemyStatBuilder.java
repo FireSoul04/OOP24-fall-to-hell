@@ -4,13 +4,12 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.LongRa
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-public interface LongRangeEnemyStatBuilder<T extends  LongRangeEnemyStatBuilder<T>> extends GroundEnemyStatBuilder<T>{
-    public T withProjectileVelocity(Vector2 projectileVelocity);
+public interface LongRangeEnemyStatBuilder{
+    public LongRangeEnemyStatBuilder withProjectileVelocity(Vector2 projectileVelocity);
 
-    public T withProjectileDimensions(Dimensions projectileDimensions);
+    public LongRangeEnemyStatBuilder withProjectileDimensions(Dimensions projectileDimensions);
 
-    public T withTimeAttack(int timeAttack);
+    public LongRangeEnemyStatBuilder withTimeAttack(int timeAttack);
 
-    @Override
     public LongRangeEnemyStatistics build();
 }
