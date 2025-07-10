@@ -147,6 +147,24 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
 
     /**
      * {@inheritDoc}
+     * If character has a temporary life buff, the buff take the damage instead of the character until it reaches zero.
+     * When temporary life is consumed, the character takes the damage not absorbed by the temporary life.
+     */
+    @Override
+    public void setDamagedLife(final double damage) {
+        final double remainingTemporaryLife = this.stats.getTemporaryLife() - damage;
+        if (remainingTemporaryLife == 0) {
+            this.stats.setTemporaryLife(0);
+        } else if (remainingTemporaryLife > 0) {
+            this.stats.subTemporaryLife(damage);
+        } else {
+            this.stats.setTemporaryLife(0);
+            super.setDamagedLife(-remainingTemporaryLife);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public BuffManager getBuffManager() {
