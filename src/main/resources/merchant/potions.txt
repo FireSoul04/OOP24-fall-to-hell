@@ -1,0 +1,5 @@
+attack,500
+life,700
+speed,200
+attsp,700
+mana,350

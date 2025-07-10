@@ -23,7 +23,7 @@ public class SavePoint extends GameObjectImpl implements Interactable {
      * @param collider to see if the player is close enough to interact
      * @param data to write on the save file
      */
-    public SavePoint(Level level, Vector2 position, Collider collider, GameData data) {
+    public SavePoint(final Level level, final Vector2 position, final Collider collider, final GameData data) {
         super(level, position, 0, 0, collider);
         this.saveController = new SaveFileControllerImpl(data);
     }
@@ -33,7 +33,7 @@ public class SavePoint extends GameObjectImpl implements Interactable {
      * player's choice
      */
     @Override
-    public void interact() {
+    public void interact(final Character character) {
         this.saveController.save();
         //TODO
     }

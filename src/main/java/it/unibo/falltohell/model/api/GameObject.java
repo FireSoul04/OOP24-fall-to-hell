@@ -71,4 +71,9 @@ public interface GameObject {
      * @return the level this game object belongs to
      */
     Level getLevel();
+
+    /**
+     * Method called every frame to update the game object's state.
+     */
+    void update();
 }
