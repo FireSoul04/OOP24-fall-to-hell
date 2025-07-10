@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
-import java.util.Optional;
-
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
@@ -33,15 +31,17 @@ public class Lotawiec extends BaseEnemy {
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, Optional.empty(), character, Optional.empty(), Optional.empty(), DAMAGE_A,
+                        initialCord, character, 10, null, DAMAGE_A,
                         VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME));
 
         stats = (LongRangeEnemyStatistics) super.getStats();
 
-        this.stats.getTm().addTimer(this.stats.getAttackName(), new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
+        final String name = this.stats.getAttackName() + super.getCountAttack();
+        super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
             this.attack();
-            this.stats.getTm().restartTimer(this.stats.getAttackName());
+            super.getLevel().getTimerManager().restartTimer(name);
         }));
+        super.incrementCountAttack();
     }
 
     /**

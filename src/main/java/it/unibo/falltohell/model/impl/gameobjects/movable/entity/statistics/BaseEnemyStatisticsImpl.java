@@ -5,7 +5,6 @@ import java.util.Optional;
 import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
-import it.unibo.falltohell.model.impl.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticsImpl;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -32,7 +31,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     private final int noAggro;
     private final double regen;
     private final double senseDistance;
-    private final TimerManager tm = new TimerManagerImpl();
+    private final long points;
     private Character character;
 
     /**
@@ -52,16 +51,19 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      *                      {@link Optional#empty()}, default is used.
      * @param senseDistance optional override for sensing distance. If
      *                      {@link Optional#empty()}, default is used.
+     * @param points TODO
      */
     public BaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance) {
+            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
+            final long points) {
         super(life, attack, speed, dimension);
         this.initialPosition = position;
         this.noAggro = noAggro.filter(a -> a >= 0).orElse(STANDARD_NO_AGGRO);
         this.character = character;
         this.regen = regen.filter(r -> r >= 0.05 && r <= 0.9).orElse(STANDARD_REGEN);
         this.senseDistance = senseDistance.orElse(STANDARD_SENSE);
+        this.points = points;
     }
 
     /**
@@ -70,14 +72,6 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     @Override
     public Vector2 getInitialPos() {
         return this.initialPosition;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TimerManager getTm() {
-        return this.tm;
     }
 
     /**
@@ -127,5 +121,13 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     @Override
     public double getSenseDistance() {
         return this.senseDistance;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getPoints() {
+        return this.points;
     }
 }

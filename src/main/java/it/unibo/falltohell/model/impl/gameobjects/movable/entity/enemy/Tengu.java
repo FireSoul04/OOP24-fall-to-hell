@@ -53,16 +53,20 @@ public class Tengu extends BaseEnemy {
      *                    with
      */
     public Tengu(final Level level, final Vector2 initialCord, final Character character) {
-        super(level, new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY,
-                DIMENSIONS, initialCord, Optional.empty(), character, Optional.of(REGEN_STAT),
-                Optional.of(CHAR_DISTANCE), DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME));
+        super(level,
+                new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
+                        initialCord, character, 10, new StatisticFactoryImpl()
+                                .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
+                        DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME));
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
-        this.stats.getTm().addTimer(this.stats.getAttackName(), new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
+        final String name = this.stats.getAttackName() + super.getCountAttack();
+        super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
             this.attack();
-            this.stats.getTm().restartTimer(this.stats.getAttackName());
+            super.getLevel().getTimerManager().restartTimer(name);
         }));
+        super.incrementCountAttack();
     }
 
     /**

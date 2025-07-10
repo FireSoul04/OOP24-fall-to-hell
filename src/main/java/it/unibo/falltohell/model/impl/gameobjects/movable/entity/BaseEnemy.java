@@ -28,6 +28,8 @@ import it.unibo.falltohell.util.Vector2;
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     private BaseEnemyStatistics stats;
+    private long countNoAggro = 0;
+    private long countAttack = 0;
 
     /**
      * Constructs a base enemy entity with the given {@link Level} and
@@ -42,7 +44,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
 
-        this.stats.getTm().addTimer(this.stats.getNoAggroName(), new CustomTimerImpl(this.stats.getNoAggro(), () -> {
+        final String name = this.stats.getNoAggroName() + this.countNoAggro;
+        super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getNoAggro(), () -> {
             if (this.isFull()) {
                 if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > this.stats.getFullLife()) {
                     this.stats.setLife(this.stats.getFullLife());
@@ -50,8 +53,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
                     this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
                 }
             }
-            this.stats.getTm().restartTimer(this.stats.getNoAggroName());
+            super.getLevel().getTimerManager().restartTimer(name);
         }));
+        countNoAggro++;
     }
 
     /**
@@ -71,8 +75,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     @Override
     public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
-        this.stats.getTm().stopTimer(stats.getNoAggroName());
-        this.stats.getTm().restartTimer(stats.getNoAggroName());
+        super.getLevel().getTimerManager().stopTimer(stats.getNoAggroName());
+        super.getLevel().getTimerManager().restartTimer(stats.getNoAggroName());
     }
 
     /**
@@ -89,7 +93,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     /**
      * {@inheritDoc}
-     * TODO Game data e passive for druid
      */
     @Override
     public boolean isDead() {
@@ -97,6 +100,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             if (this.stats.getCharacter() instanceof Druid) {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
+            super.getLevel().getGameData().addPoints(this.stats.getPoints());
             super.getLevel().removeGameObject(this);
             return true;
         }
@@ -124,4 +128,19 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param deltaTime time elapsed since the last update, in seconds
      */
     protected abstract void move(double deltaTime);
+
+    /**
+     * TODO
+     * @return
+     */
+    protected long getCountAttack(){
+        return this.countAttack;
+    }
+
+    /**
+     * TODO
+     */
+    protected void incrementCountAttack(){
+        this.countAttack++;
+    }
 }

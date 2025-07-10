@@ -38,13 +38,13 @@ public class RestrictedBaseEnemyStatisticsImpl extends BaseEnemyStatisticsImpl
      *                      {@link Optional#empty()}, default is used.
      * @param senseDistance optional override for sensing distance. If
      *                      {@link Optional#empty()}, default is used.
+     * @param points TODO
      * @param distance      the restricted distance value for this enemy
      */
     public RestrictedBaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character,
-            final Optional<Double> regen, final Optional<Double> senseDistance, final double distance) {
-        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance);
+            final Character character,final Optional<Double> regen, final Optional<Double> senseDistance, final long points, final double distance) {
+        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points);
         this.distance = distance;
     }
 

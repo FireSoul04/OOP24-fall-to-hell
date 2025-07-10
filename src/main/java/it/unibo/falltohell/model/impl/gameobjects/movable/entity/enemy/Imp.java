@@ -29,7 +29,8 @@ public class Imp extends BaseEnemy {
     public Imp(final Level level, final Vector2 initialCord, final Character character) {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, Optional.empty(), character, Optional.of(REGEN_STAT), Optional.of(CHAR_DISTANCE),
+                        initialCord, character, 10, new StatisticFactoryImpl()
+                                .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DISTANCE));
 
         this.stats = (RestrictedBaseEnemyStatistics) super.getStats();

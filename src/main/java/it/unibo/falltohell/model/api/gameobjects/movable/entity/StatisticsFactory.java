@@ -7,6 +7,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.Charac
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.LongRangeEnemyStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedBaseEnemyStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.builder.ParamBuilderOptional;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -62,18 +63,13 @@ public interface StatisticsFactory {
          * @param speed         the speed represented as a {@link Vector2}
          * @param dimension     the size of the enemy as {@link Dimensions}
          * @param position      the starting position as {@link Vector2}
-         * @param noAggro       number of ticks before enemy begins regenration. If
-         *                      {@link Optional#empty()}, default is used.
          * @param character     the character owning or related to this statistic
-         * @param regen         optional override for regen. If
-         *                      {@link Optional#empty()}, default is used.
-         * @param senseDistance optional override for sensing distance. If
-         *                      {@link Optional#empty()}, default is used.
+         * @param points TODO
+         * @param optionalParams
          * @return a new instance of {@link BaseEnemyStatistics}
          */
         BaseEnemyStatistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
-                        Vector2 position, Optional<Integer> noAggro, Character character, Optional<Double> regen,
-                        Optional<Double> senseDistance);
+                        Vector2 position,  Character character, long points, ParamBuilderOptional optionalParams);
 
         /**
          * Creates a {@link LongRangeEnemyStatistics} instance for enemies with long
@@ -85,22 +81,17 @@ public interface StatisticsFactory {
          * @param speed                the speed represented as a {@link Vector2}
          * @param dimension            the size of the enemy as {@link Dimensions}
          * @param position             the starting position as {@link Vector2}
-         * @param noAggro              number of ticks before enemy begins regenration.
-         *                             If {@link Optional#empty()}, default is used.
          * @param character            the character owning or related to this statistic
-         * @param regen                optional override for regen. If
-         *                             {@link Optional#empty()}, default is used.
-         * @param senseDistance        optional override for sensing distance. If
-         *                             {@link Optional#empty()}, default is used.
+         * @param points TODO
+         * @param optionalParams
          * @param projectileAttack     the damage of the projectile attack
          * @param projectileVelocity   the velocity of the projectile as {@link Vector2}
          * @param projectileDimensions the size of the projectile as {@link Dimensions}
          * @param timeAttack           ticks between each projectile attack
          * @return a new instance of {@link LongRangeEnemyStatistics}
          */
-        LongRangeEnemyStatistics createLongRangeEnemyStatistic(double life, double attack,
-                        Vector2 speed, Dimensions dimension, Vector2 position, Optional<Integer> noAggro,
-                        Character character, Optional<Double> regen, Optional<Double> senseDistance,
+        LongRangeEnemyStatistics createLongRangeEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
+                        Vector2 position,  Character character, long points, ParamBuilderOptional optionalParams,
                         double projectileAttack, Vector2 projectileVelocity, Dimensions projectileDimensions,
                         int timeAttack);
 
@@ -114,19 +105,14 @@ public interface StatisticsFactory {
          * @param speed         the speed represented as a {@link Vector2}
          * @param dimension     the size of the enemy as {@link Dimensions}
          * @param position      the starting position as {@link Vector2}
-         * @param noAggro       number of ticks before enemy begins regenration. If
-         *                      {@link Optional#empty()}, default is used.
+         * @param points TODO
+         * @param optionalParams
          * @param character     the character owning or related to this statistic
-         * @param regen         optional override for regen. If
-         *                      {@link Optional#empty()}, default is used.
-         * @param senseDistance optional override for sensing distance. If
-         *                      {@link Optional#empty()}, default is used.
          * @param distance      the restricted movement distance
          * @return a new instance of {@link RestrictedBaseEnemyStatistics}
          */
-        RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed,
-                        Dimensions dimension, Vector2 position, Optional<Integer> noAggro, Character character,
-                        Optional<Double> regen, Optional<Double> senseDistance, double distance);
+        RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
+                        Vector2 position,  Character character, long points, ParamBuilderOptional optionalParams, double distance);
 
         /**
          * Creates a {@link RestrictedLongRangeEnemyStatistics} instance for enemies
@@ -138,13 +124,9 @@ public interface StatisticsFactory {
          * @param speed                the speed represented as a {@link Vector2}
          * @param dimension            the size of the enemy as {@link Dimensions}
          * @param position             the starting position as {@link Vector2}
-         * @param noAggro              number of ticks before enemy begins regenration.
-         *                             If {@link Optional#empty()}, default is used.
          * @param character            the character owning or related to this statistic
-         * @param regen                optional override for regen. If
-         *                             {@link Optional#empty()}, default is used.
-         * @param senseDistance        optional override for sensing distance. If
-         *                             {@link Optional#empty()}, default is used.
+         * @param points TODO
+         * @param optionalParams
          * @param projectileAttack     the damage of the projectile attack
          * @param projectileVelocity   the velocity of the projectile as {@link Vector2}
          * @param projectileDimensions the size of the projectile as {@link Dimensions}
@@ -152,9 +134,8 @@ public interface StatisticsFactory {
          * @param timeAttack           ticks between each projectile attack
          * @return a new instance of {@link RestrictedLongRangeEnemyStatistics}
          */
-        RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(double life, double attack,
-                        Vector2 speed, Dimensions dimension, Vector2 position, Optional<Integer> noAggro,
-                        Character character, Optional<Double> regen, Optional<Double> senseDistance,
-                        double projectileAttack,
-                        Vector2 projectileVelocity, Dimensions projectileDimensions, double distance, int timeAttack);
+        RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
+                        Vector2 position,  Character character, long points, ParamBuilderOptional optionalParams,double projectileAttack,Vector2 projectileVelocity, Dimensions projectileDimensions, double distance, int timeAttack);
+
+        ParamBuilderOptional createOptional();
 }

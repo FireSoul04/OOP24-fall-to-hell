@@ -22,28 +22,25 @@ public class Druid extends BaseCharacter {
         this.stats = (CharacterStatistics) super.getStats();
 
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
-            switch (this.kills) {
-                case 1:
-                    this.stats.addLife(this.stats.getFullLife() * 0.1);
-                    break;
-                case 2:
-                    this.stats.addLife(this.stats.getFullLife() * 0.15);
-                    break;
-                case 3:
-                    this.stats.addLife(this.stats.getFullLife() * 0.2);
-                    this.stats.addMana(this.stats.getInitialMana() * 0.1);
-                    break;
-                case 4:
-                    this.stats.addLife(this.stats.getFullLife() * 0.25);
-                    this.stats.addMana(this.stats.getInitialMana() * 0.15);
-                    break;
-                case 5:
-                    this.stats.addLife(this.stats.getFullLife() * 0.30);
-                    this.stats.addMana(this.stats.getInitialMana() * 0.20);
-                    this.setZeroKill();
-                    break;
-                default:
-                    break;
+            double[][] lifeManaGains = {
+                {}, // 0 kill
+                {0.10, 0.0}, // 1 kill
+                {0.15, 0.0}, // 2 kills
+                {0.20, 0.10}, // 3 kills
+                {0.25, 0.15}, // 4 kills
+                {0.30, 0.20}  // 5 kills
+            };
+
+            if (this.kills >= 1 && this.kills <= 5) {
+                double lifeGain = stats.getFullLife() * lifeManaGains[this.kills][0];
+                double manaGain = stats.getInitialMana() * lifeManaGains[this.kills][1];
+
+                stats.setLife(Math.min(stats.getLife() + lifeGain, stats.getFullLife()));
+                if (manaGain > 0) {
+                    stats.setMana(Math.min(stats.getMana() + manaGain, stats.getInitialMana()));
+                }
+
+                if (this.kills == 5) this.setZeroKill();
             }
         });
     }

@@ -40,6 +40,7 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
      *                             used.
      * @param senseDistance        optional override for sensing distance. If
      *                             {@link Optional#empty()}, default is used.
+     * @param points TODO
      * @param projectileAttack     the damage of the projectile attack
      * @param projectileVelocity   the velocity of the projectile as a
      *                             {@link Vector2}
@@ -51,9 +52,8 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
     public LongRangedEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
             final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
-            final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions,
-            final int timeAttack) {
-        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance);
+            final long points,final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions,final int timeAttack) {
+        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points);
         this.projectileAttack = projectileAttack;
         this.projectileVelocity = projectileVelocity;
         this.projectileDimensions = projectileDimensions;
