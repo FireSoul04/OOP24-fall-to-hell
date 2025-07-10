@@ -19,7 +19,7 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
      * Every frame this map saves if a game object is colliding so the next frame
      * the collisions manager knows if this game object left a collision
      */
-    private final Map<GameObject, Optional<Collision>> lastFrameCollisions = new HashMap<>();
+    private final Map<GameObject, Collision> lastFrameCollisions = new HashMap<>();
 
     /**
      * {@inheritDoc}
@@ -35,12 +35,12 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
                         // Notifies for both onCollision with direction and without
                         g1.onCollision(g2);
                         g1.onCollision(g2, collision.get().direction());
-                    } else {
+                        this.lastFrameCollisions.put(g1, collision.get());
+                    } else if (this.lastFrameCollisions.containsKey(g1)) {
                         // If there is not a collision, but in the last frame was a collision
-                        this.lastFrameCollisions.get(g1).ifPresent(t -> g1.onCollisionExit(g2, t.direction()));
+                        g1.onCollisionExit(g2, this.lastFrameCollisions.get(g1).direction());
+                        this.lastFrameCollisions.remove(g1);
                     }
-                    this.lastFrameCollisions.clear();
-                    this.lastFrameCollisions.put(g1, collision);
                 }
             }
         }
