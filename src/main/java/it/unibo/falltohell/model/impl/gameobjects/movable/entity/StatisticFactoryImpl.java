@@ -27,63 +27,66 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class StatisticFactoryImpl implements StatisticsFactory {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CharacterStatistics createCharacterStatistic(final double life, final double attack, final Vector2 speed,
-            final Dimensions dimensions, final double mana, final double attackSpeed) {
-        return new CharacterStatisticsImpl(life, attack, speed, dimensions, mana, attackSpeed);
-    }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public CharacterStatistics createCharacterStatistic(final double life, final double attack, final Vector2 speed,
+                        final Dimensions dimensions, final double mana, final double attackSpeed) {
+                return new CharacterStatisticsImpl(life, attack, speed, dimensions, mana, attackSpeed);
+        }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BaseEnemyStatistics createBaseEnemyStatistic(final double life, final double attack, final Vector2 speed,
-            final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character,
-            final Optional<Double> regen, final Optional<Double> senseDistance) {
-        return new BaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
-                senseDistance);
-    }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public BaseEnemyStatistics createBaseEnemyStatistic(final double life, final double attack, final Vector2 speed,
+                        final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
+                        final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
+                        final long points) {
+                return new BaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
+                                senseDistance, points);
+        }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public LongRangeEnemyStatistics createLongRangeEnemyStatistic(final double life, final double attack,
-            final Vector2 speed, final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
-            final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions,
-            final int timeAttack) {
-        return new LongRangedEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
-                senseDistance, projectileAttack, projectileVelocity, projectileDimensions, timeAttack);
-    }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public LongRangeEnemyStatistics createLongRangeEnemyStatistic(final double life, final double attack,
+                        final Vector2 speed, final Dimensions dimension, final Vector2 position,
+                        final Optional<Integer> noAggro, final Character character, final Optional<Double> regen,
+                        final Optional<Double> senseDistance, final long points, final double projectileAttack,
+                        final Vector2 projectileVelocity, final Dimensions projectileDimensions, final int timeAttack) {
+                return new LongRangedEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character,
+                                regen, senseDistance, points, projectileAttack, projectileVelocity,
+                                projectileDimensions, timeAttack);
+        }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(final double life, final double attack,
-            final Vector2 speed, final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
-            final double distance) {
-        return new RestrictedBaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character,
-                regen, senseDistance, distance);
-    }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(final double life,
+                        final double attack, final Vector2 speed, final Dimensions dimension, final Vector2 position,
+                        final Optional<Integer> noAggro, final Character character, final Optional<Double> regen,
+                        final Optional<Double> senseDistance, final long points, final double distance) {
+                return new RestrictedBaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro,
+                                character, regen, senseDistance, points, distance);
+        }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(final double life, final double attack,
-            final Vector2 speed, final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
-            final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions,
-            final double distance, final int timeAttack) {
-        return new RestrictedLongRangeEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character,
-                regen, senseDistance, projectileAttack, projectileVelocity, projectileDimensions, distance, timeAttack);
-    }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(final double life,
+                        final double attack, final Vector2 speed, final Dimensions dimension, final Vector2 position,
+                        final Optional<Integer> noAggro, final Character character, final Optional<Double> regen,
+                        final Optional<Double> senseDistance, final long points, final double projectileAttack,
+                        final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance,
+                        final int timeAttack) {
+                return new RestrictedLongRangeEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro,
+                                character, regen, senseDistance, points, projectileAttack, projectileVelocity,
+                                projectileDimensions, distance, timeAttack);
+        }
 
 }

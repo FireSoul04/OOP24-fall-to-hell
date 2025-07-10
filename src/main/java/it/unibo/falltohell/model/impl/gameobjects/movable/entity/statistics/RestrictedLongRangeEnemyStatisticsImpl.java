@@ -41,6 +41,7 @@ public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStati
      *                             used.
      * @param senseDistance        optional override for sensing distance. If
      *                             {@link Optional#empty()}, default is used.
+     * @param points TODO
      * @param projectileAttack     the damage dealt by projectiles
      * @param projectileVelocity   the velocity of projectiles as a {@link Vector2}
      * @param projectileDimensions the dimensions of the projectiles as a
@@ -52,12 +53,8 @@ public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStati
      */
     public RestrictedLongRangeEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character,
-            final Optional<Double> regen, final Optional<Double> senseDistance, final double projectileAttack,
-            final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance,
-            final int timeAttack) {
-        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, projectileAttack,
-                projectileVelocity, projectileDimensions, timeAttack);
+            final Character character,final Optional<Double> regen, final Optional<Double> senseDistance, final long points, final double projectileAttack,final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance,final int timeAttack) {
+        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance,points, projectileAttack,projectileVelocity, projectileDimensions, timeAttack);
         this.distance = distance;
     }
 

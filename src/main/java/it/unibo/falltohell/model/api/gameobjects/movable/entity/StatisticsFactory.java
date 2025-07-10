@@ -69,11 +69,12 @@ public interface StatisticsFactory {
          *                      {@link Optional#empty()}, default is used.
          * @param senseDistance optional override for sensing distance. If
          *                      {@link Optional#empty()}, default is used.
+         * @param points TODO
          * @return a new instance of {@link BaseEnemyStatistics}
          */
         BaseEnemyStatistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
                         Vector2 position, Optional<Integer> noAggro, Character character, Optional<Double> regen,
-                        Optional<Double> senseDistance);
+                        Optional<Double> senseDistance, long points);
 
         /**
          * Creates a {@link LongRangeEnemyStatistics} instance for enemies with long
@@ -92,6 +93,7 @@ public interface StatisticsFactory {
          *                             {@link Optional#empty()}, default is used.
          * @param senseDistance        optional override for sensing distance. If
          *                             {@link Optional#empty()}, default is used.
+         *
          * @param projectileAttack     the damage of the projectile attack
          * @param projectileVelocity   the velocity of the projectile as {@link Vector2}
          * @param projectileDimensions the size of the projectile as {@link Dimensions}
@@ -100,7 +102,7 @@ public interface StatisticsFactory {
          */
         LongRangeEnemyStatistics createLongRangeEnemyStatistic(double life, double attack,
                         Vector2 speed, Dimensions dimension, Vector2 position, Optional<Integer> noAggro,
-                        Character character, Optional<Double> regen, Optional<Double> senseDistance,
+                        Character character, Optional<Double> regen, Optional<Double> senseDistance, long points,
                         double projectileAttack, Vector2 projectileVelocity, Dimensions projectileDimensions,
                         int timeAttack);
 
@@ -126,7 +128,7 @@ public interface StatisticsFactory {
          */
         RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed,
                         Dimensions dimension, Vector2 position, Optional<Integer> noAggro, Character character,
-                        Optional<Double> regen, Optional<Double> senseDistance, double distance);
+                        Optional<Double> regen, Optional<Double> senseDistance, long points, double distance);
 
         /**
          * Creates a {@link RestrictedLongRangeEnemyStatistics} instance for enemies
@@ -154,7 +156,5 @@ public interface StatisticsFactory {
          */
         RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(double life, double attack,
                         Vector2 speed, Dimensions dimension, Vector2 position, Optional<Integer> noAggro,
-                        Character character, Optional<Double> regen, Optional<Double> senseDistance,
-                        double projectileAttack,
-                        Vector2 projectileVelocity, Dimensions projectileDimensions, double distance, int timeAttack);
+                        Character character, Optional<Double> regen, Optional<Double> senseDistance, long points,double projectileAttack,Vector2 projectileVelocity, Dimensions projectileDimensions, double distance, int timeAttack);
 }

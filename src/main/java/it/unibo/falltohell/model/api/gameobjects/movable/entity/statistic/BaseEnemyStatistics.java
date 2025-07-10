@@ -85,4 +85,12 @@ public interface BaseEnemyStatistics extends Statistics {
      * @return the sense distance
      */
     double getSenseDistance();
+
+    /**
+     * Gets the enemy's points after a kill
+     * <p>
+     *
+     * @return the points of a enemy
+     */
+    long getPoints();
 }

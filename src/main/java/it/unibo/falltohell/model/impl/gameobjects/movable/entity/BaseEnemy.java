@@ -89,7 +89,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     /**
      * {@inheritDoc}
-     * TODO Game data e passive for druid
      */
     @Override
     public boolean isDead() {
@@ -97,6 +96,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             if (this.stats.getCharacter() instanceof Druid) {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
+            super.getLevel().getGameData().addPoints(this.stats.getPoints());
             super.getLevel().removeGameObject(this);
             return true;
         }

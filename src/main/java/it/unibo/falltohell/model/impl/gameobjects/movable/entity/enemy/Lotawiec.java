@@ -33,7 +33,7 @@ public class Lotawiec extends BaseEnemy {
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, Optional.empty(), character, Optional.empty(), Optional.empty(), DAMAGE_A,
+                        initialCord, Optional.empty(), character, Optional.empty(), Optional.empty(), 10, DAMAGE_A,
                         VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME));
 
         stats = (LongRangeEnemyStatistics) super.getStats();

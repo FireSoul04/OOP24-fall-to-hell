@@ -30,7 +30,7 @@ public class Imp extends BaseEnemy {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, Optional.empty(), character, Optional.of(REGEN_STAT), Optional.of(CHAR_DISTANCE),
-                        DISTANCE));
+                        10, DISTANCE));
 
         this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
     }
