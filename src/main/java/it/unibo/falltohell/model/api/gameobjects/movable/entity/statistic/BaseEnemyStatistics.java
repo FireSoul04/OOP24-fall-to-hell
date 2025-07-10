@@ -30,15 +30,6 @@ public interface BaseEnemyStatistics extends Statistics {
     Vector2 getInitialPos();
 
     /**
-     * Returns the {@link TimerManager} used to manage time-based behaviors like
-     * aggro.
-     * <p>
-     *
-     * @return the timer manager
-     */
-    TimerManager getTm();
-
-    /**
      * Gets the name identifier for the no-aggro timer.
      * <p>
      *
