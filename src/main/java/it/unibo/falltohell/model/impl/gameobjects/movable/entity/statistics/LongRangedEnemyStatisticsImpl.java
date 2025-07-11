@@ -88,14 +88,6 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
      * {@inheritDoc}
      */
     @Override
-    public String getAttackName() {
-        return "attack";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getTimeAttack() {
         return this.timeAttack;
     }

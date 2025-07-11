@@ -45,14 +45,6 @@ public interface LongRangeEnemyStatistics extends BaseEnemyStatistics {
     Dimensions getProjectileDimensions();
 
     /**
-     * Returns the internal name used for the projectile's attack timer.
-     * <p>
-     *
-     * @return a {@link String} identifying the attack timer name
-     */
-    String getAttackName();
-
-    /**
      * Gets the cooldown or timing associated with the projectile attack.
      *
      * @return the time between attacks in game ticks or milliseconds

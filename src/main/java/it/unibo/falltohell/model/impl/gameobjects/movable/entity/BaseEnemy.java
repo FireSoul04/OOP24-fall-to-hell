@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
-import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
@@ -8,6 +7,7 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.util.Vector2;
 
@@ -28,34 +28,25 @@ import it.unibo.falltohell.util.Vector2;
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     private BaseEnemyStatistics stats;
-    private long countNoAggro = 0;
-    private long countAttack = 0;
+    private EnemyTimerManager manager;
 
     /**
-     * Constructs a base enemy entity with the given {@link Level} and
-     * {@link BaseEnemyStatistics}.
+     * Constructs a BaseEnemy instance with the specified {@link Level},
+     * {@link BaseEnemyStatistics}, and {@link EnemyTimerManager}.
      * <p>
+     * Initializes the enemy's position, collider, statistics, and registers the
+     * "NoAggro" timer using the provided timer manager.
+     * </p>
      *
-     * @param level the level the enemy belongs to
-     * @param stats the statistical data defining the enemy's behavior and
-     *              characteristics
+     * @param level   the level the enemy belongs to
+     * @param stats   the statistics defining the enemy's behavior and attributes
+     * @param manager the timer manager responsible for managing enemy timers
      */
-    public BaseEnemy(final Level level, final BaseEnemyStatistics stats) {
+    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager) {
         super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
-
-        final String name = this.stats.getNoAggroName() + this.countNoAggro;
-        super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getNoAggro(), () -> {
-            if (this.isFull()) {
-                if (this.stats.getLife() + this.stats.getLife() * this.stats.getRegen() > this.stats.getFullLife()) {
-                    this.stats.setLife(this.stats.getFullLife());
-                } else {
-                    this.stats.addLife(this.stats.getLife() * this.stats.getRegen());
-                }
-            }
-            super.getLevel().getTimerManager().restartTimer(name);
-        }));
-        countNoAggro++;
+        this.manager = manager;
+        this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
     }
 
     /**
@@ -70,13 +61,16 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * {@inheritDoc}
      * <p>
      * Also restarts the no-aggro timer upon being damaged.
+     * And calls the death checker.
      * </p>
      */
     @Override
     public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
-        super.getLevel().getTimerManager().stopTimer(stats.getNoAggroName());
-        super.getLevel().getTimerManager().restartTimer(stats.getNoAggroName());
+        final String name = this.manager.getNoAggroTimerName(this);
+        super.getLevel().getTimerManager().stopTimer(name);
+        super.getLevel().getTimerManager().restartTimer(name);
+        this.isDead();
     }
 
     /**
@@ -100,6 +94,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             if (this.stats.getCharacter() instanceof Druid) {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
+            this.manager.removeTimersFor(this, super.getLevel());
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             super.getLevel().removeGameObject(this);
             return true;
@@ -114,7 +109,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @return {@code true} if the enemy is at maximum health, {@code false}
      *         otherwise
      */
-    protected abstract boolean isFull();
+    protected boolean isFull() {
+        return this.stats.getLife() == this.stats.getFullLife();
+    }
 
     /**
      * Executes the attack behavior specific to the enemy.
@@ -130,17 +127,13 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     protected abstract void move(double deltaTime);
 
     /**
-     * TODO
-     * @return
+     * Returns the instance of the {@link EnemyTimerManager} responsible for
+     * managing
+     * enemy timers and their counters.
+     *
+     * @return the {@link EnemyTimerManager} instance
      */
-    protected long getCountAttack(){
-        return this.countAttack;
-    }
-
-    /**
-     * TODO
-     */
-    protected void incrementCountAttack(){
-        this.countAttack++;
+    protected EnemyTimerManager getEnemyTimerManager() {
+        return this.manager;
     }
 }

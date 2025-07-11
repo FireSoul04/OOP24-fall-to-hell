@@ -6,6 +6,7 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.LevelImpl;
@@ -52,21 +53,20 @@ public class Tengu extends BaseEnemy {
      * @param character   the {@link Character} this enemy targets or is associated
      *                    with
      */
-    public Tengu(final Level level, final Vector2 initialCord, final Character character) {
+    public Tengu(final Level level, final Vector2 initialCord, final Character character, final EnemyTimerManager manager) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
-                        DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME));
+                        DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME), manager);
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
-        final String name = this.stats.getAttackName() + super.getCountAttack();
+        final String name = super.getEnemyTimerManager().getNextAttackName(this);
         super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
             this.attack();
             super.getLevel().getTimerManager().restartTimer(name);
         }));
-        super.incrementCountAttack();
     }
 
     /**
@@ -91,14 +91,6 @@ public class Tengu extends BaseEnemy {
         }
         // TODO delete when the tests works without this
         this.collided = Optional.of(super.getPosition());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean isFull() {
-        return this.stats.getLife() == FULL_LIFE;
     }
 
     /**

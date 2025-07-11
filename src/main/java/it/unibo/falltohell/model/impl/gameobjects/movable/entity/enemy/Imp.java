@@ -6,6 +6,7 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedBaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
@@ -26,12 +27,12 @@ public class Imp extends BaseEnemy {
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
 
-    public Imp(final Level level, final Vector2 initialCord, final Character character) {
+    public Imp(final Level level, final Vector2 initialCord, final Character character, final EnemyTimerManager manager) {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
-                        DISTANCE));
+                        DISTANCE), manager);
 
         this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
     }
@@ -58,14 +59,6 @@ public class Imp extends BaseEnemy {
         }
         // TODO delete when the tests works without this
         this.collided = Optional.of(super.getPosition());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean isFull() {
-        return this.stats.getLife() == FULL_LIFE;
     }
 
     /**
