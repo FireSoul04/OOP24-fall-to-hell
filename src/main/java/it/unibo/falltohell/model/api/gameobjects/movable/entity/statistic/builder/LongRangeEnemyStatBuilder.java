@@ -4,12 +4,50 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.LongRa
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-public interface LongRangeEnemyStatBuilder{
+/**
+ * Builder interface for constructing {@link LongRangeEnemyStatistics} objects.
+ * This builder allows configuration of various properties relevant to ranged
+ * enemies,
+ * such as projectile speed, dimensions, and attack timing.
+ * <p>
+ *
+ * @author Sara Visani
+ */
+public interface LongRangeEnemyStatBuilder {
+
+    /**
+     * Sets the velocity of the projectile.
+     * <p>
+     *
+     * @param projectileVelocity the {@link Vector2} representing projectile speed
+     *                           in both axes
+     * @return this builder instance for chaining
+     */
     public LongRangeEnemyStatBuilder withProjectileVelocity(Vector2 projectileVelocity);
 
+    /**
+     * Sets the dimensions of the projectile.
+     * <p>
+     *
+     * @param projectileDimensions the {@link Dimensions} of the projectile
+     * @return this builder instance for chaining
+     */
     public LongRangeEnemyStatBuilder withProjectileDimensions(Dimensions projectileDimensions);
 
+    /**
+     * Sets the time between attacks.
+     * <p>
+     *
+     * @param timeAttack the time between two attacks
+     * @return this builder instance for chaining
+     */
     public LongRangeEnemyStatBuilder withTimeAttack(int timeAttack);
 
+    /**
+     * Builds the configured {@link LongRangeEnemyStatistics} instance.
+     * <p>
+     *
+     * @return the constructed statistics object
+     */
     public LongRangeEnemyStatistics build();
 }
