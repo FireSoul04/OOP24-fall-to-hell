@@ -1,0 +1,40 @@
+package it.unibo.falltohell.model.api;
+
+import it.unibo.falltohell.util.Vector2;
+
+/**
+ * Builder for the game (model).
+ *
+ * @author Davide Mancini
+ */
+public interface GameBuilder {
+
+    /**
+     * Creates a level inside game.
+     * @return this builder with the level
+     */
+    GameBuilder createLevel();
+
+    /**
+     * Loads from the save file the game data for the game.
+     * @return this builder with the game data
+     */
+    GameBuilder loadGameData();
+
+    /**
+     * Loads the characters into the game.
+     * @return this builder with the characters
+     */
+    GameBuilder loadCharacters();
+
+    /**
+     * Links game data to the level for game objects that need a reference to it.
+     * @return this builder with game data inside level
+     */
+    GameBuilder linkGameDataToLevel();
+
+    /**
+     * @return build the game
+     */
+    Game build();
+}

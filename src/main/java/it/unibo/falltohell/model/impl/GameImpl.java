@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.Game;
+import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 
 /**
@@ -15,12 +16,14 @@ import it.unibo.falltohell.model.api.Level;
 public class GameImpl implements Game {
 
 	private final Level level;
+	private final GameData gameData;
 
 	/**
 	 * Creates the game with the demo level.
 	 */
-	public GameImpl() {
-		this.level = new LevelImpl();
+	public GameImpl(final Level level, final GameData gameData) {
+		this.level = level;
+		this.gameData = gameData;
 	}
 
 	/**
@@ -29,5 +32,13 @@ public class GameImpl implements Game {
 	@Override
 	public Level getLevel() {
 		return this.level;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GameData getGameData() {
+		return this.gameData;
 	}
 }

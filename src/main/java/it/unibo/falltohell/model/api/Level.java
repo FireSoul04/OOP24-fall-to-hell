@@ -30,6 +30,12 @@ public interface Level {
     TimerManager getTimerManager();
 
     /**
+     * Save a reference to game data inside this level.
+     * @param gameData to link
+     */
+    void linkGameData(GameData gameData);
+
+    /**
      * @return the game data of the level
      */
     GameData getGameData();

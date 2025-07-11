@@ -14,4 +14,9 @@ public interface Game {
      * @return current level playing
      */
     Level getLevel();
+
+    /**
+     * @return data of the game
+     */
+    GameData getGameData();
 }
