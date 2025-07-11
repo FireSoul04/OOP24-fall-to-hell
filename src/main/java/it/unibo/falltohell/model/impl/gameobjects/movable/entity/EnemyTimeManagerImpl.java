@@ -11,6 +11,16 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManage
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 
+/**
+ * Implementation of the enemy timer manager.
+ * <p>
+ * Responsible for generating unique timer names for enemies and managing the
+ * removal of timers when enemies are removed from the level.
+ * </p>
+ *
+ * @see EnemyTimerManager
+ * @author Sara Visani
+ */
 public class EnemyTimeManagerImpl implements EnemyTimerManager {
 
     private long countNoAggro = 0;
