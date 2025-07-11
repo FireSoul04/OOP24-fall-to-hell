@@ -73,7 +73,7 @@ public class LevelImpl implements Level{
     /**
      * Updates all movable game objects in the level and checks for collisions.
      *
-     * @param deltaTime the time elapsed since the last update (in seconds)
+     * @param deltaTime the time elapsed since the last update 
      */
     public void update(double deltaTime){
         for(GameObject gameObject : this.gameObjects) {
