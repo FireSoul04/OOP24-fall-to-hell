@@ -55,7 +55,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             }
             super.getLevel().getTimerManager().restartTimer(name);
         }));
-        countNoAggro++;
+        this.countNoAggro++;
     }
 
     /**
@@ -130,15 +130,22 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     protected abstract void move(double deltaTime);
 
     /**
-     * TODO
-     * @return
+     * Returns the current free index used for naming or tracking attack timers.
+     * <p>
+     * This value is typically used to generate unique timer names for enemy attack logic.
+     * </p>
+     *
+     * @return the current free index for attack timers
      */
     protected long getCountAttack(){
         return this.countAttack;
     }
 
     /**
-     * TODO
+     * Increments the attack timer index counter.
+     * <p>
+     * Call this when scheduling a new attack-related timer to ensure unique identification.
+     * </p>
      */
     protected void incrementCountAttack(){
         this.countAttack++;
