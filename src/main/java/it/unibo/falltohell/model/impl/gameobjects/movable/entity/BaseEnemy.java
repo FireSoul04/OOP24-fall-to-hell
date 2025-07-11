@@ -61,6 +61,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * {@inheritDoc}
      * <p>
      * Also restarts the no-aggro timer upon being damaged.
+     * And calls the death checker.
      * </p>
      */
     @Override
@@ -69,6 +70,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         final String name = this.manager.getNoAggroTimerName(this);
         super.getLevel().getTimerManager().stopTimer(name);
         super.getLevel().getTimerManager().restartTimer(name);
+        this.isDead();
     }
 
     /**
