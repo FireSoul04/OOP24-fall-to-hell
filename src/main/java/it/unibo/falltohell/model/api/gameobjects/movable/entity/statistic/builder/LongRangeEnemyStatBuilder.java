@@ -16,6 +16,13 @@ import it.unibo.falltohell.util.Vector2;
 public interface LongRangeEnemyStatBuilder {
 
     /**
+     *
+     * @param projectileAttack
+     * @return this builder instance for chaining
+     */
+    LongRangeEnemyStatBuilder withProjectileAttack(double projectileAttack);
+
+    /**
      * Sets the velocity of the projectile.
      * <p>
      *
