@@ -23,10 +23,9 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      */
     @Override
     public void createNoAggroTimer(final Level level, final Enemy enemy, final long duration) {
-        final BaseEnemy health = (BaseEnemy) enemy;
         final String name = getNextNoAggroName(enemy);
         final CustomTimerImpl timer = new CustomTimerImpl(duration, () -> {
-            if (health.isFull()) {
+            if (enemy.getStats().getLife() < enemy.getStats().getFullLife()) {
                 final var stats = (BaseEnemyStatistics) enemy.getStats();
                 final double life = stats.getLife();
                 final double regenLife = life * stats.getRegen();
