@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 
 /**
  * Interface for managing enemy timer counters and their unique timer names.
@@ -41,12 +42,5 @@ public interface EnemyTimerManager {
      */
     void removeTimersFor(Enemy enemy, Level level);
 
-    /**
-     * Returns the "NoAggro" timer name associated with the given enemy.
-     *
-     * @param enemy the enemy instance to query
-     * @return the unique timer name for the no-aggro timer
-     * @throws IllegalStateException if no timer is found for the enemy
-     */
-    public String getNoAggroTimerName(Enemy enemy);
+    void restartEnemyTimer(Level level, Enemy enemy, BaseEnemy.TimerType type);
 }

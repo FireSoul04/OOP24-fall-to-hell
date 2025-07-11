@@ -27,6 +27,11 @@ import it.unibo.falltohell.util.Vector2;
  */
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
+    public enum TimerType {
+        ATTACK,
+        NO_AGGRO
+    }
+
     private BaseEnemyStatistics stats;
     private EnemyTimerManager manager;
 
@@ -67,9 +72,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     @Override
     public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
-        final String name = this.manager.getNoAggroTimerName(this);
-        super.getLevel().getTimerManager().stopTimer(name);
-        super.getLevel().getTimerManager().restartTimer(name);
+        this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
         this.isDead();
     }
 
