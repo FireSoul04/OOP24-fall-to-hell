@@ -78,14 +78,6 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      * {@inheritDoc}
      */
     @Override
-    public String getNoAggroName() {
-        return "no_aggro";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getNoAggro() {
         return this.noAggro;
     }

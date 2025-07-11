@@ -4,6 +4,7 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.LongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.LevelImpl;
@@ -28,20 +29,19 @@ public class Lotawiec extends BaseEnemy {
     private LongRangeEnemyStatistics stats;
     private int direction = 1;
 
-    public Lotawiec(final Level level, final Vector2 initialCord, final Character character) {
+    public Lotawiec(final Level level, final Vector2 initialCord, final Character character, final EnemyTimerManager manager) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, null, DAMAGE_A,
-                        VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME));
+                        VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME), manager);
 
         stats = (LongRangeEnemyStatistics) super.getStats();
 
-        final String name = this.stats.getAttackName() + super.getCountAttack();
+        final String name = super.getEnemyTimerManager().getNextAttackName(this);
         super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
             this.attack();
             super.getLevel().getTimerManager().restartTimer(name);
         }));
-        super.incrementCountAttack();
     }
 
     /**
@@ -66,14 +66,6 @@ public class Lotawiec extends BaseEnemy {
         }
         // TODO delete when the tests works without this
         this.direction *= -1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean isFull() {
-        return this.stats.getLife() == FULL_LIFE;
     }
 
     /**

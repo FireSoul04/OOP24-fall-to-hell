@@ -30,14 +30,6 @@ public interface BaseEnemyStatistics extends Statistics {
     Vector2 getInitialPos();
 
     /**
-     * Gets the name identifier for the no-aggro timer.
-     * <p>
-     *
-     * @return the timer name as a {@link String}
-     */
-    String getNoAggroName();
-
-    /**
      * Gets the duration (in ticks or seconds) of the no-aggro state.
      * <p>
      *

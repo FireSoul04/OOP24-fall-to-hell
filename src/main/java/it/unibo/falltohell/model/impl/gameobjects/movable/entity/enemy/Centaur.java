@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
 import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 
 import java.util.Optional;
@@ -54,9 +55,9 @@ public class Centaur extends BaseEnemy {
      * @param initialCord the initial {@link Vector2} position of the enemy
      * @param character   the target {@link Character} this enemy reacts to
      */
-    public Centaur(final Level level, final Vector2 initialCord, final Character character) {
+    public Centaur(final Level level, final Vector2 initialCord, final Character character,final EnemyTimerManager manager) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, character, 10, null));
+                initialCord, character, 10, null), manager);
 
         this.stats = (BaseEnemyStatistics) super.getStats();
     }
@@ -87,14 +88,6 @@ public class Centaur extends BaseEnemy {
         }
         // TODO delete when the tests works without this
         this.direction *= -1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected boolean isFull() {
-        return this.stats.getLife() == this.stats.getFullLife();
     }
 
     /**
