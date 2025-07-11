@@ -2,7 +2,7 @@ package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.controller.api.GameController;
 import it.unibo.falltohell.model.api.Game;
-import it.unibo.falltohell.model.impl.GameImpl;
+import it.unibo.falltohell.model.impl.GameBuilderImpl;
 import it.unibo.falltohell.view.api.GameWindow;
 import it.unibo.falltohell.view.impl.GameWindowImpl;
 
@@ -47,7 +47,12 @@ public class GameControllerImpl implements GameController {
      * Creates the controller with a new model and view, setting the state to start.
      */
     public GameControllerImpl() {
-        this.model = new GameImpl();
+        this.model = new GameBuilderImpl()
+            .createLevel()
+            .loadGameData()
+            .linkGameDataToLevel()
+            .loadCharacters()
+            .build();
         this.view = new GameWindowImpl(WIDTH, HEIGHT);
         this.state = GameState.START;
         this.logger = Logger.getLogger("GameLogger");
