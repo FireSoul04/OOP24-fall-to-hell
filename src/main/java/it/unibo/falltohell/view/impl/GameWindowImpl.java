@@ -34,8 +34,8 @@ public class GameWindowImpl implements GameWindow {
      * Creates a window for the game with the specified width and height.
      * Window starts at the center of the screen with a 2/3 ratio of the screen size.
      *
-     * @param width
-     * @param height
+     * @param width of the window
+     * @param height of the window
      */
 	public GameWindowImpl(final int width, final int height) {
 		super();
