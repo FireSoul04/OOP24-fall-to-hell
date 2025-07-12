@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.api;
 
 import it.unibo.falltohell.controller.impl.InputListener;
+import it.unibo.falltohell.model.impl.GameEventManager;
 
 import java.awt.event.KeyListener;
 
@@ -24,11 +25,11 @@ public interface GameBuilder {
     GameBuilder loadGameData();
 
     /**
-     * Attach the controller's listener of every key press to the game.
-     * @param inputListener controller to key presses of the keyboard
-     * @return this builder with a key listener
+     * Attach the event manager to the game.
+     * @param eventManager to handle event like key presses
+     * @return this builder with an event manager
      */
-    GameBuilder attachInputListener(InputListener inputListener);
+    GameBuilder attachGameEventManager(GameEventManager<String> eventManager);
 
     /**
      * Loads the characters into the game.

@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl;
 
-import it.unibo.falltohell.controller.impl.InputListener;
 import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.api.GameBuilder;
 import it.unibo.falltohell.model.api.GameData;
@@ -18,13 +17,13 @@ public class GameBuilderImpl implements GameBuilder {
 
     private Optional<Level> level;
     private Optional<GameData> gameData;
-    private Optional<InputListener> inputListener;
+    private Optional<GameEventManager<String>> eventManager;
     private List<Character> characters;
 
     public GameBuilderImpl() {
         this.level = Optional.empty();
         this.gameData = Optional.empty();
-        this.inputListener = Optional.empty();
+        this.eventManager = Optional.empty();
         this.characters = new ArrayList<>();
     }
 
@@ -51,8 +50,8 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilder attachInputListener(final InputListener keyListener) {
-        this.inputListener = Optional.of(keyListener);
+    public GameBuilder attachGameEventManager(final GameEventManager<String> eventManager) {
+        this.eventManager = Optional.of(eventManager);
         return this;
     }
 
@@ -92,7 +91,7 @@ public class GameBuilderImpl implements GameBuilder {
     /**
      * {@inheritDoc}
      * If no game data is present it creates a new one.
-     * If no input listener is attached, it creates a new one not linked with the view.
+     * If no event manager is attached, it creates a new one without any event.
      * @throws IllegalStateException if level is not created
      */
     @Override
@@ -100,6 +99,6 @@ public class GameBuilderImpl implements GameBuilder {
         if (level.isEmpty()) {
             throw new IllegalStateException("Cannot create a game without a level");
         }
-        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()), inputListener.orElse(new InputListener()));
+        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()), eventManager.orElse(new GameEventManager<>()));
     }
 }
