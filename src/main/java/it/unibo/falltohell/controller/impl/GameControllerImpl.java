@@ -52,6 +52,7 @@ public class GameControllerImpl implements GameController {
             .createLevel()
             .loadGameData()
             .linkGameDataToLevel()
+            .attachInputListener(inputListener)
             .loadCharacters()
             .build();
         this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener());

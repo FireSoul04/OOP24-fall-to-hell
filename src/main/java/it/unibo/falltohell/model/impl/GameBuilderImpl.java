@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl;
 
+import it.unibo.falltohell.controller.impl.InputListener;
 import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.api.GameBuilder;
 import it.unibo.falltohell.model.api.GameData;
@@ -9,7 +10,6 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
 import it.unibo.falltohell.util.Vector2;
 
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +18,13 @@ public class GameBuilderImpl implements GameBuilder {
 
     private Optional<Level> level;
     private Optional<GameData> gameData;
-    private Optional<KeyListener> keyListener;
+    private Optional<InputListener> inputListener;
     private List<Character> characters;
 
     public GameBuilderImpl() {
         this.level = Optional.empty();
         this.gameData = Optional.empty();
-        this.keyListener = Optional.empty();
+        this.inputListener = Optional.empty();
         this.characters = new ArrayList<>();
     }
 
@@ -51,8 +51,8 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilder attachKeyListener(final KeyListener keyListener) {
-        this.keyListener = Optional.of(keyListener);
+    public GameBuilder attachInputListener(final InputListener keyListener) {
+        this.inputListener = Optional.of(keyListener);
         return this;
     }
 
