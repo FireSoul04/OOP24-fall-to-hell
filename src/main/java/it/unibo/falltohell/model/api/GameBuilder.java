@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.api;
 
-import it.unibo.falltohell.util.Vector2;
-
 import java.awt.event.KeyListener;
 
 /**
