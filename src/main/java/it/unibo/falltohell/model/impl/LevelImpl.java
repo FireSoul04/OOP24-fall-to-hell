@@ -25,7 +25,8 @@ public class LevelImpl implements Level{
     private final List<GameObject> gameObjects;
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
-    private Optional<GameData> gameData;
+    private GameEventManager<String> eventManager;
+    private GameData gameData;
 
     /**
      * Constructs a new LevelImpl with a given list of game objects.
@@ -36,7 +37,8 @@ public class LevelImpl implements Level{
         this.gameObjects = gameObjects;
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
-        this.gameData = Optional.empty();
+        this.eventManager = new GameEventManager<>();
+        this.gameData = new GameDataImpl();
     }
     /**
      * Constructs a new empty LevelImpl.
@@ -45,7 +47,8 @@ public class LevelImpl implements Level{
         this.gameObjects = new ArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
-        this.gameData = Optional.empty();
+        this.eventManager = new GameEventManager<>();
+        this.gameData = new GameDataImpl();
     }
     /**
      * Adds a game object to the level.
@@ -99,7 +102,7 @@ public class LevelImpl implements Level{
      */
     @Override
     public void linkGameData(final GameData gameData) {
-        this.gameData = Optional.of(gameData);
+        this.gameData = gameData;
     }
 
     /**
@@ -107,6 +110,22 @@ public class LevelImpl implements Level{
      */
     @Override
     public GameData getGameData() {
-        return this.gameData.orElse(new GameDataImpl());
+        return this.gameData;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setGameEventManager(final GameEventManager<String> eventManager) {
+        this.eventManager = eventManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameEventManager<String> getGameEventManager() {
+        return this.eventManager;
     }
 }

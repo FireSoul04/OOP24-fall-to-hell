@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.api;
 
+import it.unibo.falltohell.model.impl.GameEventManager;
+
 import java.util.List;
 
 public interface Level {
@@ -39,4 +41,14 @@ public interface Level {
      * @return the game data of the level
      */
     GameData getGameData();
+
+    /**
+     * @param eventManager manager to all events of the level
+     */
+    void setGameEventManager(GameEventManager<String> eventManager);
+
+    /**
+     * @return manager to all events of the level
+     */
+    GameEventManager<String> getGameEventManager();
 }
