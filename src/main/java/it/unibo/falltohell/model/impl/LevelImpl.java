@@ -19,6 +19,9 @@ import it.unibo.falltohell.model.api.GameObject;
  * Provides methods to add, remove, and retrieve game objects, as well as to update
  * the state of the level and its objects.
  * </p>
+ *
+ * @author Lorenzo Casadei
+ * @author Davide Mancini
  */
 public class LevelImpl implements Level{
 
