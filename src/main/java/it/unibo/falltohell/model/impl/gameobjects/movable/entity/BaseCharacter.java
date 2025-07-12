@@ -47,7 +47,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.currentJumpHeight = 0;
         this.jumpAcceleration = JUMP_ACCELERATION_STEP;
         this.stats = stats;
-        this.input = new GameEventManager<>();
+        this.input = level.getGameEventManager();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
         this.interactingObject = Optional.empty();
     }
@@ -134,7 +134,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     @Override
     public void interact() {
         if (this.input.checkCondition("Interact")) {
-            this.interactingObject.ifPresent(i -> i.interact());
+            this.interactingObject.ifPresent(i -> i.interact(this));
         }
     }
 
