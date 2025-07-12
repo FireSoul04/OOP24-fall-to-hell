@@ -5,12 +5,13 @@ import it.unibo.falltohell.model.api.GameBuilder;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class GameBuilderImpl implements GameBuilder {
@@ -18,13 +19,13 @@ public class GameBuilderImpl implements GameBuilder {
     private Optional<Level> level;
     private Optional<GameData> gameData;
     private Optional<GameEventManager<String>> eventManager;
-    private List<Character> characters;
+    private Map<CharacterID, Character> characters;
 
     public GameBuilderImpl() {
         this.level = Optional.empty();
         this.gameData = Optional.empty();
         this.eventManager = Optional.empty();
-        this.characters = new ArrayList<>();
+        this.characters = new HashMap<>();
     }
 
     /**
@@ -40,11 +41,15 @@ public class GameBuilderImpl implements GameBuilder {
 
     /**
      * {@inheritDoc}
+     * @throws IllegalStateException if no character is added
      */
     @Override
     public GameBuilder loadGameData() {
         // TODO update when game data is going to load from save file
-        this.gameData = Optional.of(new GameDataImpl());
+        if (this.characters.isEmpty()) {
+            throw new IllegalStateException("Game data needs at least one character to work");
+        }
+        this.gameData = Optional.of(new GameDataImpl(this.characters));
         return this;
     }
 
@@ -72,8 +77,8 @@ public class GameBuilderImpl implements GameBuilder {
         final Vector2 position = Vector2.zero();
         final Level lv = this.level.get();
         // TODO add remaining characters
-        this.characters.add(new Rogue(lv, position));
-        this.characters.add(new Druid(lv, position));
+        this.characters.put(CharacterID.ROGUE, new Rogue(lv, position));
+        this.characters.put(CharacterID.DRUID, new Druid(lv, position));
         return this;
     }
 
@@ -100,6 +105,6 @@ public class GameBuilderImpl implements GameBuilder {
         if (level.isEmpty()) {
             throw new IllegalStateException("Cannot create a game without a level");
         }
-        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()));
+        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl(this.characters)), this.characters);
     }
 }
