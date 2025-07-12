@@ -41,11 +41,15 @@ public class GameBuilderImpl implements GameBuilder {
 
     /**
      * {@inheritDoc}
+     * @throws IllegalStateException if no character is added
      */
     @Override
     public GameBuilder loadGameData() {
         // TODO update when game data is going to load from save file
-        this.gameData = Optional.of(new GameDataImpl());
+        if (this.characters.isEmpty()) {
+            throw new IllegalStateException("Game data needs at least one character to work");
+        }
+        this.gameData = Optional.of(new GameDataImpl(this.characters));
         return this;
     }
 
@@ -101,6 +105,6 @@ public class GameBuilderImpl implements GameBuilder {
         if (level.isEmpty()) {
             throw new IllegalStateException("Cannot create a game without a level");
         }
-        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()), this.characters);
+        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl(this.characters)), this.characters);
     }
 }
