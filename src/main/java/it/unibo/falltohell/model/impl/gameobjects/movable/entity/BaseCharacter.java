@@ -50,13 +50,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.input = new GameEventManager<>();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
         this.interactingObject = Optional.empty();
-
-        this.input.addCondition("MoveLeft", () -> false);
-        this.input.addCondition("MoveRight", () -> true);
-        this.input.addCondition("MoveUp", () -> false);
-        this.input.addCondition("MoveDown", () -> false);
-        this.input.addCondition("Jump", () -> false);
-        this.input.addCondition("Interact", () -> false);
     }
 
     /**
