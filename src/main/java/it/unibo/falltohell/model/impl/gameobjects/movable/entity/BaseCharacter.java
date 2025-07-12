@@ -95,7 +95,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void update(final double deltaTime) {
-        this.input.update();
         this.move(deltaTime);
     }
 
