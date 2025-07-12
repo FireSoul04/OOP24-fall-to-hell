@@ -3,9 +3,11 @@ package it.unibo.falltohell.controller.impl;
 import it.unibo.falltohell.controller.api.GameController;
 import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.impl.GameBuilderImpl;
+import it.unibo.falltohell.model.impl.GameEventManager;
 import it.unibo.falltohell.view.api.GameWindow;
 import it.unibo.falltohell.view.impl.GameWindowImpl;
 
+import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
 
 /**
@@ -48,16 +50,52 @@ public class GameControllerImpl implements GameController {
      */
     public GameControllerImpl() {
         final InputListener inputListener = new InputListener();
+        final GameEventManager<String> eventManager = this.addEvents(inputListener);
         this.model = new GameBuilderImpl()
             .createLevel()
             .loadGameData()
             .linkGameDataToLevel()
-            .attachInputListener(inputListener)
+            .attachGameEventManager(eventManager)
             .loadCharacters()
             .build();
         this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener());
         this.state = GameState.START;
         this.logger = Logger.getLogger("GameLogger");
+    }
+
+    /**
+     * Add events based on keyboard input.
+     * @param inputListener to check for keyboard input
+     * @return new event manager with events for the player based on keyboard input
+     */
+    private GameEventManager<String> addEvents(final InputListener inputListener) {
+        final GameEventManager<String> eventManager = new GameEventManager<>();
+        eventManager.addCondition(
+            "MoveLeft",
+            () -> inputListener.isKeyPressed(KeyEvent.VK_A) || inputListener.isKeyPressed(KeyEvent.VK_LEFT)
+        );
+        eventManager.addCondition(
+            "MoveRight",
+            () -> inputListener.isKeyPressed(KeyEvent.VK_D) || inputListener.isKeyPressed(KeyEvent.VK_RIGHT)
+        );
+        eventManager.addCondition(
+            "MoveUp",
+            () -> inputListener.isKeyPressed(KeyEvent.VK_W) || inputListener.isKeyPressed(KeyEvent.VK_UP)
+        );
+        eventManager.addCondition(
+            "MoveDown",
+            () -> inputListener.isKeyPressed(KeyEvent.VK_W) || inputListener.isKeyPressed(KeyEvent.VK_DOWN)
+        );
+        eventManager.addCondition(
+            "Reload",
+            () -> inputListener.isKeyPressedOnce(KeyEvent.VK_R) || inputListener.isKeyPressedOnce(KeyEvent.VK_X)
+        );
+        eventManager.addCondition(
+            "Interact",
+            () -> inputListener.isKeyPressedOnce(KeyEvent.VK_E) || inputListener.isKeyPressedOnce(KeyEvent.VK_Z)
+        );
+        eventManager.addCondition("Jump", () -> inputListener.isKeyPressed(KeyEvent.VK_SPACE));
+        return eventManager;
     }
 
     /**
