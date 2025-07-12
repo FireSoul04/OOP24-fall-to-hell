@@ -91,6 +91,8 @@ public class GameBuilderImpl implements GameBuilder {
 
     /**
      * {@inheritDoc}
+     * If no game data is present it creates a new one.
+     * If no input listener is attached, it creates a new one not linked with the view.
      * @throws IllegalStateException if level is not created
      */
     @Override
@@ -98,6 +100,6 @@ public class GameBuilderImpl implements GameBuilder {
         if (level.isEmpty()) {
             throw new IllegalStateException("Cannot create a game without a level");
         }
-        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()));
+        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()), inputListener.orElse(new InputListener()));
     }
 }
