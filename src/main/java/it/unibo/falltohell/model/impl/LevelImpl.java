@@ -29,7 +29,7 @@ public class LevelImpl implements Level{
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
     private GameEventManager<String> eventManager;
-    private GameData gameData;
+    private Optional<GameData> gameData;
 
     /**
      * Constructs a new LevelImpl with a given list of game objects.
@@ -41,7 +41,7 @@ public class LevelImpl implements Level{
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
         this.eventManager = new GameEventManager<>();
-        this.gameData = new GameDataImpl();
+        this.gameData = Optional.empty();
     }
     /**
      * Constructs a new empty LevelImpl.
@@ -51,7 +51,7 @@ public class LevelImpl implements Level{
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
         this.eventManager = new GameEventManager<>();
-        this.gameData = new GameDataImpl();
+        this.gameData = Optional.empty();
     }
     /**
      * Adds a game object to the level.
@@ -105,15 +105,16 @@ public class LevelImpl implements Level{
      */
     @Override
     public void linkGameData(final GameData gameData) {
-        this.gameData = gameData;
+        this.gameData = Optional.of(gameData);
     }
 
     /**
      * {@inheritDoc}
+     * @throws IllegalStateException if game data is never initialized
      */
     @Override
     public GameData getGameData() {
-        return this.gameData;
+        return this.gameData.orElseThrow(() -> new IllegalStateException("Game data is not initialized"));
     }
 
     /**
