@@ -91,7 +91,6 @@ public class GameBuilderImpl implements GameBuilder {
     /**
      * {@inheritDoc}
      * If no game data is present it creates a new one.
-     * If no event manager is attached, it creates a new one without any event.
      * @throws IllegalStateException if level is not created
      */
     @Override
@@ -99,6 +98,7 @@ public class GameBuilderImpl implements GameBuilder {
         if (level.isEmpty()) {
             throw new IllegalStateException("Cannot create a game without a level");
         }
-        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()), eventManager.orElse(new GameEventManager<>()));
+        eventManager.ifPresent(level.get()::setGameEventManager);
+        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()));
     }
 }
