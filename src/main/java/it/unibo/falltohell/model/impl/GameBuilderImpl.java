@@ -29,10 +29,12 @@ public class GameBuilderImpl implements GameBuilder {
 
     /**
      * {@inheritDoc}
+     * Adds the event manager if already linked.
      */
     @Override
     public GameBuilder createLevel() {
         this.level = Optional.of(new LevelImpl());
+        eventManager.ifPresent(level.get()::setGameEventManager);
         return this;
     }
 
@@ -98,7 +100,6 @@ public class GameBuilderImpl implements GameBuilder {
         if (level.isEmpty()) {
             throw new IllegalStateException("Cannot create a game without a level");
         }
-        eventManager.ifPresent(level.get()::setGameEventManager);
         return new GameImpl(level.get(), gameData.orElse(new GameDataImpl()));
     }
 }

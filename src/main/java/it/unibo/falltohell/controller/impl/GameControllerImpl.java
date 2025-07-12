@@ -52,10 +52,10 @@ public class GameControllerImpl implements GameController {
         final InputListener inputListener = new InputListener();
         final GameEventManager<String> eventManager = this.addEvents(inputListener);
         this.model = new GameBuilderImpl()
+            .attachGameEventManager(eventManager)
             .createLevel()
             .loadGameData()
             .linkGameDataToLevel()
-            .attachGameEventManager(eventManager)
             .loadCharacters()
             .build();
         this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener());
