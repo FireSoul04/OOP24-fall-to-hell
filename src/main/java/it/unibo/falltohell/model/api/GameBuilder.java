@@ -2,6 +2,8 @@ package it.unibo.falltohell.model.api;
 
 import it.unibo.falltohell.util.Vector2;
 
+import java.awt.event.KeyListener;
+
 /**
  * Builder for the game (model).
  *
@@ -20,6 +22,13 @@ public interface GameBuilder {
      * @return this builder with the game data
      */
     GameBuilder loadGameData();
+
+    /**
+     * Attach the controller's listener of every key press to the game.
+     * @param keyListener controller to key presses of the keyboard
+     * @return this builder with a key listener
+     */
+    GameBuilder attachKeyListener(KeyListener keyListener);
 
     /**
      * Loads the characters into the game.

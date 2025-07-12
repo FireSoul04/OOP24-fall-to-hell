@@ -9,6 +9,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
 import it.unibo.falltohell.util.Vector2;
 
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,11 +18,13 @@ public class GameBuilderImpl implements GameBuilder {
 
     private Optional<Level> level;
     private Optional<GameData> gameData;
+    private Optional<KeyListener> keyListener;
     private List<Character> characters;
 
     public GameBuilderImpl() {
         this.level = Optional.empty();
         this.gameData = Optional.empty();
+        this.keyListener = Optional.empty();
         this.characters = new ArrayList<>();
     }
 
@@ -41,6 +44,15 @@ public class GameBuilderImpl implements GameBuilder {
     public GameBuilder loadGameData() {
         // TODO update when game data is going to load from save file
         this.gameData = Optional.of(new GameDataImpl());
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameBuilder attachKeyListener(final KeyListener keyListener) {
+        this.keyListener = Optional.of(keyListener);
         return this;
     }
 
