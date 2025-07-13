@@ -16,16 +16,16 @@ import java.util.Optional;
 
 public class GameBuilderImpl implements GameBuilder {
 
+    private final Map<CharacterID, Character> characters;
     private Optional<Level> level;
     private Optional<GameData> gameData;
     private Optional<GameEventManager<String>> eventManager;
-    private Map<CharacterID, Character> characters;
 
     public GameBuilderImpl() {
+        this.characters = new HashMap<>();
         this.level = Optional.empty();
         this.gameData = Optional.empty();
         this.eventManager = Optional.empty();
-        this.characters = new HashMap<>();
     }
 
     /**
@@ -35,20 +35,16 @@ public class GameBuilderImpl implements GameBuilder {
     @Override
     public GameBuilder createLevel() {
         this.level = Optional.of(new LevelImpl());
-        eventManager.ifPresent(level.get()::setGameEventManager);
+        this.eventManager.ifPresent(this.level.get()::setGameEventManager);
         return this;
     }
 
     /**
      * {@inheritDoc}
-     * @throws IllegalStateException if no character is added
      */
     @Override
     public GameBuilder loadGameData() {
         // TODO update when game data is going to load from save file
-        if (this.characters.isEmpty()) {
-            throw new IllegalStateException("Game data needs at least one character to work");
-        }
         this.gameData = Optional.of(new GameDataImpl(this.characters));
         return this;
     }
@@ -68,7 +64,7 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public GameBuilder loadCharacters() {
-        if (level.isEmpty()) {
+        if (this.level.isEmpty()) {
             throw new IllegalStateException("The characters needs a level to stay inside");
         }
         // TODO change when game data has get character instead of get id
@@ -79,6 +75,7 @@ public class GameBuilderImpl implements GameBuilder {
         // TODO add remaining characters
         this.characters.put(CharacterID.ROGUE, new Rogue(lv, position));
         this.characters.put(CharacterID.DRUID, new Druid(lv, position));
+        this.level.get().loadCharacters(this.characters);
         return this;
     }
 
@@ -88,10 +85,10 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public GameBuilder linkGameDataToLevel() {
-        if (level.isEmpty() || gameData.isEmpty()) {
+        if (this.level.isEmpty() || this.gameData.isEmpty()) {
             throw new IllegalStateException("Game data and level needs to be created to link them");
         }
-        level.get().linkGameData(gameData.get());
+        this.level.get().linkGameData(this.gameData.get());
         return this;
     }
 
@@ -102,9 +99,9 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public Game build() {
-        if (level.isEmpty()) {
+        if (this.level.isEmpty()) {
             throw new IllegalStateException("Cannot create a game without a level");
         }
-        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl(this.characters)), this.characters);
+        return new GameImpl(this.level.get(), this.gameData.orElse(new GameDataImpl(this.characters)), this.characters);
     }
 }

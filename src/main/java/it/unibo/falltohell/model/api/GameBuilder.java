@@ -1,9 +1,6 @@
 package it.unibo.falltohell.model.api;
 
-import it.unibo.falltohell.controller.impl.InputListener;
 import it.unibo.falltohell.model.impl.GameEventManager;
-
-import java.awt.event.KeyListener;
 
 /**
  * Builder for the game (model).

@@ -5,6 +5,7 @@ import it.unibo.falltohell.controller.impl.SaveFileControllerImpl;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
 
@@ -29,17 +30,10 @@ public class SavePoint extends GameObjectImpl implements Interactable {
     }
 
     /**
-     * Method to save the current state of the game or change the current character depending on the
-     * player's choice
+     * Method to save the current state of the game.
      */
     @Override
     public void interact(final Character character) {
         this.saveController.save();
-        //TODO
     }
-
-    private void selectCharacter() {
-        //TODO
-    }
-
 }
