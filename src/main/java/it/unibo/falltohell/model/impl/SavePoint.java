@@ -35,6 +35,5 @@ public class SavePoint extends GameObjectImpl implements Interactable {
     @Override
     public void interact(final Character character) {
         this.saveController.save();
-
     }
 }
