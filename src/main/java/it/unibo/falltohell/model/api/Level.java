@@ -1,8 +1,11 @@
 package it.unibo.falltohell.model.api;
 
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.GameEventManager;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface for a level in the game.
@@ -59,4 +62,15 @@ public interface Level {
      * @return manager to all events of the level
      */
     GameEventManager<String> getGameEventManager();
+
+    /**
+     * Save a reference to all playable characters inside the level.
+     * @param characters playable
+     */
+    void loadCharacters(Map<CharacterID, Character> characters);
+
+    /**
+     * @return all playable characters
+     */
+    Map<CharacterID, Character> getCharacters();
 }
