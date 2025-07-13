@@ -164,21 +164,28 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     }
 
     /**
+     * <p>
      * Randomly applies a buff to the character based on weighted probability
      * thresholds.
+     * </p>
      *
+     * <p>
      * Steps:
-     * 1. Generates a random number between 0.0 and 100.0 (with one decimal place)
-     * using ThreadLocalRandom.
-     * 2. Sorts the buff probability map entries by their threshold values.
-     * 3. Finds which interval the random number falls into, returning the
-     * associated buff key.
-     * 4. Creates and adds the corresponding Buff object to the character's
-     * BuffManager.
+     * </p>
+     * <ul>
+     * <li>Generates a random number between 0.0 and 100.0 (with one decimal place)
+     * using ThreadLocalRandom.</li>
+     * <li>Sorts the buff probability map entries by their threshold values.</li>
+     * <li>Finds which interval the random number falls into, returning the
+     * associated buff key.</li>
+     * <li>Creates and adds the corresponding Buff object to the character's
+     * BuffManager.</li>
+     * </ul>
      *
+     * <p>
      * This uses Java Streams, Optionals, and IntStream for efficient
      * functional-style operations.
-     *
+     * </p>
      */
     protected void dropBuff() {
         // Casual Percentage
