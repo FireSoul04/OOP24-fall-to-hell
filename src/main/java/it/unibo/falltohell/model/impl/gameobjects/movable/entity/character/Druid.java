@@ -22,7 +22,7 @@ public class Druid extends BaseCharacter {
         this.stats = (CharacterStatistics) super.getStats();
 
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
-            double[][] lifeManaGains = {
+            final double[][] lifeManaGains = {
                 {}, // 0 kill
                 {0.10, 0.0}, // 1 kill
                 {0.15, 0.0}, // 2 kills
