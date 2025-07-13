@@ -3,11 +3,11 @@ package it.unibo.falltohell.model.impl;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import it.unibo.falltohell.model.api.TimerManager;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
@@ -28,6 +28,7 @@ public class LevelImpl implements Level{
     private final List<GameObject> gameObjects;
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
+    private Map<CharacterID, Character> characters;
     private GameEventManager<String> eventManager;
     private Optional<GameData> gameData;
 
@@ -41,6 +42,7 @@ public class LevelImpl implements Level{
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
         this.eventManager = new GameEventManager<>();
+        this.characters = new HashMap<>();
         this.gameData = Optional.empty();
     }
     /**
@@ -51,6 +53,7 @@ public class LevelImpl implements Level{
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
         this.eventManager = new GameEventManager<>();
+        this.characters = new HashMap<>();
         this.gameData = Optional.empty();
     }
     /**
@@ -131,5 +134,21 @@ public class LevelImpl implements Level{
     @Override
     public GameEventManager<String> getGameEventManager() {
         return this.eventManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void loadCharacters(final Map<CharacterID, Character> characters) {
+        this.characters = Collections.unmodifiableMap(characters);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<CharacterID, Character> getCharacters() {
+        return this.characters;
     }
 }

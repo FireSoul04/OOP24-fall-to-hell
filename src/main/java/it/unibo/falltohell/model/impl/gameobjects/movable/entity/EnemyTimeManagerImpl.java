@@ -104,10 +104,13 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the "NoAggro" timer name associated with the given enemy.
+     *
+     * @param enemy the enemy instance to query
+     * @return the unique timer name for the no-aggro timer
+     * @throws IllegalStateException if no timer is found for the enemy
      */
-    @Override
-    public String getNoAggroTimerName(final Enemy enemy) {
+    private String getNoAggroTimerName(final Enemy enemy) {
         List<String> timers = enemyTimers.get(enemy);
         if (timers != null) {
             for (String timerName : timers) {
@@ -119,4 +122,37 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
         throw new IllegalStateException("No NoAggro timer found for enemy: " + enemy);
     }
 
+    /**
+     * Returns the "Attack" timer name associated with the given enemy.
+     *
+     * @param enemy the enemy instance to query
+     * @return the unique timer name for the attack timer
+     * @throws IllegalStateException if no timer is found for the enemy
+     */
+    private String getAttackTimerName(final Enemy enemy) {
+        List<String> timers = enemyTimers.get(enemy);
+        if (timers != null) {
+            for (String timerName : timers) {
+                if (timerName.startsWith("Attack_")) {
+                    return timerName;
+                }
+            }
+        }
+        throw new IllegalStateException("No NoAggro timer found for enemy: " + enemy);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void restartEnemyTimer(final Level level, final Enemy enemy, final BaseEnemy.TimerType type) {
+        final String name;
+        switch (type) {
+            case ATTACK -> name = getAttackTimerName(enemy);
+            case NO_AGGRO -> name = getNoAggroTimerName(enemy);
+            default -> throw new IllegalArgumentException("Unknown timer type: " + type);
+        }
+        level.getTimerManager().stopTimer(name);
+        level.getTimerManager().restartTimer(name);
+    }
 }
