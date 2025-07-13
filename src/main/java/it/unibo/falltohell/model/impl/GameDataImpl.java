@@ -4,6 +4,8 @@ import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 
+import java.util.Map;
+
 /**
  * Class to maintain the current state of the game.
  * @author Martina Malagoli
@@ -11,24 +13,24 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.Charac
 public class GameDataImpl implements GameData {
 
     private long points;
-    private CharacterID currentCharacterID;
-    //TODO add reference to the current level
+    private Character currentCharacter;
 
     /**
      * Initialization of GameData when reading an already existent save file.
      * @param points saved on the save file
      * @param characterID is the ID of last character used before saving
+     * @param characters is the map of characters in the game
      */
-    public GameDataImpl(final long points, final CharacterID characterID) {
+    public GameDataImpl(final long points, final CharacterID characterID, Map<CharacterID, Character> characters) {
         this.points = points;
-        this.currentCharacterID = characterID;
+        this.currentCharacter = characters.get(characterID);
     }
 
     /**
      * Initialization of GameData when starting a new game.
      */
-    public GameDataImpl() {
-        this(0, CharacterID.ROGUE);
+    public GameDataImpl(Map<CharacterID, Character> characters) {
+        this(0, CharacterID.ROGUE, characters);
     }
 
     /**
@@ -64,15 +66,15 @@ public class GameDataImpl implements GameData {
      */
     @Override
     public void changeCurrentCharacter(final Character newCharacter) {
-        this.currentCharacterID = newCharacter.getCharacterID();
+        this.currentCharacter = newCharacter;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public CharacterID getCurrentCharacterID() {
-        return this.currentCharacterID;
+    public Character getCurrentCharacter() {
+        return this.currentCharacter;
     }
 
     /**
