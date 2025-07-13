@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.builder;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -40,6 +41,8 @@ public interface ParamBuilderOptional {
      */
     ParamBuilderOptional withSenseDistance(Double senseDistance);
 
+    ParamBuilderOptional withBuff(Map<String, Double> buff);
+
     /**
      * @return an {@link Optional} containing the noAggro value if present
      */
@@ -54,4 +57,6 @@ public interface ParamBuilderOptional {
      * @return an {@link Optional} containing the sensing distance if present
      */
     Optional<Double> getSenseDistance();
+
+    Optional<Map<String,Double>> getBuffMap();
 }

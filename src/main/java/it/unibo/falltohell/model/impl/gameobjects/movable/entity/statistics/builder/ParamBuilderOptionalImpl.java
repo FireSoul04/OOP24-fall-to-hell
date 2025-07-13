@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder;
 
+import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.builder.ParamBuilderOptional;
@@ -19,6 +20,7 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
     private Optional<Integer> noAggro = Optional.empty();
     private Optional<Double> regen = Optional.empty();
     private Optional<Double> senseDistance = Optional.empty();
+    private Optional<Map<String,Double>> buff = Optional.empty();
 
     /**
      * {@inheritDoc}
@@ -51,6 +53,15 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
      * {@inheritDoc}
      */
     @Override
+    public ParamBuilderOptional withBuff(final Map<String, Double> buff) {
+        this.buff = Optional.ofNullable(buff);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Optional<Integer> getNoAggro() {
         return this.noAggro;
     }
@@ -71,4 +82,11 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
         return this.senseDistance;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Map<String,Double>> getBuffMap() {
+        return this.buff;
+    }
 }

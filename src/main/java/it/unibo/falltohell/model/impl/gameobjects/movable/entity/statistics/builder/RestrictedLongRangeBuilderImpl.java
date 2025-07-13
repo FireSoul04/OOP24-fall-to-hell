@@ -36,7 +36,7 @@ public class RestrictedLongRangeBuilderImpl extends LongRangeStatBuilderImpl<Res
     public RestrictedLongRangeEnemyStatisticsImpl build() {
         return new RestrictedLongRangeEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character,
                 regen, senseDistance, points, projectileAttack, projectileVelocity, projectileDimensions, distance,
-                timeAttack);
+                timeAttack, buff);
     }
 
     /**

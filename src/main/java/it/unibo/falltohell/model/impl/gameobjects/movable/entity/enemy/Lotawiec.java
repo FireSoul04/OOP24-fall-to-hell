@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
+import java.util.Map;
+
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
@@ -25,6 +27,13 @@ public class Lotawiec extends BaseEnemy {
     private static final double DAMAGE_A = 10;
     private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
     private static final int ATTACK_TIME = 4000;
+    private static final Map<String, Double> BUFF = Map.of(
+        BuffNames.ATTACK.name(), 10.0,
+        BuffNames.ATTACK_SPEED.name(), 20.0,
+        BuffNames.LIFE.name(), 30.0,
+        BuffNames.MANA.name(), 40.0,
+        BuffNames.SPEED.name(), 50.0
+    );
 
     private LongRangeEnemyStatistics stats;
     private int direction = 1;
@@ -32,7 +41,7 @@ public class Lotawiec extends BaseEnemy {
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character, final EnemyTimerManager manager) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, character, 10, null, DAMAGE_A,
+                        initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF), DAMAGE_A,
                         VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME), manager);
 
         stats = (LongRangeEnemyStatistics) super.getStats();

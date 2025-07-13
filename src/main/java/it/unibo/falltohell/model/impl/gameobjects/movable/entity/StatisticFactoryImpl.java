@@ -141,6 +141,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                         optionalParams.getNoAggro().ifPresent(builder::withNoAggro);
                         optionalParams.getRegen().ifPresent(builder::withRegen);
                         optionalParams.getSenseDistance().ifPresent(builder::withSenseDistance);
+                        optionalParams.getBuffMap().ifPresent(builder::withBuff);
                 }
 
                 return builder.build();
@@ -175,6 +176,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                         optionalParams.getNoAggro().ifPresent(builder::withNoAggro);
                         optionalParams.getRegen().ifPresent(builder::withRegen);
                         optionalParams.getSenseDistance().ifPresent(builder::withSenseDistance);
+                        optionalParams.getBuffMap().ifPresent(builder::withBuff);
                 }
 
                 return builder.build();
@@ -204,6 +206,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                         optionalParams.getNoAggro().ifPresent(builder::withNoAggro);
                         optionalParams.getRegen().ifPresent(builder::withRegen);
                         optionalParams.getSenseDistance().ifPresent(builder::withSenseDistance);
+                        optionalParams.getBuffMap().ifPresent(builder::withBuff);
                 }
 
                 return builder.build();
@@ -240,6 +243,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                         optionalParams.getNoAggro().ifPresent(builder::withNoAggro);
                         optionalParams.getRegen().ifPresent(builder::withRegen);
                         optionalParams.getSenseDistance().ifPresent(builder::withSenseDistance);
+                        optionalParams.getBuffMap().ifPresent(builder::withBuff);
                 }
 
                 return builder.build();

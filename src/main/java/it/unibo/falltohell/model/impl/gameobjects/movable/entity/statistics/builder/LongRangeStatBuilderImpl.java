@@ -66,7 +66,7 @@ public class LongRangeStatBuilderImpl<T extends LongRangeStatBuilderImpl<T>> ext
     @Override
     public LongRangeEnemyStatistics build() {
         return new LongRangedEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
-                senseDistance, points, projectileAttack, projectileVelocity, projectileDimensions, timeAttack);
+                senseDistance, points, projectileAttack, projectileVelocity, projectileDimensions, timeAttack, buff);
     }
 
     /**

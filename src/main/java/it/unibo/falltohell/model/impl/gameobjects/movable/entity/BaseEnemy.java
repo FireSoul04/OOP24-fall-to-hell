@@ -2,13 +2,27 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackSpeedBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.LifeBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.SpeedBuff;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
+
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -30,6 +44,14 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     public enum TimerType {
         ATTACK,
         NO_AGGRO
+    }
+
+    protected enum BuffNames {
+        ATTACK,
+        ATTACK_SPEED,
+        LIFE,
+        MANA,
+        SPEED
     }
 
     private BaseEnemyStatistics stats;
@@ -99,6 +121,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             }
             this.manager.removeTimersFor(this, super.getLevel());
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
+            this.dropBuff();
             super.getLevel().removeGameObject(this);
             return true;
         }
@@ -138,5 +161,59 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     protected EnemyTimerManager getEnemyTimerManager() {
         return this.manager;
+    }
+
+    /**
+     * Randomly applies a buff to the character based on weighted probability
+     * thresholds.
+     *
+     * Steps:
+     * 1. Generates a random number between 0.0 and 100.0 (with one decimal place)
+     * using ThreadLocalRandom.
+     * 2. Sorts the buff probability map entries by their threshold values.
+     * 3. Finds which interval the random number falls into, returning the
+     * associated buff key.
+     * 4. Creates and adds the corresponding Buff object to the character's
+     * BuffManager.
+     *
+     * This uses Java Streams, Optionals, and IntStream for efficient
+     * functional-style operations.
+     *
+     */
+    protected void dropBuff() {
+        // Casual Percentage
+        final double number = Math.round(ThreadLocalRandom.current().nextDouble(0, 100) * 10.0) / 10.0;
+        // Sort the map to have the percentage intervals in order
+        final List<Map.Entry<String, Double>> sorted = this.stats.getBuffMap().entrySet().stream()
+                .sorted(Comparator.comparingDouble(Map.Entry::getValue))
+                .toList();
+        // Find the key, if it exist, of said percentage
+        final Optional<String> typeBuff = IntStream.range(0, sorted.size() - 1)
+                .filter(i -> {
+                    double lower = sorted.get(i).getValue();
+                    double upper = sorted.get(i + 1).getValue();
+                    return number > lower && number <= upper;
+                })
+                .mapToObj(i -> sorted.get(i + 1).getKey())
+                .findFirst();
+        // Create the said buff if key was founded
+        if (typeBuff.isPresent()) {
+            if (typeBuff.get().equals(BuffNames.ATTACK.name())) {
+                this.stats.getCharacter().getBuffManager().addBuff(new AttackBuff(
+                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
+            } else if (typeBuff.get().equals(BuffNames.ATTACK_SPEED.name())) {
+                this.stats.getCharacter().getBuffManager().addBuff(new AttackSpeedBuff(
+                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
+            } else if (typeBuff.get().equals(BuffNames.LIFE.name())) {
+                this.stats.getCharacter().getBuffManager().addBuff(new LifeBuff(
+                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
+            } else if (typeBuff.get().equals(BuffNames.MANA.name())) {
+                this.stats.getCharacter().getBuffManager().addBuff(new ManaBuff(
+                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
+            } else {
+                this.stats.getCharacter().getBuffManager().addBuff(new SpeedBuff(
+                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
+            }
+        }
     }
 }

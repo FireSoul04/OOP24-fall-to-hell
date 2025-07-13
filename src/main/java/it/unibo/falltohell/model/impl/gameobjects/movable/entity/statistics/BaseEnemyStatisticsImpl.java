@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics;
 
+import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.TimerManager;
@@ -26,12 +27,21 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     static private double STANDARD_SENSE = 100;
     static private double STANDARD_REGEN = 0.1;
     static private int STANDARD_NO_AGGRO = 1000;
+    private static final Map<String, Double> BUFF = Map.of(
+        "LIFE", 12.0,
+        "MANA", 15.0,
+        "ATTACK_SPEED", 9.0,
+        "ATTACK", 3.0,
+        "SPEED", 6.0
+    );
 
     private final Vector2 initialPosition;
     private final int noAggro;
     private final double regen;
     private final double senseDistance;
     private final long points;
+    private final Map<String, Double> buff;
+    private double multiplier = 15.5;
     private Character character;
 
     /**
@@ -56,14 +66,16 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     public BaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
             final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
-            final long points) {
+            final long points, final Optional<Map<String, Double>> buff) {
         super(life, attack, speed, dimension);
         this.initialPosition = position;
         this.noAggro = noAggro.filter(a -> a >= 0).orElse(STANDARD_NO_AGGRO);
         this.character = character;
         this.regen = regen.filter(r -> r >= 0.05 && r <= 0.9).orElse(STANDARD_REGEN);
-        this.senseDistance = senseDistance.orElse(STANDARD_SENSE);
+        this.senseDistance = senseDistance.filter(d -> d > 0).orElse(STANDARD_SENSE);
         this.points = points;
+        this.buff = buff.orElse(BUFF);
+
     }
 
     /**
@@ -121,5 +133,25 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     @Override
     public long getPoints() {
         return this.points;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<String, Double> getBuffMap() {
+        return this.buff;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getMultiplier() {
+        return this.multiplier;
+    }
+
+    protected void setMultiplier(final double multiplier) {
+        this.multiplier = multiplier;
     }
 }

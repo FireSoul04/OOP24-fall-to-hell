@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 
+import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
@@ -37,6 +38,13 @@ public class Centaur extends BaseEnemy {
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 20;
     private static final Vector2 VELOCITY = new Vector2(2, 20);
+    private static final Map<String, Double> BUFF = Map.of(
+        BuffNames.ATTACK.name(), 10.0,
+        BuffNames.ATTACK_SPEED.name(), 20.0,
+        BuffNames.LIFE.name(), 30.0,
+        BuffNames.MANA.name(), 40.0,
+        BuffNames.SPEED.name(), 50.0
+    );
 
     private BaseEnemyStatistics stats;
     private int direction = 1;
@@ -57,7 +65,7 @@ public class Centaur extends BaseEnemy {
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,final EnemyTimerManager manager) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, character, 10, null), manager);
+                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager);
 
         this.stats = (BaseEnemyStatistics) super.getStats();
     }

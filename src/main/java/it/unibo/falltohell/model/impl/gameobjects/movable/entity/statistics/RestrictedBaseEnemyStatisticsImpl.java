@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics;
 
+import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -43,8 +44,8 @@ public class RestrictedBaseEnemyStatisticsImpl extends BaseEnemyStatisticsImpl
      */
     public RestrictedBaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character,final Optional<Double> regen, final Optional<Double> senseDistance, final long points, final double distance) {
-        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points);
+            final Character character,final Optional<Double> regen, final Optional<Double> senseDistance, final long points, final double distance, final Optional<Map<String, Double>> buff) {
+        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points, buff);
         this.distance = distance;
     }
 

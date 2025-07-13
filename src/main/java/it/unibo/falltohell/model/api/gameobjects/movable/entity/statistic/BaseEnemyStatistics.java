@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic;
 
+import java.util.Map;
+
 import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -76,4 +78,14 @@ public interface BaseEnemyStatistics extends Statistics {
      * @return the points of a enemy
      */
     long getPoints();
+
+    /**
+     * @return the map with key type of buff and value the percentage
+     */
+    Map<String, Double> getBuffMap();
+
+    /**
+     * @return the multiplier of buffs
+     */
+    double getMultiplier();
 }

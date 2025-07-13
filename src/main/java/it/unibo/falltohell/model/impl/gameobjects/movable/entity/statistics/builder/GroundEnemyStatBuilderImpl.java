@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder;
 
+import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -26,6 +27,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
     protected Optional<Integer> noAggro = Optional.empty();
     protected Optional<Double> regen = Optional.empty();
     protected Optional<Double> senseDistance = Optional.empty();
+    protected Optional<Map<String, Double>> buff= Optional.empty();
     protected Character character;
     protected long points;
 
@@ -87,9 +89,18 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      * {@inheritDoc}
      */
     @Override
+    public T withBuff(final Map<String, Double> buff) {
+        this.buff = Optional.ofNullable(buff);
+        return self();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public BaseEnemyStatistics build() {
         return new BaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
-                senseDistance, points);
+                senseDistance, points, buff);
     }
 
     /**

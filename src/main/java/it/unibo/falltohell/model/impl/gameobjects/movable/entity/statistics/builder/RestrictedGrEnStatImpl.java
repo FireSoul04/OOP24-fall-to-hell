@@ -32,7 +32,7 @@ public class RestrictedGrEnStatImpl extends GroundEnemyStatBuilderImpl<Restricte
     @Override
     public RestrictedBaseEnemyStatistics build() {
         return new RestrictedBaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character,
-                regen, senseDistance, points, distance);
+                regen, senseDistance, points, distance, buff);
     }
 
     /**
