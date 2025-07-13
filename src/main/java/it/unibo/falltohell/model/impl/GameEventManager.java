@@ -46,8 +46,8 @@ public class GameEventManager<K> {
         this.actions.put(key, action);
     }
     /**
-     * Checks all registered conditions and executes the corresponding actions if the conditions are met.
-     * Should be called regularly (e.g., in the game loop).
+     * Checks all registered conditions and executes the corresponding 
+     * actions if the conditions are met.
      */
     public void update() {
         this.conditions.forEach((key, cond) -> {

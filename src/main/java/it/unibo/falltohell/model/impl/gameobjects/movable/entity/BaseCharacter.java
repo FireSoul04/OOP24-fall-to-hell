@@ -24,12 +24,12 @@ import java.util.Optional;
 public abstract class BaseCharacter extends EntityImpl implements Character {
 
     private static final int MAX_JUMP_HEIGHT = 10;
-    private static final Vector2 JUMP_ACCELERATION_STEP = new Vector2(0.0, -0.125);
+    private static final Vector2 JUMP_ACCELERATION = new Vector2(0.0, -0.125);
+    private static final Vector2 GRAVITY = new Vector2(0.0, 0.75);
 
     private final GameEventManager<String> input;
     private final CharacterStatistics stats;
     private final BuffManager buffManager;
-    private final Vector2 jumpAcceleration;
     private int currentJumpHeight;
     private boolean onGround;
     private Optional<Interactable> interactingObject;
@@ -45,18 +45,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         super(level, position, new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
         this.onGround = false;
         this.currentJumpHeight = 0;
-        this.jumpAcceleration = JUMP_ACCELERATION_STEP;
         this.stats = stats;
-        this.input = new GameEventManager<>();
+        this.input = level.getGameEventManager();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
         this.interactingObject = Optional.empty();
-
-        this.input.addCondition("MoveLeft", () -> false);
-        this.input.addCondition("MoveRight", () -> true);
-        this.input.addCondition("MoveUp", () -> false);
-        this.input.addCondition("MoveDown", () -> false);
-        this.input.addCondition("Jump", () -> false);
-        this.input.addCondition("Interact", () -> false);
     }
 
     /**
@@ -64,7 +56,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * How fast it moves depends on current speed.
      * If both direction are read at the same time, the character remains still.
      *
-     * @param deltaTime
+     * @param deltaTime difference between two frames
      */
     private void move(final double deltaTime) {
         Vector2 velocity = Vector2.zero();
@@ -81,15 +73,17 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     /**
      * If the character is on ground it can jump until it reach max jump height or jump less than max height if the
      * jump key is released.
+     *
+     * @param deltaTime difference between two frames
      */
-    private void jump() {
+    private void jump(final double deltaTime) {
         if (this.input.checkCondition("Jump")
             && (this.onGround || this.currentJumpHeight > 0 && this.currentJumpHeight < MAX_JUMP_HEIGHT)
         ) {
             this.currentJumpHeight++;
             this.onGround = false;
             this.setPosition(this.getPosition().add(
-                this.jumpAcceleration.multiply(MAX_JUMP_HEIGHT - this.currentJumpHeight)
+                JUMP_ACCELERATION.multiply(MAX_JUMP_HEIGHT - this.currentJumpHeight).multiply(deltaTime)
             ));
         }
         if (!this.input.checkCondition("Jump")) {
@@ -98,12 +92,24 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     }
 
     /**
+     * Apply gravity to the character every frame.
+     *
+     * @param deltaTime difference between two frames
+     */
+    private void applyGravity(final double deltaTime) {
+        if (!this.onGround) {
+            this.setPosition(this.getPosition().add(GRAVITY.multiply(deltaTime)));
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void update(final double deltaTime) {
-        this.input.update();
         this.move(deltaTime);
+        this.jump(deltaTime);
+        this.applyGravity(deltaTime);
     }
 
     /**
@@ -141,7 +147,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     @Override
     public void interact() {
         if (this.input.checkCondition("Interact")) {
-            this.interactingObject.ifPresent(i -> i.interact());
+            this.interactingObject.ifPresent(i -> i.interact(this));
         }
     }
 

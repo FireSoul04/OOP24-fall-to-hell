@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyListener;
 
 /**
  * Swing implementation of the main window for the game.
@@ -34,19 +35,19 @@ public class GameWindowImpl implements GameWindow {
      * Creates a window for the game with the specified width and height.
      * Window starts at the center of the screen with a 2/3 ratio of the screen size.
      *
-     * @param width
-     * @param height
+     * @param width of the window
+     * @param height of the window
      */
-	public GameWindowImpl(final int width, final int height) {
+	public GameWindowImpl(final int width, final int height, final KeyListener keyListener) {
 		super();
 		this.width = width;
 		this.height = height;
 		this.scale = Vector2.one();
 		this.renderer = new SwingGameRenderer(this);
-		this.initializeWindow(width, height);
+		this.initializeWindow(width, height, keyListener);
 	}
 
-	private void initializeWindow(final int width, final int height) {
+	private void initializeWindow(final int width, final int height, final KeyListener keyListener) {
 		final JFrame mainFrame = new JFrame("FTH");
 		final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.scale = new Vector2(screenSize.getWidth() / width, screenSize.getHeight() / height)
@@ -55,6 +56,7 @@ public class GameWindowImpl implements GameWindow {
 			(int) (screenSize.getWidth() - width * this.scale.x()) / 2,
 			(int) (screenSize.getHeight() - height * this.scale.y()) / 2
 		);
+		mainFrame.addKeyListener(keyListener);
 		mainFrame.setLocation(startPosition);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(width, height);

@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
  *   Follows the player and moves towards the expected target position.
  *   Is correctly clamped within the level boundaries.
  *   Positions itself at the top-left corner when the player is there.
- * A small delta is used in assertions to account for floating-point precision.
  * @author Lorenzo Casadei
  */
 public class TestGameCamera {
@@ -35,8 +34,8 @@ public class TestGameCamera {
         
         Vector2 expectedTarget = new Vector2(playerPosition.x() - cameraWidth / 2, playerPosition.y() - cameraHeight / 2);
 
-        assertEquals(expectedTarget.x(), camera.getCameraPosition().x(), 0.0001, "Camera x not at expected position");
-        assertEquals(expectedTarget.y(), camera.getCameraPosition().y(), 0.0001, "Camera y not at expected position");
+        assertEquals(expectedTarget.x(), camera.getCameraPosition().x(), "Camera x not at expected position");
+        assertEquals(expectedTarget.y(), camera.getCameraPosition().y(), "Camera y not at expected position");
     }
     @Test
     void testCameraClampedToLevelBounds() {
@@ -48,15 +47,15 @@ public class TestGameCamera {
 
         Vector2 cameraPos = camera.getCameraPosition();
 
-        assertEquals(maxX, cameraPos.x(), 0.0001, "Camera x not correctly clamped");
-        assertEquals(maxY, cameraPos.y(), 0.0001, "Camera y not correctly clamped");
+        assertEquals(maxX, cameraPos.x(), "Camera x not correctly clamped");
+        assertEquals(maxY, cameraPos.y(),  "Camera y not correctly clamped");
     }
     @Test
     void testCameraAtTopLeftCorner() {
         Vector2 playerPosition = new Vector2(0, 0); 
         camera.updateCamera(playerPosition, 1.0);
-        assertEquals(0.0, camera.getCameraPosition().x(), 0.0001);
-        assertEquals(0.0, camera.getCameraPosition().y(), 0.0001);
+        assertEquals(0.0, camera.getCameraPosition().x());
+        assertEquals(0.0, camera.getCameraPosition().y());
     }
     
 }

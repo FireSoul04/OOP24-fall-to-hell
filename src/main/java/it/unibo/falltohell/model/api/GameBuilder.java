@@ -1,0 +1,50 @@
+package it.unibo.falltohell.model.api;
+
+import it.unibo.falltohell.controller.impl.InputListener;
+import it.unibo.falltohell.model.impl.GameEventManager;
+
+import java.awt.event.KeyListener;
+
+/**
+ * Builder for the game (model).
+ *
+ * @author Davide Mancini
+ */
+public interface GameBuilder {
+
+    /**
+     * Creates a level inside game.
+     * @return this builder with the level
+     */
+    GameBuilder createLevel();
+
+    /**
+     * Loads from the save file the game data for the game.
+     * @return this builder with the game data
+     */
+    GameBuilder loadGameData();
+
+    /**
+     * Attach the event manager to the game.
+     * @param eventManager to handle event like key presses
+     * @return this builder with an event manager
+     */
+    GameBuilder attachGameEventManager(GameEventManager<String> eventManager);
+
+    /**
+     * Loads the characters into the game.
+     * @return this builder with the characters
+     */
+    GameBuilder loadCharacters();
+
+    /**
+     * Links game data to the level for game objects that need a reference to it.
+     * @return this builder with game data inside level
+     */
+    GameBuilder linkGameDataToLevel();
+
+    /**
+     * @return build the game
+     */
+    Game build();
+}

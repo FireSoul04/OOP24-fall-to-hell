@@ -1,7 +1,17 @@
 package it.unibo.falltohell.model.api;
 
+import it.unibo.falltohell.model.impl.GameEventManager;
+
 import java.util.List;
 
+/**
+ * Interface for a level in the game.
+ * It contains every game object and update them every frame.
+ * It also has the data of the player, a timer manager and a game event manager.
+ *
+ * @author Lorenzo Casadei
+ * @author Davide Mancini
+ */
 public interface Level {
     
     /**
@@ -30,7 +40,23 @@ public interface Level {
     TimerManager getTimerManager();
 
     /**
+     * Save a reference to game data inside this level.
+     * @param gameData to link
+     */
+    void linkGameData(GameData gameData);
+
+    /**
      * @return the game data of the level
      */
     GameData getGameData();
+
+    /**
+     * @param eventManager manager to all events of the level
+     */
+    void setGameEventManager(GameEventManager<String> eventManager);
+
+    /**
+     * @return manager to all events of the level
+     */
+    GameEventManager<String> getGameEventManager();
 }

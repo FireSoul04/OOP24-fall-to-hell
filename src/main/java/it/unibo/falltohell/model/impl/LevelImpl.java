@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.Level;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
@@ -18,24 +19,29 @@ import it.unibo.falltohell.model.api.GameObject;
  * Provides methods to add, remove, and retrieve game objects, as well as to update
  * the state of the level and its objects.
  * </p>
+ *
+ * @author Lorenzo Casadei
+ * @author Davide Mancini
  */
 public class LevelImpl implements Level{
 
     private final List<GameObject> gameObjects;
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
-    private final GameData gameData;
+    private GameEventManager<String> eventManager;
+    private Optional<GameData> gameData;
 
     /**
      * Constructs a new LevelImpl with a given list of game objects.
      *
      * @param gameObjects the initial list of game objects in the level
      */
-    public LevelImpl(final List<GameObject> gameObjects, final GameData gameData) {
+    public LevelImpl(final List<GameObject> gameObjects) {
         this.gameObjects = gameObjects;
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
-        this.gameData = gameData;
+        this.eventManager = new GameEventManager<>();
+        this.gameData = Optional.empty();
     }
     /**
      * Constructs a new empty LevelImpl.
@@ -44,7 +50,8 @@ public class LevelImpl implements Level{
         this.gameObjects = new ArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
-        this.gameData = new GameDataImpl();
+        this.eventManager = new GameEventManager<>();
+        this.gameData = Optional.empty();
     }
     /**
      * Adds a game object to the level.
@@ -73,7 +80,7 @@ public class LevelImpl implements Level{
     /**
      * Updates all movable game objects in the level and checks for collisions.
      *
-     * @param deltaTime the time elapsed since the last update (in seconds)
+     * @param deltaTime the time elapsed since the last update 
      */
     public void update(double deltaTime){
         for(GameObject gameObject : this.gameObjects) {
@@ -97,7 +104,32 @@ public class LevelImpl implements Level{
      * {@inheritDoc}
      */
     @Override
+    public void linkGameData(final GameData gameData) {
+        this.gameData = Optional.of(gameData);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws IllegalStateException if game data is never initialized
+     */
+    @Override
     public GameData getGameData() {
-        return this.gameData;
+        return this.gameData.orElseThrow(() -> new IllegalStateException("Game data is not initialized"));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setGameEventManager(final GameEventManager<String> eventManager) {
+        this.eventManager = eventManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameEventManager<String> getGameEventManager() {
+        return this.eventManager;
     }
 }

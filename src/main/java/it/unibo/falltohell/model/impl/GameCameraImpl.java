@@ -7,8 +7,6 @@ import java.lang.Math;
  * Implementation of the {@link GameCamera} interface.
  * <p>
  * Represents the camera that follows the player within the game level.
- * The camera smoothly follows the player position, is clamped within the level boundaries,
- * and exposes methods to retrieve its position and visible area size.
  * </p>
  */
 public class GameCameraImpl implements GameCamera{
