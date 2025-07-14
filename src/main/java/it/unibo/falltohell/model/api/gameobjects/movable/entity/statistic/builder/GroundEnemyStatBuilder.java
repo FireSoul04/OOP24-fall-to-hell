@@ -4,6 +4,7 @@ import java.util.Map;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -71,7 +72,7 @@ public interface GroundEnemyStatBuilder {
      */
     public GroundEnemyStatBuilder withPoints(long points);
 
-    GroundEnemyStatBuilder withBuff(Map<String, Double> buff);
+    GroundEnemyStatBuilder withBuff(Map<BuffNames, Double> buff);
 
     /**
      * Builds and returns the {@link BaseEnemyStatistics} instance with the

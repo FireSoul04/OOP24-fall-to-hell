@@ -6,6 +6,7 @@ import java.util.Optional;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.builder.GroundEnemyStatBuilder;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.BaseEnemyStatisticsImpl;
 import it.unibo.falltohell.util.Vector2;
 
@@ -27,7 +28,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
     protected Optional<Integer> noAggro = Optional.empty();
     protected Optional<Double> regen = Optional.empty();
     protected Optional<Double> senseDistance = Optional.empty();
-    protected Optional<Map<String, Double>> buff= Optional.empty();
+    protected Optional<Map<BuffNames, Double>> buff= Optional.empty();
     protected Character character;
     protected long points;
 
@@ -89,7 +90,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      * {@inheritDoc}
      */
     @Override
-    public T withBuff(final Map<String, Double> buff) {
+    public T withBuff(final Map<BuffNames, Double> buff) {
         this.buff = Optional.ofNullable(buff);
         return self();
     }

@@ -27,12 +27,12 @@ public class Lotawiec extends BaseEnemy {
     private static final double DAMAGE_A = 10;
     private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
     private static final int ATTACK_TIME = 4000;
-    private static final Map<String, Double> BUFF = Map.of(
-        BuffNames.ATTACK.name(), 10.0,
-        BuffNames.ATTACK_SPEED.name(), 20.0,
-        BuffNames.LIFE.name(), 30.0,
-        BuffNames.MANA.name(), 40.0,
-        BuffNames.SPEED.name(), 50.0
+    private static final Map<BuffNames, Double> BUFF = Map.of(
+        BuffNames.ATTACK, 10.0,
+        BuffNames.ATTACK_SPEED, 20.0,
+        BuffNames.LIFE, 30.0,
+        BuffNames.MANA, 40.0,
+        BuffNames.SPEED, 50.0
     );
 
     private LongRangeEnemyStatistics stats;

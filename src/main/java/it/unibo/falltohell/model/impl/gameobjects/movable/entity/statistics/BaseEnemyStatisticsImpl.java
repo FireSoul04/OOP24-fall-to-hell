@@ -6,6 +6,7 @@ import java.util.Optional;
 import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticsImpl;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -27,20 +28,19 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     static private double STANDARD_SENSE = 100;
     static private double STANDARD_REGEN = 0.1;
     static private int STANDARD_NO_AGGRO = 1000;
-    private static final Map<String, Double> BUFF = Map.of(
-        "LIFE", 12.0,
-        "MANA", 15.0,
-        "ATTACK_SPEED", 9.0,
-        "ATTACK", 3.0,
-        "SPEED", 6.0
-    );
+    private static final Map<BuffNames, Double> BUFF = Map.of(
+            BuffNames.LIFE, 12.0,
+            BuffNames.MANA, 15.0,
+            BuffNames.ATTACK_SPEED, 9.0,
+            BuffNames.ATTACK, 3.0,
+            BuffNames.SPEED, 6.0);
 
     private final Vector2 initialPosition;
     private final int noAggro;
     private final double regen;
     private final double senseDistance;
     private final long points;
-    private final Map<String, Double> buff;
+    private final Map<BuffNames, Double> buff;
     private double multiplier = 15.5;
     private Character character;
 
@@ -61,12 +61,12 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      *                      {@link Optional#empty()}, default is used.
      * @param senseDistance optional override for sensing distance. If
      *                      {@link Optional#empty()}, default is used.
-     * @param points TODO
+     * @param points        TODO
      */
     public BaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
             final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
-            final long points, final Optional<Map<String, Double>> buff) {
+            final long points, final Optional<Map<BuffNames, Double>> buff) {
         super(life, attack, speed, dimension);
         this.initialPosition = position;
         this.noAggro = noAggro.filter(a -> a >= 0).orElse(STANDARD_NO_AGGRO);
@@ -139,7 +139,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      * {@inheritDoc}
      */
     @Override
-    public Map<String, Double> getBuffMap() {
+    public Map<BuffNames, Double> getBuffMap() {
         return this.buff;
     }
 

@@ -2,12 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackSpeedBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.DropImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.LifeBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.SpeedBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.BuffBuilderImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 
 import java.util.Comparator;
@@ -47,7 +42,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         NO_AGGRO
     }
 
-    protected enum BuffNames {
+    public enum BuffNames {
         ATTACK,
         ATTACK_SPEED,
         LIFE,
@@ -192,11 +187,11 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         // Casual Percentage
         final double number = Math.round(ThreadLocalRandom.current().nextDouble(0, 100) * 10.0) / 10.0;
         // Sort the map to have the percentage intervals in order
-        final List<Map.Entry<String, Double>> sorted = this.stats.getBuffMap().entrySet().stream()
+        final List<Map.Entry<BuffNames, Double>> sorted = this.stats.getBuffMap().entrySet().stream()
                 .sorted(Comparator.comparingDouble(Map.Entry::getValue))
                 .toList();
         // Find the key, if it exist, of said percentage
-        final Optional<String> typeBuff = IntStream.range(0, sorted.size() - 1)
+        final Optional<BuffNames> typeBuff = IntStream.range(0, sorted.size() - 1)
                 .filter(i -> {
                     double lower = sorted.get(i).getValue();
                     double upper = sorted.get(i + 1).getValue();
@@ -206,22 +201,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
                 .findFirst();
         // Create the said buff if key was founded
         if (typeBuff.isPresent()) {
-            if (typeBuff.get().equals(BuffNames.ATTACK.name())) {
-                new DropImpl(super.getLevel(), super.getPosition(), new AttackBuff(
-                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
-            } else if (typeBuff.get().equals(BuffNames.ATTACK_SPEED.name())) {
-                new DropImpl(super.getLevel(), super.getPosition(), new AttackSpeedBuff(
-                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
-            } else if (typeBuff.get().equals(BuffNames.LIFE.name())) {
-                new DropImpl(super.getLevel(), super.getPosition(), new LifeBuff(
-                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
-            } else if (typeBuff.get().equals(BuffNames.MANA.name())) {
-                new DropImpl(super.getLevel(), super.getPosition(), new ManaBuff(
-                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
-            } else {
-                new DropImpl(super.getLevel(), super.getPosition(), new SpeedBuff(
-                        (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
-            }
+            new BuffBuilderImpl().withLevel(super.getLevel()).withPosition(super.getPosition()).withBuff(typeBuff.get(), (CharacterStatistics)this.stats.getCharacter().getStats(), this.stats.getMultiplier()).build();
         }
     }
 }

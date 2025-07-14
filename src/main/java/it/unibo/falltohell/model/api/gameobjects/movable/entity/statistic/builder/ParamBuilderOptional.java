@@ -3,6 +3,8 @@ package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.build
 import java.util.Map;
 import java.util.Optional;
 
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
+
 /**
  * Interface for building optional parameters of a enemy's statistics.
  * <p>
@@ -41,7 +43,7 @@ public interface ParamBuilderOptional {
      */
     ParamBuilderOptional withSenseDistance(Double senseDistance);
 
-    ParamBuilderOptional withBuff(Map<String, Double> buff);
+    ParamBuilderOptional withBuff(Map<BuffNames, Double> buff);
 
     /**
      * @return an {@link Optional} containing the noAggro value if present
@@ -58,5 +60,5 @@ public interface ParamBuilderOptional {
      */
     Optional<Double> getSenseDistance();
 
-    Optional<Map<String,Double>> getBuffMap();
+    Optional<Map<BuffNames,Double>> getBuffMap();
 }

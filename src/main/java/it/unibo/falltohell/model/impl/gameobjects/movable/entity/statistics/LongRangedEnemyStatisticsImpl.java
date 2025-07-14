@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.LongRangeEnemyStatistics;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -53,7 +54,7 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
     public LongRangedEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
             final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
-            final long points,final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions,final int timeAttack,final Optional<Map<String, Double>> buff) {
+            final long points,final double projectileAttack, final Vector2 projectileVelocity, final Dimensions projectileDimensions,final int timeAttack,final Optional<Map<BuffNames, Double>> buff) {
         super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points, buff);
         this.projectileAttack = projectileAttack;
         this.projectileVelocity = projectileVelocity;

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.builder.ParamBuilderOptional;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
 
 /**
  * Implementation of {@link ParamBuilderOptional} interface,
@@ -20,7 +21,7 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
     private Optional<Integer> noAggro = Optional.empty();
     private Optional<Double> regen = Optional.empty();
     private Optional<Double> senseDistance = Optional.empty();
-    private Optional<Map<String,Double>> buff = Optional.empty();
+    private Optional<Map<BuffNames,Double>> buff = Optional.empty();
 
     /**
      * {@inheritDoc}
@@ -53,7 +54,7 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
      * {@inheritDoc}
      */
     @Override
-    public ParamBuilderOptional withBuff(final Map<String, Double> buff) {
+    public ParamBuilderOptional withBuff(final Map<BuffNames, Double> buff) {
         this.buff = Optional.ofNullable(buff);
         return this;
     }
@@ -86,7 +87,7 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Map<String,Double>> getBuffMap() {
+    public Optional<Map<BuffNames,Double>> getBuffMap() {
         return this.buff;
     }
 }

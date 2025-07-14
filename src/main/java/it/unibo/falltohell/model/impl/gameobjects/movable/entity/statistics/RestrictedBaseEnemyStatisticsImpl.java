@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedBaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -44,7 +45,7 @@ public class RestrictedBaseEnemyStatisticsImpl extends BaseEnemyStatisticsImpl
      */
     public RestrictedBaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character,final Optional<Double> regen, final Optional<Double> senseDistance, final long points, final double distance, final Optional<Map<String, Double>> buff) {
+            final Character character,final Optional<Double> regen, final Optional<Double> senseDistance, final long points, final double distance, final Optional<Map<BuffNames, Double>> buff) {
         super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points, buff);
         this.distance = distance;
     }
