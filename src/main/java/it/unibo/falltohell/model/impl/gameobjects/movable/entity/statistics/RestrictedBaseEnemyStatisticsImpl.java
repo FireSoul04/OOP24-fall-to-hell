@@ -40,12 +40,15 @@ public class RestrictedBaseEnemyStatisticsImpl extends BaseEnemyStatisticsImpl
      *                      {@link Optional#empty()}, default is used.
      * @param senseDistance optional override for sensing distance. If
      *                      {@link Optional#empty()}, default is used.
-     * @param points TODO
+     * @param points        the amount of points awarded when the enemy is defeated
      * @param distance      the restricted distance value for this enemy
+     * @param buff          optional map of possible buffs dropped by this enemy,
+     *                      with probabilities
      */
     public RestrictedBaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character,final Optional<Double> regen, final Optional<Double> senseDistance, final long points, final double distance, final Optional<Map<BuffNames, Double>> buff) {
+            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
+            final long points, final double distance, final Optional<Map<BuffNames, Double>> buff) {
         super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points, buff);
         this.distance = distance;
     }

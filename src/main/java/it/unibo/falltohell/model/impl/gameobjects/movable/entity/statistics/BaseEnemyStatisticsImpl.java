@@ -61,7 +61,9 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      *                      {@link Optional#empty()}, default is used.
      * @param senseDistance optional override for sensing distance. If
      *                      {@link Optional#empty()}, default is used.
-     * @param points        TODO
+     * @param points        the amount of points awarded when the enemy is defeated
+     * @param buff          optional map of possible buffs dropped by this enemy,
+     *                      with probabilities
      */
     public BaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
