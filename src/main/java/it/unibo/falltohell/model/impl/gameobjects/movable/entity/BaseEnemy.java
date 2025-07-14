@@ -4,6 +4,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackBuff;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackSpeedBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.DropImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.LifeBuff;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.SpeedBuff;
@@ -206,19 +207,19 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         // Create the said buff if key was founded
         if (typeBuff.isPresent()) {
             if (typeBuff.get().equals(BuffNames.ATTACK.name())) {
-                this.stats.getCharacter().getBuffManager().addBuff(new AttackBuff(
+                new DropImpl(super.getLevel(), super.getPosition(), new AttackBuff(
                         (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
             } else if (typeBuff.get().equals(BuffNames.ATTACK_SPEED.name())) {
-                this.stats.getCharacter().getBuffManager().addBuff(new AttackSpeedBuff(
+                new DropImpl(super.getLevel(), super.getPosition(), new AttackSpeedBuff(
                         (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
             } else if (typeBuff.get().equals(BuffNames.LIFE.name())) {
-                this.stats.getCharacter().getBuffManager().addBuff(new LifeBuff(
+                new DropImpl(super.getLevel(), super.getPosition(), new LifeBuff(
                         (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
             } else if (typeBuff.get().equals(BuffNames.MANA.name())) {
-                this.stats.getCharacter().getBuffManager().addBuff(new ManaBuff(
+                new DropImpl(super.getLevel(), super.getPosition(), new ManaBuff(
                         (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
             } else {
-                this.stats.getCharacter().getBuffManager().addBuff(new SpeedBuff(
+                new DropImpl(super.getLevel(), super.getPosition(), new SpeedBuff(
                         (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier()));
             }
         }
