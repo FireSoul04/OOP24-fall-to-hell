@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.impl.GameEventManager;
 import it.unibo.falltohell.model.impl.abilities.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
@@ -14,6 +15,7 @@ public class Druid extends BaseCharacter {
     private final CharacterStatistics stats;
     final private AbilityFactoryImpl factory = new AbilityFactoryImpl();
     final private StatisticPassiveAbility sPa;
+    final private GameEventManager<String> input = super.getLevel().getGameEventManager();
     private int kills = 0;
 
     public Druid(final Level level, final Vector2 position) {
@@ -47,8 +49,7 @@ public class Druid extends BaseCharacter {
 
     @Override
     public CharacterID getCharacterID() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCharacterID'");
+        return CharacterID.DRUID;
     }
 
     public void addKill() {
