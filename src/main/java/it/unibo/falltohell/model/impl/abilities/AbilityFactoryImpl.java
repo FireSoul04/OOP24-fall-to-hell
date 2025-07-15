@@ -2,12 +2,15 @@ package it.unibo.falltohell.model.impl.abilities;
 
 import it.unibo.falltohell.model.api.abilities.AbilityFactory;
 import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityBuilder;
+import it.unibo.falltohell.model.api.abilities.active.GhostAbilityCreate;
+import it.unibo.falltohell.model.api.abilities.active.GhostActiveAbility;
 import it.unibo.falltohell.model.api.abilities.passive.MethodPassiveAbility;
 import it.unibo.falltohell.model.api.abilities.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 import it.unibo.falltohell.model.impl.abilities.active.ActiveAbilityImplBuilder;
+import it.unibo.falltohell.model.impl.abilities.active.GhostActiveAbilityImpl;
 import it.unibo.falltohell.model.impl.abilities.passive.MethodPassiveAbilityTest1;
 import it.unibo.falltohell.model.impl.abilities.passive.MethodPassiveAbilityTest2;
 import it.unibo.falltohell.model.impl.abilities.passive.StatisticPassiveAbilityImpl;
@@ -46,6 +49,14 @@ public class AbilityFactoryImpl implements AbilityFactory {
     @Override
     public ActiveAbilityBuilder buildActiveAbility() {
         return new ActiveAbilityImplBuilder();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GhostActiveAbility createGhostActiveAbility(final GhostAbilityCreate obj, final Character character) {
+        return new GhostActiveAbilityImpl(obj, character);
     }
 
     /**

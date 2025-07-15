@@ -1,6 +1,8 @@
 package it.unibo.falltohell.model.api.abilities;
 
 import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityBuilder;
+import it.unibo.falltohell.model.api.abilities.active.GhostAbilityCreate;
+import it.unibo.falltohell.model.api.abilities.active.GhostActiveAbility;
 import it.unibo.falltohell.model.api.abilities.passive.MethodPassiveAbility;
 import it.unibo.falltohell.model.api.abilities.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility;
@@ -37,6 +39,8 @@ public interface AbilityFactory {
      * @return a new instance of {@link ActiveAbilityBuilder}
      */
     public ActiveAbilityBuilder buildActiveAbility();
+
+    GhostActiveAbility createGhostActiveAbility(GhostAbilityCreate obj, Character character);
 
     /**
      * Creates a passive ability.

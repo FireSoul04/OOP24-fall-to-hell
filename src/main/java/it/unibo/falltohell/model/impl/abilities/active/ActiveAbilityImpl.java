@@ -7,6 +7,7 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.abilities.active.ActiveAbility;
 import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityUpdate;
 import it.unibo.falltohell.model.api.abilities.active.OptionalCollision;
+import it.unibo.falltohell.model.api.abilities.active.PhysicalActiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
@@ -21,7 +22,7 @@ import it.unibo.falltohell.util.Vector2;
  *
  * @author Sara Visani
  */
-public class ActiveAbilityImpl extends MovableImpl implements ActiveAbility {
+public class ActiveAbilityImpl extends MovableImpl implements PhysicalActiveAbility {
     private final double damage;
     private final ActiveAbilityUpdate attack;
     private final Level level;

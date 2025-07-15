@@ -91,8 +91,7 @@ public class Druid extends BaseCharacter {
         }
         if(this.input.checkCondition("SpecialAbility") && this.tryPayCost()){
             this.SaActive = true;
-            //create special active ability dal manager
-
+            new AbilityFactoryImpl().createGhostActiveAbility( this.manager::createFamiliar, this).action();
         }
         if (this.SaActive) {
             Vector2 direction = Vector2.zero();
@@ -111,8 +110,7 @@ public class Druid extends BaseCharacter {
             }
 
             if (!direction.equals(Vector2.zero())) {
-                // Esegui attacco speciale nella direzione
-                // es. this.abilityManager.useSpecialAttack(direction)
+                this.manager.attack(direction);
             }
         }
     }
