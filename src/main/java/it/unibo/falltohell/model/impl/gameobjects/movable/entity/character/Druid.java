@@ -18,6 +18,7 @@ public class Druid extends BaseCharacter {
     final private AbilityFactoryImpl factory = new AbilityFactoryImpl();
     final private StatisticPassiveAbility sPa;
     final private GameEventManager<String> input = super.getLevel().getGameEventManager();
+    final private ManagerFamiliars manager = new ManagerFamiliars();
     private int kills = 0;
     private boolean canAttack = true;
     private boolean SaActive = false;
@@ -97,7 +98,7 @@ public class Druid extends BaseCharacter {
             Vector2 direction = Vector2.zero();
 
             if (this.input.checkCondition("SaAttackRight")) {
-            direction = direction.add(Vector2.right());
+                direction = direction.add(Vector2.right());
             }
             if (this.input.checkCondition("SaAttackLeft")) {
                 direction = direction.add(Vector2.left());
@@ -131,4 +132,7 @@ public class Druid extends BaseCharacter {
         return false;
     }
 
+    protected void setSaActive(final boolean newState){
+        this.SaActive = newState;
+    }
 }
