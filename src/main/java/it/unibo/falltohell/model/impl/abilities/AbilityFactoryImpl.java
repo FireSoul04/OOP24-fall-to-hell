@@ -1,24 +1,18 @@
 package it.unibo.falltohell.model.impl.abilities;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.abilities.AbilityFactory;
-import it.unibo.falltohell.model.api.abilities.active.ActiveAbility;
-import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityUpdate;
-import it.unibo.falltohell.model.api.abilities.active.OptionalCollision;
+import it.unibo.falltohell.model.api.abilities.active.ActiveAbilityBuilder;
 import it.unibo.falltohell.model.api.abilities.passive.MethodPassiveAbility;
 import it.unibo.falltohell.model.api.abilities.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.abilities.active.ActiveAbilityImpl;
+
+import it.unibo.falltohell.model.impl.abilities.active.ActiveAbilityImplBuilder;
 import it.unibo.falltohell.model.impl.abilities.passive.MethodPassiveAbilityTest1;
 import it.unibo.falltohell.model.impl.abilities.passive.MethodPassiveAbilityTest2;
 import it.unibo.falltohell.model.impl.abilities.passive.StatisticPassiveAbilityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.TestCharacter;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.TestCharacter2;
-import it.unibo.falltohell.util.Vector2;
 
 /**
  * Implementation of the {@link AbilityFactory} interface.
@@ -27,7 +21,7 @@ import it.unibo.falltohell.util.Vector2;
  * a registry mapping {@link Character} subclasses to their
  * respective {@link MethodPassiveAbility} creators.
  * </p>
- * 
+ *
  * @author Sara Visani
  */
 public class AbilityFactoryImpl implements AbilityFactory {
@@ -50,10 +44,8 @@ public class AbilityFactoryImpl implements AbilityFactory {
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbility createActiveAbility(final Level level, final Vector2 position, final double damage,
-            final Collider collider, final Vector2 velocity, final ActiveAbilityUpdate attack,
-            final Optional<OptionalCollision> collided) {
-        return new ActiveAbilityImpl(level, position, damage, collider, velocity, attack, collided);
+    public ActiveAbilityBuilder buildActiveAbility() {
+        return new ActiveAbilityImplBuilder();
     }
 
     /**
