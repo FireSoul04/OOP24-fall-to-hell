@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.GameEventManager;
 import it.unibo.falltohell.model.impl.abilities.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
@@ -12,11 +13,14 @@ import it.unibo.falltohell.util.Vector2;
 
 public class Druid extends BaseCharacter {
 
+    private static final double COST = 20;
     private final CharacterStatistics stats;
     final private AbilityFactoryImpl factory = new AbilityFactoryImpl();
     final private StatisticPassiveAbility sPa;
     final private GameEventManager<String> input = super.getLevel().getGameEventManager();
     private int kills = 0;
+    private boolean canAttack = true;
+    private boolean SaActive = false;
 
     public Druid(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
@@ -44,9 +48,22 @@ public class Druid extends BaseCharacter {
 
                 if (this.kills == 5) this.setZeroKill();
             }
+
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final double deltaTime) {
+        super.update(deltaTime);
+        this.attack();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CharacterID getCharacterID() {
         return CharacterID.DRUID;
@@ -59,6 +76,59 @@ public class Druid extends BaseCharacter {
 
     private void setZeroKill() {
         this.kills = 0;
+    }
+
+    private void attack() {
+        if(this.input.checkCondition("NormalAttack") && this.canAttack){
+            this.canAttack = false;
+            if(/* wait for method TODO */){
+                super.getLevel().getTimerManager().restartTimer("Druid_Attack");
+            }else{
+                super.getLevel().getTimerManager().addTimer("Druid_Attack", new CustomTimerImpl(1000, () -> this.canAttack = true));
+            }
+            //chiama l'attacco
+        }
+        if(this.input.checkCondition("SpecialAbility") && this.tryPayCost()){
+            this.SaActive = true;
+            //create special active ability dal manager
+
+        }
+        if (this.SaActive) {
+            Vector2 direction = Vector2.zero();
+
+            if (this.input.checkCondition("SaAttackRight")) {
+            direction = direction.add(Vector2.right());
+            }
+            if (this.input.checkCondition("SaAttackLeft")) {
+                direction = direction.add(Vector2.left());
+            }
+            if (this.input.checkCondition("SaAttackUp")) {
+                direction = direction.add(Vector2.up());
+            }
+            if (this.input.checkCondition("SaAttackDown")) {
+                direction = direction.add(Vector2.down());
+            }
+
+            if (!direction.equals(Vector2.zero())) {
+                // Esegui attacco speciale nella direzione
+                // es. this.abilityManager.useSpecialAttack(direction)
+            }
+        }
+    }
+
+    private boolean tryPayCost(){
+        if(this.stats.getMana()+this.stats.getTemporaryMana()-COST >= 0){
+            if(this.stats.getTemporaryMana()>0){
+                var remaining = COST - this.stats.getTemporaryMana();
+                this.stats.setTemporaryMana(0);
+                this.stats.subMana(remaining);
+            }
+            else{
+                this.stats.subMana(COST);
+            }
+            return true;
+        }
+        return false;
     }
 
 }
