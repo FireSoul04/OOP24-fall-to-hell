@@ -59,7 +59,7 @@ public class Druid extends BaseCharacter {
     @Override
     public void update(final double deltaTime) {
         super.update(deltaTime);
-        this.attack();
+        this.handleAttackInput();
     }
 
     /**
@@ -79,7 +79,14 @@ public class Druid extends BaseCharacter {
         this.kills = 0;
     }
 
-    private void attack() {
+    /**
+     * TODO
+     */
+    private void baseAttack(){
+
+    }
+
+    private void handleAttackInput() {
         if(this.input.checkCondition("NormalAttack") && this.canAttack){
             this.canAttack = false;
             if(/* wait for method TODO */){
@@ -87,7 +94,7 @@ public class Druid extends BaseCharacter {
             }else{
                 super.getLevel().getTimerManager().addTimer("Druid_Attack", new CustomTimerImpl(1000, () -> this.canAttack = true));
             }
-            //chiama l'attacco
+            this.baseAttack();
         }
         if(this.input.checkCondition("SpecialAbility") && this.tryPayCost()){
             this.SaActive = true;
