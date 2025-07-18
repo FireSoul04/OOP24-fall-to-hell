@@ -9,7 +9,7 @@ import it.unibo.falltohell.util.Vector2;
 public interface Renderable {
 
     /**
-     * Method to mirror the image associated to the renderable object.
+     * Method to mirror along the x-axis the image associated to the renderable object.
      * @param mirroring tells if the image associated to the renderable object should be mirrored
      */
     void mirror(boolean mirroring);
