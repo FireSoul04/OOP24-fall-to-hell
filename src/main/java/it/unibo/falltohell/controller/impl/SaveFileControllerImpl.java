@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * Class to that saves the current state of the game in the save file.
  * @author Martina Malagoli
  */
-public class SaveFileControllerImpl extends FileControllerImpl implements SaveFileController {
+public class SaveFileControllerImpl implements SaveFileController {
 
     private static final String FILE_NAME = "saveFile.txt";
     private static final String DIR_PATH = System.getProperty("user.home") + File.separator + "FTH" + File.separator;
@@ -26,7 +26,6 @@ public class SaveFileControllerImpl extends FileControllerImpl implements SaveFi
      * @param data is what has to be saved on the file
      */
     public SaveFileControllerImpl(final GameData data) {
-        super(DIR_PATH + FILE_NAME);
         this.data = data;
         this.logger = Logger.getLogger("SaveFileControllerLogger");
     }
