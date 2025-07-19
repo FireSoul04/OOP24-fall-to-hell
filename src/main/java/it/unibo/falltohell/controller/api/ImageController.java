@@ -1,18 +1,21 @@
 package it.unibo.falltohell.controller.api;
 
 import java.awt.*;
-import java.util.Map;
+import java.io.IOException;
 
 /**
- * Controller that handles the loading of all the sprites images.
+ * Controller that handles the loading of an image from the file system.
  * @author Martina Malagoli
  */
 public interface ImageController {
 
     /**
-     * @return a map that has the name of the class, which is also the name
-     * of the image file, as the key and the value associated is the
-     * corresponding image
+     * Method to load an image from the file system.
+     * @param fileName of the image to be loaded with its file extension
+     * @return Image loaded
+     * @throws IOException if the path given is not one of an image
+     * or doesn't exist
      */
-    Map<String, Image> createImageMap();
+    Image loadImage(String fileName) throws IOException;
+
 }
