@@ -13,29 +13,11 @@ import java.util.List;
  */
 public class FileControllerImpl implements FileController {
 
-    private final String path;
-
-    /**
-     * Initialization of the FileControllerImpl.
-     * @param path of the file
-     */
-    public FileControllerImpl(final String path) {
-        this.path = path;
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getPath() {
-        return this.path;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<String> read() throws IOException {
-        return Files.readAllLines(Path.of(this.path));
+    public List<String> read(final String path) throws IOException {
+        return Files.readAllLines(Path.of(path));
     }
 }

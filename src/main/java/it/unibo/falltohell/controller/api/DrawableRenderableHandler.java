@@ -1,0 +1,30 @@
+package it.unibo.falltohell.controller.api;
+
+import it.unibo.falltohell.model.api.Drawable;
+import it.unibo.falltohell.model.api.GameCamera;
+
+import java.awt.*;
+
+/**
+ * Interface that handles the drawable-renderable pair associated with a game object.
+ * @author Martina Malagoli
+ */
+public interface DrawableRenderableHandler {
+
+    /**
+     * Method that creates a pair of Drawable-SpriteRenderableController and that puts it on the map.
+     * @param drawable object that must be added to the map with its associated spriteRenderableController
+     */
+    void linkSprite(Drawable drawable, Image image);
+
+    /**
+     * Method that removes the pair of Drawable-RenderableController from the map.
+     * @param drawable object that must be removed from the map with its associated renderableController
+     */
+    void removeLink(Drawable drawable);
+
+    /**
+     * Method to update all the renderable objects with their associate drawable's information.
+     */
+    void updateAll(GameCamera camera);
+}

@@ -96,4 +96,12 @@ public class TimerManagerImpl implements TimerManager {
     public void stopTimer(final String name) {
         this.timers.get(name).stop();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean searchTimer(String name) {
+        return this.timers.containsKey(name);
+    }
 }
