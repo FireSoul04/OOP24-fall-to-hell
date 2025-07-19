@@ -5,11 +5,21 @@ import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.view.api.Renderable;
 
+/**
+ * Controller that handles the update of a renderable object using the information
+ * given by the drawable object associated with it.
+ * @author Martina Malagoli
+ */
 public abstract class BaseRenderableController implements RenderableController {
 
     private final Drawable drawable;
     private final Renderable renderable;
 
+    /**
+     * Initialization of the BaseRenderableController class.
+     * @param drawable associated with the renderable to be updated
+     * @param renderable to be updated
+     */
     public BaseRenderableController(final Drawable drawable, final Renderable renderable) {
         this.drawable = drawable;
         this.renderable = renderable;
