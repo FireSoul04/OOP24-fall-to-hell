@@ -40,7 +40,7 @@ public class FamiliarBat extends MovableImpl {
     private static final Dimensions DIMENSIONS = new Dimensions(5, 5);
     private static final BoxCollider COLLIDER = new BoxCollider(Vector2.zero(), DIMENSIONS);
     private final String name = "Bat-" + UUID.randomUUID();
-    final Random random = new Random();
+    private final Random random = new Random();
     private Optional<Enemy> enemy = Optional.empty();
     private int numberAttack;
     private Character character;
