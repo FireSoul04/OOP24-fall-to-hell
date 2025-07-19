@@ -13,7 +13,8 @@ import it.unibo.falltohell.util.Vector2;
 
 public class Druid extends BaseCharacter {
 
-    private static final double COST = 20;
+    private static final double CREATION_COST = 30;
+    private static final double ATTACK_COST = 10;
     private final CharacterStatistics stats;
     final private AbilityFactoryImpl factory = new AbilityFactoryImpl();
     final private StatisticPassiveAbility sPa;
@@ -30,12 +31,12 @@ public class Druid extends BaseCharacter {
 
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
             final double[][] lifeManaGains = {
-                {}, // 0 kill
-                {0.10, 0.0}, // 1 kill
-                {0.15, 0.0}, // 2 kills
-                {0.20, 0.10}, // 3 kills
-                {0.25, 0.15}, // 4 kills
-                {0.30, 0.20}  // 5 kills
+                    {}, // 0 kill
+                    { 0.10, 0.0 }, // 1 kill
+                    { 0.15, 0.0 }, // 2 kills
+                    { 0.20, 0.10 }, // 3 kills
+                    { 0.25, 0.15 }, // 4 kills
+                    { 0.30, 0.20 } // 5 kills
             };
 
             if (this.kills >= 1 && this.kills <= 5) {
@@ -47,9 +48,11 @@ public class Druid extends BaseCharacter {
                     stats.setMana(Math.min(stats.getMana() + manaGain, stats.getInitialMana()));
                 }
 
-                if (this.kills == 5) this.setZeroKill();
+                if (this.kills == 5)
+                    this.setZeroKill();
             }
 
+            this.manager.setNoFamiliarsCallback(() -> this.setSaActive(false));
         });
     }
 
@@ -82,25 +85,26 @@ public class Druid extends BaseCharacter {
     /**
      * TODO
      */
-    private void baseAttack(){
+    private void baseAttack() {
 
     }
 
     private void handleAttackInput() {
-        if(this.input.checkCondition("NormalAttack") && this.canAttack){
+        if (this.input.checkCondition("NormalAttack") && this.canAttack) {
             this.canAttack = false;
-            if(/* wait for method TODO */){
+            if (super.getLevel().getTimerManager().searchTimer("Druid_Attack")) {
                 super.getLevel().getTimerManager().restartTimer("Druid_Attack");
-            }else{
-                super.getLevel().getTimerManager().addTimer("Druid_Attack", new CustomTimerImpl(1000, () -> this.canAttack = true));
+            } else {
+                super.getLevel().getTimerManager().addTimer("Druid_Attack",
+                        new CustomTimerImpl(1000, () -> this.canAttack = true));
             }
             this.baseAttack();
         }
-        if(this.input.checkCondition("SpecialAbility") && this.tryPayCost()){
+        if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
             this.SaActive = true;
-            new AbilityFactoryImpl().createGhostActiveAbility( this.manager::createFamiliar, this).action();
+            new AbilityFactoryImpl().createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
-        if (this.SaActive) {
+        if (this.SaActive && this.tryPayCost(ATTACK_COST)) {
             Vector2 direction = Vector2.zero();
 
             if (this.input.checkCondition("SaAttackRight")) {
@@ -122,22 +126,21 @@ public class Druid extends BaseCharacter {
         }
     }
 
-    private boolean tryPayCost(){
-        if(this.stats.getMana()+this.stats.getTemporaryMana()-COST >= 0){
-            if(this.stats.getTemporaryMana()>0){
-                var remaining = COST - this.stats.getTemporaryMana();
+    private boolean tryPayCost(final double cost) {
+        if (this.stats.getMana() + this.stats.getTemporaryMana() - cost >= 0) {
+            if (this.stats.getTemporaryMana() > 0) {
+                var remaining = cost - this.stats.getTemporaryMana();
                 this.stats.setTemporaryMana(0);
                 this.stats.subMana(remaining);
-            }
-            else{
-                this.stats.subMana(COST);
+            } else {
+                this.stats.subMana(cost);
             }
             return true;
         }
         return false;
     }
 
-    protected void setSaActive(final boolean newState){
+    private void setSaActive(final boolean newState) {
         this.SaActive = newState;
     }
 }

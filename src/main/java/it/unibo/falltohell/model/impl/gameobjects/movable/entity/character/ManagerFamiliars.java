@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.weapons.NoFamiliarsCallback;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.FamiliarBat;
 import it.unibo.falltohell.util.Vector2;
@@ -27,6 +28,7 @@ import it.unibo.falltohell.util.Vector2;
 public class ManagerFamiliars {
     private List<FamiliarBat> list = new ArrayList<>();
     private final Set<FamiliarBat> pendingRemoval = new HashSet<>();
+    private NoFamiliarsCallback callback;
 
     /**
      * Creates a new familiar linked to the specified character.
@@ -57,6 +59,7 @@ public class ManagerFamiliars {
      * <p>
      * If the familiar is currently idle, it is removed immediately.
      * Otherwise, the removal is deferred and handled after the current attack ends.
+     * Notifies callback if no familiars remain.
      * </p>
      *
      * @param familiar the familiar to remove
@@ -68,7 +71,7 @@ public class ManagerFamiliars {
             familiar.getLevel().getTimerManager().removeTimer(familiar.getName());
             familiar.getLevel().removeGameObject(familiar);
             if (this.list.isEmpty())
-                familiar.getCharacter().setSaActive(false);
+                callback.onNoFamiliarsLeft();
         } else {
             pendingRemoval.add(familiar);
         }
@@ -88,5 +91,14 @@ public class ManagerFamiliars {
                 .filter(f -> f.isIdle() && f.isInAttackRange())
                 .findFirst()
                 .ifPresent(f -> f.attack(direction));
+    }
+
+    /**
+     * Sets the callback to be notified when no familiars remain.
+     *
+     * @param callback the callback instance
+     */
+    public void setNoFamiliarsCallback(NoFamiliarsCallback callback) {
+        this.callback = callback;
     }
 }
