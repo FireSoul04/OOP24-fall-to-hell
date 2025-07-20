@@ -91,7 +91,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
         this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
-        this.isDead();
+        this.removeEntity();
     }
 
     /**
