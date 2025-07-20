@@ -34,9 +34,9 @@ import it.unibo.falltohell.util.Vector2;
  * @see Enemy
  */
 public class FamiliarBat extends MovableImpl {
-    private static final double DAMAGE = 5;
-    private static final double DISTANCE = 15;
-    private static final Vector2 VELOCITY = new Vector2(10, 10);
+    private static final double DAMAGE = 15;
+    private static final double DISTANCE = 20;
+    private static final Vector2 VELOCITY = new Vector2(20, 10);
     private static final Dimensions DIMENSIONS = new Dimensions(5, 5);
     private static final BoxCollider COLLIDER = new BoxCollider(Vector2.zero(), DIMENSIONS);
     private final String name = "Bat-" + UUID.randomUUID();
