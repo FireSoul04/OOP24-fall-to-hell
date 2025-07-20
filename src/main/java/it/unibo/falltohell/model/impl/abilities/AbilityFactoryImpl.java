@@ -11,11 +11,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 import it.unibo.falltohell.model.impl.abilities.active.ActiveAbilityImplBuilder;
 import it.unibo.falltohell.model.impl.abilities.active.GhostActiveAbilityImpl;
-import it.unibo.falltohell.model.impl.abilities.passive.MethodPassiveAbilityTest1;
-import it.unibo.falltohell.model.impl.abilities.passive.MethodPassiveAbilityTest2;
 import it.unibo.falltohell.model.impl.abilities.passive.StatisticPassiveAbilityImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.TestCharacter;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.TestCharacter2;
 
 /**
  * Implementation of the {@link AbilityFactory} interface.
@@ -36,11 +32,8 @@ public class AbilityFactoryImpl implements AbilityFactory {
      * corresponding {@link MethodPassiveAbility} creators.
      */
     public AbilityFactoryImpl() {
-        registry.register(TestCharacter.class,
-                character -> new MethodPassiveAbilityTest1(character));
-
-        registry.register(TestCharacter2.class,
-                character -> new MethodPassiveAbilityTest2(character));
+        /*registry.register(TestCharacter.class,
+                character -> new MethodPassiveAbilityTest1(character));*/
     }
 
     /**
