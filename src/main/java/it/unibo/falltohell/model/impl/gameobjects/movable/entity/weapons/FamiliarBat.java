@@ -190,6 +190,13 @@ public class FamiliarBat extends MovableImpl {
 
         stats.setMana(Math.min(stats.getMana() + manaIncrease, stats.getInitialMana()));
         stats.setLife(Math.min(stats.getLife() + lifeIncrease, stats.getFullLife()));
+
+        if (enemy.isDead()) {
+            this.enemy = Optional.empty();
+            this.isAttacking = false;
+            this.numberAttack = 0;
+            this.attackFinishListener.onAttackFinished(this);
+        }
     }
 
     /**
