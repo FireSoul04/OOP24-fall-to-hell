@@ -59,7 +59,6 @@ public class EntityImpl extends MovableImpl implements Entity {
     @Override
     public boolean isDead() {
         if (this.stats.getLife() <= 0) {
-            super.getLevel().removeGameObject(this);
             return true;
         }
         return false;
