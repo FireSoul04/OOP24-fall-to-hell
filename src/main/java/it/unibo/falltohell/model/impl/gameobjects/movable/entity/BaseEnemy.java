@@ -110,8 +110,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * {@inheritDoc}
      */
     @Override
-    public boolean isDead() {
-        if (this.stats.getLife() <= 0) {
+    protected void removeEntity() {
+        if (super.isDead()) {
             if (this.stats.getCharacter() instanceof Druid) {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
@@ -119,9 +119,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.getLevel().removeGameObject(this);
-            return true;
         }
-        return false;
     }
 
     /**
