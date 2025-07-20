@@ -16,10 +16,10 @@ public class Druid extends BaseCharacter {
     private static final double CREATION_COST = 30;
     private static final double ATTACK_COST = 10;
     private final CharacterStatistics stats;
-    final private AbilityFactoryImpl factory = new AbilityFactoryImpl();
-    final private StatisticPassiveAbility sPa;
-    final private GameEventManager<String> input = super.getLevel().getGameEventManager();
-    final private ManagerFamiliars manager = new ManagerFamiliars();
+    private final AbilityFactoryImpl factory = new AbilityFactoryImpl();
+    private final StatisticPassiveAbility sPa;
+    private final GameEventManager<String> input = super.getLevel().getGameEventManager();
+    private final ManagerFamiliars manager = new ManagerFamiliars();
     private int kills = 0;
     private int passiveCycles = 1;
     private boolean canAttack = true;
@@ -49,13 +49,13 @@ public class Druid extends BaseCharacter {
                     stats.setMana(Math.min(stats.getMana() + manaGain, stats.getInitialMana()));
                 }
 
-                if (this.kills == 5){
+                if (this.kills == 5) {
                     this.setZeroKill();
                     this.passiveCycles++;
                 }
             }
         });
-        this.manager.setNoFamiliarsCallback(() -> this.setSaActive(false));
+        this.manager.setNoFamiliarsCallback(() -> this.SaActive = false);
     }
 
     /**
@@ -80,13 +80,7 @@ public class Druid extends BaseCharacter {
         this.sPa.carryOut();
 
         final String resetTimerName = "Druid_ResetKills";
-
-        if (super.getLevel().getTimerManager().searchTimer(resetTimerName)) {
-            super.getLevel().getTimerManager().restartTimer(resetTimerName);
-        } else {
-            super.getLevel().getTimerManager().addTimer(resetTimerName,
-                new CustomTimerImpl(10_000, () -> this.setZeroKill()));
-        }
+        this.restartOrAddTimer(resetTimerName, new CustomTimerImpl(10_000, () -> this.setZeroKill()));
     }
 
     private void setZeroKill() {
@@ -103,37 +97,27 @@ public class Druid extends BaseCharacter {
     private void handleAttackInput() {
         if (this.input.checkCondition("NormalAttack") && this.canAttack) {
             this.canAttack = false;
-            if (super.getLevel().getTimerManager().searchTimer("Druid_Attack")) {
-                super.getLevel().getTimerManager().restartTimer("Druid_Attack");
-            } else {
-                super.getLevel().getTimerManager().addTimer("Druid_Attack",
-                        new CustomTimerImpl(1000, () -> this.canAttack = true));
-            }
+            this.restartOrAddTimer("Druid_Attack", new CustomTimerImpl(1000, () -> this.canAttack = true));
             this.baseAttack();
         }
         if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
             this.SaActive = true;
-            new AbilityFactoryImpl().createGhostActiveAbility(this.manager::createFamiliar, this).action();
+            this.factory.createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
-        if (this.SaActive && this.manager.isFree() && this.tryPayCost(ATTACK_COST)) {
+        if (this.SaActive && this.spAtkCalled() && this.manager.isFree() && this.tryPayCost(ATTACK_COST)) {
             Vector2 direction = Vector2.zero();
 
             if (this.input.checkCondition("SaAttackRight")) {
                 direction = direction.add(Vector2.right());
-            }
-            if (this.input.checkCondition("SaAttackLeft")) {
+            } else if (this.input.checkCondition("SaAttackLeft")) {
                 direction = direction.add(Vector2.left());
-            }
-            if (this.input.checkCondition("SaAttackUp")) {
+            } else if (this.input.checkCondition("SaAttackUp")) {
                 direction = direction.add(Vector2.up());
-            }
-            if (this.input.checkCondition("SaAttackDown")) {
+            } else if (this.input.checkCondition("SaAttackDown")) {
                 direction = direction.add(Vector2.down());
             }
 
-            if (!direction.equals(Vector2.zero())) {
-                this.manager.attack(direction);
-            }
+            this.manager.attack(direction);
         }
     }
 
@@ -151,7 +135,19 @@ public class Druid extends BaseCharacter {
         return false;
     }
 
-    private void setSaActive(final boolean newState) {
-        this.SaActive = newState;
+    private void restartOrAddTimer(final String name, final CustomTimerImpl timer) {
+        var tm = super.getLevel().getTimerManager();
+        if (tm.searchTimer(name)) {
+            tm.restartTimer(name);
+        } else {
+            tm.addTimer(name, timer);
+        }
+    }
+
+    private boolean spAtkCalled(){
+        return this.input.checkCondition("SaAttackRight")
+            || this.input.checkCondition("SaAttackLeft")
+            || this.input.checkCondition("SaAttackUp")
+            || this.input.checkCondition("SaAttackDown");
     }
 }
