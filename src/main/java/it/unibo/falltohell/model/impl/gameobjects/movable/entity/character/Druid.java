@@ -21,6 +21,7 @@ public class Druid extends BaseCharacter {
     final private GameEventManager<String> input = super.getLevel().getGameEventManager();
     final private ManagerFamiliars manager = new ManagerFamiliars();
     private int kills = 0;
+    private int passiveCycles = 1;
     private boolean canAttack = true;
     private boolean SaActive = false;
 
@@ -32,28 +33,29 @@ public class Druid extends BaseCharacter {
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
             final double[][] lifeManaGains = {
                     {}, // 0 kill
-                    { 0.10, 0.0 }, // 1 kill
-                    { 0.15, 0.0 }, // 2 kills
-                    { 0.20, 0.10 }, // 3 kills
-                    { 0.25, 0.15 }, // 4 kills
-                    { 0.30, 0.20 } // 5 kills
+                    { 0.05, 0.0 }, // 1 kill
+                    { 0.10, 0.0 }, // 2 kills
+                    { 0.10, 0.05 }, // 3 kills
+                    { 0.15, 0.10 }, // 4 kills
+                    { 0.20, 0.20 } // 5 kills
             };
 
             if (this.kills >= 1 && this.kills <= 5) {
-                double lifeGain = stats.getFullLife() * lifeManaGains[this.kills][0];
-                double manaGain = stats.getInitialMana() * lifeManaGains[this.kills][1];
+                double lifeGain = stats.getFullLife() * lifeManaGains[this.kills][0] * passiveCycles;
+                double manaGain = stats.getInitialMana() * lifeManaGains[this.kills][1] * passiveCycles;
 
                 stats.setLife(Math.min(stats.getLife() + lifeGain, stats.getFullLife()));
                 if (manaGain > 0) {
                     stats.setMana(Math.min(stats.getMana() + manaGain, stats.getInitialMana()));
                 }
 
-                if (this.kills == 5)
+                if (this.kills == 5){
                     this.setZeroKill();
+                    this.passiveCycles++;
+                }
             }
-
-            this.manager.setNoFamiliarsCallback(() -> this.setSaActive(false));
         });
+        this.manager.setNoFamiliarsCallback(() -> this.setSaActive(false));
     }
 
     /**
@@ -76,6 +78,15 @@ public class Druid extends BaseCharacter {
     public void addKill() {
         this.kills += 1;
         this.sPa.carryOut();
+
+        final String resetTimerName = "Druid_ResetKills";
+
+        if (super.getLevel().getTimerManager().searchTimer(resetTimerName)) {
+            super.getLevel().getTimerManager().restartTimer(resetTimerName);
+        } else {
+            super.getLevel().getTimerManager().addTimer(resetTimerName,
+                new CustomTimerImpl(10_000, () -> this.setZeroKill()));
+        }
     }
 
     private void setZeroKill() {
@@ -104,7 +115,7 @@ public class Druid extends BaseCharacter {
             this.SaActive = true;
             new AbilityFactoryImpl().createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
-        if (this.SaActive && this.tryPayCost(ATTACK_COST)) {
+        if (this.SaActive && this.manager.isFree() && this.tryPayCost(ATTACK_COST)) {
             Vector2 direction = Vector2.zero();
 
             if (this.input.checkCondition("SaAttackRight")) {

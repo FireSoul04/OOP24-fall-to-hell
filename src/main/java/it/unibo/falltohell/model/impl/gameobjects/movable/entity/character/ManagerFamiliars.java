@@ -101,4 +101,16 @@ public class ManagerFamiliars {
     public void setNoFamiliarsCallback(NoFamiliarsCallback callback) {
         this.callback = callback;
     }
+
+    /**
+     * Checks whether there is at least one familiar that is both idle and within
+     * attack range.
+     *
+     * @return {@code true} if a familiar is ready to attack; {@code false}
+     *         otherwise
+     */
+    public boolean isFree() {
+        return this.list.stream()
+                .anyMatch(f -> f.isIdle() && f.isInAttackRange());
+    }
 }
