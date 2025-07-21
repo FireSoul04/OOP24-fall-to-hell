@@ -1,9 +1,13 @@
 package it.unibo.falltohell.controller.impl;
 
+import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.api.GameController;
 import it.unibo.falltohell.model.api.Game;
+import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.model.impl.GameBuilderImpl;
+import it.unibo.falltohell.model.impl.GameCameraImpl;
 import it.unibo.falltohell.model.impl.GameEventManager;
+import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.GameWindow;
 import it.unibo.falltohell.view.impl.GameWindowImpl;
 
@@ -50,15 +54,20 @@ public class GameControllerImpl implements GameController {
      */
     public GameControllerImpl() {
         final InputListener inputListener = new InputListener();
+        final DrawableRenderableHandler drh = new DrawableRenderableHandlerImpl();
         final GameEventManager<String> eventManager = this.addEvents(inputListener);
+        // Testing a camera with level width and height based on the virtual screen width and height
+        final GameCamera camera = new GameCameraImpl(Vector2.zero(), WIDTH, HEIGHT, 1.0, WIDTH * 2, HEIGHT * 2);
         this.model = new GameBuilderImpl()
             .attachGameEventManager(eventManager)
+            .attachDrawableRenderableHandlerToLevel(drh)
+            .attachCamera(camera)
             .createLevel()
             .loadGameData()
             .linkGameDataToLevel()
             .loadCharacters()
             .build();
-        this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener());
+        this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener(), drh);
         this.state = GameState.START;
         this.logger = Logger.getLogger("GameLogger");
     }
