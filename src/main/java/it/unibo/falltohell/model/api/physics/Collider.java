@@ -16,7 +16,7 @@ public interface Collider {
     Vector2 offset();
 
     /**
-     * @return dimensions of this collider
+     * @return size of this collider
      */
-    Dimensions dimensions();
+    Dimensions size();
 }
