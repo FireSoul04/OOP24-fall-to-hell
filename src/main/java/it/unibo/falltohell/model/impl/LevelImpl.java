@@ -2,10 +2,19 @@ package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
-import it.unibo.falltohell.model.api.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
+import it.unibo.falltohell.model.api.GameCamera;
+import it.unibo.falltohell.model.api.GameData;
+import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
@@ -23,7 +32,7 @@ import it.unibo.falltohell.model.api.physics.CollisionsManager;
  * @author Lorenzo Casadei
  * @author Davide Mancini
  */
-public class LevelImpl implements Level{
+public class LevelImpl implements Level {
 
     private final List<GameObject> gameObjects;
     private final GameCamera camera;
