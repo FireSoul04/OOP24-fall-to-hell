@@ -5,8 +5,6 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
-import it.unibo.falltohell.model.impl.GameCameraImpl;
-import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestEnemy1Movement {
 
-    Level lv = new LevelImpl(new GameCameraImpl(Vector2.zero(), 200, 200, 10, 200, 200));
+    Level lv = new LevelTest();
     EnemyFactory fact;
     Character chara1;
     Character chara2;
