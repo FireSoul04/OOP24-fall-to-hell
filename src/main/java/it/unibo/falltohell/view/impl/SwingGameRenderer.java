@@ -1,5 +1,6 @@
 package it.unibo.falltohell.view.impl;
 
+import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.view.api.GameRenderer;
 import it.unibo.falltohell.view.api.GameWindow;
 
@@ -16,15 +17,17 @@ import java.awt.Graphics2D;
 public class SwingGameRenderer extends JPanel implements GameRenderer {
 
 	private final GameWindow window;
+	private final DrawableRenderableHandler drh;
 
 	/**
 	 * Create a renderer implemented with Java Swing.
 	 *
 	 * @param window of the game
 	 */
-	public SwingGameRenderer(final GameWindow window) {
+	public SwingGameRenderer(final GameWindow window, final DrawableRenderableHandler drh) {
 		super();
 		this.window = window;
+		this.drh = drh;
 	}
 
 	/**
@@ -55,11 +58,10 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 		g2.scale(this.window.getScale().x(), this.window.getScale().y());
 
-		// Two rectangles are drawn for debugging purpose only
-		g2.setColor(Color.WHITE);
-		g2.fillRect(50, 50, 50, 50);
-		g2.fillRect(this.window.getWidth() - 100, this.window.getHeight() - 100, 50, 50);
-		//
+		this.drh.getAllRenderables()
+			.stream()
+			.map(t -> (BaseRenderable) t)
+			.forEach(t -> t.render(g));
 
 		g2.dispose();
 	}

@@ -1,5 +1,6 @@
 package it.unibo.falltohell.view.impl;
 
+import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.GameWindow;
@@ -38,12 +39,13 @@ public class GameWindowImpl implements GameWindow {
      * @param width of the window
      * @param height of the window
      */
-	public GameWindowImpl(final int width, final int height, final KeyListener keyListener) {
+	public GameWindowImpl(final int width, final int height, final KeyListener keyListener,
+	                      final DrawableRenderableHandler drh) {
 		super();
 		this.width = width;
 		this.height = height;
 		this.scale = Vector2.one();
-		this.renderer = new SwingGameRenderer(this);
+		this.renderer = new SwingGameRenderer(this, drh);
 		this.initializeWindow(width, height, keyListener);
 	}
 
