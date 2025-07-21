@@ -1,11 +1,13 @@
 package it.unibo.falltohell;
 
 import it.unibo.falltohell.model.api.EnemyFactory;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
+import it.unibo.falltohell.model.impl.GameCameraImpl;
 import it.unibo.falltohell.model.impl.LevelImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.TestCharacter;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestEnemy2Movement {
 
+    Level lv = new LevelImpl(new GameCameraImpl(Vector2.zero(), 200, 200, 10, 200, 200));
     EnemyFactory fact;
     Character chara1;
     Character chara2;
@@ -25,13 +28,13 @@ public class TestEnemy2Movement {
     @BeforeEach
     public void setUp(){
         fact = new EnemyFactoryImpl();
-        chara1 = new TestCharacter(new Vector2(-50, 0));
-        chara1_2 = new TestCharacter(new Vector2(-45, 0));
-        chara2 = new TestCharacter(new Vector2(5, 0));
-        en1 = fact.CreateMonster2(new LevelImpl(), Vector2.zero(), chara1);
-        en2 = fact.CreateMonster2(new LevelImpl(), new Vector2(-30, 0), chara1);
-        en3 = fact.CreateMonster2(new LevelImpl(), new Vector2(-40, 0), chara1);
-        en4 = fact.CreateMonster2(new LevelImpl(), new Vector2(10, 0), chara1);
+        chara1 = new Druid(lv, new Vector2(-50, 0));
+        chara1_2 = new Druid(lv, new Vector2(-45, 0));
+        chara2 = new Druid(lv, new Vector2(5, 0));
+        en1 = fact.createTengu(lv, Vector2.zero(), chara1);
+        en2 = fact.createTengu(lv, new Vector2(-30, 0), chara1);
+        en3 = fact.createTengu(lv, new Vector2(-40, 0), chara1);
+        en4 = fact.createTengu(lv, new Vector2(10, 0), chara1);
     }
 
     /*Testing Movement with Monster 2 to far away from Player*/
