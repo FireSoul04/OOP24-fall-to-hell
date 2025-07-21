@@ -8,6 +8,7 @@ import it.unibo.falltohell.model.impl.GameEventManager;
 import it.unibo.falltohell.model.impl.abilities.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.WarScythe;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -20,6 +21,7 @@ public class Druid extends BaseCharacter {
     private final StatisticPassiveAbility sPa;
     private final GameEventManager<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
+    private final WarScythe weapon = new WarScythe();
     private int kills = 0;
     private int passiveCycles = 1;
     private boolean canAttack = true;
@@ -87,18 +89,11 @@ public class Druid extends BaseCharacter {
         this.kills = 0;
     }
 
-    /**
-     * TODO
-     */
-    private void baseAttack() {
-
-    }
-
     private void handleAttackInput() {
         if (this.input.checkCondition("NormalAttack") && this.canAttack) {
             this.canAttack = false;
             this.restartOrAddTimer("Druid_Attack", new CustomTimerImpl(1000, () -> this.canAttack = true));
-            this.baseAttack();
+            this.weapon.attack();
         }
         if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
             this.SaActive = true;
