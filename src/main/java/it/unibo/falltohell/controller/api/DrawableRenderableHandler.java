@@ -2,8 +2,10 @@ package it.unibo.falltohell.controller.api;
 
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
+import it.unibo.falltohell.view.api.Renderable;
 
 import java.awt.*;
+import java.util.List;
 
 /**
  * Interface that handles the drawable-renderable pair associated with a game object.
@@ -27,4 +29,9 @@ public interface DrawableRenderableHandler {
      * Method to update all the renderable objects with their associate drawable's information.
      */
     void updateAll(GameCamera camera);
+
+    /**
+     * @return a list with all the renderable objects
+     */
+    List<Renderable> getAllRenderables();
 }
