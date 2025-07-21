@@ -86,8 +86,8 @@ public class LevelImpl implements Level{
      *
      * @return a new list containing all game objects
      */
-    public List<GameObject> getGameObject() {
-        return new ArrayList<>(this.gameObjects);
+    public List<GameObject> getGameObjects() {
+        return Collections.unmodifiableList(this.gameObjects);
     }
     /**
      * Updates all movable game objects in the level and checks for collisions.

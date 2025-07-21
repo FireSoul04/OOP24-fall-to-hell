@@ -21,7 +21,7 @@ public interface Level {
     /**
      * @return the list of game objects currently present in the level
      */
-    List<GameObject> getGameObject();
+    List<GameObject> getGameObjects();
 
     /**
      * @param gameObject to be added in the level
