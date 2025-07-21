@@ -6,9 +6,9 @@ import it.unibo.falltohell.model.api.*;
 
 import java.util.*;
 
+import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
-import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 
@@ -96,8 +96,10 @@ public class LevelImpl implements Level{
      */
     public void update(double deltaTime){
         for(GameObject gameObject : this.gameObjects) {
-            if(gameObject instanceof MovableImpl) {
-                ((MovableImpl) gameObject).update(deltaTime);
+            if(gameObject instanceof Movable movable) {
+                movable.update(deltaTime);
+            } else {
+                gameObject.update();
             }
         }
         this.collisionsManager.checkCollisions(this.gameObjects);
