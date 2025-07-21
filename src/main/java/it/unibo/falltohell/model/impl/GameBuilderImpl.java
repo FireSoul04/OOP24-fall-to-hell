@@ -1,9 +1,7 @@
 package it.unibo.falltohell.model.impl;
 
-import it.unibo.falltohell.model.api.Game;
-import it.unibo.falltohell.model.api.GameBuilder;
-import it.unibo.falltohell.model.api.GameData;
-import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
+import it.unibo.falltohell.model.api.*;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
@@ -19,23 +17,31 @@ public class GameBuilderImpl implements GameBuilder {
     private final Map<CharacterID, Character> characters;
     private Optional<Level> level;
     private Optional<GameData> gameData;
+    private Optional<GameCamera> camera;
     private Optional<GameEventManager<String>> eventManager;
+    private Optional<DrawableRenderableHandler> drh;
 
     public GameBuilderImpl() {
         this.characters = new HashMap<>();
         this.level = Optional.empty();
         this.gameData = Optional.empty();
+        this.camera = Optional.empty();
         this.eventManager = Optional.empty();
+        this.drh = Optional.empty();
     }
 
     /**
      * {@inheritDoc}
-     * Adds the event manager if already linked.
+     * Adds the event manager and drawable-renderable handler if already linked.
      */
     @Override
     public GameBuilder createLevel() {
-        this.level = Optional.of(new LevelImpl());
+        if (this.camera.isEmpty()) {
+            throw new IllegalStateException("Cannot create a level without a camera");
+        }
+        this.level = Optional.of(new LevelImpl(this.camera.get()));
         this.eventManager.ifPresent(this.level.get()::setGameEventManager);
+        this.drh.ifPresent(this.level.get()::setDrawableRenderableHandler);
         return this;
     }
 
@@ -55,6 +61,24 @@ public class GameBuilderImpl implements GameBuilder {
     @Override
     public GameBuilder attachGameEventManager(final GameEventManager<String> eventManager) {
         this.eventManager = Optional.of(eventManager);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameBuilder attachDrawableRenderableHandlerToLevel(final DrawableRenderableHandler drh) {
+        this.drh = Optional.of(drh);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameBuilder attachCamera(GameCamera camera) {
+        this.camera = Optional.of(camera);
         return this;
     }
 
