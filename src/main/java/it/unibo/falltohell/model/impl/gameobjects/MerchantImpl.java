@@ -10,7 +10,11 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.B
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobjects.interactable.Potion;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.*;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.LifeBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackSpeedBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.SpeedBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
