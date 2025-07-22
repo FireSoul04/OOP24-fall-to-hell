@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
+import it.unibo.falltohell.controller.api.ImageController;
+import it.unibo.falltohell.controller.impl.ImageControllerImpl;
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Block;
@@ -8,11 +11,13 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.BuffManager;
 import it.unibo.falltohell.model.impl.GameEventManager;
+import it.unibo.falltohell.model.impl.Sprite;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.BuffManagerImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -23,13 +28,15 @@ import java.util.Optional;
  */
 public abstract class BaseCharacter extends EntityImpl implements Character {
 
-    private static final int MAX_JUMP_HEIGHT = 10;
-    private static final Vector2 JUMP_ACCELERATION = new Vector2(0.0, -0.125);
-    private static final Vector2 GRAVITY = new Vector2(0.0, 0.75);
+    private static final int MAX_JUMP_HEIGHT = 15;
+    private static final Vector2 JUMP_ACCELERATION = new Vector2(0.0, -0.0625);
+    private static final Vector2 GRAVITY_STEP = new Vector2(0.0, 0.0625);
 
     private final GameEventManager<String> input;
     private final CharacterStatistics stats;
     private final BuffManager buffManager;
+    private Vector2 jumpVelocity;
+    private Vector2 gravity;
     private int currentJumpHeight;
     private boolean onGround;
     private Optional<Interactable> interactingObject;
@@ -45,6 +52,8 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         super(level, position, new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
         this.onGround = false;
         this.currentJumpHeight = 0;
+        this.jumpVelocity = Vector2.zero();
+        this.gravity = Vector2.zero();
         this.stats = stats;
         this.input = level.getGameEventManager();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
@@ -82,9 +91,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         ) {
             this.currentJumpHeight++;
             this.onGround = false;
-            this.setPosition(this.getPosition().add(
-                JUMP_ACCELERATION.multiply(MAX_JUMP_HEIGHT - this.currentJumpHeight).multiply(deltaTime)
-            ));
+            this.jumpVelocity = this.jumpVelocity.add(JUMP_ACCELERATION.multiply(MAX_JUMP_HEIGHT - this.currentJumpHeight).multiply(deltaTime));
+            this.setPosition(this.getPosition().add(this.jumpVelocity));
+        } else {
+            this.jumpVelocity = Vector2.zero();
         }
         if (!this.input.checkCondition("Jump")) {
             this.currentJumpHeight = 0;
@@ -98,7 +108,8 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     private void applyGravity(final double deltaTime) {
         if (!this.onGround) {
-            this.setPosition(this.getPosition().add(GRAVITY.multiply(deltaTime)));
+            this.gravity = this.gravity.add(GRAVITY_STEP.multiply(deltaTime));
+            this.setPosition(this.getPosition().add(this.gravity));
         }
     }
 
