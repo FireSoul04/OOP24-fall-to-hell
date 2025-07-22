@@ -67,7 +67,6 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
     @Override
     public void restock() {
         this.potionCounter = 0;
-        this.merch.clear();
         final List<String> shuffledMerch = new ArrayList<>(this.allMerchFromFile);
         Collections.shuffle(shuffledMerch);
         this.merch.addAll(shuffledMerch
@@ -79,7 +78,15 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
 
     /**
      * {@inheritDoc}
-     * Method to check at each frame if the items from the merchant's merch are sold.
+     */
+    @Override
+    public void destock() {
+        this.merch.clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     * It is used to check at each frame if the items from the merchant's merch are sold.
      */
     @Override
     public void update() {
