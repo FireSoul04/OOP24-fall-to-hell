@@ -86,7 +86,7 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
 
     /**
      * {@inheritDoc}
-     * Method to check at each frame if the items from the merchant's merch are sold.
+     * It is used to check at each frame if the items from the merchant's merch are sold.
      */
     @Override
     public void update() {
