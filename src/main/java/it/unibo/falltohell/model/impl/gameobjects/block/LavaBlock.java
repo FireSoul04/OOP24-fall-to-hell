@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.gameobjects;
+package it.unibo.falltohell.model.impl.gameobjects.block;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
@@ -15,7 +15,7 @@ import java.util.Objects;
  * to the character and to enemies while they touch it from above.
  * @author Martina Malagoli
  */
-public class LavaBlock extends BaseBlock{
+public class LavaBlock extends BaseBlock {
 
     private static final long TIME = 1500;
     private static final double DAMAGE = 2;
@@ -28,7 +28,8 @@ public class LavaBlock extends BaseBlock{
      * @param height
      * @param collider associated to the block
      */
-    public LavaBlock(Level lv, Vector2 position, double width, double height, Collider collider) {
+    public LavaBlock(final Level lv, final Vector2 position,
+                     final double width, final double height, final Collider collider) {
         super(lv, position, width, height, collider);
     }
 
@@ -38,14 +39,16 @@ public class LavaBlock extends BaseBlock{
      * walks on this type of block.
      */
     @Override
-    public void onCollision(GameObject other, Vector2 direction) {
-        if (other instanceof Entity entity) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
+        if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
             final String ID = String.valueOf(Objects.hash(this, entity));
             final String name = "LavaBlock" + ID;
             final TimerManager timerManager = this.getLevel().getTimerManager();
-            timerManager.addTimer(name + ID, new CustomTimerImpl(TIME, () -> {
+            timerManager.addTimer(name, new CustomTimerImpl(TIME, () -> {
                 entity.getStats().subLife(DAMAGE);
-                timerManager.restartTimer(name);
+                if (timerManager.searchTimer(name)) {
+                    timerManager.restartTimer(name);
+                }
             }));
         }
     }
@@ -56,12 +59,14 @@ public class LavaBlock extends BaseBlock{
      * walks away from this type of block.
      */
     @Override
-    public void onCollisionExit(GameObject other, Vector2 direction) {
-        if (other instanceof Entity entity) {
+    public void onCollisionExit(final GameObject other, final Vector2 direction) {
+        if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
             final String ID = String.valueOf(Objects.hash(this, entity));
             final String name = "LavaBlock" + ID;
             final TimerManager timerManager = this.getLevel().getTimerManager();
-            timerManager.removeTimer(name);
+            if (timerManager.searchTimer(name)) {
+                timerManager.removeTimer(name);
+            }
         }
     }
 }
