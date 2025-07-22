@@ -44,12 +44,12 @@ public class LavaBlock extends BaseBlock {
             final String ID = String.valueOf(Objects.hash(this, entity));
             final String name = "LavaBlock" + ID;
             final TimerManager timerManager = this.getLevel().getTimerManager();
-            timerManager.addTimer(name, new CustomTimerImpl(TIME, () -> {
-                entity.getStats().subLife(DAMAGE);
-                if (timerManager.searchTimer(name)) {
+            if (!timerManager.searchTimer(name)) {
+                timerManager.addTimer(name, new CustomTimerImpl(TIME, () -> {
+                    entity.getStats().subLife(DAMAGE);
                     timerManager.restartTimer(name);
-                }
-            }));
+                }));
+            }
         }
     }
 
