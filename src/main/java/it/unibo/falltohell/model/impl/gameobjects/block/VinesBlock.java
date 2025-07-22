@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.gameobjects;
+package it.unibo.falltohell.model.impl.gameobjects.block;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
@@ -24,7 +24,8 @@ public class VinesBlock extends BaseBlock {
      * @param height
      * @param collider associated to the block
      */
-    public VinesBlock(Level lv, Vector2 position, double width, double height, Collider collider) {
+    public VinesBlock(final Level lv, final Vector2 position,
+                      final double width, final double height, final Collider collider) {
         super(lv, position, width, height, collider);
     }
 
@@ -34,7 +35,7 @@ public class VinesBlock extends BaseBlock {
      * with this type of block.
      */
     @Override
-    public void onCollision(GameObject other, Vector2 direction) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
             final Statistics statistics = entity.getStats();
             statistics.setSpeed(statistics.getInitialSpeed().multiply(MULTIPLIER));
@@ -47,8 +48,8 @@ public class VinesBlock extends BaseBlock {
      * walks away from this block.
      */
     @Override
-    public void onCollisionExit(GameObject other, Vector2 direction) {
-        if (other instanceof Entity entity) {
+    public void onCollisionExit(final GameObject other, final Vector2 direction) {
+        if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
             final Statistics statistics = entity.getStats();
             statistics.setSpeed(statistics.getInitialSpeed());
         }
