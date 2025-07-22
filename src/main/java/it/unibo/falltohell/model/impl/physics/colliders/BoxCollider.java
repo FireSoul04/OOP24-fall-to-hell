@@ -13,4 +13,9 @@ import it.unibo.falltohell.util.Vector2;
  * @param size of the box
  */
 public record BoxCollider(Vector2 offset, Dimensions size) implements Collider {
+
+    public BoxCollider(final Vector2 offset, final Dimensions size) {
+        this.offset = offset.subtract(new Vector2(size.width(), size.height()).divide(2));
+        this.size = size;
+    }
 }

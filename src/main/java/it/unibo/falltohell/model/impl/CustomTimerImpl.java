@@ -16,7 +16,7 @@ public class CustomTimerImpl implements CustomTimer {
     private long elapsedTime;
     private boolean started;
     private boolean paused;
-    private final TimerTask eventOnFinish;
+    private final CustomTimerEvent eventOnFinish;
 
     /**
      * Initialization of the new CustomTimer.
@@ -27,9 +27,7 @@ public class CustomTimerImpl implements CustomTimer {
         this.timer = new Timer();
         this.started = false;
         this.paused = false;
-        this.eventOnFinish = new TimerTask() {
-            @Override
-            public void run() {
+        this.eventOnFinish = () -> {
                 if (!paused) {
                     elapsedTime++;
                 }
@@ -37,7 +35,6 @@ public class CustomTimerImpl implements CustomTimer {
                     event.execute();
                     stop();
                 }
-            }
         };
     }
 
@@ -49,7 +46,12 @@ public class CustomTimerImpl implements CustomTimer {
         if (!this.started) {
             this.timer = new Timer();
             this.elapsedTime = 0;
-            this.timer.scheduleAtFixedRate(this.eventOnFinish, 0, 1);
+            this.timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    eventOnFinish.execute();
+                }
+            }, 0, 1);
             this.started = true;
         } else {
             throw new IllegalStateException("Cannot start a timer that is already running");
