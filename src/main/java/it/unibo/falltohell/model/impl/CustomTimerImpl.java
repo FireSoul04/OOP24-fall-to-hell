@@ -32,8 +32,8 @@ public class CustomTimerImpl implements CustomTimer {
                     elapsedTime++;
                 }
                 if (elapsedTime >= duration) {
-                    event.execute();
                     stop();
+                    event.execute();
                 }
         };
     }
