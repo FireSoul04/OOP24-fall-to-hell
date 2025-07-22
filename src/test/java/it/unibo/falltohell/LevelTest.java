@@ -1,6 +1,7 @@
 package it.unibo.falltohell;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
+import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
@@ -17,18 +18,29 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
+/**
+ * Class for new level dedicated to tests.
+ * The characters and the view features are disabled on this class.
+ */
 public class LevelTest implements Level {
 
     private final List<GameObject> gameObjects;
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
+    private GameEventManager<String> eventManager;
     private Optional<GameData> gameData;
 
+    /**
+     * Creates a new level with default managers.
+     * The game objects list and event manager are empty by default.
+     */
     public LevelTest() {
         this.gameObjects = new ArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
+        this.eventManager = new GameEventManager<>();
         this.gameData = Optional.empty();
     }
 
@@ -60,8 +72,9 @@ public class LevelTest implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void update(final double deltaTime){
-        for(final GameObject gameObject : this.gameObjects) {
+    public void update(final double deltaTime) {
+        final Stream<GameObject> gameObjectStream = this.gameObjects.stream();
+        for (final GameObject gameObject : gameObjectStream.toList()) {
             if(gameObject instanceof Movable movable) {
                 movable.update(deltaTime);
             } else {
@@ -97,20 +110,18 @@ public class LevelTest implements Level {
 
     /**
      * {@inheritDoc}
-     * Not used
      */
     @Override
     public void setGameEventManager(final GameEventManager<String> eventManager) {
-        throw new UnsupportedOperationException("No use for tests");
+        this.eventManager = eventManager;
     }
 
     /**
      * {@inheritDoc}
-     * Not used
      */
     @Override
     public GameEventManager<String> getGameEventManager() {
-        throw new UnsupportedOperationException("No use for tests");
+        return this.eventManager;
     }
 
     /**
@@ -128,7 +139,7 @@ public class LevelTest implements Level {
      */
     @Override
     public DrawableRenderableHandler getDrawableRenderableHandler() {
-        throw new UnsupportedOperationException("No use for tests");
+        return new DrawableRenderableHandlerImpl();
     }
 
     /**

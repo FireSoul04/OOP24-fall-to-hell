@@ -1,20 +1,19 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
+import it.unibo.falltohell.controller.api.ImageController;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.model.api.GameData;
-import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.TimerManager;
+import it.unibo.falltohell.model.api.*;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
@@ -103,8 +102,9 @@ public class LevelImpl implements Level {
      *
      * @param deltaTime the time elapsed since the last update 
      */
-    public void update(double deltaTime){
-        for(GameObject gameObject : this.gameObjects) {
+    public void update(final double deltaTime) {
+        final Stream<GameObject> gameObjectStream = this.gameObjects.stream();
+        for (final GameObject gameObject : gameObjectStream.toList()) {
             if(gameObject instanceof Movable movable) {
                 movable.update(deltaTime);
             } else {
@@ -193,7 +193,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void setPlayer(Character player) {
+    public void setPlayer(final Character player) {
         this.player = Optional.of(player);
     }
 }
