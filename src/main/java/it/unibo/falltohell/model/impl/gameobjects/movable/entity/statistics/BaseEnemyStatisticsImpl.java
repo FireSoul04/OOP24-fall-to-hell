@@ -25,9 +25,12 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemyStatistics {
 
-    static private double STANDARD_SENSE = 100;
-    static private double STANDARD_REGEN = 0.1;
-    static private int STANDARD_NO_AGGRO = 1000;
+    private static final double STANDARD_MULTIPLIER = 15.5;
+    private static final double MIN_R = 0.05;
+    private static final double MAX_R = 0.9;
+    private static final double STANDARD_SENSE = 100;
+    private static final double STANDARD_REGEN = 0.1;
+    private static final int STANDARD_NO_AGGRO = 1000;
     private static final Map<BuffNames, Double> BUFF = Map.of(
             BuffNames.LIFE, 12.0,
             BuffNames.MANA, 15.0,
@@ -41,7 +44,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     private final double senseDistance;
     private final long points;
     private final Map<BuffNames, Double> buff;
-    private double multiplier = 15.5;
+    private double multiplier = STANDARD_MULTIPLIER;
     private Character character;
 
     /**
@@ -73,7 +76,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         this.initialPosition = position;
         this.noAggro = noAggro.filter(a -> a >= 0).orElse(STANDARD_NO_AGGRO);
         this.character = character;
-        this.regen = regen.filter(r -> r >= 0.05 && r <= 0.9).orElse(STANDARD_REGEN);
+        this.regen = regen.filter(r -> r >= MIN_R && r <= MAX_R).orElse(STANDARD_REGEN);
         this.senseDistance = senseDistance.filter(d -> d > 0).orElse(STANDARD_SENSE);
         this.points = points;
         this.buff = buff.orElse(BUFF);
@@ -153,6 +156,15 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
         return this.multiplier;
     }
 
+    /**
+     * <p>
+     * Sets the internal multiplier value used for damage, speed, or other scaling
+     * calculations.
+     * </p>
+     *
+     * @param multiplier the new multiplier to apply; typically a value greater than
+     *                   0
+     */
     protected void setMultiplier(final double multiplier) {
         this.multiplier = multiplier;
     }

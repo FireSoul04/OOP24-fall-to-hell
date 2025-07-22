@@ -128,7 +128,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                         final Dimensions dimension, final Vector2 position,
                         final Character character,
                         final long points, final ParamBuilderOptional optionalParams) {
-                GroundEnemyStatBuilderImpl<?> builder = new GroundEnemyStatBuilderImpl<>()
+                final GroundEnemyStatBuilderImpl<?> builder = new GroundEnemyStatBuilderImpl<>()
                                 .withLife(life)
                                 .withAttack(attack)
                                 .withSpeed(speed)
@@ -159,7 +159,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                         final Character character,
                         final long points, final ParamBuilderOptional optionalParams, final double projectileAttack,
                         final Vector2 projectileVelocity, final Dimensions projectileDimensions, final int timeAttack) {
-                LongRangeStatBuilderImpl<?> builder = new LongRangeStatBuilderImpl<>()
+                final LongRangeStatBuilderImpl<?> builder = new LongRangeStatBuilderImpl<>()
                                 .withLife(life)
                                 .withAttack(attack)
                                 .withSpeed(speed)
@@ -193,7 +193,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                         final Dimensions dimension, final Vector2 position,
                         final Character character,
                         final long points, final ParamBuilderOptional optionalParams, final double distance) {
-                RestrictedGrEnStatImpl builder = new RestrictedGrEnStatImpl()
+                final RestrictedGrEnStatImpl builder = new RestrictedGrEnStatImpl()
                                 .withLife(life)
                                 .withAttack(attack)
                                 .withSpeed(speed)
@@ -225,7 +225,7 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                         final long points, final ParamBuilderOptional optionalParams, final double projectileAttack,
                         final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance,
                         final int timeAttack) {
-                RestrictedLongRangeBuilderImpl builder = new RestrictedLongRangeBuilderImpl()
+                final RestrictedLongRangeBuilderImpl builder = new RestrictedLongRangeBuilderImpl()
                                 .withLife(life)
                                 .withAttack(attack)
                                 .withSpeed(speed)

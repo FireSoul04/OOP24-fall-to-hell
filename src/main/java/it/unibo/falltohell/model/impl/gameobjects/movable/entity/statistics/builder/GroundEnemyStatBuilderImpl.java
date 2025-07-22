@@ -24,19 +24,19 @@ import it.unibo.falltohell.util.Vector2;
 public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>> extends StatisticBuilderImpl<T>
         implements GroundEnemyStatBuilder {
 
-    protected Vector2 position;
-    protected Optional<Integer> noAggro = Optional.empty();
-    protected Optional<Double> regen = Optional.empty();
-    protected Optional<Double> senseDistance = Optional.empty();
-    protected Optional<Map<BuffNames, Double>> buff= Optional.empty();
-    protected Character character;
-    protected long points;
+    private Vector2 position;
+    private Optional<Integer> noAggro = Optional.empty();
+    private Optional<Double> regen = Optional.empty();
+    private Optional<Double> senseDistance = Optional.empty();
+    private Optional<Map<BuffNames, Double>> buff = Optional.empty();
+    private Character character;
+    private long points;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T withPosition(Vector2 position) {
+    public T withPosition(final Vector2 position) {
         this.position = position;
         return self();
     }
@@ -45,7 +45,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      * {@inheritDoc}
      */
     @Override
-    public T withNoAggro(Integer noAggro) {
+    public T withNoAggro(final Integer noAggro) {
         this.noAggro = Optional.ofNullable(noAggro);
         return self();
     }
@@ -54,7 +54,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      * {@inheritDoc}
      */
     @Override
-    public T withRegen(Double regen) {
+    public T withRegen(final Double regen) {
         this.regen = Optional.ofNullable(regen);
         return self();
     }
@@ -63,7 +63,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      * {@inheritDoc}
      */
     @Override
-    public T withSenseDistance(Double senseDistance) {
+    public T withSenseDistance(final Double senseDistance) {
         this.senseDistance = Optional.ofNullable(senseDistance);
         return self();
     }
@@ -72,7 +72,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      * {@inheritDoc}
      */
     @Override
-    public T withCharacter(Character character) {
+    public T withCharacter(final Character character) {
         this.character = character;
         return self();
     }
@@ -81,7 +81,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      * {@inheritDoc}
      */
     @Override
-    public T withPoints(long points) {
+    public T withPoints(final long points) {
         this.points = points;
         return self();
     }
@@ -100,6 +100,12 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      */
     @Override
     public BaseEnemyStatistics build() {
+
+        final var life = super.getLife();
+        final var attack = super.getAttack();
+        final var speed = super.getSpeed();
+        final var dimension = super.getDimensions();
+
         return new BaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
                 senseDistance, points, buff);
     }
@@ -111,5 +117,61 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
     @SuppressWarnings("unchecked")
     protected T self() {
         return (T) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Vector2 getInitialPos() {
+        return this.position;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Integer> getNoAggro() {
+        return this.noAggro;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Character getCharacter() {
+        return this.character;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Double> getRegen() {
+        return this.regen;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Double> getSenseDistance() {
+        return this.senseDistance;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getPoints() {
+        return this.points;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Map<BuffNames, Double>> getBuffMap() {
+        return this.buff;
     }
 }

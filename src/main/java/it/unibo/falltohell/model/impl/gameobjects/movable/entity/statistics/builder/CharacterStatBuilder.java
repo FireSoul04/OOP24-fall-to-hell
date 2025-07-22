@@ -23,7 +23,7 @@ public class CharacterStatBuilder extends StatisticBuilderImpl<CharacterStatBuil
      * {@inheritDoc}
      */
     @Override
-    public CharacterStatBuilder withMana(double mana) {
+    public CharacterStatBuilder withMana(final double mana) {
         this.mana = mana;
         return this;
     }
@@ -32,7 +32,7 @@ public class CharacterStatBuilder extends StatisticBuilderImpl<CharacterStatBuil
      * {@inheritDoc}
      */
     @Override
-    public CharacterStatBuilder withAttackSpeed(double attackSpeed) {
+    public CharacterStatBuilder withAttackSpeed(final double attackSpeed) {
         this.attackSpeed = attackSpeed;
         return this;
     }
@@ -42,6 +42,11 @@ public class CharacterStatBuilder extends StatisticBuilderImpl<CharacterStatBuil
      */
     @Override
     public CharacterStatistics build() {
+        final var life = super.getLife();
+        final var attack = super.getAttack();
+        final var speed = super.getSpeed();
+        final var dimension = super.getDimensions();
+
         return new CharacterStatisticsImpl(life, attack, speed, dimension, mana, attackSpeed);
     }
 }

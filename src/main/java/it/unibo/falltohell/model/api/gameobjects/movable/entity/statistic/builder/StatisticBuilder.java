@@ -20,7 +20,7 @@ public interface StatisticBuilder {
      * @param life the life value to assign
      * @return this builder instance for method chaining
      */
-    public StatisticBuilder withLife(double life);
+    StatisticBuilder withLife(double life);
 
     /**
      * Sets the attack power for the entity.
@@ -29,7 +29,7 @@ public interface StatisticBuilder {
      * @param attack the attack value to assign
      * @return this builder instance for method chaining
      */
-    public StatisticBuilder withAttack(double attack);
+    StatisticBuilder withAttack(double attack);
 
     /**
      * Sets the movement speed of the entity.
@@ -39,7 +39,7 @@ public interface StatisticBuilder {
      *              and Y axes
      * @return this builder instance for method chaining
      */
-    public StatisticBuilder withSpeed(Vector2 speed);
+    StatisticBuilder withSpeed(Vector2 speed);
 
     /**
      * Sets the dimensions (size) of the entity.
@@ -48,5 +48,37 @@ public interface StatisticBuilder {
      * @param dimensions a {@link Dimensions} object specifying width and height
      * @return this builder instance for method chaining
      */
-    public StatisticBuilder withDimensions(Dimensions dimensions);
+    StatisticBuilder withDimensions(Dimensions dimensions);
+
+    /**
+     * Returns the current life points of the entity.
+     * <p>
+     *
+     * @return the entity's current life
+     */
+    double getLife();
+
+    /**
+     * Returns the current attack power of the entity.
+     * <p>
+     *
+     * @return the attack value
+     */
+    double getAttack();
+
+    /**
+     * Returns the current movement speed of the entity.
+     * <p>
+     *
+     * @return the speed as a {@link Vector2}
+     */
+    Vector2 getSpeed();
+
+    /**
+     * Returns the physical size of the entity.
+     * <p>
+     *
+     * @return the entity's {@link Dimensions}
+     */
+    Dimensions getDimensions();
 }

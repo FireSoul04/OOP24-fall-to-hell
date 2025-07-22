@@ -21,13 +21,13 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
     private Optional<Integer> noAggro = Optional.empty();
     private Optional<Double> regen = Optional.empty();
     private Optional<Double> senseDistance = Optional.empty();
-    private Optional<Map<BuffNames,Double>> buff = Optional.empty();
+    private Optional<Map<BuffNames, Double>> buff = Optional.empty();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ParamBuilderOptional withNoAggro(Integer noAggro) {
+    public ParamBuilderOptional withNoAggro(final Integer noAggro) {
         this.noAggro = Optional.ofNullable(noAggro);
         return this;
     }
@@ -36,7 +36,7 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
      * {@inheritDoc}
      */
     @Override
-    public ParamBuilderOptional withRegen(Double regen) {
+    public ParamBuilderOptional withRegen(final Double regen) {
         this.regen = Optional.ofNullable(regen);
         return this;
     }
@@ -45,7 +45,7 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
      * {@inheritDoc}
      */
     @Override
-    public ParamBuilderOptional withSenseDistance(Double senseDistance) {
+    public ParamBuilderOptional withSenseDistance(final Double senseDistance) {
         this.senseDistance = Optional.ofNullable(senseDistance);
         return this;
     }
@@ -87,7 +87,7 @@ public class ParamBuilderOptionalImpl implements ParamBuilderOptional {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Map<BuffNames,Double>> getBuffMap() {
+    public Optional<Map<BuffNames, Double>> getBuffMap() {
         return this.buff;
     }
 }

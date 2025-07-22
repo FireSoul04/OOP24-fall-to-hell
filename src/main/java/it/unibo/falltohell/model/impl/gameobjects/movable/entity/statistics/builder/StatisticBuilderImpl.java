@@ -19,16 +19,16 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class StatisticBuilderImpl<T extends StatisticBuilderImpl<T>> implements StatisticBuilder {
 
-    protected double life;
-    protected double attack;
-    protected Vector2 speed;
-    protected Dimensions dimension;
+    private double life;
+    private double attack;
+    private Vector2 speed;
+    private Dimensions dimension;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T withLife(double life) {
+    public T withLife(final double life) {
         this.life = life;
         return self();
     }
@@ -37,7 +37,7 @@ public class StatisticBuilderImpl<T extends StatisticBuilderImpl<T>> implements 
      * {@inheritDoc}
      */
     @Override
-    public T withAttack(double attack) {
+    public T withAttack(final double attack) {
         this.attack = attack;
         return self();
     }
@@ -46,7 +46,7 @@ public class StatisticBuilderImpl<T extends StatisticBuilderImpl<T>> implements 
      * {@inheritDoc}
      */
     @Override
-    public T withSpeed(Vector2 speed) {
+    public T withSpeed(final Vector2 speed) {
         this.speed = speed;
         return self();
     }
@@ -55,7 +55,7 @@ public class StatisticBuilderImpl<T extends StatisticBuilderImpl<T>> implements 
      * {@inheritDoc}
      */
     @Override
-    public T withDimensions(Dimensions dimensions) {
+    public T withDimensions(final Dimensions dimensions) {
         this.dimension = dimensions;
         return self();
     }
@@ -69,5 +69,37 @@ public class StatisticBuilderImpl<T extends StatisticBuilderImpl<T>> implements 
     @SuppressWarnings("unchecked")
     protected T self() {
         return (T) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getLife() {
+        return this.life;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getAttack() {
+        return this.attack;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Vector2 getSpeed() {
+        return this.speed;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Dimensions getDimensions() {
+        return this.dimension;
     }
 }

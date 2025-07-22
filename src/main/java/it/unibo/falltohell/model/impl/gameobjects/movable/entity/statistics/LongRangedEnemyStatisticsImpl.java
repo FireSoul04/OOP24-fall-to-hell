@@ -18,6 +18,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl implements LongRangeEnemyStatistics {
 
+    private static final double MULTIPLIER = 20.5;
     private final double projectileAttack;
     private final Vector2 projectileVelocity;
     private final Dimensions projectileDimensions;
@@ -64,7 +65,7 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
         this.projectileVelocity = projectileVelocity;
         this.projectileDimensions = projectileDimensions;
         this.timeAttack = timeAttack;
-        super.setMultiplier(20.5);
+        super.setMultiplier(MULTIPLIER);
     }
 
     /**

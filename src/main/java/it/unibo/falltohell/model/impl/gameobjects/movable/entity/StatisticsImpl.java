@@ -106,7 +106,7 @@ public class StatisticsImpl implements Statistics {
      * {@inheritDoc}
      */
     @Override
-    public void addAttack(double attack) {
+    public void addAttack(final double attack) {
         this.attack += attack;
     }
 
@@ -114,7 +114,7 @@ public class StatisticsImpl implements Statistics {
      * {@inheritDoc}
      */
     @Override
-    public void subAttack(double attack) {
+    public void subAttack(final double attack) {
         this.addAttack(-attack);
     }
 
@@ -146,7 +146,7 @@ public class StatisticsImpl implements Statistics {
      * {@inheritDoc}
      */
     @Override
-    public void addSpeed(double speedX, double speedY) {
+    public void addSpeed(final double speedX, final double speedY) {
         this.speed.add(new Vector2(speedX, speedY));
     }
 
@@ -154,7 +154,7 @@ public class StatisticsImpl implements Statistics {
      * {@inheritDoc}
      */
     @Override
-    public void subSpeed(double speedX, double speedY) {
+    public void subSpeed(final double speedX, final double speedY) {
         this.addSpeed(-speedX, -speedY);
     }
 

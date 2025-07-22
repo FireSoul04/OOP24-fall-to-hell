@@ -73,7 +73,7 @@ public interface BaseEnemyStatistics extends Statistics {
     double getSenseDistance();
 
     /**
-     * Gets the enemy's points after a kill
+     * Gets the enemy's points after a kill.
      * <p>
      *
      * @return the points of a enemy

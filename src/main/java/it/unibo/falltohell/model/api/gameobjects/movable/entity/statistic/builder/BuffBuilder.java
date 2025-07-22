@@ -28,7 +28,7 @@ public interface BuffBuilder {
      * @param level the level where the drop exists
      * @return this builder instance
      */
-    BuffBuilderImpl withLevel(final Level level);
+    BuffBuilderImpl withLevel(Level level);
 
     /**
      * Sets the initial {@link Vector2} position where the drop will be placed.

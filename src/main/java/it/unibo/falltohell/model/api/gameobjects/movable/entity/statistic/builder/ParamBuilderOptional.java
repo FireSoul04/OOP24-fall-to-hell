@@ -43,6 +43,16 @@ public interface ParamBuilderOptional {
      */
     ParamBuilderOptional withSenseDistance(Double senseDistance);
 
+    /**
+     * <p>
+     * Sets optional buffs applied to the enemy's statistics.
+     * </p>
+     *
+     * @param buff a map containing buff types and their corresponding multipliers
+     * @return this builder instance for method chaining
+     *
+     * @see BuffNames
+     */
     ParamBuilderOptional withBuff(Map<BuffNames, Double> buff);
 
     /**
@@ -60,5 +70,14 @@ public interface ParamBuilderOptional {
      */
     Optional<Double> getSenseDistance();
 
-    Optional<Map<BuffNames,Double>> getBuffMap();
+    /**
+     * <p>
+     * Returns the optional map of buffs applied to the enemy.
+     * </p>
+     *
+     * @return an {@link Optional} containing the buff map, if present
+     *
+     * @see BuffNames
+     */
+    Optional<Map<BuffNames, Double>> getBuffMap();
 }
