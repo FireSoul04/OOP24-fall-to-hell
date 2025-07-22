@@ -37,16 +37,77 @@ import it.unibo.falltohell.util.Vector2;
  */
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
+    /**
+     * <p>
+     * Represents types of timers used in game logic for characters and enemies.
+     * </p>
+     */
     public enum TimerType {
+        /**
+         * <p>
+         * Timer related to attack cooldowns.
+         * </p>
+         */
         ATTACK,
+        /**
+         * <p>
+         * Timer preventing aggro (aggression or targeting behavior) for a period.
+         * </p>
+         */
         NO_AGGRO
     }
 
+    /**
+     * <p>
+     * Enumerates all the possible types of buffs that can be applied to a character
+     * or entity.
+     * </p>
+     *
+     * <p>
+     * Each value corresponds to a stat-enhancing effect:
+     * </p>
+     * <ul>
+     * <li><b>ATTACK</b>: Increases attack power</li>
+     * <li><b>ATTACK_SPEED</b>: Reduces delay between attacks</li>
+     * <li><b>LIFE</b>: Increases maximum or current life points</li>
+     * <li><b>MANA</b>: Increases maximum or current mana</li>
+     * <li><b>SPEED</b>: Boosts movement velocity</li>
+     * </ul>
+     */
     public enum BuffNames {
+        /**
+         * <p>
+         * Increases damage dealt by the entity's attacks.
+         * </p>
+         */
         ATTACK,
+
+        /**
+         * <p>
+         * Decreases attack cooldown for faster attack execution.
+         * </p>
+         */
         ATTACK_SPEED,
+
+        /**
+         * <p>
+         * Increases current or maximum life.
+         * </p>
+         */
         LIFE,
+
+        /**
+         * <p>
+         * Increases current or maximum mana.
+         * </p>
+         */
         MANA,
+
+        /**
+         * <p>
+         * Increases movement speed.
+         * </p>
+         */
         SPEED
     }
 
@@ -191,15 +252,18 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         // Find the key, if it exist, of said percentage
         final Optional<BuffNames> typeBuff = IntStream.range(0, sorted.size() - 1)
                 .filter(i -> {
-                    double lower = sorted.get(i).getValue();
-                    double upper = sorted.get(i + 1).getValue();
+                    final double lower = sorted.get(i).getValue();
+                    final double upper = sorted.get(i + 1).getValue();
                     return number > lower && number <= upper;
                 })
                 .mapToObj(i -> sorted.get(i + 1).getKey())
                 .findFirst();
         // Create the said buff if key was founded
         if (typeBuff.isPresent()) {
-            new BuffBuilderImpl().withLevel(super.getLevel()).withPosition(super.getPosition()).withBuff(typeBuff.get(), (CharacterStatistics)this.stats.getCharacter().getStats(), this.stats.getMultiplier()).build();
+            new BuffBuilderImpl()
+                    .withLevel(super.getLevel()).withPosition(super.getPosition()).withBuff(typeBuff.get(),
+                            (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier())
+                    .build();
         }
     }
 }

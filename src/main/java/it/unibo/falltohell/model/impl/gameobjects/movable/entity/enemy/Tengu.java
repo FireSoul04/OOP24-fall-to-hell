@@ -12,6 +12,7 @@ import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.ProjectileImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.ManagerFamiliars;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -51,6 +52,7 @@ public class Tengu extends BaseEnemy {
      * @param initialCord the initial position of the enemy in the level
      * @param character   the {@link Character} this enemy targets or is associated
      *                    with
+     * @param manager     the {@link ManagerFamiliars} that handles familiar logic in this context
      */
     public Tengu(final Level level, final Vector2 initialCord, final Character character, final EnemyTimerManager manager) {
         super(level,

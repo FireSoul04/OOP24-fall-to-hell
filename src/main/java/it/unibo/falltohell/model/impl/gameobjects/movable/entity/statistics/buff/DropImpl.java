@@ -37,6 +37,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class DropImpl extends MovableImpl implements Drop {
 
+    private static final int EXPIRE_TIME = 5000;
     private static final Vector2 VELOCITY = new Vector2(0, -10);
     private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
     private final String name;
@@ -59,7 +60,7 @@ public class DropImpl extends MovableImpl implements Drop {
 
         this.name = "drop-timer-" + UUID.randomUUID();
         super.getLevel().getTimerManager().addTimer(this.name,
-                new CustomTimerImpl(5000, () -> super.getLevel().removeGameObject(this)));
+                new CustomTimerImpl(EXPIRE_TIME, () -> super.getLevel().removeGameObject(this)));
     }
 
     /**
@@ -77,7 +78,7 @@ public class DropImpl extends MovableImpl implements Drop {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof Character) {
-            var character = (Character) other;
+            final var character = (Character) other;
             character.getBuffManager().addBuff(this.buff);
             super.getLevel().getTimerManager().removeTimer(this.name);
             super.getLevel().removeGameObject(this);

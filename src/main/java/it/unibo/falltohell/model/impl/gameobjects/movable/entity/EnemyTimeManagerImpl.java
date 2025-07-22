@@ -23,8 +23,8 @@ import it.unibo.falltohell.model.impl.CustomTimerImpl;
  */
 public class EnemyTimeManagerImpl implements EnemyTimerManager {
 
-    private long countNoAggro = 0;
-    private long countAttack = 0;
+    private long countNoAggro;
+    private long countAttack;
 
     private final Map<Enemy, List<String>> enemyTimers = new HashMap<>();
 
@@ -60,7 +60,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      * @return a unique name for the "NoAggro" timer
      */
     private String getNextNoAggroName(final Enemy enemy) {
-        String name = "NoAggro_" + enemy.getClass().getSimpleName() + "_" + countNoAggro++;
+        final String name = "NoAggro_" + enemy.getClass().getSimpleName() + "_" + countNoAggro++;
         registerTimer(enemy, name);
         return name;
     }
@@ -70,7 +70,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      */
     @Override
     public String getNextAttackName(final Enemy enemy) {
-        String name = "Attack_" + enemy.getClass().getSimpleName() + "_" + countAttack++;
+        final String name = "Attack_" + enemy.getClass().getSimpleName() + "_" + countAttack++;
         registerTimer(enemy, name);
         return name;
     }
@@ -111,9 +111,9 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      * @throws IllegalStateException if no timer is found for the enemy
      */
     private String getNoAggroTimerName(final Enemy enemy) {
-        List<String> timers = enemyTimers.get(enemy);
+        final List<String> timers = enemyTimers.get(enemy);
         if (timers != null) {
-            for (String timerName : timers) {
+            for (final String timerName : timers) {
                 if (timerName.startsWith("NoAggro_")) {
                     return timerName;
                 }
@@ -130,9 +130,9 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      * @throws IllegalStateException if no timer is found for the enemy
      */
     private String getAttackTimerName(final Enemy enemy) {
-        List<String> timers = enemyTimers.get(enemy);
+        final List<String> timers = enemyTimers.get(enemy);
         if (timers != null) {
-            for (String timerName : timers) {
+            for (final String timerName : timers) {
                 if (timerName.startsWith("Attack_")) {
                     return timerName;
                 }

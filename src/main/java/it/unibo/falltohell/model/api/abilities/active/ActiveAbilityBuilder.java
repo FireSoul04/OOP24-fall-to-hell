@@ -7,7 +7,32 @@ import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
 
 /**
+ * <p>
+ * A builder interface for constructing {@link ActiveAbility} instances
+ * with a fluent API.
+ * </p>
+ *
+ * <p>
+ * This builder allows configuration of:
+ * </p>
+ * <ul>
+ *   <li>The level in which the ability is spawned</li>
+ *   <li>Initial position and velocity</li>
+ *   <li>Damage value and collider for collision detection</li>
+ *   <li>Custom update logic via {@link ActiveAbilityUpdate}</li>
+ *   <li>Optional collision behavior via {@link OptionalCollision}</li>
+ * </ul>
+ *
+ * <p>
+ * Usage of this builder ensures that all required properties are set before
+ * creating an ability instance.
+ * </p>
+ *
  * @author Sara Visani
+ * @see ActiveAbility
+ * @see ActiveAbilityUpdate
+ * @see OptionalCollision
+ * @see it.unibo.falltohell.model.impl.abilities.ActiveAbilityImpl
  */
 public interface ActiveAbilityBuilder {
 

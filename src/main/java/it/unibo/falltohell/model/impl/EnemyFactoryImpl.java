@@ -43,7 +43,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
      */
     @Override
     public Enemy createCentaur(final Level level, final Vector2 initialCords, final Character character) {
-        EnemyTimerManager manager = ManagerHolder.getManagerFor(level);
+        final EnemyTimerManager manager = ManagerHolder.getManagerFor(level);
         return new Centaur(level, initialCords, character, manager);
     }
 
@@ -52,7 +52,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
      */
     @Override
     public Enemy createTengu(final Level level, final Vector2 initialCords, final Character character) {
-        EnemyTimerManager manager = ManagerHolder.getManagerFor(level);
+        final EnemyTimerManager manager = ManagerHolder.getManagerFor(level);
         return new Tengu(level, initialCords, character, manager);
     }
 
@@ -60,8 +60,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * {@inheritDoc}
      */
     @Override
-    public Enemy createImp(Level level, Vector2 initialCords, Character character) {
-        EnemyTimerManager manager = ManagerHolder.getManagerFor(level);
+    public Enemy createImp(final Level level, final Vector2 initialCords, final Character character) {
+        final EnemyTimerManager manager = ManagerHolder.getManagerFor(level);
         return new Imp(level, initialCords, character, manager);
     }
 
@@ -69,8 +69,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * {@inheritDoc}
      */
     @Override
-    public Enemy createLotawiec(Level level, Vector2 initialCords, Character character) {
-        EnemyTimerManager manager = ManagerHolder.getManagerFor(level);
+    public Enemy createLotawiec(final Level level, final Vector2 initialCords, final Character character) {
+        final EnemyTimerManager manager = ManagerHolder.getManagerFor(level);
         return new Lotawiec(level, initialCords, character, manager);
     }
 
@@ -82,7 +82,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * This avoids duplication and simplifies timer cleanup when the level ends.
      * </p>
      */
-    private static class ManagerHolder {
+    private static final class ManagerHolder {
         private static final Map<Level, EnemyTimerManager> MANAGERS = new HashMap<>();
 
         /**

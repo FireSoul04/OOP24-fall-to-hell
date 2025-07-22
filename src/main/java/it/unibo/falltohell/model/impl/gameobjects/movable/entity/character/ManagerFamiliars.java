@@ -26,6 +26,7 @@ import it.unibo.falltohell.util.Vector2;
  * @see Character
  */
 public class ManagerFamiliars {
+    private static final int LIFE_DURATION = 5000;
     private List<FamiliarBat> list = new ArrayList<>();
     private final Set<FamiliarBat> pendingRemoval = new HashSet<>();
     private NoFamiliarsCallback callback;
@@ -40,7 +41,7 @@ public class ManagerFamiliars {
      * @param character the character summoning the familiar
      */
     public void createFamiliar(final Character character) {
-        var familiar = new FamiliarBat(character, f -> {
+        final var familiar = new FamiliarBat(character, f -> {
 
             if (pendingRemoval.contains(f)) {
                 pendingRemoval.remove(f);
@@ -49,7 +50,7 @@ public class ManagerFamiliars {
         });
         list.add(familiar);
         final String name = "Active-" + UUID.randomUUID();
-        familiar.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(5000, () -> {
+        familiar.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(LIFE_DURATION, () -> {
             this.removeFamiliar(familiar);
         }));
     }
@@ -70,8 +71,9 @@ public class ManagerFamiliars {
             this.list.remove(familiar);
             familiar.getLevel().getTimerManager().removeTimer(familiar.getName());
             familiar.getLevel().removeGameObject(familiar);
-            if (this.list.isEmpty())
+            if (this.list.isEmpty()) {
                 callback.onNoFamiliarsLeft();
+            }
         } else {
             pendingRemoval.add(familiar);
         }
@@ -98,7 +100,7 @@ public class ManagerFamiliars {
      *
      * @param callback the callback instance
      */
-    public void setNoFamiliarsCallback(NoFamiliarsCallback callback) {
+    public void setNoFamiliarsCallback(final NoFamiliarsCallback callback) {
         this.callback = callback;
     }
 

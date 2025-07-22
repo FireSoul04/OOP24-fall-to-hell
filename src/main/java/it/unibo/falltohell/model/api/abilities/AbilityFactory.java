@@ -11,8 +11,13 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 /**
  * Factory interface for creating different types of abilities.
  * Provides methods to create active and passive abilities.
+ * <p>
  *
  * @author Sara Visani
+ * @see ActiveAbilityBuilder
+ * @see StatisticPassiveAbility
+ * @see MethodPassiveAbility
+ * @see GhostActiveAbility
  */
 public interface AbilityFactory {
 
@@ -38,8 +43,23 @@ public interface AbilityFactory {
      *
      * @return a new instance of {@link ActiveAbilityBuilder}
      */
-    public ActiveAbilityBuilder buildActiveAbility();
+    ActiveAbilityBuilder buildActiveAbility();
 
+    /**
+     * <p>
+     * Creates a ghost-based active ability tied to a specific character and
+     * creation logic.
+     * </p>
+     *
+     * @param obj       a {@link GhostAbilityCreate} functional interface
+     *                  representing the familiar's creation logic
+     * @param character the {@link Character} to which the ability belongs
+     * @return a configured {@link GhostActiveAbility} instance
+     *
+     * @see GhostAbilityCreate
+     * @see GhostActiveAbility
+     * @see Character
+     */
     GhostActiveAbility createGhostActiveAbility(GhostAbilityCreate obj, Character character);
 
     /**

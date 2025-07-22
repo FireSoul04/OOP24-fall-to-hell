@@ -34,6 +34,11 @@ import it.unibo.falltohell.util.Vector2;
  * @see Enemy
  */
 public class FamiliarBat extends MovableImpl {
+    private static final int P_30 = 30;
+    private static final int P_40 = 70;
+    private static final int CASE_5 = 5;
+    private static final double REGEN_RATE = 0.1;
+    private static final int OFFSET_B_TO_C = 5;
     private static final double DAMAGE = 15;
     private static final double DISTANCE = 20;
     private static final Vector2 VELOCITY = new Vector2(20, 10);
@@ -45,14 +50,26 @@ public class FamiliarBat extends MovableImpl {
     private int numberAttack;
     private Character character;
     private Vector2 attackDirection;
-    private boolean isAttacking = false;
+    private boolean isAttacking;
     private boolean canAttack = true;
     private AttackFinishListener attackFinishListener;
 
     /**
-     * Constructs a FamiliarBat bound to the specified character.
+     * <p>
+     * Constructs a {@code FamiliarBat} bound to the specified character.
+     * </p>
+     *
+     * <p>
+     * This familiar:
+     * </p>
+     * <ul>
+     * <li>Follows and assists the given {@code character}</li>
+     * <li>Uses a timer to enable attacks periodically (every 1000ms)</li>
+     * <li>Triggers the given {@code listener} when its attack is finished</li>
+     * </ul>
      *
      * @param character the character that this FamiliarBat follows and assists
+     * @param listener  the callback to invoke when the familiar finishes an attack
      */
     public FamiliarBat(final Character character, final AttackFinishListener listener) {
         super(character.getLevel(), character.getPosition(), DIMENSIONS.width(), DIMENSIONS.height(), VELOCITY.x(),
@@ -83,18 +100,18 @@ public class FamiliarBat extends MovableImpl {
         this.attackDirection = direction;
         this.canAttack = true;
 
-        int rand = random.nextInt(100) + 1; // 1 - 100
+        final int rand = random.nextInt(100) + 1; // 1 - 100
 
         if (rand <= 10) { // 1-10 -> 10%
             this.numberAttack = 1;
-        } else if (rand <= 30) { // 11-30 -> 20%
+        } else if (rand <= P_30) { // 11-30 -> 20%
             this.numberAttack = 2;
-        } else if (rand <= 70) { // 31-70 -> 40%
+        } else if (rand <= P_40) { // 31-70 -> 40%
             this.numberAttack = 3;
         } else if (rand <= 90) { // 71-90 -> 20%
             this.numberAttack = 4;
         } else { // 91-100 -> 10%
-            this.numberAttack = 5;
+            this.numberAttack = CASE_5;
         }
     }
 
@@ -114,8 +131,8 @@ public class FamiliarBat extends MovableImpl {
      * @return {@code true} if within attack range; {@code false} otherwise
      */
     public boolean isInAttackRange() {
-        Vector2 currentPos = super.getPosition();
-        Vector2 targetPos = this.character.getPosition();
+        final Vector2 currentPos = super.getPosition();
+        final Vector2 targetPos = this.character.getPosition();
         return currentPos.distance(targetPos) <= DISTANCE;
     }
 
@@ -147,7 +164,7 @@ public class FamiliarBat extends MovableImpl {
      * @see #action(Enemy)
      */
     @Override
-    public void onCollision(GameObject other, Vector2 direction) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         if (isAttacking) {
             if (other instanceof Block) {
                 isAttacking = false;
@@ -183,10 +200,10 @@ public class FamiliarBat extends MovableImpl {
     private void attackEffect(final Enemy enemy) {
         enemy.setDamagedLife(DAMAGE);
 
-        var stats = (CharacterStatistics) this.character.getStats();
+        final var stats = (CharacterStatistics) this.character.getStats();
 
-        double manaIncrease = 0.1 * stats.getInitialMana();
-        double lifeIncrease = 0.1 * stats.getFullLife();
+        final double manaIncrease = REGEN_RATE * stats.getInitialMana();
+        final double lifeIncrease = REGEN_RATE * stats.getFullLife();
 
         stats.setMana(Math.min(stats.getMana() + manaIncrease, stats.getInitialMana()));
         stats.setLife(Math.min(stats.getLife() + lifeIncrease, stats.getFullLife()));
@@ -212,20 +229,20 @@ public class FamiliarBat extends MovableImpl {
      * @see #attack(Vector2)
      */
     private void move(final double deltaTime) {
-        Vector2 currentPos = super.getPosition();
-        Vector2 targetPos = this.character.getPosition();
+        final Vector2 currentPos = super.getPosition();
+        final Vector2 targetPos = this.character.getPosition();
         if (!this.isAttacking) {
             if (!targetPos.equals(currentPos)) {
 
-                double nextX;
+                final double nextX;
                 if (targetPos.x() - currentPos.x() > 0) {
                     nextX = Math.min(currentPos.x() + VELOCITY.x() * deltaTime, targetPos.x());
                 } else {
                     nextX = Math.max(currentPos.x() - VELOCITY.x() * deltaTime, targetPos.x());
                 }
 
-                double desiredY = targetPos.y() + 5;
-                double nextY;
+                final double desiredY = targetPos.y() + OFFSET_B_TO_C;
+                final double nextY;
                 if (desiredY - currentPos.y() > 0) {
                     nextY = Math.min(currentPos.y() + VELOCITY.y() * deltaTime, desiredY);
                 } else {
@@ -235,23 +252,24 @@ public class FamiliarBat extends MovableImpl {
                 super.setPosition(new Vector2(nextX, nextY));
             }
         } else if (this.enemy.isEmpty()) {
-            Vector2 velocity = new Vector2(
+            final Vector2 velocity = new Vector2(
                     VELOCITY.x() * attackDirection.x(),
                     VELOCITY.y() * attackDirection.y()).multiply(deltaTime);
 
             var attackPos = currentPos;
-            if (Math.abs(currentPos.y() - targetPos.y()) <= 5)
+            if (Math.abs(currentPos.y() - targetPos.y()) <= OFFSET_B_TO_C) {
                 attackPos = new Vector2(currentPos.x(), targetPos.y());
+            }
 
             super.setPosition(attackPos.add(velocity));
         } else {
-            Vector2 toEnemy = this.enemy.get().getPosition().subtract(currentPos).normalize();
+            final Vector2 toEnemy = this.enemy.get().getPosition().subtract(currentPos).normalize();
             attackDirection = toEnemy;
 
-            Vector2 velocity = new Vector2(
+            final Vector2 velocity = new Vector2(
                     VELOCITY.x() * attackDirection.x(),
                     VELOCITY.y() * attackDirection.y()).multiply(deltaTime);
-            var attackPos = currentPos.add(velocity);
+            final var attackPos = currentPos.add(velocity);
 
             if (currentPos.distance(attackPos) > currentPos.distance(this.enemy.get().getPosition())) {
                 super.setPosition(this.enemy.get().getPosition());

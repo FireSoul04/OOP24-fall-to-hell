@@ -12,6 +12,7 @@ import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.ManagerFamiliars;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -62,6 +63,7 @@ public class Centaur extends BaseEnemy {
      * @param level       the game {@link Level} where the enemy exists
      * @param initialCord the initial {@link Vector2} position of the enemy
      * @param character   the target {@link Character} this enemy reacts to
+     * @param manager     the {@link ManagerFamiliars} that handles familiar logic in this context
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,final EnemyTimerManager manager) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,

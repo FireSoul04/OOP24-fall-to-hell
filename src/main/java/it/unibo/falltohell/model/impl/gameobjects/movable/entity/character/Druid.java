@@ -35,6 +35,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Druid extends BaseCharacter {
 
+    private static final int END_KILL = 5;
+    private static final int KILL_RESET = 10_000;
     private static final double CREATION_COST = 30;
     private static final double ATTACK_COST = 10;
     private final CharacterStatistics stats;
@@ -43,10 +45,10 @@ public class Druid extends BaseCharacter {
     private final GameEventManager<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
     private final WarScythe weapon = new WarScythe();
-    private int kills = 0;
+    private int kills;
     private int passiveCycles = 1;
     private boolean canAttack = true;
-    private boolean SaActive = false;
+    private boolean sAactive;
 
     /**
      * <p>
@@ -68,25 +70,25 @@ public class Druid extends BaseCharacter {
                     { 0.10, 0.0 }, // 2 kills
                     { 0.10, 0.05 }, // 3 kills
                     { 0.15, 0.10 }, // 4 kills
-                    { 0.20, 0.20 } // 5 kills
+                    { 0.20, 0.20 }, // 5 kills
             };
 
-            if (this.kills >= 1 && this.kills <= 5) {
-                double lifeGain = stats.getFullLife() * lifeManaGains[this.kills][0] * passiveCycles;
-                double manaGain = stats.getInitialMana() * lifeManaGains[this.kills][1] * passiveCycles;
+            if (this.kills >= 1 && this.kills <= END_KILL) {
+                final double lifeGain = stats.getFullLife() * lifeManaGains[this.kills][0] * passiveCycles;
+                final double manaGain = stats.getInitialMana() * lifeManaGains[this.kills][1] * passiveCycles;
 
                 stats.setLife(Math.min(stats.getLife() + lifeGain, stats.getFullLife()));
                 if (manaGain > 0) {
                     stats.setMana(Math.min(stats.getMana() + manaGain, stats.getInitialMana()));
                 }
 
-                if (this.kills == 5) {
+                if (this.kills == END_KILL) {
                     this.setZeroKill();
                     this.passiveCycles++;
                 }
             }
         });
-        this.manager.setNoFamiliarsCallback(() -> this.SaActive = false);
+        this.manager.setNoFamiliarsCallback(() -> this.sAactive = false);
     }
 
     /**
@@ -122,7 +124,7 @@ public class Druid extends BaseCharacter {
         this.sPa.carryOut();
 
         final String resetTimerName = "Druid_ResetKills";
-        this.restartOrAddTimer(resetTimerName, new CustomTimerImpl(10_000, () -> this.setZeroKill()));
+        this.restartOrAddTimer(resetTimerName, new CustomTimerImpl(KILL_RESET, () -> this.setZeroKill()));
     }
 
     /**
@@ -155,10 +157,10 @@ public class Druid extends BaseCharacter {
             this.weapon.attack();
         }
         if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
-            this.SaActive = true;
+            this.sAactive = true;
             this.factory.createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
-        if (this.SaActive && this.spAtkCalled() && this.manager.isFree() && this.tryPayCost(ATTACK_COST)) {
+        if (this.sAactive && this.spAtkCalled() && this.manager.isFree() && this.tryPayCost(ATTACK_COST)) {
             Vector2 direction = Vector2.zero();
 
             if (this.input.checkCondition("SaAttackRight")) {
@@ -186,7 +188,7 @@ public class Druid extends BaseCharacter {
     private boolean tryPayCost(final double cost) {
         if (this.stats.getMana() + this.stats.getTemporaryMana() - cost >= 0) {
             if (this.stats.getTemporaryMana() > 0) {
-                var remaining = cost - this.stats.getTemporaryMana();
+                final var remaining = cost - this.stats.getTemporaryMana();
                 this.stats.setTemporaryMana(0);
                 this.stats.subMana(remaining);
             } else {
@@ -207,7 +209,7 @@ public class Druid extends BaseCharacter {
      * @see CustomTimerImpl
      */
     private void restartOrAddTimer(final String name, final CustomTimerImpl timer) {
-        var tm = super.getLevel().getTimerManager();
+        final var tm = super.getLevel().getTimerManager();
         if (tm.searchTimer(name)) {
             tm.restartTimer(name);
         } else {

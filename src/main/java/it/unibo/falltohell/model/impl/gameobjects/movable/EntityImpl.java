@@ -68,8 +68,9 @@ public class EntityImpl extends MovableImpl implements Entity {
      * Removes this entity from the level if it is considered dead.
      */
     protected void removeEntity() {
-        if(this.isDead())
+        if (this.isDead()) {
             super.getLevel().removeGameObject(this);
+        }
     }
 
 }
