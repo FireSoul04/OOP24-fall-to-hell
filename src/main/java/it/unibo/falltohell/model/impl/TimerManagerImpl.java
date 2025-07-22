@@ -110,7 +110,7 @@ public class TimerManagerImpl implements TimerManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean searchTimer(String name) {
+    public boolean searchTimer(final String name) {
         return this.timers.containsKey(name);
     }
 }
