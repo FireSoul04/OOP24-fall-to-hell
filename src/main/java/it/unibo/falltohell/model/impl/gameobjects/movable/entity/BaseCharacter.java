@@ -126,12 +126,18 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     /**
      * {@inheritDoc}
      * Notify if the character is on ground and check if player is colliding with an interactable.
+     * If the character is inside a block because of gravity, this method will move the character up to the floor level.
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof Block && direction.equals(Vector2.up())) {
+        if (other instanceof Block && direction.equals(Vector2.down())) {
             this.currentJumpHeight = 0;
             this.onGround = true;
+            this.gravity = Vector2.zero();
+
+            final double moveUpToFloor =
+                (this.getCollider().size().height() + this.getPosition().subtract(other.getPosition()).y()) / 10;
+            this.setPosition(this.getPosition().subtract(new Vector2(0, moveUpToFloor)));
         }
         if (other instanceof Interactable interactable) {
             this.interactingObject = Optional.of(interactable);
@@ -144,7 +150,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
-        if (other instanceof Block && direction.equals(Vector2.up())) {
+        if (other instanceof Block && direction.equals(Vector2.down())) {
             this.onGround = false;
         }
         if (other instanceof Interactable) {
