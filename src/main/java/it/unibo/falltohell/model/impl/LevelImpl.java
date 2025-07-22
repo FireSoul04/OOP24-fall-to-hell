@@ -193,7 +193,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void setPlayer(Character player) {
+    public void setPlayer(final Character player) {
         this.player = Optional.of(player);
     }
 }
