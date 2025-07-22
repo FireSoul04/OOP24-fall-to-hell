@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
-import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
@@ -10,6 +9,7 @@ import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.impl.gameobjects.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.ManagerFamiliars;
@@ -85,7 +85,7 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof Block) {
+        if (other instanceof BaseBlock) {
             if (direction.y() != 0) {
                 if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
                     this.collided = Optional.ofNullable(direction);

@@ -4,12 +4,12 @@ import java.util.UUID;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Buff;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Drop;
 
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
+import it.unibo.falltohell.model.impl.gameobjects.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 
@@ -82,7 +82,7 @@ public class DropImpl extends MovableImpl implements Drop {
             character.getBuffManager().addBuff(this.buff);
             super.getLevel().getTimerManager().removeTimer(this.name);
             super.getLevel().removeGameObject(this);
-        } else if (other instanceof Block && direction.y() < 0) {
+        } else if (other instanceof BaseBlock && direction.y() < 0) {
             super.setSpeedY(0);
         }
     }

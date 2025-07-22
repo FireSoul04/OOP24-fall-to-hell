@@ -4,11 +4,11 @@ import java.util.Map;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.LongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
+import it.unibo.falltohell.model.impl.gameobjects.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.movable.ProjectileImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
@@ -65,7 +65,7 @@ public class Lotawiec extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof Block) {
+        if (other instanceof BaseBlock) {
             if (direction.y() != 0) {
                 this.direction *= -1;
             }
