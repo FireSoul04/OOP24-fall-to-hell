@@ -96,6 +96,10 @@ public class GameControllerImpl implements GameController {
             () -> inputListener.isKeyPressed(KeyEvent.VK_W) || inputListener.isKeyPressed(KeyEvent.VK_DOWN)
         );
         eventManager.addCondition(
+            "ActiveAbility",
+            () -> inputListener.isKeyPressedOnce(KeyEvent.VK_SHIFT)
+        );
+        eventManager.addCondition(
             "Reload",
             () -> inputListener.isKeyPressedOnce(KeyEvent.VK_R) || inputListener.isKeyPressedOnce(KeyEvent.VK_X)
         );
