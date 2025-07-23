@@ -136,4 +136,17 @@ public record Vector2(double x, double y) {
         }
         return new Vector2(this.x, this.y).divide(norm);
     }
+
+    /**
+     * Computes the magnitude (length) of this vector.
+     * <p>
+     * The magnitude is calculated using the Euclidean norm:
+     * {@code sqrt(x^2 + y^2)}. This represents the distance from the origin
+     * (0, 0) to the point defined by this vector.
+     *
+     * @return the scalar length of the vector.
+     */
+    public double magnitude() {
+        return Math.sqrt(this.x() * this.x() + this.y() * this.y());
+    }
 }
