@@ -63,8 +63,9 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * @see Collider
      * @see Character
      */
-    public TrackEnemyProjectile(Level level, Vector2 position, double width, double height, double speedX,
-            double speedY, Collider collider, double damage, Character character, double distance) {
+    public TrackEnemyProjectile(final Level level, final Vector2 position, final double width, final double height,
+            final double speedX, final double speedY, final Collider collider, final double damage,
+            final Character character, final double distance) {
         super(level, position, width, height, speedX, speedY, collider, damage);
         this.character = character;
         this.distance = distance + DISTANCE_BUFF;
@@ -88,12 +89,12 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * {@inheritDoc}
      */
     @Override
-    protected void onUpdate(double deltaTime) {
+    protected void onUpdate(final double deltaTime) {
         final var characterPos = this.character.getPosition();
         if (characterPos.distance(super.getPosition()) <= this.distance) {
-            Vector2 currentPos = super.getPosition();
-            Vector2 toTarget = characterPos.subtract(currentPos).normalize();
-            Vector2 acceleration = toTarget.multiply(MAX_ACCEL);
+            final Vector2 currentPos = super.getPosition();
+            final Vector2 toTarget = characterPos.subtract(currentPos).normalize();
+            final Vector2 acceleration = toTarget.multiply(MAX_ACCEL);
             Vector2 currentVelocity = new Vector2(super.getSpeedX(), super.getSpeedY());
             currentVelocity = currentVelocity.add(acceleration.multiply(deltaTime));
 
@@ -113,7 +114,7 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * {@inheritDoc}
      */
     @Override
-    protected void onProjectileHit(GameObject other) {
+    protected void onProjectileHit(final GameObject other) {
         if (super.getLevel().getTimerManager().searchTimer(name)) {
             super.getLevel().getTimerManager().removeTimer(name);
         }

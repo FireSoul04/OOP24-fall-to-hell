@@ -41,8 +41,8 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      * @see Vector2
      * @see Collider
      */
-    public BaseEnemyProjectile(Level level, Vector2 position, double width, double height, double speedX, double speedY,
-            Collider collider, double damage) {
+    public BaseEnemyProjectile(final Level level, final Vector2 position, final double width, final double height,
+            final double speedX, final double speedY, final Collider collider, final double damage) {
         super(level, position, width, height, speedX, speedY, collider);
         this.damage = damage;
     }
@@ -51,7 +51,7 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      * {@inheritDoc}
      */
     @Override
-    public void update(double deltaTime) {
+    public void update(final double deltaTime) {
         if (!super.isHit()) {
             this.onUpdate(deltaTime);
         }
@@ -61,7 +61,7 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      * {@inheritDoc}
      */
     @Override
-    protected void onUpdate(double deltaTime) {
+    protected void onUpdate(final double deltaTime) {
         super.setPosition(getPosition().add(new Vector2(0, super.getSpeedY() * deltaTime)));
     }
 
@@ -69,7 +69,7 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      * {@inheritDoc}
      */
     @Override
-    protected void onProjectileHit(GameObject other) {
+    protected void onProjectileHit(final GameObject other) {
         if (other instanceof Character) {
             ((Character) other).setDamagedLife(damage);
         }
