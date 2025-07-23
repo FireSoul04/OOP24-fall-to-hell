@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
@@ -31,9 +34,9 @@ public class EntityImpl extends MovableImpl implements Entity {
      * @param stats    the {@link Statistics} defining attributes like life and
      *                 speed
      */
-    public EntityImpl(final Level level, final Vector2 position, final Statistics stats) {
+    public EntityImpl(final Level level, final Vector2 position, final Statistics stats, Optional<Drawable> drawable) {
         super(level, position, stats.getSpeed().x(), stats.getSpeed().y(),
-                new BoxCollider(Vector2.zero(), stats.getDimensions()));
+                new BoxCollider(Vector2.zero(), stats.getDimensions()), drawable);
         this.stats = stats;
     }
 

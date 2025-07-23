@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
 import java.util.Optional;
 
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -66,13 +67,13 @@ public class Tengu extends BaseEnemy {
      * @see CustomTimerImpl
      */
     public Tengu(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager) {
+            final EnemyTimerManager manager, final Optional<Drawable> drawable) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME),
-                manager);
+                manager, drawable);
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
@@ -116,7 +117,7 @@ public class Tengu extends BaseEnemy {
             new BaseEnemyProjectile(super.getLevel(),
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
                     this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(),
-                    new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A);
+                    new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A, this.getDrawable());
         }
     }
 

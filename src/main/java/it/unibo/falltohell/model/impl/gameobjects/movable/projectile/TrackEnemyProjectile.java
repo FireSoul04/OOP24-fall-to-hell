@@ -1,7 +1,9 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.projectile;
 
+import java.util.Optional;
 import java.util.UUID;
 
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -62,8 +64,8 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * @see Character
      */
     public TrackEnemyProjectile(final Level level, final Vector2 position, final double speedX, final double speedY,
-            final Collider collider, final double damage, final Character character, final double distance) {
-        super(level, position, speedX, speedY, collider, damage);
+            final Collider collider, final double damage, final Character character, final double distance, Optional<Drawable> drawable) {
+        super(level, position, speedX, speedY, collider, damage, drawable);
         this.character = character;
         this.distance = distance + DISTANCE_BUFF;
 

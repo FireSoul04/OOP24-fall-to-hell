@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.interactable;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Item;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -27,9 +30,8 @@ public class Potion extends BaseItem {
      * @param price is the price of the potion
      * @param buff is the buff given by the potion to the character
      */
-    public Potion(final Level lv, final Vector2 position, final double width, final double height,
-                  final Collider collider, final long price, final Buff buff) {
-        super(lv, position, width, height, collider, price);
+    public Potion(final Level lv, final Vector2 position, final Collider collider, final long price, final Buff buff, final Optional<Drawable> drawable) {
+        super(lv, position, collider, price, drawable);
         this.buff = buff;
     }
 

@@ -1,15 +1,17 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.gameobjects.movable.ReturnableArrow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.BaseRangedWeapon;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Bow;
+import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
 public class Archer extends BaseCharacter {
 
     private final Bow bow;
@@ -23,8 +25,8 @@ public class Archer extends BaseCharacter {
      * @param stats the character statistics<
      * @param bow the ranged weapon used to shoot arrows
      */
-    public Archer(Level level, Vector2 position, CharacterStatistics stats, Bow bow) {
-        super(level, position, stats);
+    public Archer(final Level level, final Vector2 position, final CharacterStatistics stats, final Bow bow, final Optional<Drawable> drawable) {
+        super(level, position, stats, drawable);
         this.bow = bow;
         
     }

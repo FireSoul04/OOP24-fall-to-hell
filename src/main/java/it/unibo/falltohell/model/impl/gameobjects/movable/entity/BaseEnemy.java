@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -126,8 +127,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param stats   the statistics defining the enemy's behavior and attributes
      * @param manager the timer manager responsible for managing enemy timers
      */
-    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager) {
-        super(level, stats.getInitialPos(), stats);
+    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager, Optional<Drawable> drawable) {
+        super(level, stats.getInitialPos(), stats, drawable);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());

@@ -23,7 +23,7 @@ public class BaseBlock extends GameObjectImpl {
      * @param collider associated to the block
      */
     public BaseBlock(final Level lv, final Vector2 position,
-                final Collider collider, Optional <Drawable> drawable) {
+                final Collider collider, final Optional <Drawable> drawable) {
         super(lv, position, collider, drawable);
     }
 

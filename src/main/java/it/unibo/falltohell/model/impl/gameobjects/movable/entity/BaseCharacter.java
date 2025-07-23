@@ -48,8 +48,8 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * @param position
      * @param stats
      */
-    public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats) {
-        super(level, position, new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
+    public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats, Optional<Drawable> drawable) {
+        super(level, position, stats, drawable);
         this.onGround = false;
         this.currentJumpHeight = 0;
         this.jumpVelocity = Vector2.zero();

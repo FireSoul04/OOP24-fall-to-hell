@@ -31,7 +31,7 @@ public class LavaBlock extends BaseBlock {
      * @param collider associated to the block
      */
     public LavaBlock(final Level lv, final Vector2 position,
-                    final Collider collider, Optional <Drawable> drawable) {
+                    final Collider collider, final Optional <Drawable> drawable) {
         super(lv, position, collider, drawable);
     }
 

@@ -1,5 +1,9 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 
+import java.lang.foreign.Linker.Option;
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
@@ -58,9 +62,9 @@ public class Druid extends BaseCharacter {
      * @param level    the level this character belongs to
      * @param position the initial spawn position
      */
-    public Druid(final Level level, final Vector2 position) {
+    public Druid(final Level level, final Vector2 position, final Optional<Drawable> drawable) {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
-                new Dimensions(10, 10), 10, 10));
+                new Dimensions(10, 10), 10, 10), drawable);
         this.stats = (CharacterStatistics) super.getStats();
 
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {

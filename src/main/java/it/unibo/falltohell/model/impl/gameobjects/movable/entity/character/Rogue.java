@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
@@ -23,8 +26,8 @@ public class Rogue extends BaseCharacter {
      * @param level where it belongs
      * @param position where is it in the level
      */
-    public Rogue(final Level level, final Vector2 position) {
-        super(level, position, STATS);
+    public Rogue(final Level level, final Vector2 position, final Optional<Drawable> drawable) {
+        super(level, position, STATS, drawable);
     }
 
     /**

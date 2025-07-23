@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects;
 
 import it.unibo.falltohell.controller.api.FileController;
 import it.unibo.falltohell.controller.impl.FileControllerImpl;
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Item;
 import it.unibo.falltohell.model.api.gameobjects.Merchant;
@@ -21,6 +22,7 @@ import it.unibo.falltohell.util.Vector2;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -47,9 +49,8 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
      * @param height
      * @param collider is the collider associated with the merchant
      */
-    public MerchantImpl(final Level lv, final Vector2 position, final double width,
-                        final double height, final Collider collider) {
-        super(lv, position, width, height, collider);
+    public MerchantImpl(final Level lv, final Vector2 position, final Collider collider, Optional <Drawable> drawable) {
+        super(lv, position, collider, drawable);
         final FileController fileController = new FileControllerImpl();
         try {
             this.allMerchFromFile = fileController.read(PATH);

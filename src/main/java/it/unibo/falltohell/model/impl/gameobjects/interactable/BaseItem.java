@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.interactable;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Item;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -17,9 +20,8 @@ public abstract class BaseItem extends GameObjectImpl implements Item {
     private boolean sold;
     private final long price;
 
-    public BaseItem(final Level lv, final Vector2 position, final double width, final double height,
-                  final Collider collider, final long price) {
-        super(lv, position, width, height, collider);
+    public BaseItem(final Level lv, final Vector2 position, final Collider collider, final long price, final Optional<Drawable> drawable) {
+        super(lv, position, collider, drawable);
         this.price = price;
         this.sold = false;
     }

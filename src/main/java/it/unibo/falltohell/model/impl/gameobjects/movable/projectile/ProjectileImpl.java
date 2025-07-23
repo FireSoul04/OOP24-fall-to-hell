@@ -1,7 +1,11 @@
-package it.unibo.falltohell.model.impl.gameobjects.movable;
+package it.unibo.falltohell.model.impl.gameobjects.movable.projectile;
 
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
+
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -18,8 +22,8 @@ import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 public class ProjectileImpl extends MovableImpl implements Projectile{
     private boolean hit;
 
-    public ProjectileImpl(Level level, Vector2 position, double width, double height, double speedX, double speedY, Collider collider) {
-        super(level, position, width, height, speedX, speedY, collider);
+    public ProjectileImpl(Level level, Vector2 position, double speedX, double speedY, Collider collider, Optional<Drawable> drawable) {
+        super(level, position, speedX, speedY, collider, drawable);
         this.hit = false;
     }
     /**

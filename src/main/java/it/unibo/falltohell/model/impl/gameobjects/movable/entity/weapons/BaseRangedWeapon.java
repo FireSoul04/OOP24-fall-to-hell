@@ -3,10 +3,15 @@ import it.unibo.falltohell.model.api.Weapon;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.ProjectileImpl;
+import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ProjectileImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.Level;
+
+import java.lang.foreign.Linker.Option;
+import java.util.Optional;
+
 import it.unibo.falltohell.model.api.CustomTimer;
+import it.unibo.falltohell.model.api.Drawable;
 
 
 /**
@@ -48,9 +53,9 @@ public abstract class BaseRangedWeapon implements Weapon {
      * @param height height of the projectile
      * @param collider collider for the projectile
      */
-    public Projectile attack(Level level, Vector2 position, double speedX, double speedY, double width, double height, Collider collider) {
+    public Projectile attack(Level level, Vector2 position, double speedX, double speedY, Collider collider, Optional<Drawable> drawable) {
         if (canShoot()) {
-            Projectile p = createProjectile(level, position, speedX, speedY, width, height, collider);
+            Projectile p = createProjectile(level, position, speedX, speedY, collider, drawable);
             ammo--;
             cooldownTimer.start();
             onShoot(p);
@@ -111,8 +116,8 @@ public abstract class BaseRangedWeapon implements Weapon {
     /**
      * Creates a projectile. By default, returns a ProjectileImpl.
      */
-    protected Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY, double width, double height, Collider collider) {
-        return new ProjectileImpl(level, position, width, height, speedX, speedY, collider);
+    protected Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY, Collider collider, Optional<Drawable> drawable) {
+        return new ProjectileImpl(level, position, speedX, speedY, collider, drawable);
     }
     
 

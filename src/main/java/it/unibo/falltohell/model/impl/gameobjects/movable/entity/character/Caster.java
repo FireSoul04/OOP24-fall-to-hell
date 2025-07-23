@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
@@ -25,8 +28,8 @@ public class Caster extends BaseCharacter {
      * @param level
      * @param position
      */
-    public Caster(Level level, Vector2 position) {
-        super(level, position, STATISTICS);
+    public Caster(Level level, Vector2 position, Optional<Drawable> drawable) {
+        super(level, position, STATISTICS, drawable);
     }
 
     @Override

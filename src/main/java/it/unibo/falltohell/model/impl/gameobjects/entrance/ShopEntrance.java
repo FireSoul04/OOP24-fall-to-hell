@@ -27,7 +27,7 @@ public class ShopEntrance extends GameObjectImpl {
      * @param collider associated with this entrance
      */
     public ShopEntrance(final Level lv, final Vector2 position,
-                        Optional<Drawable> drawable, final Collider collider) {
+                        final Optional<Drawable> drawable, final Collider collider) {
         super(lv, position, false, collider, drawable);
         merchant = Optional.empty();
     }

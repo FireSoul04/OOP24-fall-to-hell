@@ -28,7 +28,7 @@ public class VinesBlock extends BaseBlock {
      * @param collider associated to the block
      */
     public VinesBlock(final Level lv, final Vector2 position,
-                      final Collider collider, Optional <Drawable> drawable) {
+                      final Collider collider, final Optional<Drawable> drawable) {
         super(lv, position, collider, drawable);
     }
 

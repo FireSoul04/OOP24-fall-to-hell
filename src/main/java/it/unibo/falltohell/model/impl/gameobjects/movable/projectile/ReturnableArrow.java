@@ -1,5 +1,8 @@
-package it.unibo.falltohell.model.impl.gameobjects.movable;
+package it.unibo.falltohell.model.impl.gameobjects.movable.projectile;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -32,9 +35,8 @@ public class ReturnableArrow extends ProjectileImpl{
      * @param collider the collider used for collisions
      * @param owner the archer who fired the arrow
      */
-    public ReturnableArrow(Level level, Vector2 position, double width, double height,
-                           double speedX, double speedY, Collider collider, Archer owner) {
-        super(level, position, width, height, speedX, speedY, collider);
+    public ReturnableArrow(Level level, Vector2 position, double speedX, double speedY, Collider collider, Archer owner, Optional<Drawable> drawable) {
+        super(level, position, speedX, speedY, collider, drawable);
         this.owner = owner;
         this.originalSpeed = Math.sqrt(speedX * speedX + speedY * speedY);
     }

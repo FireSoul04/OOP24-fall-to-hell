@@ -1,8 +1,8 @@
 package it.unibo.falltohell.model.impl.abilities.active;
 import it.unibo.falltohell.model.api.abilities.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
-import it.unibo.falltohell.model.impl.gameobjects.movable.ReturnableArrow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Archer;
+import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
 
 import java.util.ArrayList;
 
