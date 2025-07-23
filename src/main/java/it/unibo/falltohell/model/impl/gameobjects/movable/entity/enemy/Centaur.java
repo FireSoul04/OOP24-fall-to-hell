@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.impl.gameobjects.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.ManagerFamiliars;
