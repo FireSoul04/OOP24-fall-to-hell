@@ -30,8 +30,6 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      *
      * @param level    the game level this projectile belongs to
      * @param position the initial position of the projectile
-     * @param width    the width of the projectile
-     * @param height   the height of the projectile
      * @param speedX   the initial horizontal speed
      * @param speedY   the initial vertical speed
      * @param collider the collider used for collision detection
@@ -41,9 +39,9 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      * @see Vector2
      * @see Collider
      */
-    public BaseEnemyProjectile(final Level level, final Vector2 position, final double width, final double height,
-            final double speedX, final double speedY, final Collider collider, final double damage) {
-        super(level, position, width, height, speedX, speedY, collider);
+    public BaseEnemyProjectile(final Level level, final Vector2 position, final double speedX, final double speedY,
+            final Collider collider, final double damage) {
+        super(level, position, speedX, speedY, collider);
         this.damage = damage;
     }
 

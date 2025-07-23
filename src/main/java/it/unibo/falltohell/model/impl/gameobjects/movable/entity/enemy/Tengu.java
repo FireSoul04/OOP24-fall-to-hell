@@ -115,7 +115,6 @@ public class Tengu extends BaseEnemy {
         if (this.stats.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new BaseEnemyProjectile(super.getLevel(),
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
-                    this.stats.getProjectileDimensions().width(), this.stats.getProjectileDimensions().height(),
                     this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A);
         }

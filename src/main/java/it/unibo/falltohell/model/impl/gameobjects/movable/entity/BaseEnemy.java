@@ -127,7 +127,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param manager the timer manager responsible for managing enemy timers
      */
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager) {
-        super(level, stats.getInitialPos(), new BoxCollider(Vector2.zero(), stats.getDimensions()), stats);
+        super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());

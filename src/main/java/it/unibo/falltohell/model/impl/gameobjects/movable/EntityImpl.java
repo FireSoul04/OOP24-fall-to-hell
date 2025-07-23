@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
+import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -27,13 +28,12 @@ public class EntityImpl extends MovableImpl implements Entity {
      *
      * @param level    the {@link Level} where the entity exists
      * @param position the {@link Vector2} position of the entity
-     * @param collider the {@link Collider} used for physics and collision
      * @param stats    the {@link Statistics} defining attributes like life and
      *                 speed
      */
-    public EntityImpl(final Level level, final Vector2 position, final Collider collider, final Statistics stats) {
-        super(level, position, stats.getDimensions().width(), stats.getDimensions().height(), stats.getSpeed().x(),
-                stats.getSpeed().y(), collider);
+    public EntityImpl(final Level level, final Vector2 position, final Statistics stats) {
+        super(level, position, stats.getSpeed().x(), stats.getSpeed().y(),
+                new BoxCollider(Vector2.zero(), stats.getDimensions()));
         this.stats = stats;
     }
 
