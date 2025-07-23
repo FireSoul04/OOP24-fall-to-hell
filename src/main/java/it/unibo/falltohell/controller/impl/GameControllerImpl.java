@@ -29,8 +29,8 @@ public class GameControllerImpl implements GameController {
      * How many frames per seconds the game will run.
      */
     private static final double MAX_FRAMES = 60.0;
-    private static final int WIDTH = 640;
-    private static final int HEIGHT = 360;
+    private static final int WIDTH = 320;
+    private static final int HEIGHT = WIDTH * 9 / 16;
 
     private final Logger logger;
 
