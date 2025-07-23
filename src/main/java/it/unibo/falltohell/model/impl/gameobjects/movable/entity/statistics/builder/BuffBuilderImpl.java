@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Buff;
@@ -32,6 +35,7 @@ public class BuffBuilderImpl implements BuffBuilder {
     private Level level;
     private Vector2 position;
     private Buff buff;
+    private Optional<Drawable> drawable = Optional.empty();
 
     /**
      * {@inheritDoc}
@@ -66,7 +70,14 @@ public class BuffBuilderImpl implements BuffBuilder {
         }
         return this;
     }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BuffBuilderImpl withDrawable(final Drawable drawable) {
+        this.drawable = Optional.ofNullable(drawable);
+        return this;
+    }
     /**
      * {@inheritDoc}
      */
@@ -75,6 +86,6 @@ public class BuffBuilderImpl implements BuffBuilder {
         if (level == null || position == null || buff == null) {
             throw new IllegalStateException("Level, position, and buff must be set before building DropImpl.");
         }
-        return new DropImpl(level, position, buff);
+        return new DropImpl(level, position, buff, drawable);
     }
 }

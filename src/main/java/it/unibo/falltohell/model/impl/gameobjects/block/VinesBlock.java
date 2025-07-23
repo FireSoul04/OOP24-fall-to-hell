@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.block;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
@@ -25,8 +28,8 @@ public class VinesBlock extends BaseBlock {
      * @param collider associated to the block
      */
     public VinesBlock(final Level lv, final Vector2 position,
-                      final double width, final double height, final Collider collider) {
-        super(lv, position, width, height, collider);
+                      final Collider collider, Optional <Drawable> drawable) {
+        super(lv, position, collider, drawable);
     }
 
     /**

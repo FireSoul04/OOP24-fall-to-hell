@@ -1,7 +1,10 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff;
 
+import java.lang.foreign.Linker.Option;
+import java.util.Optional;
 import java.util.UUID;
 
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -53,9 +56,9 @@ public class DropImpl extends MovableImpl implements Drop {
      * @param buff     the {@link Buff} to be applied when collected by a
      *                 {@link Character}
      */
-    public DropImpl(final Level lv, final Vector2 position, final Buff buff) {
-        super(lv, position, DIMENSIONS.width(), DIMENSIONS.height(), VELOCITY.x(), VELOCITY.y(),
-                new BoxCollider(Vector2.zero(), DIMENSIONS));
+    public DropImpl(final Level lv, final Vector2 position, final Buff buff, Optional<Drawable> drawable) {
+        super(lv, position, VELOCITY.x(), VELOCITY.y(),
+                new BoxCollider(Vector2.zero(), DIMENSIONS), drawable);
         this.buff = buff;
 
         this.name = "drop-timer-" + UUID.randomUUID();

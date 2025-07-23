@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.builder;
 
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
@@ -50,6 +51,15 @@ public interface BuffBuilder {
      * @return this builder instance
      */
     BuffBuilderImpl withBuff(BuffNames type, CharacterStatistics stats, double multiplier);
+    
+    /**
+     * Sets the drawable for the drop.
+     * <p>
+     *
+     * @param drawable the drawable to associate with the drop
+     * @return this builder instance
+     */
+    BuffBuilderImpl withDrawable(Drawable drawable);
 
     /**
      * Builds the {@link DropImpl} instance.

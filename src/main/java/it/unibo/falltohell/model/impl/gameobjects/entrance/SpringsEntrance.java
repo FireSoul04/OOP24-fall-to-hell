@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.entrance;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
@@ -22,8 +25,8 @@ public class SpringsEntrance extends GameObjectImpl {
      * @param collider associated with this entrance
      */
     public SpringsEntrance(final Level lv, final Vector2 position,
-                           final double width, final double height, final Collider collider) {
-        super(lv, position, width, height, false, collider);
+                           Optional<Drawable> drawable, final Collider collider) {
+        super(lv, position, false, collider, drawable);
     }
 
     /**

@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.block;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
@@ -20,8 +23,8 @@ public class BaseBlock extends GameObjectImpl {
      * @param collider associated to the block
      */
     public BaseBlock(final Level lv, final Vector2 position,
-                     final double width, final double height, final Collider collider) {
-        super(lv, position, width, height, collider);
+                final Collider collider, Optional <Drawable> drawable) {
+        super(lv, position, collider, drawable);
     }
 
 }
