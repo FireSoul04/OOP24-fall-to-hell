@@ -37,6 +37,7 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void removeTimer(final String name) {
+        this.checkExists(name);
         if (this.timers.get(name).isStarted()) {
             this.timers.get(name).stop();
         }
@@ -48,6 +49,7 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void pauseTimer(final String name) {
+        this.checkExists(name);
         this.timers.get(name).pause();
     }
 
@@ -68,6 +70,7 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void resumeTimer(final String name) {
+        this.checkExists(name);
         if (this.timers.get(name).isPaused()) {
             this.timers.get(name).resume();
         }
@@ -90,6 +93,7 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void restartTimer(final String name) {
+        this.checkExists(name);
         if (this.timers.get(name).isStarted()) {
             this.timers.get(name).stop();
         }
@@ -101,6 +105,7 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void stopTimer(final String name) {
+        this.checkExists(name);
         if (this.timers.get(name).isStarted()) {
             this.timers.get(name).stop();
         }
@@ -112,5 +117,11 @@ public class TimerManagerImpl implements TimerManager {
     @Override
     public boolean searchTimer(final String name) {
         return this.timers.containsKey(name);
+    }
+
+    private void checkExists(final String name) {
+        if (!this.searchTimer(name)) {
+            throw new IllegalArgumentException("There is no timer with the name:" + name);
+        }
     }
 }
