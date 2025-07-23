@@ -37,7 +37,9 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void removeTimer(final String name) {
-        this.timers.get(name).stop();
+        if (this.timers.get(name).isStarted()) {
+            this.timers.get(name).stop();
+        }
         this.timers.remove(name);
     }
 
@@ -66,7 +68,9 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void resumeTimer(final String name) {
-        this.timers.get(name).resume();
+        if (this.timers.get(name).isPaused()) {
+            this.timers.get(name).resume();
+        }
     }
 
     /**
@@ -86,6 +90,9 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void restartTimer(final String name) {
+        if (this.timers.get(name).isStarted()) {
+            this.timers.get(name).stop();
+        }
         this.timers.get(name).start();
     }
 
@@ -94,6 +101,16 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void stopTimer(final String name) {
-        this.timers.get(name).stop();
+        if (this.timers.get(name).isStarted()) {
+            this.timers.get(name).stop();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean searchTimer(String name) {
+        return this.timers.containsKey(name);
     }
 }

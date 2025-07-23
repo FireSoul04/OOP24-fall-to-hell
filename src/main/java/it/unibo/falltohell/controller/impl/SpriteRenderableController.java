@@ -1,0 +1,36 @@
+package it.unibo.falltohell.controller.impl;
+
+import it.unibo.falltohell.model.api.Drawable;
+import it.unibo.falltohell.model.api.GameCamera;
+import it.unibo.falltohell.view.api.Renderable;
+import it.unibo.falltohell.view.impl.SpriteRenderable;
+
+import java.awt.*;
+
+/**
+ * Controller that handles the update of a sprite object using the information
+ * given by the drawable object associated with it.
+ * @author Martina Malagoli
+ */
+public class SpriteRenderableController extends BaseRenderableController {
+
+    /**
+     * Initialization of the class SpriteRenderableController.
+     * @param drawable associated with the sprite to be updated
+     * @param sprite to be updated
+     */
+    public SpriteRenderableController(final Drawable drawable, final Image sprite) {
+        super(drawable, new SpriteRenderable(drawable.isVisible(), drawable.getPosition(), sprite));
+    }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public void updateRenderable(final GameCamera camera) {
+        super.updateRenderable(camera);
+        final Renderable renderable = this.getRenderable();
+        final Drawable drawable = this.getDrawable();
+        renderable.mirror(drawable.isMirrored());
+    }
+}

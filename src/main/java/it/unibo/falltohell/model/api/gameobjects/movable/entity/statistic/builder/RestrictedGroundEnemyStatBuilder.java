@@ -23,12 +23,12 @@ public interface RestrictedGroundEnemyStatBuilder {
      * @param distance the maximum allowed distance for the enemy to engage or react
      * @return this builder instance for method chaining
      */
-    public RestrictedGroundEnemyStatBuilder withDistance(double distance);
+    RestrictedGroundEnemyStatBuilder withDistance(double distance);
 
     /**
      * Builds and returns the configured {@link RestrictedBaseEnemyStatistics}.
      *
      * @return a configured instance of {@link RestrictedBaseEnemyStatistics}
      */
-    public RestrictedBaseEnemyStatistics build();
+    RestrictedBaseEnemyStatistics build();
 }

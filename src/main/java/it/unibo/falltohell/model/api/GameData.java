@@ -1,7 +1,6 @@
 package it.unibo.falltohell.model.api;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 
 /**
  * Set of data to maintain the current state of the game.
@@ -30,7 +29,7 @@ public interface GameData {
     void changeCurrentCharacter(Character newCharacter);
 
     /**
-     * @return the ID of the current character
+     * @return the current character
      */
-    CharacterID getCurrentCharacterID();
+    Character getCurrentCharacter();
 }

@@ -20,7 +20,7 @@ public interface RestrictedLongRangeEnemyStatBuilder {
      * @param distance the maximum allowed distance for the enemy to engage or react
      * @return this builder instance for method chaining
      */
-    public RestrictedLongRangeEnemyStatBuilder withDistance(double distance);
+    RestrictedLongRangeEnemyStatBuilder withDistance(double distance);
 
     /**
      * Builds the {@link RestrictedLongRangeEnemyStatistics} object using the
@@ -28,5 +28,5 @@ public interface RestrictedLongRangeEnemyStatBuilder {
      *
      * @return a new instance of {@link RestrictedLongRangeEnemyStatistics}
      */
-    public RestrictedLongRangeEnemyStatistics build();
+    RestrictedLongRangeEnemyStatistics build();
 }

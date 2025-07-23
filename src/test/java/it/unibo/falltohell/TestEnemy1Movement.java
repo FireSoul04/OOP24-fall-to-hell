@@ -1,18 +1,19 @@
 package it.unibo.falltohell;
 
 import it.unibo.falltohell.model.api.EnemyFactory;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
-import it.unibo.falltohell.model.impl.LevelImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.TestCharacter;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestEnemy1Movement {
-    
+
+    Level lv = new LevelTest();
     EnemyFactory fact;
     Character chara1;
     Character chara2;
@@ -23,11 +24,11 @@ public class TestEnemy1Movement {
     @BeforeEach
     public void setUp(){
         fact = new EnemyFactoryImpl();
-        chara1 = new TestCharacter(new Vector2(-100, 0));
-        chara2 = new TestCharacter(new Vector2(100, 0));
-        en1 = fact.CreateMonster1(new LevelImpl(), Vector2.zero(), chara1);
-        en2 = fact.CreateMonster1(new LevelImpl(), new Vector2(-30, 0), chara1);
-        en3 = fact.CreateMonster1(new LevelImpl(), new Vector2(-40, 0), chara1);
+        chara1 = new Druid(lv, new Vector2(-100, 0));
+        chara2 = new Druid(lv, new Vector2(100, 0));
+        en1 = fact.createCentaur(lv, Vector2.zero(), chara1);
+        en2 = fact.createCentaur(lv, new Vector2(-30, 0), chara1);
+        en3 = fact.createCentaur(lv, new Vector2(-40, 0), chara1);
     }
 
     /*Testing Movement with Monster 1 to far away from Player*/

@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.physics.colliders;
 
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
      * Every frame this map saves if a game object is colliding so the next frame
      * the collisions manager knows if this game object left a collision
      */
-    private final Map<GameObject, Collision> lastFrameCollisions = new HashMap<>();
+    private final Map<Pair<GameObject, GameObject>, Collision> lastFrameCollisions = new HashMap<>();
 
     /**
      * {@inheritDoc}
@@ -28,18 +29,18 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
     public void checkCollisions(final List<GameObject> gameObjects) {
         for (final GameObject g1 : gameObjects) {
             for (final GameObject g2 : gameObjects) {
-                if (!g1.equals(g2) && g1.isSolid() && g2.isSolid()) {
+                if (!g1.equals(g2)) {
                     final Optional<Collision> collision = this.determineCollision(g1, g2);
 
                     if (collision.isPresent()) {
                         // Notifies for both onCollision with direction and without
                         g1.onCollision(g2);
                         g1.onCollision(g2, collision.get().direction());
-                        this.lastFrameCollisions.put(g1, collision.get());
-                    } else if (this.lastFrameCollisions.containsKey(g1)) {
+                        this.lastFrameCollisions.put(Pair.of(g1, g2), collision.get());
+                    } else if (this.lastFrameCollisions.containsKey(Pair.of(g1, g2))) {
                         // If there is not a collision, but in the last frame was a collision
-                        g1.onCollisionExit(g2, this.lastFrameCollisions.get(g1).direction());
-                        this.lastFrameCollisions.remove(g1);
+                        g1.onCollisionExit(g2, this.lastFrameCollisions.get(Pair.of(g1, g2)).direction());
+                        this.lastFrameCollisions.remove(Pair.of(g1, g2));
                     }
                 }
             }

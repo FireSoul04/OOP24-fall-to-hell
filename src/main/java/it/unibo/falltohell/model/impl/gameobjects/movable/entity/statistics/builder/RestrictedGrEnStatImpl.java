@@ -21,7 +21,7 @@ public class RestrictedGrEnStatImpl extends GroundEnemyStatBuilderImpl<Restricte
      * {@inheritDoc}
      */
     @Override
-    public RestrictedGroundEnemyStatBuilder withDistance(double distance) {
+    public RestrictedGroundEnemyStatBuilder withDistance(final double distance) {
         this.distance = distance;
         return this;
     }
@@ -31,8 +31,20 @@ public class RestrictedGrEnStatImpl extends GroundEnemyStatBuilderImpl<Restricte
      */
     @Override
     public RestrictedBaseEnemyStatistics build() {
+        final var life = super.getLife();
+        final var attack = super.getAttack();
+        final var speed = super.getSpeed();
+        final var dimension = super.getDimensions();
+        final var position = super.getInitialPos();
+        final var noAggro = super.getNoAggro();
+        final var character = super.getCharacter();
+        final var regen = super.getRegen();
+        final var senseDistance = super.getSenseDistance();
+        final var points = super.getPoints();
+        final var buff = super.getBuffMap();
+
         return new RestrictedBaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character,
-                regen, senseDistance, points, distance);
+                regen, senseDistance, points, distance, buff);
     }
 
     /**

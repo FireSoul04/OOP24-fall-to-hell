@@ -6,7 +6,8 @@ import it.unibo.falltohell.util.Vector2;
 /**
  * Interface representing the statistics specific to characters.
  * <p>
- * Extends {@link Statistics} and provides additional attributes such as temporary life, mana, temporary mana
+ * Extends {@link Statistics} and provides additional attributes such as
+ * temporary life, mana, temporary mana
  * and attack speed.
  * These values are updatable and relevant to gameplay mechanics such as ability
  * casting and attack timing.
@@ -18,37 +19,37 @@ import it.unibo.falltohell.util.Vector2;
  */
 public interface CharacterStatistics extends Statistics {
 
-	/**
-	 * Returns the current temporary life of the entity.
-	 * <p>
-	 *
-	 * @return the current temporary life value
-	 */
-	double getTemporaryLife();
+    /**
+     * Returns the current temporary life of the entity.
+     * <p>
+     *
+     * @return the current temporary life value
+     */
+    double getTemporaryLife();
 
-	/**
-	 * Updates the temporary life of the entity.
-	 * <p>
-	 *
-	 * @param temporaryLife the new temporary life value
-	 */
-	void setTemporaryLife(double temporaryLife);
+    /**
+     * Updates the temporary life of the entity.
+     * <p>
+     *
+     * @param temporaryLife the new temporary life value
+     */
+    void setTemporaryLife(double temporaryLife);
 
-	/**
-	 * Adds a specified amount to the entity's current temporary life.
-	 * <p>
-	 *
-	 * @param temporaryLife the amount of temporary life to add
-	 */
-	void addTemporaryLife(double temporaryLife);
+    /**
+     * Adds a specified amount to the entity's current temporary life.
+     * <p>
+     *
+     * @param temporaryLife the amount of temporary life to add
+     */
+    void addTemporaryLife(double temporaryLife);
 
-	/**
-	 * Subtracts a specified amount from the entity's current temporary life.
-	 * <p>
-	 *
-	 * @param temporaryLife the amount of temporary life to subtract
-	 */
-	void subTemporaryLife(double temporaryLife);
+    /**
+     * Subtracts a specified amount from the entity's current temporary life.
+     * <p>
+     *
+     * @param temporaryLife the amount of temporary life to subtract
+     */
+    void subTemporaryLife(double temporaryLife);
 
     /**
      * Gets the initial mana of the entity.

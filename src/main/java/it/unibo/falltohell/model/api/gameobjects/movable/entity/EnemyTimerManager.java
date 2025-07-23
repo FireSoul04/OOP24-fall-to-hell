@@ -42,5 +42,20 @@ public interface EnemyTimerManager {
      */
     void removeTimersFor(Enemy enemy, Level level);
 
+    /**
+     * <p>
+     * Restarts a specific type of timer for an enemy.
+     * </p>
+     *
+     * <p>
+     * Useful for resetting cooldowns (e.g., "ATTACK") or reapplying behavioral delays (e.g., "NO_AGGRO").
+     * </p>
+     *
+     * @param level the {@link Level} to access the enemy's {@code TimerManager}
+     * @param enemy the {@link Enemy} whose timer should be restarted
+     * @param type  the {@link BaseEnemy.TimerType} indicating which timer to restart
+     *
+     * @see BaseEnemy.TimerType
+     */
     void restartEnemyTimer(Level level, Enemy enemy, BaseEnemy.TimerType type);
 }

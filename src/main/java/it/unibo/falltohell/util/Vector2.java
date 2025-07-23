@@ -117,12 +117,36 @@ public record Vector2(double x, double y) {
     public double distance(final Vector2 v) {
         return Math.sqrt(Math.pow(this.x - v.x, 2) + Math.pow(this.y - v.y, 2));
     }
-    
+
+    /**
+     * <p>
+     * Normalization scales the vector so that its length (magnitude) is 1,
+     * unless the vector is a zero vector (length 0), in which case it returns a
+     * copy of the original vector.
+     * </p>
+     *
+     * @return Returns a Vector2 instance representing the normalized (unit length)
+     *         vector
+     *         in the same direction as this vector.
+     */
     public Vector2 normalize() {
-        double length = Math.sqrt(this.x * this.x + this.y * this.y);
-        if (length == 0) {
-            return Vector2.zero();
+        final double norm = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+        if (norm == 0) {
+            return new Vector2(this.x, this.y);
         }
-        return new Vector2(this.x / length, this.y / length);
+        return new Vector2(this.x, this.y).divide(norm);
+    }
+
+    /**
+     * Computes the magnitude (length) of this vector.
+     * <p>
+     * The magnitude is calculated using the Euclidean norm:
+     * {@code sqrt(x^2 + y^2)}. This represents the distance from the origin
+     * (0, 0) to the point defined by this vector.
+     *
+     * @return the scalar length of the vector.
+     */
+    public double magnitude() {
+        return Math.sqrt(this.x() * this.x() + this.y() * this.y());
     }
 }

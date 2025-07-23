@@ -53,4 +53,11 @@ public interface TimerManager {
      */
     void stopTimer(String name);
 
+    /**
+     * Method that tells if there is already a timer with the given name
+     * @param name of the timer to be searched
+     * @return true if there is a timer with that name, false otherwise
+     */
+    boolean searchTimer(String name);
+
 }

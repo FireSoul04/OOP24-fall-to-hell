@@ -4,15 +4,38 @@ import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedBaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
+/**
+ * Represents an enemy type "Imp" that moves horizontally within a restricted
+ * range,
+ * can detect and attack a target {@link Character}, and reacts to collisions
+ * with blocks.
+ * <p>
+ * The Imp moves back and forth between defined distance boundaries or chases
+ * the target
+ * if it is within sensing distance.
+ * <p>
+ * Collision with blocks stops movement in the vertical direction and reverses
+ * movement
+ * direction when hitting horizontal boundaries.
+ * <p>
+ * Movement logic ensures the Imp does not pass through obstacles or move beyond
+ * its allowed range.
+ *
+ * @author Sara Visani
+ * @see BaseEnemy
+ * @see Character
+ * @see RestrictedBaseEnemyStatistics
+ * @see Vector2
+ */
 public class Imp extends BaseEnemy {
 
     private static final double CHAR_DISTANCE = 20;
@@ -27,12 +50,28 @@ public class Imp extends BaseEnemy {
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
 
-    public Imp(final Level level, final Vector2 initialCord, final Character character, final EnemyTimerManager manager) {
+    /**
+     * Constructs a new Imp enemy with default stats, initial position, and target
+     * character.
+     * <p>
+     * The Imp will use {@link RestrictedBaseEnemyStatistics} for movement limits,
+     * sensing,
+     * and regeneration.
+     *
+     * @param level       the game level the Imp belongs to
+     * @param initialCord the initial spawn position of the Imp
+     * @param character   the target {@link Character} to track and attack
+     * @param manager     the {@link EnemyTimerManager} responsible for managing
+     *                    enemy timers
+     */
+    public Imp(final Level level, final Vector2 initialCord, final Character character,
+            final EnemyTimerManager manager) {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
-                        DISTANCE), manager);
+                        DISTANCE),
+                manager);
 
         this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
     }
@@ -50,7 +89,7 @@ public class Imp extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof Block) {
+        if (other instanceof BaseBlock) {
             if (direction.y() != 0) {
                 this.collided = Optional.of(super.getPosition());
             }

@@ -11,4 +11,8 @@ public interface BuffManager {
      */
     void addBuff(Buff buff);
 
+    /**
+     * Method to remove all buffs from the character.
+     */
+    void removeBuffs();
 }

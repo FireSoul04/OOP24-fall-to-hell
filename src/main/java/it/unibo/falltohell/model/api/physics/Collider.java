@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.api.physics;
 
+import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -10,7 +11,12 @@ import it.unibo.falltohell.util.Vector2;
 public interface Collider {
 
     /**
-     * @return offset relative to the game object.
+     * @return offset relative to the game object
      */
     Vector2 offset();
+
+    /**
+     * @return size of this collider
+     */
+    Dimensions size();
 }

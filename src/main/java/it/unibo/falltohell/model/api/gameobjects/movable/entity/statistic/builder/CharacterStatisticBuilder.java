@@ -19,7 +19,7 @@ public interface CharacterStatisticBuilder {
      * @param mana the mana value
      * @return this builder instance for chaining
      */
-    public CharacterStatisticBuilder withMana(double mana);
+    CharacterStatisticBuilder withMana(double mana);
 
     /**
      * Sets the attack speed for the {@link CharacterStatistics} being built.
@@ -28,7 +28,7 @@ public interface CharacterStatisticBuilder {
      * @param attackSpeed the attack speed value
      * @return this builder instance for chaining
      */
-    public CharacterStatisticBuilder withAttackSpeed(double attackSpeed);
+    CharacterStatisticBuilder withAttackSpeed(double attackSpeed);
 
     /**
      * Builds and returns a new instance of {@link CharacterStatistics} using the
@@ -37,5 +37,5 @@ public interface CharacterStatisticBuilder {
      *
      * @return a fully constructed {@link CharacterStatistics} instance
      */
-    public CharacterStatistics build();
+    CharacterStatistics build();
 }

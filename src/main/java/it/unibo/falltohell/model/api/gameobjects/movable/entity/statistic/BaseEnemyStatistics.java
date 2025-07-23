@@ -1,7 +1,10 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic;
 
+import java.util.Map;
+
 import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.util.Vector2;
 
@@ -70,10 +73,20 @@ public interface BaseEnemyStatistics extends Statistics {
     double getSenseDistance();
 
     /**
-     * Gets the enemy's points after a kill
+     * Gets the enemy's points after a kill.
      * <p>
      *
      * @return the points of a enemy
      */
     long getPoints();
+
+    /**
+     * @return the map with key type of buff and value the percentage
+     */
+    Map<BuffNames, Double> getBuffMap();
+
+    /**
+     * @return the multiplier of buffs
+     */
+    double getMultiplier();
 }

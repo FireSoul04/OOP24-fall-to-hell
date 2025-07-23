@@ -31,7 +31,8 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * @param mana
      * @param attackSpeed
      */
-    public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimensions, final double mana, final double attackSpeed) {
+    public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed,
+            final Dimensions dimensions, final double mana, final double attackSpeed) {
 
         super(life, attack, speed, dimensions);
         this.temporaryLife = 0;
@@ -54,7 +55,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void setTemporaryLife(double temporaryLife) {
+    public void setTemporaryLife(final double temporaryLife) {
         this.temporaryLife = temporaryLife;
     }
 
@@ -62,7 +63,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void addTemporaryLife(double temporaryLife) {
+    public void addTemporaryLife(final double temporaryLife) {
         this.temporaryLife = this.temporaryLife + temporaryLife;
     }
 
@@ -70,7 +71,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void subTemporaryLife(double temporaryLife) {
+    public void subTemporaryLife(final double temporaryLife) {
         this.addTemporaryLife(-temporaryLife);
     }
 
@@ -85,6 +86,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
     /**
      * {@inheritDoc}
      */
+    @Override
     public double getMana() {
         return this.mana;
     }
@@ -92,6 +94,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setMana(final double mana) {
         this.mana = mana;
     }
@@ -100,7 +103,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void addMana(double mana) {
+    public void addMana(final double mana) {
         this.mana += mana;
     }
 
@@ -108,7 +111,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void subMana(double mana) {
+    public void subMana(final double mana) {
         this.addMana(-mana);
     }
 
@@ -124,7 +127,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void setTemporaryMana(double temporaryMana) {
+    public void setTemporaryMana(final double temporaryMana) {
         this.temporaryMana = temporaryMana;
     }
 
@@ -132,7 +135,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void addTemporaryMana(double temporaryMana) {
+    public void addTemporaryMana(final double temporaryMana) {
         this.temporaryMana = this.temporaryMana + temporaryMana;
     }
 
@@ -140,7 +143,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void subTemporaryMana(double temporaryMana) {
+    public void subTemporaryMana(final double temporaryMana) {
         this.addTemporaryMana(-temporaryMana);
     }
 
@@ -155,6 +158,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
     /**
      * {@inheritDoc}
      */
+    @Override
     public double getAttackSpeed() {
         return this.attackSpeed;
     }
@@ -162,6 +166,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setAttackSpeed(final double attackSpeed) {
         this.attackSpeed = attackSpeed;
     }
@@ -170,7 +175,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void addAttackSpeed(double attackSpeed) {
+    public void addAttackSpeed(final double attackSpeed) {
         this.attackSpeed += attackSpeed;
     }
 
@@ -178,7 +183,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
-    public void subAttackSpeed(double attackSpeed) {
+    public void subAttackSpeed(final double attackSpeed) {
         this.addAttackSpeed(-attackSpeed);
     }
 }

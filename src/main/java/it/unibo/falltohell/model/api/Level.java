@@ -1,8 +1,12 @@
 package it.unibo.falltohell.model.api;
 
+import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.GameEventManager;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Interface for a level in the game.
@@ -17,7 +21,7 @@ public interface Level {
     /**
      * @return the list of game objects currently present in the level
      */
-    List<GameObject> getGameObject();
+    List<GameObject> getGameObjects();
 
     /**
      * @param gameObject to be added in the level
@@ -59,4 +63,31 @@ public interface Level {
      * @return manager to all events of the level
      */
     GameEventManager<String> getGameEventManager();
+
+    /**
+     * @param drh handler to all drawables of the level
+     */
+    void setDrawableRenderableHandler(DrawableRenderableHandler drh);
+
+    /**
+     * @return handler to all drawables of the level
+     */
+    DrawableRenderableHandler getDrawableRenderableHandler();
+
+    /**
+     * Save a reference to all playable characters inside the level.
+     * @param characters playable
+     */
+    void loadCharacters(Map<CharacterID, Character> characters);
+
+    /**
+     * @return all playable characters
+     */
+    Map<CharacterID, Character> getCharacters();
+
+    /**
+     * Saves a reference of the player.
+     * @param player reference
+     */
+    void setPlayer(Character player);
 }

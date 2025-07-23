@@ -32,7 +32,7 @@ public interface LongRangeEnemyStatBuilder {
      *                           in both axes
      * @return this builder instance for chaining
      */
-    public LongRangeEnemyStatBuilder withProjectileVelocity(Vector2 projectileVelocity);
+    LongRangeEnemyStatBuilder withProjectileVelocity(Vector2 projectileVelocity);
 
     /**
      * Sets the dimensions of the projectile.
@@ -41,7 +41,7 @@ public interface LongRangeEnemyStatBuilder {
      * @param projectileDimensions the {@link Dimensions} of the projectile
      * @return this builder instance for chaining
      */
-    public LongRangeEnemyStatBuilder withProjectileDimensions(Dimensions projectileDimensions);
+    LongRangeEnemyStatBuilder withProjectileDimensions(Dimensions projectileDimensions);
 
     /**
      * Sets the time between attacks.
@@ -50,7 +50,7 @@ public interface LongRangeEnemyStatBuilder {
      * @param timeAttack the time between two attacks
      * @return this builder instance for chaining
      */
-    public LongRangeEnemyStatBuilder withTimeAttack(int timeAttack);
+    LongRangeEnemyStatBuilder withTimeAttack(int timeAttack);
 
     /**
      * Builds the configured {@link LongRangeEnemyStatistics} instance.
@@ -58,5 +58,36 @@ public interface LongRangeEnemyStatBuilder {
      *
      * @return the constructed statistics object
      */
-    public LongRangeEnemyStatistics build();
+    LongRangeEnemyStatistics build();
+
+    /**
+     * Returns the damage value of the projectile attack.
+     * <p>
+     *
+     * @return the current projectile attack damage
+     */
+    double getProjectileAttack();
+
+    /**
+     * Returns the projectile's movement speed.
+     * <p>
+     *
+     * @return a {@link Vector2} representing the speed of the projectile
+     */
+    Vector2 getProjectileSpeed();
+
+    /**
+     * Returns the dimensions (width and height) of the projectile.
+     * <p>
+     *
+     * @return a {@link Dimensions} object representing projectile size
+     */
+    Dimensions getProjectileDimensions();
+
+    /**
+     * Gets the cooldown or timing associated with the projectile attack.
+     *
+     * @return the time between attacks in game ticks or milliseconds
+     */
+    int getTimeAttack();
 }

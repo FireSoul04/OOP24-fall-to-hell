@@ -14,24 +14,25 @@ public class Sprite implements Drawable {
     private boolean mirrored;
     private boolean visible;
     private final GameObject gameObject;
-    
+    private final Vector2 offset;
     /**
      * Default initialization of the Sprite class.
      * @param gameObject is the game object associated with this drawable object
      */
     public Sprite(final GameObject gameObject) {
-        this(gameObject, false);
+        this(gameObject, Vector2.zero());
     }
 
     /**
-     * Initialization of the Sprite class with customized mirroring information.
-     * @param mirroring tells if the Sprite should be initialized mirrored or not
+     * Initialization of the Sprite class with customized offset information.
      * @param gameObject is the game object associated with this drawable object
+     * @param offset is the vector used to move a sprite from the position of its associated collider
      */
-    public Sprite(final GameObject gameObject, final boolean mirroring) {
-        this.mirrored = mirroring;
+    public Sprite(final GameObject gameObject, final Vector2 offset) {
+        this.mirrored = false;
         this.visible = true;
         this.gameObject = gameObject;
+        this.offset = offset;
     }
 
     /**
@@ -71,6 +72,6 @@ public class Sprite implements Drawable {
      */
     @Override
     public Vector2 getPosition() {
-        return this.gameObject.getPosition();
+        return this.gameObject.getPosition().add(this.offset);
     }
 }

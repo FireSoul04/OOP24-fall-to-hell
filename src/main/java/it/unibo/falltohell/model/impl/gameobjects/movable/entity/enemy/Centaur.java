@@ -1,14 +1,15 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
-import it.unibo.falltohell.model.api.gameobjects.Block;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 
+import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.util.Dimensions;
@@ -37,6 +38,12 @@ public class Centaur extends BaseEnemy {
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 20;
     private static final Vector2 VELOCITY = new Vector2(2, 20);
+    private static final Map<BuffNames, Double> BUFF = Map.of(
+            BuffNames.ATTACK, 10.0,
+            BuffNames.ATTACK_SPEED, 20.0,
+            BuffNames.LIFE, 30.0,
+            BuffNames.MANA, 40.0,
+            BuffNames.SPEED, 50.0);
 
     private BaseEnemyStatistics stats;
     private int direction = 1;
@@ -54,10 +61,13 @@ public class Centaur extends BaseEnemy {
      * @param level       the game {@link Level} where the enemy exists
      * @param initialCord the initial {@link Vector2} position of the enemy
      * @param character   the target {@link Character} this enemy reacts to
+     * @param manager     the {@link EnemyTimerManager} that handles familiar logic
+     *                    in this context
      */
-    public Centaur(final Level level, final Vector2 initialCord, final Character character,final EnemyTimerManager manager) {
+    public Centaur(final Level level, final Vector2 initialCord, final Character character,
+            final EnemyTimerManager manager) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, character, 10, null), manager);
+                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager);
 
         this.stats = (BaseEnemyStatistics) super.getStats();
     }
@@ -75,7 +85,7 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof Block) {
+        if (other instanceof BaseBlock) {
             if (direction.y() != 0) {
                 if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
                     this.collided = Optional.ofNullable(direction);

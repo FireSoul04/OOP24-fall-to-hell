@@ -2,13 +2,23 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.BuffBuilderImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
+
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -27,9 +37,78 @@ import it.unibo.falltohell.util.Vector2;
  */
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
+    /**
+     * <p>
+     * Represents types of timers used in game logic for characters and enemies.
+     * </p>
+     */
     public enum TimerType {
+        /**
+         * <p>
+         * Timer related to attack cooldowns.
+         * </p>
+         */
         ATTACK,
+        /**
+         * <p>
+         * Timer preventing aggro (aggression or targeting behavior) for a period.
+         * </p>
+         */
         NO_AGGRO
+    }
+
+    /**
+     * <p>
+     * Enumerates all the possible types of buffs that can be applied to a character
+     * or entity.
+     * </p>
+     *
+     * <p>
+     * Each value corresponds to a stat-enhancing effect:
+     * </p>
+     * <ul>
+     * <li><b>ATTACK</b>: Increases attack power</li>
+     * <li><b>ATTACK_SPEED</b>: Reduces delay between attacks</li>
+     * <li><b>LIFE</b>: Increases maximum or current life points</li>
+     * <li><b>MANA</b>: Increases maximum or current mana</li>
+     * <li><b>SPEED</b>: Boosts movement velocity</li>
+     * </ul>
+     */
+    public enum BuffNames {
+        /**
+         * <p>
+         * Increases damage dealt by the entity's attacks.
+         * </p>
+         */
+        ATTACK,
+
+        /**
+         * <p>
+         * Decreases attack cooldown for faster attack execution.
+         * </p>
+         */
+        ATTACK_SPEED,
+
+        /**
+         * <p>
+         * Increases current or maximum life.
+         * </p>
+         */
+        LIFE,
+
+        /**
+         * <p>
+         * Increases current or maximum mana.
+         * </p>
+         */
+        MANA,
+
+        /**
+         * <p>
+         * Increases movement speed.
+         * </p>
+         */
+        SPEED
     }
 
     private BaseEnemyStatistics stats;
@@ -73,7 +152,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
         this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
-        this.isDead();
+        this.removeEntity();
     }
 
     /**
@@ -92,17 +171,16 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * {@inheritDoc}
      */
     @Override
-    public boolean isDead() {
-        if (this.stats.getLife() <= 0) {
+    protected void removeEntity() {
+        if (super.isDead()) {
             if (this.stats.getCharacter() instanceof Druid) {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
             this.manager.removeTimersFor(this, super.getLevel());
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
+            this.dropBuff();
             super.getLevel().removeGameObject(this);
-            return true;
         }
-        return false;
     }
 
     /**
@@ -138,5 +216,54 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     protected EnemyTimerManager getEnemyTimerManager() {
         return this.manager;
+    }
+
+    /**
+     * <p>
+     * Randomly applies a buff to the character based on weighted probability
+     * thresholds.
+     * </p>
+     *
+     * <p>
+     * Steps:
+     * </p>
+     * <ul>
+     * <li>Generates a random number between 0.0 and 100.0 (with one decimal place)
+     * using ThreadLocalRandom.</li>
+     * <li>Sorts the buff probability map entries by their threshold values.</li>
+     * <li>Finds which interval the random number falls into, returning the
+     * associated buff key.</li>
+     * <li>Creates and adds the corresponding Buff object to the character's
+     * BuffManager.</li>
+     * </ul>
+     *
+     * <p>
+     * This uses Java Streams, Optionals, and IntStream for efficient
+     * functional-style operations.
+     * </p>
+     */
+    protected void dropBuff() {
+        // Casual Percentage
+        final double number = Math.round(ThreadLocalRandom.current().nextDouble(0, 100) * 10.0) / 10.0;
+        // Sort the map to have the percentage intervals in order
+        final List<Map.Entry<BuffNames, Double>> sorted = this.stats.getBuffMap().entrySet().stream()
+                .sorted(Comparator.comparingDouble(Map.Entry::getValue))
+                .toList();
+        // Find the key, if it exist, of said percentage
+        final Optional<BuffNames> typeBuff = IntStream.range(0, sorted.size() - 1)
+                .filter(i -> {
+                    final double lower = sorted.get(i).getValue();
+                    final double upper = sorted.get(i + 1).getValue();
+                    return number > lower && number <= upper;
+                })
+                .mapToObj(i -> sorted.get(i + 1).getKey())
+                .findFirst();
+        // Create the said buff if key was founded
+        if (typeBuff.isPresent()) {
+            new BuffBuilderImpl()
+                    .withLevel(super.getLevel()).withPosition(super.getPosition()).withBuff(typeBuff.get(),
+                            (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier())
+                    .build();
+        }
     }
 }

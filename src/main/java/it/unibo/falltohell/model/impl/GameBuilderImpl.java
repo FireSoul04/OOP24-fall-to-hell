@@ -1,9 +1,7 @@
 package it.unibo.falltohell.model.impl;
 
-import it.unibo.falltohell.model.api.Game;
-import it.unibo.falltohell.model.api.GameBuilder;
-import it.unibo.falltohell.model.api.GameData;
-import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
+import it.unibo.falltohell.model.api.*;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
@@ -16,39 +14,43 @@ import java.util.Optional;
 
 public class GameBuilderImpl implements GameBuilder {
 
+    private final Map<CharacterID, Character> characters;
     private Optional<Level> level;
     private Optional<GameData> gameData;
+    private Optional<GameCamera> camera;
     private Optional<GameEventManager<String>> eventManager;
-    private Map<CharacterID, Character> characters;
+    private Optional<DrawableRenderableHandler> drh;
 
     public GameBuilderImpl() {
+        this.characters = new HashMap<>();
         this.level = Optional.empty();
         this.gameData = Optional.empty();
+        this.camera = Optional.empty();
         this.eventManager = Optional.empty();
-        this.characters = new HashMap<>();
+        this.drh = Optional.empty();
     }
 
     /**
      * {@inheritDoc}
-     * Adds the event manager if already linked.
+     * Adds the event manager and drawable-renderable handler if already linked.
      */
     @Override
     public GameBuilder createLevel() {
-        this.level = Optional.of(new LevelImpl());
-        eventManager.ifPresent(level.get()::setGameEventManager);
+        if (this.camera.isEmpty()) {
+            throw new IllegalStateException("Cannot create a level without a camera");
+        }
+        this.level = Optional.of(new LevelImpl(this.camera.get()));
+        this.eventManager.ifPresent(this.level.get()::setGameEventManager);
+        this.drh.ifPresent(this.level.get()::setDrawableRenderableHandler);
         return this;
     }
 
     /**
      * {@inheritDoc}
-     * @throws IllegalStateException if no character is added
      */
     @Override
     public GameBuilder loadGameData() {
         // TODO update when game data is going to load from save file
-        if (this.characters.isEmpty()) {
-            throw new IllegalStateException("Game data needs at least one character to work");
-        }
         this.gameData = Optional.of(new GameDataImpl(this.characters));
         return this;
     }
@@ -64,11 +66,29 @@ public class GameBuilderImpl implements GameBuilder {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public GameBuilder attachDrawableRenderableHandlerToLevel(final DrawableRenderableHandler drh) {
+        this.drh = Optional.of(drh);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameBuilder attachCamera(GameCamera camera) {
+        this.camera = Optional.of(camera);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
      * @throws IllegalStateException if level is not created
      */
     @Override
     public GameBuilder loadCharacters() {
-        if (level.isEmpty()) {
+        if (this.level.isEmpty()) {
             throw new IllegalStateException("The characters needs a level to stay inside");
         }
         // TODO change when game data has get character instead of get id
@@ -79,6 +99,7 @@ public class GameBuilderImpl implements GameBuilder {
         // TODO add remaining characters
         this.characters.put(CharacterID.ROGUE, new Rogue(lv, position));
         this.characters.put(CharacterID.DRUID, new Druid(lv, position));
+        this.level.get().loadCharacters(this.characters);
         return this;
     }
 
@@ -88,10 +109,10 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public GameBuilder linkGameDataToLevel() {
-        if (level.isEmpty() || gameData.isEmpty()) {
+        if (this.level.isEmpty() || this.gameData.isEmpty()) {
             throw new IllegalStateException("Game data and level needs to be created to link them");
         }
-        level.get().linkGameData(gameData.get());
+        this.level.get().linkGameData(this.gameData.get());
         return this;
     }
 
@@ -102,9 +123,9 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public Game build() {
-        if (level.isEmpty()) {
+        if (this.level.isEmpty()) {
             throw new IllegalStateException("Cannot create a game without a level");
         }
-        return new GameImpl(level.get(), gameData.orElse(new GameDataImpl(this.characters)), this.characters);
+        return new GameImpl(this.level.get(), this.gameData.orElse(new GameDataImpl(this.characters)), this.characters);
     }
 }

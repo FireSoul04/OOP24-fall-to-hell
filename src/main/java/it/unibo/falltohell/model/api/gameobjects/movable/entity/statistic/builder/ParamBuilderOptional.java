@@ -1,6 +1,9 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.builder;
 
+import java.util.Map;
 import java.util.Optional;
+
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy.BuffNames;
 
 /**
  * Interface for building optional parameters of a enemy's statistics.
@@ -41,6 +44,18 @@ public interface ParamBuilderOptional {
     ParamBuilderOptional withSenseDistance(Double senseDistance);
 
     /**
+     * <p>
+     * Sets optional buffs applied to the enemy's statistics.
+     * </p>
+     *
+     * @param buff a map containing buff types and their corresponding multipliers
+     * @return this builder instance for method chaining
+     *
+     * @see BuffNames
+     */
+    ParamBuilderOptional withBuff(Map<BuffNames, Double> buff);
+
+    /**
      * @return an {@link Optional} containing the noAggro value if present
      */
     Optional<Integer> getNoAggro();
@@ -54,4 +69,15 @@ public interface ParamBuilderOptional {
      * @return an {@link Optional} containing the sensing distance if present
      */
     Optional<Double> getSenseDistance();
+
+    /**
+     * <p>
+     * Returns the optional map of buffs applied to the enemy.
+     * </p>
+     *
+     * @return an {@link Optional} containing the buff map, if present
+     *
+     * @see BuffNames
+     */
+    Optional<Map<BuffNames, Double>> getBuffMap();
 }

@@ -19,16 +19,16 @@ import it.unibo.falltohell.util.Vector2;
 public class LongRangeStatBuilderImpl<T extends LongRangeStatBuilderImpl<T>> extends GroundEnemyStatBuilderImpl<T>
         implements LongRangeEnemyStatBuilder {
 
-    protected double projectileAttack;
-    protected Vector2 projectileVelocity;
-    protected Dimensions projectileDimensions;
-    protected int timeAttack;
+    private double projectileAttack;
+    private Vector2 projectileVelocity;
+    private Dimensions projectileDimensions;
+    private int timeAttack;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T withProjectileAttack(double projectileAttack) {
+    public T withProjectileAttack(final double projectileAttack) {
         this.projectileAttack = projectileAttack;
         return self();
     }
@@ -37,7 +37,7 @@ public class LongRangeStatBuilderImpl<T extends LongRangeStatBuilderImpl<T>> ext
      * {@inheritDoc}
      */
     @Override
-    public T withProjectileVelocity(Vector2 projectileVelocity) {
+    public T withProjectileVelocity(final Vector2 projectileVelocity) {
         this.projectileVelocity = projectileVelocity;
         return self();
     }
@@ -46,7 +46,7 @@ public class LongRangeStatBuilderImpl<T extends LongRangeStatBuilderImpl<T>> ext
      * {@inheritDoc}
      */
     @Override
-    public T withProjectileDimensions(Dimensions projectileDimensions) {
+    public T withProjectileDimensions(final Dimensions projectileDimensions) {
         this.projectileDimensions = projectileDimensions;
         return self();
     }
@@ -55,7 +55,7 @@ public class LongRangeStatBuilderImpl<T extends LongRangeStatBuilderImpl<T>> ext
      * {@inheritDoc}
      */
     @Override
-    public T withTimeAttack(int timeAttack) {
+    public T withTimeAttack(final int timeAttack) {
         this.timeAttack = timeAttack;
         return self();
     }
@@ -65,8 +65,20 @@ public class LongRangeStatBuilderImpl<T extends LongRangeStatBuilderImpl<T>> ext
      */
     @Override
     public LongRangeEnemyStatistics build() {
+        final var life = super.getLife();
+        final var attack = super.getAttack();
+        final var speed = super.getSpeed();
+        final var dimension = super.getDimensions();
+        final var position = super.getInitialPos();
+        final var noAggro = super.getNoAggro();
+        final var character = super.getCharacter();
+        final var regen = super.getRegen();
+        final var senseDistance = super.getSenseDistance();
+        final var points = super.getPoints();
+        final var buff = super.getBuffMap();
+
         return new LongRangedEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
-                senseDistance, points, projectileAttack, projectileVelocity, projectileDimensions, timeAttack);
+                senseDistance, points, projectileAttack, projectileVelocity, projectileDimensions, timeAttack, buff);
     }
 
     /**
@@ -76,5 +88,37 @@ public class LongRangeStatBuilderImpl<T extends LongRangeStatBuilderImpl<T>> ext
     @SuppressWarnings("unchecked")
     protected T self() {
         return (T) this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getProjectileAttack() {
+        return this.projectileAttack;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Vector2 getProjectileSpeed() {
+        return this.projectileVelocity;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Dimensions getProjectileDimensions() {
+        return this.projectileDimensions;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getTimeAttack() {
+        return this.timeAttack;
     }
 }

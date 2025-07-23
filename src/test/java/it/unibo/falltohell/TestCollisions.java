@@ -6,14 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,7 +29,7 @@ class TestCollisions {
 
     private static final int STEPS = 500;
 
-    private final Level fakeLevel = new LevelImpl();
+    private final Level fakeLevel = new LevelTest();
 
     private boolean collision;
     private boolean exitedCollision;
@@ -105,7 +103,7 @@ class TestCollisions {
 
     @Test
     void testGameDummyVsBlock() {
-        final Level level = new LevelImpl();
+        final Level level = new LevelTest();
         final Vector2 blockPosition = new Vector2(STEPS / 2.0, STEPS / 2.0);
         block.setPosition(blockPosition);
         level.addGameObject(dummy1);
@@ -117,7 +115,7 @@ class TestCollisions {
 
     @Test
     void testGameDummyVsGameDummy() {
-        final Level level = new LevelImpl();
+        final Level level = new LevelTest();
         dummy2.setPosition(new Vector2(STEPS / 2.0, STEPS / 2.0));
         level.addGameObject(dummy1);
         level.addGameObject(dummy2);
@@ -128,7 +126,7 @@ class TestCollisions {
 
     @Test
     void testGameDummyShouldNotCollide() {
-        final Level level = new LevelImpl();
+        final Level level = new LevelTest();
         final Vector2 blockPosition = new Vector2(STEPS / 2.0 + 50, STEPS / 2.0);
         block.setPosition(blockPosition);
         level.addGameObject(dummy1);
@@ -143,7 +141,7 @@ class TestCollisions {
         dummy1.setSpeedX(1);
         dummy1.setSpeedY(0);
         block.setPosition(new Vector2(STEPS / 2.0, 0));
-        final Level testCollisionDirectionXLevel = new LevelImpl();
+        final Level testCollisionDirectionXLevel = new LevelTest();
         testCollisionDirectionXLevel.addGameObject(dummy1);
         testCollisionDirectionXLevel.addGameObject(block);
         baseCollisionTest(testCollisionDirectionXLevel, () -> !collision);
@@ -161,7 +159,7 @@ class TestCollisions {
         dummy1.setSpeedX(0);
         dummy1.setSpeedY(1);
         block.setPosition(new Vector2(0, STEPS / 2.0));
-        final Level testCollisionDirectionYLevel = new LevelImpl();
+        final Level testCollisionDirectionYLevel = new LevelTest();
         testCollisionDirectionYLevel.addGameObject(dummy1);
         testCollisionDirectionYLevel.addGameObject(block);
         baseCollisionTest(testCollisionDirectionYLevel, () -> !collision);
@@ -179,7 +177,7 @@ class TestCollisions {
         dummy1.setSpeedX(1);
         dummy1.setSpeedY(1);
         block.setPosition(new Vector2(STEPS / 2.0, STEPS / 2.0));
-        final Level testCollisionDirectionXandYLevel = new LevelImpl();
+        final Level testCollisionDirectionXandYLevel = new LevelTest();
         testCollisionDirectionXandYLevel.addGameObject(dummy1);
         testCollisionDirectionXandYLevel.addGameObject(block);
         baseCollisionTest(testCollisionDirectionXandYLevel, () -> !collision);

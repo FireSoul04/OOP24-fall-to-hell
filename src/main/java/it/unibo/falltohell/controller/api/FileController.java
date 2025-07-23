@@ -10,12 +10,9 @@ import java.util.List;
 public interface FileController {
 
     /**
-     * Method to read from the file
+     * Method to read from the file.
+     * @throws IOException when the
      */
-    List<String> read() throws IOException;
+    List<String> read(String path) throws IOException;
 
-    /**
-     * @return the path of the save file
-     */
-    String getPath();
 }
