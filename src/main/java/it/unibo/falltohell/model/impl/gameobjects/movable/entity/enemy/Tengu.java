@@ -11,21 +11,25 @@ import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.ManagerFamiliars;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.BaseEnemyProjectile;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Concrete implementation of a long-range enemy type.
- * Extends {@link BaseEnemy} to provide specific behaviors for Monster2 enemies.
+ * Concrete implementation of a long-range enemy type named Tengu.
  * <p>
- * This class manages movement, attacks, collision behavior, and health
- * regeneration timers.
+ * This enemy extends {@link BaseEnemy} and implements behavior such as
+ * movement,
+ * attacking with projectiles, collision handling, and health regeneration.
+ * It uses timers to manage attack intervals and regenerates health over time.
  * </p>
  *
  * @author Sara Visani
+ * @see BaseEnemy
+ * @see RestrictedLongRangeEnemyStatistics
+ * @see BaseEnemyProjectile
+ * @see EnemyTimerManager
  */
 public class Tengu extends BaseEnemy {
     private static final double CHAR_DISTANCE = 20;
@@ -45,21 +49,30 @@ public class Tengu extends BaseEnemy {
     private Optional<Vector2> collided = Optional.empty();
 
     /**
-     * Constructs a new Monster2 enemy instance.
+     * Constructs a new Tengu enemy with configured statistics, timers, and target
+     * character.
      * <p>
+     * The enemy's attack timer is started immediately and configured to repeat
+     * attacks
+     * based on {@link RestrictedLongRangeEnemyStatistics#getTimeAttack()}.
+     * </p>
      *
      * @param level       the {@link Level} this enemy belongs to
-     * @param initialCord the initial position of the enemy in the level
-     * @param character   the {@link Character} this enemy targets or is associated
-     *                    with
-     * @param manager     the {@link ManagerFamiliars} that handles familiar logic in this context
+     * @param initialCord the initial spawn position of this enemy
+     * @param character   the {@link Character} this enemy targets
+     * @param manager     the {@link EnemyTimerManager} used to handle enemy timers
+     *
+     * @see RestrictedLongRangeEnemyStatistics
+     * @see CustomTimerImpl
      */
-    public Tengu(final Level level, final Vector2 initialCord, final Character character, final EnemyTimerManager manager) {
+    public Tengu(final Level level, final Vector2 initialCord, final Character character,
+            final EnemyTimerManager manager) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
-                        DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME), manager);
+                        DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME),
+                manager);
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 

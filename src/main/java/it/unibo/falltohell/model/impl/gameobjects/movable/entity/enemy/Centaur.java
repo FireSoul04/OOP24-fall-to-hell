@@ -12,7 +12,6 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.ManagerFamiliars;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -40,12 +39,11 @@ public class Centaur extends BaseEnemy {
     private static final double DAMAGE = 20;
     private static final Vector2 VELOCITY = new Vector2(2, 20);
     private static final Map<BuffNames, Double> BUFF = Map.of(
-        BuffNames.ATTACK, 10.0,
-        BuffNames.ATTACK_SPEED, 20.0,
-        BuffNames.LIFE, 30.0,
-        BuffNames.MANA, 40.0,
-        BuffNames.SPEED, 50.0
-    );
+            BuffNames.ATTACK, 10.0,
+            BuffNames.ATTACK_SPEED, 20.0,
+            BuffNames.LIFE, 30.0,
+            BuffNames.MANA, 40.0,
+            BuffNames.SPEED, 50.0);
 
     private BaseEnemyStatistics stats;
     private int direction = 1;
@@ -63,9 +61,11 @@ public class Centaur extends BaseEnemy {
      * @param level       the game {@link Level} where the enemy exists
      * @param initialCord the initial {@link Vector2} position of the enemy
      * @param character   the target {@link Character} this enemy reacts to
-     * @param manager     the {@link ManagerFamiliars} that handles familiar logic in this context
+     * @param manager     the {@link EnemyTimerManager} that handles familiar logic
+     *                    in this context
      */
-    public Centaur(final Level level, final Vector2 initialCord, final Character character,final EnemyTimerManager manager) {
+    public Centaur(final Level level, final Vector2 initialCord, final Character character,
+            final EnemyTimerManager manager) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                 initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager);
 

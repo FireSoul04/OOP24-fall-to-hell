@@ -16,6 +16,23 @@ import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
+/**
+ * Represents a ranged enemy ("Lotawiec") that moves horizontally,
+ * attacks by shooting projectiles, and reacts to collisions with blocks and
+ * characters.
+ * <p>
+ * This enemy periodically attacks the target {@link Character} by firing
+ * {@link TrackEnemyProjectile}s if the character is within sensing distance.
+ * <p>
+ * It inherits from {@link BaseEnemy} and uses {@link LongRangeEnemyStatistics}
+ * for managing its stats and behavior.
+ *
+ * @author Sara Visani
+ * @see BaseEnemy
+ * @see TrackEnemyProjectile
+ * @see LongRangeEnemyStatistics
+ * @see Character
+ */
 public class Lotawiec extends BaseEnemy {
 
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
@@ -37,6 +54,21 @@ public class Lotawiec extends BaseEnemy {
     private int direction = 1;
     private Vector2 jump = Vector2.zero();
 
+    /**
+     * Constructs a new Lotawiec enemy with specified initial position, target
+     * character,
+     * and a timer manager for attack scheduling.
+     * <p>
+     * Initializes its statistics, dimensions, damage, velocity, and attack timers.
+     *
+     * @param level       the level this enemy belongs to
+     * @param initialCord the initial position of the enemy
+     * @param character   the target character this enemy tracks and attacks
+     * @param manager     the timer manager handling enemy-specific timers
+     *
+     * @see LongRangeEnemyStatistics
+     * @see CustomTimerImpl
+     */
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character,
             final EnemyTimerManager manager) {
         super(level,
@@ -94,7 +126,8 @@ public class Lotawiec extends BaseEnemy {
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
                     this.stats.getProjectileDimensions().width(), this.stats.getProjectileDimensions().height(),
                     this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(),
-                    new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A, this.stats.getCharacter(), this.stats.getSenseDistance());
+                    new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
+                    this.stats.getCharacter(), this.stats.getSenseDistance());
         }
     }
 
