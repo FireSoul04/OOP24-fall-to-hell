@@ -117,4 +117,12 @@ public record Vector2(double x, double y) {
     public double distance(final Vector2 v) {
         return Math.sqrt(Math.pow(this.x - v.x, 2) + Math.pow(this.y - v.y, 2));
     }
+    
+    public Vector2 normalize() {
+        double length = Math.sqrt(this.x * this.x + this.y * this.y);
+        if (length == 0) {
+            return Vector2.zero();
+        }
+        return new Vector2(this.x / length, this.y / length);
+    }
 }

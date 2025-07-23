@@ -42,6 +42,8 @@ public class ProjectileImpl extends MovableImpl implements Projectile{
         if (!hit) {
             super.update(deltaTime);
             this.onUpdate(deltaTime);
+        }else if(isHit()){
+            this.getLevel().removeGameObject(this);
         }
     }
      /**
@@ -71,5 +73,5 @@ public class ProjectileImpl extends MovableImpl implements Projectile{
     protected void onProjectileHit(GameObject other) {
         // Default: do nothing
     }
-
+   
 }

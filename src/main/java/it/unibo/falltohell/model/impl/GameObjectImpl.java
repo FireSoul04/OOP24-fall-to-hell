@@ -1,5 +1,8 @@
 package it.unibo.falltohell.model.impl;
 
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
@@ -14,13 +17,10 @@ import it.unibo.falltohell.model.api.Level;
  */
 public class GameObjectImpl implements GameObject {
     private Vector2 pos;
-    private double width;
-    private double height;
     private boolean isSolid;
-    private double widthSize;
-    private double heightSize;
     private Collider collider;
     private Level level;
+    private Optional<Drawable> drawable;
     
     /**
      * Constructs a solid GameObject and adds it to the specified level.
@@ -31,16 +31,14 @@ public class GameObjectImpl implements GameObject {
      * @param height the height (in tiles) of the object
      * @param collider the collider for this object
      */
-    public GameObjectImpl(Level lv, Vector2 position, double width, double height, Collider collider) {
+    public GameObjectImpl(Level lv, Vector2 position, Collider collider,Optional<Drawable> drawable) {
         this.pos = position;
-        this.width = width;
-        this.height = height;
         this.isSolid = true; // Default
-        this.widthSize = width * GameObject.TILE_SIZE;
-        this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
         lv.addGameObject(this);
         this.level = lv;
+        this.drawable = drawable;
+        
     }
     /**
      * Constructs a GameObject with a specified solidity and adds it to the specified level.
@@ -52,16 +50,13 @@ public class GameObjectImpl implements GameObject {
      * @param isSolid whether the object is solid
      * @param collider the collider for this object
      */
-    public GameObjectImpl(Level lv, Vector2 position, double width, double height, boolean isSolid, Collider collider) {
+    public GameObjectImpl(Level lv, Vector2 position, boolean isSolid, Collider collider, Optional<Drawable> drawable) {
         this.pos = position;
-        this.width = width;
-        this.height = height;
         this.isSolid = isSolid; 
-        this.widthSize = width * GameObject.TILE_SIZE;
-        this.heightSize = height * GameObject.TILE_SIZE;
         this.collider = collider;
         lv.addGameObject(this);
         this.level = lv;
+        this.drawable = drawable;
     }
     /**
      * {@inheritDoc}
@@ -72,38 +67,20 @@ public class GameObjectImpl implements GameObject {
      /**
      * {@inheritDoc}
      */
-    public double getWidth(){
-        return this.width;
-    }
-     /**
-     * {@inheritDoc}
-     */
-    public double getHeight(){
-        return this.height;
-    }
-     /**
-     * {@inheritDoc}
-     */
     public boolean isSolid(){
         return this.isSolid;
     }
      /**
      * {@inheritDoc}
      */
-    public double getWidthSize() {
-        return this.widthSize;
-    }
-     /**
-     * {@inheritDoc}
-     */
-    public double getHeightSize() {
-        return this.heightSize;
-    }
-     /**
-     * {@inheritDoc}
-     */
     public void setPosition(Vector2 position) {
         this.pos = position;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    public void setSolid(boolean solid) {
+        this.isSolid = solid;
     }
      /**
      * {@inheritDoc}
@@ -141,6 +118,15 @@ public class GameObjectImpl implements GameObject {
      */
     @Override
     public void update() {
+        
+    }
 
+    public Optional<Drawable> getDrawable() {
+        return drawable;
+    }
+    
+    public void setDrawable(Optional<Drawable> drawable) {
+        this.drawable = drawable;
     }
 }
+    
