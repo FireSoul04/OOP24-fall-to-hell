@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.Drawable;
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
@@ -161,8 +162,8 @@ public class GameObjectImpl implements GameObject {
      * @see Sprite
      *
      */
-    protected void initDrawable() {
-        this.setDrawable(Optional.of(new Sprite(this)));
+    protected void initDrawable(Priority priority) {
+        this.setDrawable(Optional.of(new Sprite(this, priority)));
     }
 
     /**
@@ -181,7 +182,7 @@ public class GameObjectImpl implements GameObject {
      * @param offset the {@link Vector2} offset to apply to the sprite's position
      * @see Sprite
      */
-    protected void initDrawable(final Vector2 offset) {
-        this.setDrawable(Optional.of(new Sprite(this, offset)));
+    protected void initDrawable(final Vector2 offset, Priority priority) {
+        this.setDrawable(Optional.of(new Sprite(this, offset, priority)));
     }
 }
