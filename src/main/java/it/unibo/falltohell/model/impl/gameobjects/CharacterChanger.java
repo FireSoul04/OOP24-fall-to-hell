@@ -8,7 +8,6 @@ import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class CharacterChanger extends GameObjectImpl implements Interactable {
         final double height, final Collider collider, final Map<CharacterID, Character> characters) {
         super(lv, position, width, height, collider);
         this.characters = characters;
-        this.characterIDs = Arrays.asList(CharacterID.values());
+        this.characterIDs = List.copyOf(characters.keySet());
     }
 
     /**
