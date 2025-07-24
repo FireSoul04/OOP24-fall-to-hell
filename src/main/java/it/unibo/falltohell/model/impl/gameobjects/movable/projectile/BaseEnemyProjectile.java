@@ -58,7 +58,7 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      */
     @Override
     protected void onUpdate(final double deltaTime) {
-        super.setPosition(getPosition().add(new Vector2(0, super.getSpeedY() * deltaTime)));
+        super.setPosition(getPosition().add(new Vector2(0, super.getSpeed().y() * deltaTime)));
     }
 
     /**
@@ -66,8 +66,8 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      */
     @Override
     protected void onProjectileHit(final GameObject other) {
-        if (other instanceof Character) {
-            ((Character) other).setDamagedLife(damage);
+        if (other instanceof Character character) {
+            character.setDamagedLife(damage);
         }
         super.getLevel().removeGameObject(this);
     }

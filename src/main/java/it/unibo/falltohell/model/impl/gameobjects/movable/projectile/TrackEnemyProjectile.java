@@ -91,14 +91,11 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
             final Vector2 currentPos = super.getPosition();
             final Vector2 toTarget = characterPos.subtract(currentPos).normalize();
             final Vector2 acceleration = toTarget.multiply(MAX_ACCEL);
-            Vector2 currentVelocity = new Vector2(super.getSpeedX(), super.getSpeedY());
-            currentVelocity = currentVelocity.add(acceleration.multiply(deltaTime));
-
+            Vector2 currentVelocity = super.getSpeed().add(acceleration.multiply(deltaTime));
             if (currentVelocity.magnitude() > MAX_SPEED) {
                 currentVelocity = currentVelocity.normalize().multiply(MAX_SPEED);
             }
-            super.setSpeed(new Vector2(currentVelocity.x(), currentVelocity.y()));
-
+            super.setSpeed(currentVelocity);
             super.setPosition(currentPos.add(currentVelocity.multiply(deltaTime)));
         } else {
             super.onUpdate(deltaTime);

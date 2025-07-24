@@ -9,7 +9,6 @@ import it.unibo.falltohell.model.api.Level;
 
 /**
  * A special projectile that can return to the archer after being fired.
- *
  * Behavior:
  * - Initially behaves like a normal arrow: it can hit solid objects and
  * enemies.
@@ -68,24 +67,18 @@ public class ReturnableArrow extends ProjectileImpl {
      */
     @Override
     public void update(final double deltaTime) {
-        if (isReturning()) {
-
-            final Vector2 direction = owner.getPosition().subtract(getPosition()).normalize();
-
-            setSpeed(direction.multiply(originalSpeed));
-
-            final Vector2 displacement = new Vector2(getSpeedX(), getSpeedY()).multiply(deltaTime);
-            setPosition(getPosition().add(displacement));
-
-            if (getPosition().distance(owner.getPosition()) < 0.5) {
+        if (this.isReturning()) {
+            final Vector2 direction = owner.getPosition().subtract(this.getPosition()).normalize();
+            this.setSpeed(direction.multiply(originalSpeed));
+            final Vector2 displacement = this.getSpeed().multiply(deltaTime);
+            this.setPosition(this.getPosition().add(displacement));
+            if (this.getPosition().distance(owner.getPosition()) < 0.5) {
                 owner.returnArrow(this);
-                destroy();
+                this.destroy();
             }
         } else if (!isHit()) {
-
             super.update(deltaTime);
         }
-
     }
 
     /**
@@ -97,10 +90,10 @@ public class ReturnableArrow extends ProjectileImpl {
      */
     @Override
     public void onCollision(final GameObject other) {
-        if (!returning && other != this && other.isSolid()) {
+        if (!this.returning && other != this && other.isSolid()) {
             super.onCollision(other);
             this.setHit(true);
-        } else if (returning && isEnemy(other)) {
+        } else if (this.returning && isEnemy(other)) {
             this.onProjectileHit(other);
         }
     }
@@ -119,6 +112,6 @@ public class ReturnableArrow extends ProjectileImpl {
      * Removes the arrow from the level.
      */
     public void destroy() {
-        getLevel().removeGameObject(this);
+        this.getLevel().removeGameObject(this);
     }
 }
