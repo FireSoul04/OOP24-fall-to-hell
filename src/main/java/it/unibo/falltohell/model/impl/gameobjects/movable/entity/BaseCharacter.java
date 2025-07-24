@@ -39,9 +39,9 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     /**
      * Base constructor for a new character.
      *
-     * @param level
-     * @param position
-     * @param stats
+     * @param level where it belongs
+     * @param position where is it located inside the level
+     * @param stats of the character
      */
     public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats) {
         super(level, position, stats);
