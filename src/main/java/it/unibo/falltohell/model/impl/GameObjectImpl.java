@@ -173,6 +173,11 @@ public class GameObjectImpl implements GameObject {
      * Should be called after subclass construction, just like
      * {@link #initDrawable()}.
      *
+     * @implNote This method avoids invoking {@code setDrawable(new Sprite(this))}
+     *           inside the constructor
+     *           to prevent premature access to uninitialized subclass state during
+     *           object construction.
+     *
      * @param offset the {@link Vector2} offset to apply to the sprite's position
      * @see Sprite
      */

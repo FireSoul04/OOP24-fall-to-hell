@@ -42,6 +42,7 @@ public class BaseEnemyProjectile extends ProjectileImpl {
             final Collider collider, final double damage) {
         super(level, position, speedX, speedY, collider);
         this.damage = damage;
+        super.initDrawable();
     }
 
     /**
