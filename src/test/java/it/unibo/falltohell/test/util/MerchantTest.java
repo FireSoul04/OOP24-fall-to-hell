@@ -38,17 +38,15 @@ public class MerchantTest extends GameObjectImpl implements Merchant {
     private final List<Item> merch;
     private final List<String> allMerchFromFile;
     private int potionCounter;
+
     /**
      * Initialization of the MerchantTest class.
      * @param lv is the current level
      * @param position is the position of the merchant in the level
-     * @param width
-     * @param height
      * @param collider is the collider associated with the merchant
      */
-    public MerchantTest(final Level lv, final Vector2 position, final double width,
-                        final double height, final Collider collider) {
-        super(lv, position, width, height, collider);
+    public MerchantTest(final Level lv, final Vector2 position, final Collider collider) {
+        super(lv, position, collider);
         final FileController fileController = new FileControllerImpl();
         this.allMerchFromFile = fileController.read(PATH);
         this.merch = new ArrayList<>();
@@ -131,7 +129,6 @@ public class MerchantTest extends GameObjectImpl implements Merchant {
         }
         return new Potion(this.getLevel(),
                 this.computePosition(),
-                0, 0,
                 potionCollider,
                 Long.parseLong(cost), buff);
     }
