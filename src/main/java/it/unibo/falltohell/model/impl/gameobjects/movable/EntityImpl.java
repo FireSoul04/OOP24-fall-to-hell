@@ -2,11 +2,10 @@ package it.unibo.falltohell.model.impl.gameobjects.movable;
 
 import java.util.Optional;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
-import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.Sprite;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
@@ -76,4 +75,26 @@ public class EntityImpl extends MovableImpl implements Entity {
         }
     }
 
+    /**
+     * Initializes the graphical representation of this entity by associating it
+     * with a {@link Sprite}.
+     * <p>
+     * This method should be called by subclasses <b>after</b> their construction is
+     * complete,
+     * to ensure that {@code this} refers to the fully initialized subclass
+     * instance.
+     * It sets the drawable of the entity using {@link #setDrawable} and wraps the
+     * sprite in an {@link Optional}.
+     *
+     * @implNote This method avoids invoking {@code setDrawable(new Sprite(this))}
+     *           inside the constructor
+     *           to prevent premature access to uninitialized subclass state during
+     *           object construction.
+     *
+     * @see Sprite
+     *
+     */
+    protected void initDrawable() {
+        super.setDrawable(Optional.of(new Sprite(this)));
+    }
 }
