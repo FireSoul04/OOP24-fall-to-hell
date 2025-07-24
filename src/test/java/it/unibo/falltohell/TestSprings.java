@@ -27,7 +27,8 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- *
+ * Class to test if the save point and the character changer work as expected.
+ * @author Martina Malagoli
  */
 class TestSprings {
     private Interactable savePoint;
