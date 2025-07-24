@@ -22,17 +22,18 @@ import java.util.Optional;
  */
 public abstract class BaseCharacter extends EntityImpl implements Character {
 
-    private static final int MAX_JUMP_HEIGHT = 15;
-    private static final Vector2 JUMP_ACCELERATION = new Vector2(0.0, -0.0625);
-    private static final Vector2 GRAVITY_STEP = new Vector2(0.0, 0.0625);
+    private static final int MAX_JUMP_HEIGHT = 30;
+    private static final Vector2 GRAVITY_STEP = new Vector2(0.0, 0.06);
 
     private final GameEventManager<String> input;
     private final CharacterStatistics stats;
     private final BuffManager buffManager;
     private Vector2 jumpVelocity;
     private Vector2 gravity;
-    private int currentJumpHeight;
+    private int currentJumpFrames;
+    private double jumpingSpeed;
     private boolean onGround;
+    private boolean jumping;
     private Optional<Interactable> interactingObject;
 
     /**
@@ -45,7 +46,9 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats) {
         super(level, position, stats);
         this.onGround = false;
-        this.currentJumpHeight = 0;
+        this.currentJumpFrames = 0;
+        this.jumpingSpeed = this.getStats().getInitialSpeed().y();
+        this.jumping = false;
         this.jumpVelocity = Vector2.zero();
         this.gravity = Vector2.zero();
         this.stats = stats;
@@ -75,23 +78,32 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
 
     /**
      * If the character is on ground it can jump until it reach max jump height or jump less than max height if the
-     * jump key is released.
+     * jump event is released. The character jump height is based on its current y speed at the start of the jump.
      *
      * @param deltaTime difference between two frames
      */
     private void jump(final double deltaTime) {
-        if (this.input.checkCondition("Jump")
-            && (this.onGround || this.currentJumpHeight > 0 && this.currentJumpHeight < MAX_JUMP_HEIGHT)
-        ) {
-            this.currentJumpHeight++;
+        if (this.input.checkCondition("Jump") && this.onGround) {
             this.onGround = false;
-            this.jumpVelocity = this.jumpVelocity.add(JUMP_ACCELERATION.multiply(MAX_JUMP_HEIGHT - this.currentJumpHeight).multiply(deltaTime));
-            this.setPosition(this.getPosition().add(this.jumpVelocity));
-        } else {
-            this.jumpVelocity = Vector2.zero();
+            this.jumping = true;
+            this.currentJumpFrames = 1;
+        }
+        if (this.onGround) {
+            this.jumpingSpeed = this.getStats().getSpeed().y();
         }
         if (!this.input.checkCondition("Jump")) {
-            this.currentJumpHeight = 0;
+            this.jumping = false;
+        }
+        if (this.currentJumpFrames > 0 && this.currentJumpFrames < MAX_JUMP_HEIGHT) {
+            // This multiplier let the character slow down when the player stop the jump event
+            final double multiplier = (MAX_JUMP_HEIGHT - this.currentJumpFrames) / (double) MAX_JUMP_HEIGHT;
+            final double corrector = GRAVITY_STEP.y() * (this.jumping ? 1.0 : multiplier);
+            this.jumpVelocity = new Vector2(
+                0.0,
+                2 * (currentJumpFrames - MAX_JUMP_HEIGHT) * this.jumpingSpeed * corrector * deltaTime
+            );
+            this.setPosition(this.getPosition().add(this.jumpVelocity));
+            this.currentJumpFrames++;
         }
     }
 
@@ -120,21 +132,34 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     /**
      * {@inheritDoc}
      * Notify if the character is on ground and check if player is colliding with an interactable.
-     * If the character is inside a block because of gravity, this method will move the character up to the floor level.
+     * If the character is inside a BaseBlock because of gravity, this method will move the character up to the floor level.
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof BaseBlock && direction.equals(Vector2.down())) {
-            this.currentJumpHeight = 0;
+            this.currentJumpFrames = 0;
             this.onGround = true;
             this.gravity = Vector2.zero();
-
-            final double moveUpToFloor =
-                (this.getCollider().size().height() + this.getPosition().subtract(other.getPosition()).y()) / 10;
-            this.setPosition(this.getPosition().subtract(new Vector2(0, moveUpToFloor)));
+            this.moveUpToFloor(other);
         }
         if (other instanceof Interactable interactable) {
             this.interactingObject = Optional.of(interactable);
+        }
+    }
+
+    /**
+     * Move the character up until it reaches the floor's height.
+     * @param other block colliding with
+     */
+    private void moveUpToFloor(final GameObject other) {
+        final double distance = this.getPosition().subtract(other.getPosition()).y();
+        final double thisHeight = this.getCollider().size().height();
+        final double otherHeight = other.getCollider().size().height();
+        final double idealDistance = (thisHeight + otherHeight) / 2;
+        // Range of values for the y that the character needs to be to reach floor level
+        final double eps = 1 + (distance / thisHeight);
+        if (Math.abs(Math.abs(distance) - idealDistance) > eps) {
+            this.setPosition(this.getPosition().subtract(new Vector2(0, eps)));
         }
     }
 
