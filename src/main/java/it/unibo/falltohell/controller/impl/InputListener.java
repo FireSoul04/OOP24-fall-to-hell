@@ -5,48 +5,19 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent; 
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 public class InputListener {
 
-    private static class Key {
-        private final int keyCode;
-        private boolean alreadyPressed = false;
-
-        private Key(final int keyCode) {
-            this.keyCode = keyCode;
-        }
-        public void setAlreadyPressed(final boolean alreadyPressed) {
-            this.alreadyPressed = alreadyPressed;
-        }
-        public boolean isAlreadyPressed() {
-            return this.alreadyPressed;
-        }
-        @Override
-        public int hashCode() {
-            return this.keyCode;
-        }
-        
-    }
+    private static final int MAX_KEY = 256;
     private final Map<Integer, Key> keys = new HashMap<>();
     private final Set<Key> keysPressed = new HashSet<>();
-
-    private final KeyListener keyListener = new KeyAdapter() {
-        @Override
-        public void keyPressed(final KeyEvent e) {
-            keysPressed.add(keys.get(e.getKeyCode()));
-        }
-        @Override
-        public void keyReleased(final KeyEvent e) {
-            keysPressed.remove(keys.get(e.getKeyCode()));
-        }
-    };
 
     /**
      * Create a controller for key pressed.
      */
     public InputListener() {
-        for (int i = 0; i < 256; i++) {
+        for (int i = 0; i < MAX_KEY; i++) {
             this.keys.put(i, new Key(i));
         }
     }
@@ -84,4 +55,33 @@ public class InputListener {
     public KeyListener getKeyListener() {
         return this.keyListener;
     }
+    private final static class Key {
+        private final int keyCode;
+        private boolean alreadyPressed;
+
+        private Key(final int keyCode) {
+            this.keyCode = keyCode;
+        }
+        public void setAlreadyPressed(final boolean alreadyPressed) {
+            this.alreadyPressed = alreadyPressed;
+        }
+        public boolean isAlreadyPressed() {
+            return this.alreadyPressed;
+        }
+        @Override
+        public int hashCode() {
+            return this.keyCode;
+        }
+
+    }
+    private final KeyListener keyListener = new KeyAdapter() {
+        @Override
+        public void keyPressed(final KeyEvent e) {
+            keysPressed.add(keys.get(e.getKeyCode()));
+        }
+        @Override
+        public void keyReleased(final KeyEvent e) {
+            keysPressed.remove(keys.get(e.getKeyCode()));
+        }
+    };
 }
