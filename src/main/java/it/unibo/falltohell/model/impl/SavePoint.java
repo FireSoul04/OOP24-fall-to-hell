@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.controller.api.SaveFileController;
 import it.unibo.falltohell.controller.impl.SaveFileControllerImpl;
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
@@ -23,10 +24,13 @@ public class SavePoint extends GameObjectImpl implements Interactable {
      * @param position of the save point
      * @param collider to see if the player is close enough to interact
      * @param data to write on the save file
+     * @param fileName is the name of the image file associated to the save point
      */
-    public SavePoint(final Level level, final Vector2 position, final Collider collider, final GameData data) {
+    public SavePoint(final Level level, final Vector2 position, final Collider collider, final GameData data,
+                     final String fileName) {
         super(level, position, collider);
         this.saveController = new SaveFileControllerImpl(data);
+        this.initDrawable(Priority.VERY_LOW, fileName);
     }
 
     /**

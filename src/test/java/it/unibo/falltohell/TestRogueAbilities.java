@@ -46,7 +46,7 @@ class TestRogueAbilities {
         eventManager.addCondition("Jump", () -> false);
         this.level = new LevelTest();
         this.level.setGameEventManager(eventManager);
-        this.rogue = new Rogue(this.level, Vector2.zero());
+        this.rogue = new Rogue(this.level, Vector2.zero(), "rogue.png");
     }
 
     /**

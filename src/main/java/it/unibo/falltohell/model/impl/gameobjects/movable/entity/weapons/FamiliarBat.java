@@ -71,7 +71,7 @@ public class FamiliarBat extends MovableImpl {
      * @param character the character that this FamiliarBat follows and assists
      * @param listener  the callback to invoke when the familiar finishes an attack
      */
-    public FamiliarBat(final Character character, final AttackFinishListener listener) {
+    public FamiliarBat(final Character character, final AttackFinishListener listener, final String fileName) {
         super(character.getLevel(), character.getPosition(), VELOCITY, COLLIDER);
         this.character = character;
         this.attackFinishListener = listener;

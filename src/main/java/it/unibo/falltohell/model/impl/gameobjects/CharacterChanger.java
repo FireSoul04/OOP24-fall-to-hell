@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -27,12 +28,14 @@ public class CharacterChanger extends GameObjectImpl implements Interactable {
      * @param position is the position of this object in the level
      * @param collider is the collider associated with this object
      * @param characters is the map of all characters in the game
+     * @param fileName is the name of the image file associated to the character changer
      */
     public CharacterChanger(final Level lv, final Vector2 position, final Collider collider,
-        final Map<CharacterID, Character> characters) {
+        final Map<CharacterID, Character> characters, final String fileName) {
         super(lv, position, collider);
         this.characters = characters;
         this.characterIDs = List.copyOf(characters.keySet());
+        this.initDrawable(Priority.VERY_LOW, fileName);
     }
 
     /**

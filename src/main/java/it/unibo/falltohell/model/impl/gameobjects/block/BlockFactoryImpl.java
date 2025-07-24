@@ -11,12 +11,15 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class BlockFactoryImpl implements BlockFactory {
 
+    private static final Vector2 OFFSET_LAVA = new Vector2(0.0, 0.5);
+    private static final Vector2 OFFSET_VINES = new Vector2(0.0, 3.0);
+
     /**
      *{@inheritDoc}
      */
     @Override
     public BaseBlock createBaseBlock(final Level level, final Vector2 position) {
-        return new BaseBlock(level, position, new BoxCollider());
+        return new BaseBlock(level, position, new BoxCollider(), "BaseBlock");
     }
 
     /**
@@ -24,7 +27,7 @@ public class BlockFactoryImpl implements BlockFactory {
      */
     @Override
     public BaseBlock createLavaBlock(final Level level, final Vector2 position) {
-        return new LavaBlock(level, position, new BoxCollider());
+        return new LavaBlock(level, position, new BoxCollider(), "LavaBlock", OFFSET_LAVA);
     }
 
     /**
@@ -32,6 +35,6 @@ public class BlockFactoryImpl implements BlockFactory {
      */
     @Override
     public BaseBlock createVinesBlock(final Level level, final Vector2 position) {
-        return new VinesBlock(level, position, new BoxCollider());
+        return new VinesBlock(level, position, new BoxCollider(), "VinesBlock.png", OFFSET_VINES);
     }
 }

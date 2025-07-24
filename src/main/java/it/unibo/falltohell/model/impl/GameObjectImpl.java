@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl;
 
 import java.util.Optional;
 
+import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.GameObject;
@@ -148,10 +149,6 @@ public class GameObjectImpl implements GameObject {
         return drawable;
     }
 
-    public void setDrawable(final Optional<Drawable> drawable) {
-        this.drawable = drawable;
-    }
-
     /**
      * Initializes the graphical representation of this entity by associating it
      * with a {@link Sprite}.
@@ -160,7 +157,7 @@ public class GameObjectImpl implements GameObject {
      * complete,
      * to ensure that {@code this} refers to the fully initialized subclass
      * instance.
-     * It sets the drawable of the entity using {@link #setDrawable} and wraps the
+     * It sets the drawable object of the entity using {@link #setDrawable} and wraps the
      * sprite in an {@link Optional}.
      *
      * @implNote This method avoids invoking {@code setDrawable(new Sprite(this))}
@@ -171,8 +168,8 @@ public class GameObjectImpl implements GameObject {
      * @see Sprite
      *
      */
-    protected void initDrawable(final Priority priority) {
-        this.setDrawable(Optional.of(new Sprite(this, priority)));
+    protected void initDrawable(final Priority priority, final String fileName) {
+        this.initDrawable(Vector2.zero(), priority, fileName);
     }
 
     /**
@@ -191,7 +188,8 @@ public class GameObjectImpl implements GameObject {
      * @param offset the {@link Vector2} offset to apply to the sprite's position
      * @see Sprite
      */
-    protected void initDrawable(final Vector2 offset, final Priority priority) {
-        this.setDrawable(Optional.of(new Sprite(this, offset, priority)));
+    protected void initDrawable(final Vector2 offset, final Priority priority, final String fileName) {
+        this.drawable = Optional.of(new Sprite(this, offset, priority));
+        this.drawable.ifPresent(value -> new DrawableRenderableHandlerImpl().linkSprite(value, fileName));
     }
 }

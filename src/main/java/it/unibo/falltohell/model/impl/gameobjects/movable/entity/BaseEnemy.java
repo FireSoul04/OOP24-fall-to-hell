@@ -131,15 +131,16 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param manager the timer manager responsible for managing enemy timers
      * @param ingageManager  the {@link ManagerIngage} used to handle if the player enter a
      *                safe zone
+     * @param fileName is the name of the image file associated to the enemy
      */
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
-            final ManagerIngage ingageManager) {
+            final ManagerIngage ingageManager, final String fileName) {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
         this.ingageManager = ingageManager;
-        this.initDrawable(Priority.MEDIUM);
+        this.initDrawable(Priority.MEDIUM, fileName);
     }
 
     /**

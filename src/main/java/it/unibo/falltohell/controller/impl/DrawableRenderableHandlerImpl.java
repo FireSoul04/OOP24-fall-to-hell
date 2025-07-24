@@ -30,7 +30,8 @@ public class DrawableRenderableHandlerImpl implements DrawableRenderableHandler 
      * {@inheritDoc}
      */
     @Override
-    public void linkSprite(final Drawable drawable, final Image image) {
+    public void linkSprite(final Drawable drawable, final String fileName) {
+        Image image = new ImageControllerImpl().loadImage(fileName);
         this.renderableControllers.put(drawable, new SpriteRenderableController(drawable, image));
     }
 

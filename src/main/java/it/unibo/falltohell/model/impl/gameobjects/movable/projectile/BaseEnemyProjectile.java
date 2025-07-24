@@ -32,14 +32,15 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      * @param speed    the initial speed
      * @param collider the collider used for collision detection
      * @param damage   the amount of damage inflicted on hit
+     * @param fileName is the name of the image file associated to the enemy projectile
      *
      * @see Level
      * @see Vector2
      * @see Collider
      */
     public BaseEnemyProjectile(final Level level, final Vector2 position, final Vector2 speed,
-            final Collider collider, final double damage) {
-        super(level, position, speed, collider);
+            final Collider collider, final double damage, final String fileName) {
+        super(level, position, speed, collider, fileName);
         this.damage = damage;
     }
 

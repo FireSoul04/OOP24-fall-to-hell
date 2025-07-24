@@ -22,9 +22,11 @@ public class Potion extends BaseItem {
      * @param collider is the collider associated with the potion
      * @param price is the price of the potion
      * @param buff is the buff given by the potion to the character
+     * @param fileName is the name of the image file associated to the potion
      */
-    public Potion(final Level lv, final Vector2 position, final Collider collider, final long price, final Buff buff) {
-        super(lv, position, collider, price);
+    public Potion(final Level lv, final Vector2 position, final Collider collider,
+                  final long price, final Buff buff, final String fileName) {
+        super(lv, position, collider, price, fileName);
         this.buff = buff;
     }
 

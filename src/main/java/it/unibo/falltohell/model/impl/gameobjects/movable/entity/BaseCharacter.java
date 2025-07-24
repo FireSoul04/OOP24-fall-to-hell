@@ -43,8 +43,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * @param level where it belongs
      * @param position where is it located inside the level
      * @param stats of the character
+     * @param fileName is the name of the image file associated to the character
      */
-    public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats) {
+    public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats,
+                         final String fileName) {
         super(level, position, stats);
         this.onGround = false;
         this.currentJumpFrames = 0;
@@ -56,7 +58,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.input = level.getGameEventManager();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
         this.interactingObject = Optional.empty();
-        this.initDrawable(Priority.LOW);
+        this.initDrawable(Priority.LOW, fileName);
     }
 
     /**

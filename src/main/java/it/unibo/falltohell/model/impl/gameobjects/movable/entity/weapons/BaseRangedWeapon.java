@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.Weapon;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -34,14 +35,17 @@ public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon 
      *
      * @param maxAmmo      the maximum ammo the weapon can carry
      * @param cooldownTime the cooldown time between attacks, in seconds
+     * @param fileName is the name of the image file associated to the ranged weapon
      */
-    protected BaseRangedWeapon(final Level lv, final Vector2 position, final int maxAmmo, final double cooldownTime) {
+    protected BaseRangedWeapon(final Level lv, final Vector2 position, final int maxAmmo, final double cooldownTime,
+                               final String fileName) {
         super(lv, position, new BoxCollider(new Dimensions(0, 0)));
         this.maxAmmo = maxAmmo;
         this.ammo = maxAmmo;
         this.cooldownTimeMs = (long) (cooldownTime * 1000);
         this.cooldownTimer = new CustomTimerImpl(this.cooldownTimeMs, () -> {
         });
+        this.initDrawable(Priority.MEDIUM, fileName);
     }
 
     /**
@@ -121,7 +125,7 @@ public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon 
      */
     protected Projectile createProjectile(final Level level, final Vector2 position, final Vector2 speed,
             final Collider collider) {
-        return new ProjectileImpl(level, position, speed, collider);
+        return new ProjectileImpl(level, position, speed, collider, "");
     }
 
     /**
