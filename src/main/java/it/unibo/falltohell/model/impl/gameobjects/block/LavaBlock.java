@@ -27,8 +27,8 @@ public class LavaBlock extends BaseBlock {
      * @param collider associated to the block
      */
     public LavaBlock(final Level lv, final Vector2 position,
-                     final Collider collider, final String fileName) {
-        super(lv, position, collider,fileName);
+                     final Collider collider) {
+        super(lv, position, collider);
     }
 
     /**

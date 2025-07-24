@@ -18,7 +18,7 @@ public class BaseBlock extends GameObjectImpl {
      * @param collider associated to the block
      */
     public BaseBlock(final Level lv, final Vector2 position,
-                     final Collider collider, final String fileName) {
+                     final Collider collider) {
         super(lv, position, collider);
     }
 
