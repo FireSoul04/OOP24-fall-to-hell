@@ -1,9 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -11,7 +8,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Arche
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
 /**
  * A bow weapon used by the Archer character.
- * 
+ *
  * It creates {@link ReturnableArrow} projectiles when fired, allowing arrows to be recalled later.
  */
 public class Bow extends BaseRangedWeapon{
@@ -40,8 +37,8 @@ public class Bow extends BaseRangedWeapon{
      * @return a new {@link ReturnableArrow} instance
      */
     @Override
-    public Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY,Collider collider) {
-        return new ReturnableArrow(level, position, speedX, speedY, collider, owner);
+    public Projectile createProjectile(Level level, Vector2 position, Vector2 speed, Collider collider) {
+        return new ReturnableArrow(level, position, speed, collider, owner);
     }
     public void attack(){
 
@@ -49,5 +46,5 @@ public class Bow extends BaseRangedWeapon{
     public void setOwner(Archer owner) {
         this.owner = owner;
     }
-    
+
 }

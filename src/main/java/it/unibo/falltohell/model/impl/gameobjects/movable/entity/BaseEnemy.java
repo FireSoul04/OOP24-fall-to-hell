@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.BuffBuilderImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 
@@ -12,7 +13,6 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -112,8 +112,10 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         SPEED
     }
 
-    private BaseEnemyStatistics stats;
-    private EnemyTimerManager manager;
+    private final BaseEnemyStatistics stats;
+    private final EnemyTimerManager manager;
+    private final ManagerIngage ingageManager;
+    private boolean ingage = true;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -127,11 +129,12 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param stats   the statistics defining the enemy's behavior and attributes
      * @param manager the timer manager responsible for managing enemy timers
      */
-    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager) {
+    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager, final ManagerIngage ingageManager) {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
+        this.ingageManager = ingageManager;
     }
 
     /**
@@ -178,6 +181,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
             this.manager.removeTimersFor(this, super.getLevel());
+            this.ingageManager.removeEnemy(this);
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.getLevel().removeGameObject(this);
@@ -217,6 +221,14 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     protected EnemyTimerManager getEnemyTimerManager() {
         return this.manager;
+    }
+
+    protected ManagerIngage getManagerIngage() {
+        return this.ingageManager;
+    }
+
+    public void setIngage() {
+        this.ingage = !this.ingage;
     }
 
     /**

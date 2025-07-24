@@ -1,14 +1,9 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticsImpl;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -30,6 +25,7 @@ public class Caster extends BaseCharacter {
      */
     public Caster(Level level, Vector2 position) {
         super(level, position, STATISTICS);
+        super.initDrawable();
     }
 
     @Override

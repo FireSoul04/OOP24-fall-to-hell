@@ -1,12 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
-import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
@@ -35,7 +31,7 @@ public class EntityImpl extends MovableImpl implements Entity {
      *                 speed
      */
     public EntityImpl(final Level level, final Vector2 position, final Statistics stats) {
-        super(level, position, stats.getSpeed().x(), stats.getSpeed().y(),
+        super(level, position, new Vector2(stats.getSpeed().x(), stats.getSpeed().y()),
                 new BoxCollider(Vector2.zero(), stats.getDimensions()));
         this.stats = stats;
     }
@@ -75,5 +71,4 @@ public class EntityImpl extends MovableImpl implements Entity {
             super.getLevel().removeGameObject(this);
         }
     }
-
 }

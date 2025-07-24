@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -9,9 +8,7 @@ import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 import java.util.List;
 
 /**
@@ -37,7 +34,7 @@ public class CharacterChanger extends GameObjectImpl implements Interactable {
         final Map<CharacterID, Character> characters) {
         super(lv, position, collider);
         this.characters = characters;
-        this.characterIDs = Arrays.asList(CharacterID.values());
+        this.characterIDs = List.copyOf(characters.keySet());
     }
 
     /**

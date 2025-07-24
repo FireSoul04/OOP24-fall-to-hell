@@ -2,7 +2,6 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
 import java.util.Optional;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -67,13 +66,13 @@ public class Tengu extends BaseEnemy {
      * @see CustomTimerImpl
      */
     public Tengu(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME),
-                manager);
+                manager, ingage);
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
@@ -82,6 +81,8 @@ public class Tengu extends BaseEnemy {
             this.attack();
             super.getLevel().getTimerManager().restartTimer(name);
         }));
+        ingage.addEnemy(this);
+        super.initDrawable();
     }
 
     /**
@@ -116,7 +117,7 @@ public class Tengu extends BaseEnemy {
         if (this.stats.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new BaseEnemyProjectile(super.getLevel(),
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
-                    this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(),
+                    this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A);
         }
     }

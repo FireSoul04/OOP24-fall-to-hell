@@ -44,7 +44,7 @@ public class ActiveAbilityImpl extends MovableImpl implements PhysicalActiveAbil
      */
     public ActiveAbilityImpl(final Level level, final Vector2 position, final double damage, final Collider collider,
             final Vector2 velocity, final ActiveAbilityUpdate attack, final Optional<OptionalCollision> collided) {
-        super(level, position, velocity.x(), velocity.y(), collider);
+        super(level, position, velocity, collider);
         this.damage = damage;
         this.attack = attack;
         this.level = level;

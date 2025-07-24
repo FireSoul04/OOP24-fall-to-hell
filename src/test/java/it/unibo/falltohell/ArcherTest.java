@@ -43,18 +43,18 @@ public class ArcherTest {
     void testShootArrowConsumesAmmoAndAddsToList() {
         int initialAmmo = bow.getAmmo();
 
-        archer.shootArrow(Vector2.right(), 10.0, 1.0, 1.0,
+        archer.shootArrow(Vector2.right(), 1.0, 
         new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
 
-        assertEquals(initialAmmo - 1, bow.getAmmo(), "Ammo should decrease by 1 after shooting");
-        assertEquals(1, archer.getShotArrows().size(), "Arrow should be added to shot arrows list");
+        assertEquals(initialAmmo - 1, bow.getAmmo());
+        assertEquals(1, archer.getShotArrows().size());
     }
 
     @Test
     void testReturnArrowAbilityActivatesReturning() {
         
         for (int i = 0; i < 2; i++) {
-            archer.shootArrow(Vector2.left(), 8.0, 1.0, 1.0,
+            archer.shootArrow(Vector2.left(), 8.0,
             new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
         }
 
@@ -62,14 +62,14 @@ public class ArcherTest {
         ability.activate();
 
         for (Projectile p : archer.getShotArrows()) {
-            assertTrue(((ReturnableArrow) p).isReturning(), "Arrow should be returning after activation");
+            assertTrue(((ReturnableArrow) p).isReturning());
         }
     }
     @Test
     void testArrowReturnRestoresAmmoAndRemovesArrow() {
         int initialAmmo = bow.getAmmo();
 
-        archer.shootArrow(Vector2.up(), 5.0, 1.0, 1.0,
+        archer.shootArrow(Vector2.up(), 5.0, 
             new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
 
         ReturnableArrow arrow = (ReturnableArrow) archer.getShotArrows().get(0);
@@ -81,8 +81,8 @@ public class ArcherTest {
         for (int i = 0; i < 60; i++) {
             arrow.update(0.016);  
         }
-        assertEquals(initialAmmo, bow.getAmmo(), "Ammo should be restored after arrow returns");
-        assertFalse(archer.getShotArrows().contains(arrow), "Arrow should be removed from the list after return");
+        assertEquals(initialAmmo, bow.getAmmo());
+        assertFalse(archer.getShotArrows().contains(arrow));
     }
 }
 

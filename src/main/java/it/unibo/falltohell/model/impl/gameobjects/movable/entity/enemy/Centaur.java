@@ -7,7 +7,6 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEn
 import java.util.Map;
 import java.util.Optional;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
@@ -66,11 +65,13 @@ public class Centaur extends BaseEnemy {
      *                    in this context
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager);
+                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager, ingage);
 
         this.stats = (BaseEnemyStatistics) super.getStats();
+        ingage.addEnemy(this);
+        super.initDrawable();
     }
 
     /**

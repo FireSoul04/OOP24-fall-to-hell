@@ -1,5 +1,4 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -27,7 +26,7 @@ public class Archer extends BaseCharacter {
     public Archer(final Level level, final Vector2 position, final CharacterStatistics stats, final Bow bow) {
         super(level, position, stats);
         this.bow = bow;
-        
+
     }
     /**
      * Shoots an arrow in the given direction if possible.
@@ -38,13 +37,13 @@ public class Archer extends BaseCharacter {
      * @param height the height of the arrow
      * @param collider the collider for the arrow
      */
-    public void shootArrow(Vector2 direction, double speed, double width, double height, Collider collider) {
-        double speedX = direction.x() * speed;
-        double speedY = direction.y() * speed;
-        Projectile arrow = bow.attack(getLevel(), getPosition(), speedX, speedY, collider);
+    public void shootArrow(Vector2 direction, double speed, Collider collider) {
+        Vector2 velocity = direction.multiply(speed);
+        Projectile arrow = bow.attack(getLevel(), getPosition(), velocity, collider);
         if (arrow != null) {
             shotedArrows.add(arrow);
         }
+        super.initDrawable();
     }
     /**
      * Gets the ranged weapon used by this archer.
@@ -84,5 +83,5 @@ public class Archer extends BaseCharacter {
         this.bow.reload(1);
         this.shotedArrows.remove(arrow);
     }
-    
+
 }
