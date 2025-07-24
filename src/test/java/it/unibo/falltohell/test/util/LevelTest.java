@@ -1,4 +1,4 @@
-package it.unibo.falltohell;
+package it.unibo.falltohell.test.util;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
@@ -8,6 +8,7 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.impl.GameEventManager;
 import it.unibo.falltohell.model.impl.TimerManagerImpl;
@@ -15,6 +16,7 @@ import it.unibo.falltohell.model.impl.physics.colliders.AABBCollisionsManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,6 +33,7 @@ public class LevelTest implements Level {
     private final TimerManager timerManager;
     private GameEventManager<String> eventManager;
     private Optional<GameData> gameData;
+    private Map<CharacterID, Character> characters;
 
     /**
      * Creates a new level with default managers.
@@ -42,6 +45,7 @@ public class LevelTest implements Level {
         this.timerManager = new TimerManagerImpl();
         this.eventManager = new GameEventManager<>();
         this.gameData = Optional.empty();
+        this.characters = new HashMap<>();
     }
 
     /**
@@ -148,7 +152,8 @@ public class LevelTest implements Level {
      */
     @Override
     public void loadCharacters(final Map<Character.CharacterID, Character> characters) {
-        throw new UnsupportedOperationException("No use for tests");
+        this.characters.clear();
+        this.characters.putAll(characters);
     }
 
     /**
@@ -157,7 +162,7 @@ public class LevelTest implements Level {
      */
     @Override
     public Map<Character.CharacterID, Character> getCharacters() {
-        throw new UnsupportedOperationException("No use for tests");
+        return this.characters;
     }
 
     /**

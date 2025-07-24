@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.gameobjects;
+package it.unibo.falltohell.test.util;
 
 import it.unibo.falltohell.controller.api.FileController;
 import it.unibo.falltohell.controller.impl.FileControllerImpl;
@@ -8,27 +8,27 @@ import it.unibo.falltohell.model.api.gameobjects.Merchant;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Buff;
 import it.unibo.falltohell.model.api.physics.Collider;
+
 import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobjects.interactable.Potion;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.LifeBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackSpeedBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.SpeedBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.*;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
- * Class that represents the merchant that handles the character's purchase
- * of items.
+ * Class for new Merchant dedicated to test.
+ * The method restock is implemented in a default mode to
+ * check if the selling and use of items works correctly.
+ * This class has an additional method compared to the Merchant
+ * class that permits to have access to the merch in the shop.
  * @author Martina Malagoli
  */
-public class MerchantImpl extends GameObjectImpl implements Merchant {
+public class MerchantTest extends GameObjectImpl implements Merchant {
 
     private static final String PATH = "src/main/resources/merchant/potions.txt";
     private static final Dimensions POTION_DIMENSION = new Dimensions(10, 10);
@@ -39,15 +39,16 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
     private final List<String> allMerchFromFile;
     private int potionCounter;
     /**
-     * Initialization of the Merchant class.
+     * Initialization of the MerchantTest class.
      * @param lv is the current level
      * @param position is the position of the merchant in the level
      * @param width
      * @param height
      * @param collider is the collider associated with the merchant
      */
-    public MerchantImpl(final Level lv, final Vector2 position, final Collider collider) {
-        super(lv, position, collider);
+    public MerchantTest(final Level lv, final Vector2 position, final double width,
+                        final double height, final Collider collider) {
+        super(lv, position, width, height, collider);
         final FileController fileController = new FileControllerImpl();
         this.allMerchFromFile = fileController.read(PATH);
         this.merch = new ArrayList<>();
@@ -60,14 +61,9 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
      */
     @Override
     public void restock() {
-        this.potionCounter = 0;
-        final List<String> shuffledMerch = new ArrayList<>(this.allMerchFromFile);
-        Collections.shuffle(shuffledMerch);
-        this.merch.addAll(shuffledMerch
-                .stream()
-                .limit(NUMBER_ITEMS_AVAILABLE)
-                .map(this::parseItem)
-                .toList());
+        this.getMerch().add(parseItem("life,100"));
+        this.getMerch().add(parseItem("life,100"));
+        this.getMerch().add(parseItem("life,100"));
     }
 
     /**
@@ -135,7 +131,17 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
         }
         return new Potion(this.getLevel(),
                 this.computePosition(),
+                0, 0,
                 potionCollider,
                 Long.parseLong(cost), buff);
     }
+
+    /**
+     * @return the merch in the merchant's shop
+     */
+    public List<Item> getMerch() {
+        return Collections.unmodifiableList(this.merch);
+    }
+
+
 }

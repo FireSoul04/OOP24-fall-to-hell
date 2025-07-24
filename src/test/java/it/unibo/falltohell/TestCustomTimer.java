@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Logger;
+
 /**
  * Class to test if the TimeCustomImpl class works as expected.
  * @author Martina Malagoli
@@ -17,11 +19,13 @@ class TestCustomTimer {
 
     private CustomTimer timer;
     private boolean test;
+    private Logger logger;
 
     @BeforeEach
     void initialization() {
         this.timer = new CustomTimerImpl(1000, () -> this.test = true);
         this.test = false;
+        this.logger = Logger.getLogger("TestLogger");
     }
 
     @Test
@@ -37,7 +41,7 @@ class TestCustomTimer {
             this.timer.start();
             Assertions.fail("The timer should not be started when it is already running");
         } catch (final IllegalStateException e) {
-
+            this.logger.info("The IllegalStateException has been thrown correctly");
         }
     }
 
@@ -54,7 +58,7 @@ class TestCustomTimer {
             this.timer.stop();
             Assertions.fail("The timer should not be stopped when it is already not running");
         } catch (final IllegalStateException e) {
-
+            this.logger.info("The IllegalStateException has been thrown correctly");
         }
     }
 
@@ -71,7 +75,7 @@ class TestCustomTimer {
             this.timer.pause();
             Assertions.fail("The timer should not be paused when it is not running yet");
         } catch (final IllegalStateException e) {
-
+            this.logger.info("The IllegalStateException has been thrown correctly");
         }
     }
 
@@ -83,7 +87,7 @@ class TestCustomTimer {
             this.timer.pause();
             Assertions.fail("The timer should not be paused when it is already paused");
         } catch (final IllegalStateException e) {
-
+            this.logger.info("The IllegalStateException has been thrown correctly");
         }
     }
 
@@ -101,7 +105,7 @@ class TestCustomTimer {
             this.timer.resume();
             Assertions.fail("The timer should not be resumed when it is not running yet");
         } catch (final IllegalStateException e) {
-
+            this.logger.info("The IllegalStateException has been thrown correctly");
         }
     }
 
@@ -114,7 +118,7 @@ class TestCustomTimer {
             this.timer.resume();
             Assertions.fail("The timer should not be resumed when it is already running");
         } catch (final IllegalStateException e) {
-
+            this.logger.info("The IllegalStateException has been thrown correctly");
         }
     }
 
@@ -124,7 +128,7 @@ class TestCustomTimer {
         try {
             Thread.sleep(1100);
         } catch (final InterruptedException e) {
-
+            this.logger.info("The IllegalStateException has been thrown correctly");
         }
         assertTrue(this.test, "The event is not executed as expected");
     }

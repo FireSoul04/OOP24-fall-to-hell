@@ -1,6 +1,5 @@
 package it.unibo.falltohell.controller.api;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,8 +10,7 @@ public interface FileController {
 
     /**
      * Method to read from the file.
-     * @throws IOException when the
      */
-    List<String> read(String path) throws IOException;
+    List<String> read(String path);
 
 }
