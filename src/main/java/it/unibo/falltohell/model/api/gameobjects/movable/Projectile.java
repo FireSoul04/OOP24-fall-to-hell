@@ -25,7 +25,7 @@ public interface Projectile extends Movable {
      *
      * @param deltaTime the time elapsed since the last update (in seconds)
      */
-    public void update(double deltaTime);
+    void update(double deltaTime);
 
     /**
      * Handles collision with another game object.
@@ -34,6 +34,6 @@ public interface Projectile extends Movable {
      *
      * @param other the other game object involved in the collision
      */
-    public void onCollision(GameObject other);
+    void onCollision(GameObject other);
 
 }

@@ -7,8 +7,8 @@ package it.unibo.falltohell.model.api;
  */
 public interface Weapon {
 
-	/**
-	 * Perform an attack.
-	 */
-	void attack();
+    /**
+     * Perform an attack.
+     */
+    void attack();
 }

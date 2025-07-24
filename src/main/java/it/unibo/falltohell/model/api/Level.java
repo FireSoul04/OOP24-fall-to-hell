@@ -17,7 +17,7 @@ import java.util.Map;
  * @author Davide Mancini
  */
 public interface Level {
-    
+
     /**
      * @return the list of game objects currently present in the level
      */
@@ -32,7 +32,7 @@ public interface Level {
      * @param gameObject to be removed in the level
      */
     void removeGameObject(GameObject gameObject);
-    
+
     /**
      * @param deltaTime the time elapsed since the last update (in seconds)
      */
@@ -45,6 +45,7 @@ public interface Level {
 
     /**
      * Save a reference to game data inside this level.
+     *
      * @param gameData to link
      */
     void linkGameData(GameData gameData);
@@ -76,6 +77,7 @@ public interface Level {
 
     /**
      * Save a reference to all playable characters inside the level.
+     *
      * @param characters playable
      */
     void loadCharacters(Map<CharacterID, Character> characters);
@@ -87,6 +89,7 @@ public interface Level {
 
     /**
      * Saves a reference of the player.
+     *
      * @param player reference
      */
     void setPlayer(Character player);

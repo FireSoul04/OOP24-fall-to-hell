@@ -1,7 +1,11 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
-import it.unibo.falltohell.model.api.*;
+import it.unibo.falltohell.model.api.Game;
+import it.unibo.falltohell.model.api.GameBuilder;
+import it.unibo.falltohell.model.api.GameCamera;
+import it.unibo.falltohell.model.api.GameData;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
@@ -77,7 +81,7 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilder attachCamera(GameCamera camera) {
+    public GameBuilder attachCamera(final GameCamera camera) {
         this.camera = Optional.of(camera);
         return this;
     }
