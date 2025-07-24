@@ -16,7 +16,7 @@ public class BlockFactoryImpl implements BlockFactory {
      */
     @Override
     public BaseBlock createBaseBlock(final Level level, final Vector2 position) {
-        return new BaseBlock(level, position, new BoxCollider(), "BaseBlock.png");
+        return new BaseBlock(level, position, new BoxCollider());
     }
 
     /**
@@ -24,7 +24,7 @@ public class BlockFactoryImpl implements BlockFactory {
      */
     @Override
     public BaseBlock createLavaBlock(final Level level, final Vector2 position) {
-        return new LavaBlock(level, position, new BoxCollider(), "LavaBlock.png");
+        return new LavaBlock(level, position, new BoxCollider());
     }
 
     /**
@@ -32,6 +32,6 @@ public class BlockFactoryImpl implements BlockFactory {
      */
     @Override
     public BaseBlock createVinesBlock(final Level level, final Vector2 position) {
-        return new VinesBlock(level, position, new BoxCollider(), "VinesBlock.png");
+        return new VinesBlock(level, position, new BoxCollider());
     }
 }
