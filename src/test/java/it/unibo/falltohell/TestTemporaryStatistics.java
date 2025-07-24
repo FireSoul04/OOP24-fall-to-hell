@@ -7,6 +7,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.CharacterStatisticsImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.LifeBuff;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
+import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +45,7 @@ class TestTemporaryStatistics {
             MANA,
             0
         );
-        this.character = new BaseCharacter(new LevelImpl(), Vector2.zero(), this.stats) {
+        this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats) {
             @Override
             public CharacterID getCharacterID() {
                 return CharacterID.ROGUE;
