@@ -1,7 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.AggroListener;
@@ -12,7 +11,7 @@ public class ManagerIngage {
 
     private final Set<BaseEntrance> listEntrance = new HashSet<>();
     private final Set<Enemy> listEnemy = new HashSet<>();
-    private AggroListener listener = () -> this.change();
+    private AggroListener listener = () -> this.listEnemy.forEach(e -> e.setIngage());
 
     public AggroListener addEntrance(final BaseEntrance entrance){
         this.listEntrance.add(entrance);
@@ -29,9 +28,5 @@ public class ManagerIngage {
 
     public void removeEnemy(final Enemy enemy){
         this.listEnemy.remove(enemy);
-    }
-
-    private void change() {
-        this.listEnemy.forEach(e -> e.setIngage());
     }
 }
