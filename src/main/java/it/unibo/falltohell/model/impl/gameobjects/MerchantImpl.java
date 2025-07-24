@@ -42,8 +42,6 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
      * Initialization of the Merchant class.
      * @param lv is the current level
      * @param position is the position of the merchant in the level
-     * @param width
-     * @param height
      * @param collider is the collider associated with the merchant
      */
     public MerchantImpl(final Level lv, final Vector2 position, final Collider collider) {

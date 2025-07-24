@@ -15,7 +15,6 @@ import it.unibo.falltohell.model.impl.gameobjects.block.BlockFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.entrance.SpringsEntrance;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
-import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ public class LevelLoaderImpl implements LevelLoader {
 
     private static final String PATH = "src/main/resources/level";
     private static final double DISTANCE = 20;
-    private static final Dimensions DEFAULT_DIMENSION = new Dimensions(GameObject.TILE_SIZE, GameObject.TILE_SIZE);
     private final List<String> levelFromFile;
     private final Level level;
     private final EnemyFactory enemyFactory;
@@ -71,7 +69,7 @@ public class LevelLoaderImpl implements LevelLoader {
      */
     private void parseToGameObject(final char identifier, final Vector2 position) {
         final Character character = level.getGameData().getCurrentCharacter();
-        final Collider collider = new BoxCollider(DEFAULT_DIMENSION);
+        final Collider collider = new BoxCollider();
         final Optional<GameObject> gameObject = switch (identifier) {
             case 'o' -> Optional.of(this.enemyFactory.createImp(this.level, position, character));
             case 'k' -> Optional.of(this.enemyFactory.createCentaur(this.level, position, character));
@@ -80,11 +78,11 @@ public class LevelLoaderImpl implements LevelLoader {
             case '#' -> Optional.of(this.blockFactory.createBaseBlock(level, position));
             case 'l' -> Optional.of(this.blockFactory.createLavaBlock(level, position));
             case 'v' -> Optional.of(this.blockFactory.createVinesBlock(level, position));
-            case 'e' -> Optional.of(new SpringsEntrance(level, position, 0, 0, collider));
-            case 'p' -> Optional.of(new ShopEntrance(level, position, 0, 0, collider));
-            case 'c' -> Optional.of(new CharacterChanger(level, position, 0, 0, collider, level.getCharacters()));
+            case 'e' -> Optional.of(new SpringsEntrance(level, position, collider));
+            case 'p' -> Optional.of(new ShopEntrance(level, position, collider));
+            case 'c' -> Optional.of(new CharacterChanger(level, position, collider, level.getCharacters()));
             case 's' -> Optional.of(new SavePoint(level, position, collider, level.getGameData()));
-            case 'm' -> Optional.of(new MerchantImpl(level, position, 0, 0, collider));
+            case 'm' -> Optional.of(new MerchantImpl(level, position, collider));
             case ' ' -> Optional.empty();
             default -> throw new IllegalStateException("Cannot recognize a character in the file:" + identifier);
         };

@@ -8,6 +8,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManager;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedBaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.util.Dimensions;
@@ -63,6 +64,7 @@ public class Imp extends BaseEnemy {
      * @param character   the target {@link Character} to track and attack
      * @param manager     the {@link EnemyTimerManager} responsible for managing
      *                    enemy timers
+     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
      */
     public Imp(final Level level, final Vector2 initialCord, final Character character,
             final EnemyTimerManager manager, final ManagerIngage ingage) {
@@ -91,7 +93,7 @@ public class Imp extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseBlock) {
+        if (other instanceof BaseBlock || other instanceof BaseEntrance) {
             if (direction.y() != 0) {
                 this.collided = Optional.of(super.getPosition());
             }
@@ -121,7 +123,7 @@ public class Imp extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
 
         while (otherX > 0) {
-            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
+            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
                 if (this.stats.getInitialPos()
                         .distance(new Vector2(super.getPosition().x() + (otherX * this.direction), y)) <= this.stats
                                 .getDistance()) {
