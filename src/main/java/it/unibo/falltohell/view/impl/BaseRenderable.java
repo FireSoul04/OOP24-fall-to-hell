@@ -3,7 +3,7 @@ package it.unibo.falltohell.view.impl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.Renderable;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 public abstract class BaseRenderable implements Renderable {
 

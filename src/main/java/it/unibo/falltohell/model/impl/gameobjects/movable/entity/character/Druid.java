@@ -137,6 +137,7 @@ public class Druid extends BaseCharacter {
     }
 
     /**
+     * TODO weapon
      * <p>
      * Handles attack and special ability input from the player.
      * </p>
@@ -154,7 +155,7 @@ public class Druid extends BaseCharacter {
         if (this.input.checkCondition("NormalAttack") && this.canAttack) {
             this.canAttack = false;
             this.restartOrAddTimer("Druid_Attack", new CustomTimerImpl(1000, () -> this.canAttack = true));
-            this.weapon.attack();
+            //this.weapon.attack();
         }
         if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
             this.sAactive = true;

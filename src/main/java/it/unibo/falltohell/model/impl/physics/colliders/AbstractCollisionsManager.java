@@ -18,7 +18,7 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
 
     /**
      * Every frame this map saves if a game object is colliding so the next frame
-     * the collisions manager knows if this game object left a collision
+     * the collisions manager knows if this game object left a collision.
      */
     private final Map<Pair<GameObject, GameObject>, Collision> lastFrameCollisions = new HashMap<>();
 

@@ -7,13 +7,13 @@ package it.unibo.falltohell.view.api;
  */
 public interface GameRenderer {
 
-	/**
-	 * Show all the images/sprites and background for the game.
-	 */
-	void render();
+    /**
+     * Show all the images/sprites and background for the game.
+     */
+    void render();
 
-	/**
-	 * Clear the screen.
-	 */
-	void clear();
+    /**
+     * Clear the screen.
+     */
+    void clear();
 }

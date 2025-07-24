@@ -57,7 +57,7 @@ public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon 
      */
     public Projectile attack(final Level level, final Vector2 position, final Vector2 speed, final Collider collider) {
         if (canShoot()) {
-            Projectile p = createProjectile(level, position, speed, collider);
+            final Projectile p = createProjectile(level, position, speed, collider);
             ammo--;
             cooldownTimer.start();
             onShoot(p);

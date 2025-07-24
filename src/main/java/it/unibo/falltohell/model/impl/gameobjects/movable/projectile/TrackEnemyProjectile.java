@@ -48,8 +48,7 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      *
      * @param level     the level this projectile belongs to
      * @param position  the initial position of the projectile
-     * @param speedX    the initial horizontal velocity
-     * @param speedY    the initial vertical velocity
+     * @param speed     the initial velocity
      * @param collider  the collider used for hit detection
      * @param damage    the damage this projectile deals on impact
      * @param character the target character to track

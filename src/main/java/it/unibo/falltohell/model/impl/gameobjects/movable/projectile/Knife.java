@@ -16,6 +16,7 @@ import java.util.Set;
 public class Knife extends ProjectileImpl {
 
     private static final double DAMAGE = 5.0;
+    private static final Dimensions DIMENSIONS = new Dimensions(5, 2);
 
     private final Set<Class<? extends GameObject>> ignoreCollisionsObjects = Set.of(
         Character.class,
@@ -29,7 +30,7 @@ public class Knife extends ProjectileImpl {
      * @param velocity is the direction and speed of the knife
      */
     public Knife(final Level level, final Vector2 position, final Vector2 velocity) {
-        super(level, position, velocity, new BoxCollider(Vector2.zero(), new Dimensions(5, 2)));
+        super(level, position, velocity, new BoxCollider(Vector2.zero(), DIMENSIONS));
     }
 
     /**

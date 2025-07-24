@@ -1,10 +1,7 @@
 package it.unibo.falltohell.model.impl;
 
-import java.util.Optional;
-
 import it.unibo.falltohell.controller.api.SaveFileController;
 import it.unibo.falltohell.controller.impl.SaveFileControllerImpl;
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;

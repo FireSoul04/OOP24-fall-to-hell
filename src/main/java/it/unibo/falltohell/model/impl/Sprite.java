@@ -21,7 +21,7 @@ public class Sprite implements Drawable {
      * @param gameObject is the game object associated with this drawable object
      * @param priority of the sprite when it has to be rendered
      */
-    public Sprite(final GameObject gameObject, Priority priority) {
+    public Sprite(final GameObject gameObject, final Priority priority) {
         this(gameObject, Vector2.zero(), priority);
     }
 
@@ -31,7 +31,7 @@ public class Sprite implements Drawable {
      * @param offset is the vector used to move a sprite from the position of its associated collider
      * @param priority of the sprite when it has to be rendered
      */
-    public Sprite(final GameObject gameObject, final Vector2 offset, Priority priority) {
+    public Sprite(final GameObject gameObject, final Vector2 offset, final Priority priority) {
         this.mirrored = false;
         this.visible = true;
         this.gameObject = gameObject;

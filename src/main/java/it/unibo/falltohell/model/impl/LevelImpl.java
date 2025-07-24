@@ -1,10 +1,8 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
-import it.unibo.falltohell.controller.api.ImageController;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,8 +21,10 @@ import it.unibo.falltohell.model.api.physics.CollisionsManager;
 /**
  * Implementation of the {@link Level} interface.
  * <p>
- * Manages the game objects present in the level and handles collision detection.
- * Provides methods to add, remove, and retrieve game objects, as well as to update
+ * Manages the game objects present in the level and handles collision
+ * detection.
+ * Provides methods to add, remove, and retrieve game objects, as well as to
+ * update
  * the state of the level and its objects.
  * </p>
  *
@@ -45,10 +45,11 @@ public class LevelImpl implements Level {
 
     /**
      * Constructs a new LevelImpl with a given list of game objects.
-     * If no drawable-renderable handler is linked, it will use a new not linked to the view.
+     * If no drawable-renderable handler is linked, it will use a new not linked to
+     * the view.
      * If no event manager is linked, it will use a new not linked to the game.
      *
-     * @param camera that follows the player
+     * @param camera      that follows the player
      * @param gameObjects the initial list of game objects in the level
      */
     public LevelImpl(final GameCamera camera, final List<GameObject> gameObjects) {
@@ -63,9 +64,11 @@ public class LevelImpl implements Level {
         this.gameData = Optional.empty();
 
     }
+
     /**
      * Constructs a new empty LevelImpl.
-     * If no drawable-renderable handler is linked, it will use a new not linked to the view.
+     * If no drawable-renderable handler is linked, it will use a new not linked to
+     * the view.
      * If no event manager is linked, it will use a new not linked to the game.
      *
      * @param camera that follows the player
@@ -73,22 +76,25 @@ public class LevelImpl implements Level {
     public LevelImpl(final GameCamera camera) {
         this(camera, new ArrayList<>());
     }
+
     /**
      * Adds a game object to the level.
      *
      * @param gameObject the game object to add
      */
-    public void addGameObject(GameObject gameObject) {
+    public void addGameObject(final GameObject gameObject) {
         this.gameObjects.add(gameObject);
     }
+
     /**
      * Removes a game object from the level.
      *
      * @param gameObject the game object to remove
      */
-    public void removeGameObject(GameObject gameObject) {
+    public void removeGameObject(final GameObject gameObject) {
         this.gameObjects.remove(gameObject);
     }
+
     /**
      * Returns a copy of the list of all game objects in the level.
      *
@@ -97,15 +103,16 @@ public class LevelImpl implements Level {
     public List<GameObject> getGameObjects() {
         return Collections.unmodifiableList(this.gameObjects);
     }
+
     /**
      * Updates all movable game objects in the level and checks for collisions.
      *
-     * @param deltaTime the time elapsed since the last update 
+     * @param deltaTime the time elapsed since the last update
      */
     public void update(final double deltaTime) {
         final Stream<GameObject> gameObjectStream = this.gameObjects.stream();
         for (final GameObject gameObject : gameObjectStream.toList()) {
-            if(gameObject instanceof Movable movable) {
+            if (gameObject instanceof Movable movable) {
                 movable.update(deltaTime);
             } else {
                 gameObject.update();
@@ -134,6 +141,7 @@ public class LevelImpl implements Level {
 
     /**
      * {@inheritDoc}
+     *
      * @throws IllegalStateException if game data is never initialized
      */
     @Override
