@@ -73,7 +73,6 @@ public class Centaur extends BaseEnemy {
 
         this.stats = (BaseEnemyStatistics) super.getStats();
         ingage.addEnemy(this);
-        super.initDrawable();
     }
 
     /**

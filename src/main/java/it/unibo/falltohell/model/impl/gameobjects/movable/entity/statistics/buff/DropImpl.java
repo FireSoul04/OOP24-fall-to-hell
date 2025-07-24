@@ -61,7 +61,6 @@ public class DropImpl extends MovableImpl implements Drop {
         this.name = "drop-timer-" + UUID.randomUUID();
         super.getLevel().getTimerManager().addTimer(this.name,
                 new CustomTimerImpl(EXPIRE_TIME, () -> super.getLevel().removeGameObject(this)));
-        super.initDrawable();
     }
 
     /**

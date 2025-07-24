@@ -25,7 +25,6 @@ public class Caster extends BaseCharacter {
      */
     public Caster(Level level, Vector2 position) {
         super(level, position, STATISTICS);
-        super.initDrawable();
     }
 
     @Override

@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.projectile;
 
-import java.util.Vector;
-
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -41,10 +39,9 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      * @see Collider
      */
     public BaseEnemyProjectile(final Level level, final Vector2 position, final Vector2 speed,
-                               final Collider collider, final double damage) {
+            final Collider collider, final double damage) {
         super(level, position, speed, collider);
         this.damage = damage;
-        super.initDrawable();
     }
 
     /**

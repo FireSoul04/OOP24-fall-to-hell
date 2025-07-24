@@ -77,7 +77,6 @@ public class FamiliarBat extends MovableImpl {
         this.attackFinishListener = listener;
         character.getLevel().getTimerManager().addTimer(this.name,
                 new CustomTimerImpl(1000, () -> this.canAttack = true));
-        super.initDrawable();
     }
 
     /**

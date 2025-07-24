@@ -38,7 +38,6 @@ public class Rogue extends BaseCharacter {
      */
     public Rogue(final Level level, final Vector2 position) {
         super(level, position, STATS);
-        super.initDrawable();
     }
 
     /**

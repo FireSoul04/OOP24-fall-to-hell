@@ -77,7 +77,6 @@ public class Imp extends BaseEnemy {
 
         this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
         ingage.addEnemy(this);
-        super.initDrawable();
     }
 
     /**

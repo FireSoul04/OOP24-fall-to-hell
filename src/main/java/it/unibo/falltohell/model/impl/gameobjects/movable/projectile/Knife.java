@@ -29,7 +29,7 @@ public class Knife extends ProjectileImpl {
      * @param velocity is the direction and speed of the knife
      */
     public Knife(final Level level, final Vector2 position, final Vector2 velocity) {
-        super(level, position, velocity.x(), velocity.y(), new BoxCollider(Vector2.zero(), new Dimensions(5, 2)));
+        super(level, position, velocity, new BoxCollider(Vector2.zero(), new Dimensions(5, 2)));
     }
 
     /**

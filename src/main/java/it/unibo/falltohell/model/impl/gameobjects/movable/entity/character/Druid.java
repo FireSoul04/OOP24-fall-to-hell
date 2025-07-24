@@ -89,7 +89,6 @@ public class Druid extends BaseCharacter {
             }
         });
         this.manager.setNoFamiliarsCallback(() -> this.sAactive = false);
-        super.initDrawable();
     }
 
     /**

@@ -43,7 +43,6 @@ public class Archer extends BaseCharacter {
         if (arrow != null) {
             shotedArrows.add(arrow);
         }
-        super.initDrawable();
     }
     /**
      * Gets the ranged weapon used by this archer.

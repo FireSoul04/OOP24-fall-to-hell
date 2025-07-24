@@ -87,7 +87,6 @@ public class Lotawiec extends BaseEnemy {
             super.getLevel().getTimerManager().restartTimer(name);
         }));
         ingage.addEnemy(this);
-        super.initDrawable();
     }
 
     /**
