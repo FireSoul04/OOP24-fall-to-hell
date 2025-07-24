@@ -8,6 +8,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManage
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.LongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.TrackEnemyProjectile;
@@ -101,7 +102,7 @@ public class Lotawiec extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseBlock) {
+        if (other instanceof BaseBlock || other instanceof BaseEntrance) {
             if (direction.y() != 0) {
                 this.direction *= -1;
             }
@@ -139,7 +140,7 @@ public class Lotawiec extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
         final double charX = this.stats.getCharacter().getPosition().x();
 
-        if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
+        if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
             super.setPosition(super.getPosition().add(
                     (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction, super.getPosition().y()))));
         } else {

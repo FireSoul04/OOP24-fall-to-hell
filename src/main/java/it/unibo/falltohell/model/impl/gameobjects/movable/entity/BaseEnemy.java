@@ -231,6 +231,10 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         this.ingage = !this.ingage;
     }
 
+    protected boolean getIngage() {
+        return this.ingage;
+    }
+
     /**
      * <p>
      * Randomly applies a buff to the character based on weighted probability

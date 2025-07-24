@@ -9,6 +9,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManage
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.BaseEnemyProjectile;
@@ -98,7 +99,7 @@ public class Tengu extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseBlock) {
+        if (other instanceof BaseBlock || other instanceof BaseEntrance) {
             if (direction.y() != 0) {
                 this.collided = Optional.of(super.getPosition());
             }
@@ -133,7 +134,7 @@ public class Tengu extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
 
         while (otherX > 0) {
-            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
+            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
                 if (this.stats.getInitialPos()
                         .distance(new Vector2(super.getPosition().x() + (otherX * this.direction), y)) <= this.stats
                                 .getDistance()) {
