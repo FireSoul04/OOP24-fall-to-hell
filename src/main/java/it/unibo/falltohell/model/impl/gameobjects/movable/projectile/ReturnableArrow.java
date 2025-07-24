@@ -32,10 +32,10 @@ public class ReturnableArrow extends ProjectileImpl{
      * @param collider the collider used for collisions
      * @param owner the archer who fired the arrow
      */
-    public ReturnableArrow(Level level, Vector2 position, double speedX, double speedY, Collider collider, Archer owner) {
-        super(level, position, speedX, speedY, collider);
+    public ReturnableArrow(Level level, Vector2 position, Vector2 speed, Collider collider, Archer owner) {
+        super(level, position, speed, collider);
         this.owner = owner;
-        this.originalSpeed = Math.sqrt(speedX * speedX + speedY * speedY);
+        this.originalSpeed = speed.magnitude();
     }
 
     /**
@@ -66,8 +66,7 @@ public class ReturnableArrow extends ProjectileImpl{
 
             Vector2 direction = owner.getPosition().subtract(getPosition()).normalize();
 
-            setSpeedX(direction.x() * originalSpeed);
-            setSpeedY(direction.y() * originalSpeed);
+            setSpeed(direction.multiply(originalSpeed));
 
             Vector2 displacement = new Vector2(getSpeedX(), getSpeedY()).multiply(deltaTime);
             setPosition(getPosition().add(displacement));

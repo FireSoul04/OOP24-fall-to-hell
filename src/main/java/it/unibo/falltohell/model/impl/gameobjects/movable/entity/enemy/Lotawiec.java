@@ -127,7 +127,7 @@ public class Lotawiec extends BaseEnemy {
         if (this.stats.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new TrackEnemyProjectile(super.getLevel(),
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
-                    this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(),
+                    this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
                     this.stats.getCharacter(), this.stats.getSenseDistance());
         }

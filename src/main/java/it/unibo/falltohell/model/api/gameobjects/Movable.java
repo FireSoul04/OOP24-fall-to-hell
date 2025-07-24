@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.api.gameobjects;
 
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.util.Vector2;
 
 public interface Movable extends GameObject {
     
@@ -27,11 +28,6 @@ public interface Movable extends GameObject {
      *
      * @param speedX the new horizontal speed
      */
-    void setSpeedX(double speedX);
-    /**
-     * Sets the vertical speed of the object.
-     *
-     * @param speedY the new vertical speed
-     */
-    void setSpeedY(double speedY);
+    void setSpeed(Vector2 speed);
+   
 }

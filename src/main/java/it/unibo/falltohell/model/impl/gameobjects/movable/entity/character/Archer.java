@@ -37,10 +37,9 @@ public class Archer extends BaseCharacter {
      * @param height the height of the arrow
      * @param collider the collider for the arrow
      */
-    public void shootArrow(Vector2 direction, double speed, double width, double height, Collider collider) {
-        double speedX = direction.x() * speed;
-        double speedY = direction.y() * speed;
-        Projectile arrow = bow.attack(getLevel(), getPosition(), speedX, speedY, collider);
+    public void shootArrow(Vector2 direction, double speed, Collider collider) {
+        Vector2 velocity = direction.multiply(speed);
+        Projectile arrow = bow.attack(getLevel(), getPosition(), velocity, collider);
         if (arrow != null) {
             shotedArrows.add(arrow);
         }

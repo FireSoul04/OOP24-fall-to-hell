@@ -13,8 +13,7 @@ import it.unibo.falltohell.util.Vector2;
  * </p>
  */
 public class MovableImpl extends GameObjectImpl implements Movable{
-    private double speedX;
-    private double speedY;
+    private Vector2 speed;
     /**
      * Constructs a movable game object.
      *
@@ -26,42 +25,36 @@ public class MovableImpl extends GameObjectImpl implements Movable{
      * @param speedY the initial vertical speed
      * @param collider the collider for this object
      */
-    public MovableImpl(Level level, Vector2 position, double speedX, double speedY,Collider collider) {
+    public MovableImpl(Level level, Vector2 position, Vector2 speed, Collider collider) {
         super(level, position, collider);
-        this.speedX = speedX;
-        this.speedY = speedY;
+        this.speed = speed;
     }
     /**
      * {@inheritDoc}
      */
     public void update(double deltaTime) {
-        Vector2 displacement = new Vector2(speedX, speedY).multiply(deltaTime);
+        Vector2 displacement = speed.multiply(deltaTime);
         setPosition(getPosition().add(displacement));
     }
     /**
      * {@inheritDoc}
      */
     public double getSpeedX() {
-        return speedX;
+        return this.speed.x();
     }
     /**
      * {@inheritDoc}
      */
-    public void setSpeedX(double speedX) {
-        this.speedX = speedX;
+    public void setSpeed(Vector2 speed) {
+        this.speed = speed;
     }
     /**
      * {@inheritDoc}
      */
     public double getSpeedY() {
-        return speedY;
+        return this.speed.y();
     }
-    /**
-     * {@inheritDoc}
-     */
-    public void setSpeedY(double speedY) {
-        this.speedY = speedY;
-    }
+    
 
 
 }

@@ -54,7 +54,7 @@ public class DropImpl extends MovableImpl implements Drop {
      *                 {@link Character}
      */
     public DropImpl(final Level lv, final Vector2 position, final Buff buff) {
-        super(lv, position, VELOCITY.x(), VELOCITY.y(),
+        super(lv, position, VELOCITY,
                 new BoxCollider(Vector2.zero(), DIMENSIONS));
         this.buff = buff;
 
@@ -84,7 +84,7 @@ public class DropImpl extends MovableImpl implements Drop {
             super.getLevel().getTimerManager().removeTimer(this.name);
             super.getLevel().removeGameObject(this);
         } else if (other instanceof BaseBlock && direction.y() < 0) {
-            super.setSpeedY(0);
+            super.setSpeed(new Vector2(this.getSpeedX(), 0));
         }
     }
 
