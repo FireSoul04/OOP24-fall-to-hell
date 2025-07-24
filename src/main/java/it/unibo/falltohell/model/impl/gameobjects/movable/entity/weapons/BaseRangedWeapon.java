@@ -4,7 +4,10 @@ import it.unibo.falltohell.model.api.Weapon;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
+import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ProjectileImpl;
+import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.Level;
 
@@ -19,7 +22,7 @@ import it.unibo.falltohell.model.api.CustomTimer;
  * - Cooldown timing between shots
  * - Projectile creation (can be overridden)
  */
-public abstract class BaseRangedWeapon implements Weapon {
+public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon {
 
     private int ammo;
     private final int maxAmmo;
@@ -32,7 +35,8 @@ public abstract class BaseRangedWeapon implements Weapon {
      * @param maxAmmo      the maximum ammo the weapon can carry
      * @param cooldownTime the cooldown time between attacks, in seconds
      */
-    protected BaseRangedWeapon(final int maxAmmo, final double cooldownTime) {
+    protected BaseRangedWeapon(final Level lv, final Vector2 position, final int maxAmmo, final double cooldownTime) {
+        super(lv, position, new BoxCollider(new Dimensions(0, 0)));
         this.maxAmmo = maxAmmo;
         this.ammo = maxAmmo;
         this.cooldownTimeMs = (long) (cooldownTime * 1000);

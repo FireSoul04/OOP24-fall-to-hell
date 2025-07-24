@@ -21,7 +21,7 @@ public class Bow extends BaseRangedWeapon{
      * @param cooldown the cooldown time between shots
      */
     public Bow(int ammo, double cooldown,Archer owner) {
-        super(ammo, cooldown);
+        super(owner.getLevel(), owner.getPosition(), ammo, cooldown);
         this.owner = owner;
     }
      /**
