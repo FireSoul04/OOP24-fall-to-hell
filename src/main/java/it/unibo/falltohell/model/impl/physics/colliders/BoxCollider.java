@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.physics.colliders;
 
+import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -28,5 +29,13 @@ public record BoxCollider(Vector2 offset, Dimensions size) implements Collider {
      */
     public BoxCollider(final Dimensions size) {
         this(Vector2.zero(), size);
+    }
+
+    /**
+     * Constructor with default offset as null vector and as square shaped with game object's
+     * TILE_SIZE as the square's side.
+     */
+    public BoxCollider() {
+        this(new Dimensions(GameObject.TILE_SIZE, GameObject.TILE_SIZE));
     }
 }
