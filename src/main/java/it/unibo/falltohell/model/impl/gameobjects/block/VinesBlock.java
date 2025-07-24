@@ -20,8 +20,6 @@ public class VinesBlock extends BaseBlock {
      * Initialization of the VinesBlock class.
      * @param lv is the level of the block
      * @param position is the position of the block in the level
-     * @param width
-     * @param height
      * @param collider associated to the block
      */
     public VinesBlock(final Level lv, final Vector2 position,
