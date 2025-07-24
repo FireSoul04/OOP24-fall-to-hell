@@ -65,15 +65,16 @@ public class Imp extends BaseEnemy {
      *                    enemy timers
      */
     public Imp(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DISTANCE),
-                manager);
+                manager, ingage);
 
         this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
+        ingage.addEnemy(this);
         super.initDrawable();
     }
 

@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.BuffBuilderImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 
@@ -111,8 +112,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         SPEED
     }
 
-    private BaseEnemyStatistics stats;
-    private EnemyTimerManager manager;
+    private final BaseEnemyStatistics stats;
+    private final EnemyTimerManager manager;
+    private final ManagerIngage ingageManager;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -126,11 +128,12 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param stats   the statistics defining the enemy's behavior and attributes
      * @param manager the timer manager responsible for managing enemy timers
      */
-    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager) {
+    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager, final ManagerIngage ingageManager) {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
+        this.ingageManager = ingageManager;
     }
 
     /**
@@ -216,6 +219,10 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     protected EnemyTimerManager getEnemyTimerManager() {
         return this.manager;
+    }
+
+    protected ManagerIngage getManagerIngage() {
+        return this.ingageManager;
     }
 
     /**

@@ -69,13 +69,13 @@ public class Lotawiec extends BaseEnemy {
      * @see CustomTimerImpl
      */
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF),
                         DAMAGE_A,
                         VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME),
-                manager);
+                manager, ingage);
 
         stats = (LongRangeEnemyStatistics) super.getStats();
 
@@ -84,6 +84,7 @@ public class Lotawiec extends BaseEnemy {
             this.attack();
             super.getLevel().getTimerManager().restartTimer(name);
         }));
+        ingage.addEnemy(this);
         super.initDrawable();
     }
 

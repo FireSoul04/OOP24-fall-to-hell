@@ -46,7 +46,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createCentaur(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        return new Centaur(level, initialCords, character, manager);
+        final ManagerIngage ingage = ManagerHolder.getManagerIngageFor(level);
+        return new Centaur(level, initialCords, character, manager, ingage);
     }
 
     /**
@@ -55,7 +56,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createTengu(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        return new Tengu(level, initialCords, character, manager);
+        final ManagerIngage ingage = ManagerHolder.getManagerIngageFor(level);
+        return new Tengu(level, initialCords, character, manager, ingage);
     }
 
     /**
@@ -64,7 +66,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createImp(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        return new Imp(level, initialCords, character, manager);
+        final ManagerIngage ingage = ManagerHolder.getManagerIngageFor(level);
+        return new Imp(level, initialCords, character, manager, ingage);
     }
 
     /**
@@ -73,7 +76,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createLotawiec(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        return new Lotawiec(level, initialCords, character, manager);
+        final ManagerIngage ingage = ManagerHolder.getManagerIngageFor(level);
+        return new Lotawiec(level, initialCords, character, manager, ingage);
     }
 
     /**
