@@ -19,7 +19,6 @@ import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,11 +50,7 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
                         final double height, final Collider collider) {
         super(lv, position, width, height, collider);
         final FileController fileController = new FileControllerImpl();
-        try {
-            this.allMerchFromFile = fileController.read(PATH);
-        } catch (IOException e) {
-            throw new IllegalStateException("There is no potion file with in this path:" + PATH);
-        }
+        this.allMerchFromFile = fileController.read(PATH);
         this.merch = new ArrayList<>();
         this.potionCounter = 0;
         this.restock();
