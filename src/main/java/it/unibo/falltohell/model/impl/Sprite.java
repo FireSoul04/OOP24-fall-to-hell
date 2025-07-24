@@ -15,24 +15,28 @@ public class Sprite implements Drawable {
     private boolean visible;
     private final GameObject gameObject;
     private final Vector2 offset;
+    private final Priority priority;
     /**
      * Default initialization of the Sprite class.
      * @param gameObject is the game object associated with this drawable object
+     * @param priority of the sprite when it has to be rendered
      */
-    public Sprite(final GameObject gameObject) {
-        this(gameObject, Vector2.zero());
+    public Sprite(final GameObject gameObject, Priority priority) {
+        this(gameObject, Vector2.zero(), priority);
     }
 
     /**
      * Initialization of the Sprite class with customized offset information.
      * @param gameObject is the game object associated with this drawable object
      * @param offset is the vector used to move a sprite from the position of its associated collider
+     * @param priority of the sprite when it has to be rendered
      */
-    public Sprite(final GameObject gameObject, final Vector2 offset) {
+    public Sprite(final GameObject gameObject, final Vector2 offset, Priority priority) {
         this.mirrored = false;
         this.visible = true;
         this.gameObject = gameObject;
         this.offset = offset;
+        this.priority = priority;
     }
 
     /**
@@ -74,4 +78,14 @@ public class Sprite implements Drawable {
     public Vector2 getPosition() {
         return this.gameObject.getPosition().add(this.offset);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Priority getPriority() {
+        return this.priority;
+    }
+
+
 }
