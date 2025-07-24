@@ -5,7 +5,7 @@ import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Interface that handles the creation of different type of block.
+ * Interface that handles the creation of different types of block.
  * @author Martina Malagoli
  */
 public interface BlockFactory {
