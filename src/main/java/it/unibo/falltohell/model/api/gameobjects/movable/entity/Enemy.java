@@ -24,4 +24,6 @@ public interface Enemy extends Entity {
      * @param character the character instance to target
      */
     void setCharacter(Character character);
+
+    void setIngage();
 }

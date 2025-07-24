@@ -115,6 +115,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     private final BaseEnemyStatistics stats;
     private final EnemyTimerManager manager;
     private final ManagerIngage ingageManager;
+    private boolean ingage = true;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -180,6 +181,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
             this.manager.removeTimersFor(this, super.getLevel());
+            this.ingageManager.removeEnemy(this);
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.getLevel().removeGameObject(this);
@@ -223,6 +225,10 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     protected ManagerIngage getManagerIngage() {
         return this.ingageManager;
+    }
+
+    public void setIngage() {
+        this.ingage = !this.ingage;
     }
 
     /**
