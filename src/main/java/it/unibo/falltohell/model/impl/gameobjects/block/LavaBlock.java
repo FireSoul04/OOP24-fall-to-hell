@@ -13,7 +13,6 @@ import java.util.Objects;
 /**
  * Class that represents a type of block that deals damage continuously
  * to the character and to enemies while they touch it from above.
- *
  * @author Martina Malagoli
  */
 public class LavaBlock extends BaseBlock {
@@ -23,14 +22,13 @@ public class LavaBlock extends BaseBlock {
 
     /**
      * Initialization of the LavaBlock class.
-     *
-     * @param lv       is the level of the block
+     * @param lv is the level of the block
      * @param position is the position of the block in the level
      * @param collider associated to the block
      */
     public LavaBlock(final Level lv, final Vector2 position,
-            final Collider collider, final String fileName) {
-        super(lv, position, collider, fileName);
+                     final Collider collider) {
+        super(lv, position, collider);
     }
 
     /**

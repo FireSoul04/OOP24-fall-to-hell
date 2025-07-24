@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
@@ -138,6 +139,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
         this.ingageManager = ingageManager;
+        this.initDrawable(Priority.MEDIUM);
     }
 
     /**

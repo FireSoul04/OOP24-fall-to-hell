@@ -1,4 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
+
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
+
 public class Archer extends BaseCharacter {
 
     private final Bow bow;
@@ -18,24 +20,25 @@ public class Archer extends BaseCharacter {
     /**
      * Constructs a new ArcherCharacter.
      *
-     * @param level the game level
+     * @param level    the game level
      * @param position the initial position
-     * @param stats the character statistics<
-     * @param bow the ranged weapon used to shoot arrows
+     * @param stats    the character statistics<
+     * @param bow      the ranged weapon used to shoot arrows
      */
     public Archer(final Level level, final Vector2 position, final CharacterStatistics stats, final Bow bow) {
         super(level, position, stats);
         this.bow = bow;
 
     }
+
     /**
      * Shoots an arrow in the given direction if possible.
      *
      * @param direction the direction to shoot (normalized vector)
-     * @param speed the speed of the arrow
-     * @param width the width of the arrow
-     * @param height the height of the arrow
-     * @param collider the collider for the arrow
+     * @param speed     the speed of the arrow
+     * @param width     the width of the arrow
+     * @param height    the height of the arrow
+     * @param collider  the collider for the arrow
      */
     public void shootArrow(final Vector2 direction, final double speed, final Collider collider) {
         final Vector2 velocity = direction.multiply(speed);
@@ -44,6 +47,7 @@ public class Archer extends BaseCharacter {
             shotedArrows.add(arrow);
         }
     }
+
     /**
      * Gets the ranged weapon used by this archer.
      *
@@ -52,18 +56,22 @@ public class Archer extends BaseCharacter {
     public BaseRangedWeapon getBow() {
         return bow;
     }
+
     /**
      * @return the list of arrows shot by this archer
      */
     public List<Projectile> getShotedArrows() {
         return this.shotedArrows;
     }
+
     /**
      * {@inheritDoc}
      */
+    @Override
     public CharacterID getCharacterID() {
         return CharacterID.ARCHER;
     }
+
     /**
      * Gets the list of arrows shot by this archer.
      *
@@ -72,6 +80,7 @@ public class Archer extends BaseCharacter {
     public List<Projectile> getShotArrows() {
         return shotedArrows;
     }
+
     /**
      * Returns an arrow to the archer's inventory.
      * This method is called when an arrow returns after being shot.

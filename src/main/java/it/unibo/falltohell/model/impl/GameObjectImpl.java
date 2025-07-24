@@ -191,7 +191,7 @@ public class GameObjectImpl implements GameObject {
      * @param offset the {@link Vector2} offset to apply to the sprite's position
      * @see Sprite
      */
-    protected void initDrawable(final Vector2 offset, Priority priority) {
+    protected void initDrawable(final Vector2 offset, final Priority priority) {
         this.setDrawable(Optional.of(new Sprite(this, offset, priority)));
     }
 }

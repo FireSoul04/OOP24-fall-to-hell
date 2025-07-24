@@ -4,6 +4,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 /**
  * Set of data to maintain the current state of the game.
+ *
  * @author Martina Malagoli
  */
 public interface GameData {
@@ -17,7 +18,7 @@ public interface GameData {
      * @param amount of point to be removed
      */
     void removePoints(long amount);
-    
+
     /**
      * @return the player current points
      */

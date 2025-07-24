@@ -4,6 +4,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.Charac
 
 /**
  * Class that represents a buff associated with the attack speed statistic.
+ *
  * @author Martina Malagoli
  */
 public class AttackSpeedBuff extends BaseBuff {
@@ -13,8 +14,10 @@ public class AttackSpeedBuff extends BaseBuff {
     /**
      * Initialization of the AttackSpeedBuff class.
      *
-     * @param characterStatistics is the set of statistics associated with the character
-     * @param multiplier is the value used to compute the buff amount that should be
+     * @param characterStatistics is the set of statistics associated with the
+     *                            character
+     * @param multiplier          is the value used to compute the buff amount that
+     *                            should be
      *                            between 0 and 1
      */
     public AttackSpeedBuff(final CharacterStatistics characterStatistics, final double multiplier) {

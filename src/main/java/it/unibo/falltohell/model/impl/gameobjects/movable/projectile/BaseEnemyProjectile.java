@@ -29,8 +29,7 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      *
      * @param level    the game level this projectile belongs to
      * @param position the initial position of the projectile
-     * @param speedX   the initial horizontal speed
-     * @param speedY   the initial vertical speed
+     * @param speed    the initial speed
      * @param collider the collider used for collision detection
      * @param damage   the amount of damage inflicted on hit
      *

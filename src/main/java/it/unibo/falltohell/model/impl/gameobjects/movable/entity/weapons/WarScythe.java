@@ -1,8 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
-import it.unibo.falltohell.util.Dimensions;
-import it.unibo.falltohell.util.Vector2;
 
 /**
  * <p>
@@ -21,7 +19,7 @@ import it.unibo.falltohell.util.Vector2;
  * @see MeleeWeapon
  * @see BoxCollider
  */
-public class WarScythe extends MeleeWeapon {
+public class WarScythe /*extends MeleeWeapon*/ {
 
     /**
      * <p>
@@ -33,7 +31,6 @@ public class WarScythe extends MeleeWeapon {
      * </p>
      */
     public WarScythe() {
-        super(new BoxCollider(Vector2.zero(), new Dimensions(10, 10)));
+        //super(new BoxCollider(Vector2.zero(), new Dimensions(10, 10)));
     }
-
 }

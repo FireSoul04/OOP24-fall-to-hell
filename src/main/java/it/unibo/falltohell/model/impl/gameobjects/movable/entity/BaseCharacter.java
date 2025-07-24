@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
@@ -55,6 +56,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.input = level.getGameEventManager();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
         this.interactingObject = Optional.empty();
+        this.initDrawable(Priority.LOW);
     }
 
     /**

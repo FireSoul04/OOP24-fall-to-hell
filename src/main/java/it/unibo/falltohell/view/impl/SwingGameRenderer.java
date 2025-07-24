@@ -16,53 +16,53 @@ import java.awt.Graphics2D;
  */
 public class SwingGameRenderer extends JPanel implements GameRenderer {
 
-	private final GameWindow window;
-	private final DrawableRenderableHandler drh;
+    private final GameWindow window;
+    private final DrawableRenderableHandler drh;
 
-	/**
-	 * Create a renderer implemented with Java Swing.
-	 *
-	 * @param window of the game
-	 */
-	public SwingGameRenderer(final GameWindow window, final DrawableRenderableHandler drh) {
-		super();
-		this.window = window;
-		this.drh = drh;
-	}
+    /**
+     * Create a renderer implemented with Java Swing.
+     *
+     * @param window of the game
+     */
+    public SwingGameRenderer(final GameWindow window, final DrawableRenderableHandler drh) {
+        super();
+        this.window = window;
+        this.drh = drh;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void render() {
-		this.repaint();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void render() {
+        this.repaint();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void clear() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void clear() {
 
-	}
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void paintComponent(final Graphics g) {
-		super.paintComponent(g);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void paintComponent(final Graphics g) {
+        super.paintComponent(g);
 
-		final Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.BLACK);
-		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-		g2.scale(this.window.getScale().x(), this.window.getScale().y());
+        final Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+        g2.scale(this.window.getScale().x(), this.window.getScale().y());
 
-		this.drh.getAllRenderables()
-			.stream()
-			.map(t -> (BaseRenderable) t)
-			.forEach(t -> t.render(g));
+        this.drh.getAllRenderables()
+            .stream()
+            .map(t -> (BaseRenderable) t)
+            .forEach(t -> t.render(g));
 
-		g2.dispose();
-	}
+        g2.dispose();
+    }
 }

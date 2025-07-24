@@ -11,67 +11,76 @@ import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 /**
  * Implementation of the {@link Projectile} interface.
  * <p>
- * Represents a projectile in the game world that moves and can interact with other objects.
- * The projectile moves according to its speed, can be marked as "hit" when it collides with something solid,
+ * Represents a projectile in the game world that moves and can interact with
+ * other objects.
+ * The projectile moves according to its speed, can be marked as "hit" when it
+ * collides with something solid,
  * and provides hooks for subclasses to customize update and collision behavior.
  * </p>
  */
-public class ProjectileImpl extends MovableImpl implements Projectile{
+public class ProjectileImpl extends MovableImpl implements Projectile {
     private boolean hit;
 
-    public ProjectileImpl(Level level, Vector2 position, Vector2 speed, Collider collider) {
+    public ProjectileImpl(final Level level, final Vector2 position, final Vector2 speed, final Collider collider) {
         super(level, position, speed, collider);
         this.hit = false;
     }
+
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
     public boolean isHit() {
         return hit;
     }
+
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
-    public void setHit(boolean hit) {
+    public void setHit(final boolean hit) {
         this.hit = hit;
     }
+
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
-    public void update(double deltaTime) {
+    public void update(final double deltaTime) {
         if (!hit) {
             super.update(deltaTime);
             this.onUpdate(deltaTime);
-        }else if(isHit()){
+        } else if (isHit()) {
             this.getLevel().removeGameObject(this);
         }
     }
-     /**
+
+    /**
      * Hook method for subclasses to add custom update logic.
      * Called after the base update if the projectile has not hit anything.
      *
      * @param deltaTime the time elapsed since the last update (in seconds)
      */
-    protected void onUpdate(double deltaTime) {
+    protected void onUpdate(final double deltaTime) {
         // Default: do nothing
     }
+
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
-    public void onCollision(GameObject other) {
+    public void onCollision(final GameObject other) {
         if (other != this && other.isSolid() && !hit) {
             this.hit = true;
             this.onProjectileHit(other);
         }
     }
+
     /**
-     * Hook method for subclasses to add custom logic when the projectile hits another object.
+     * Hook method for subclasses to add custom logic when the projectile hits
+     * another object.
      *
      * @param other the game object that was hit
      */
-    protected void onProjectileHit(GameObject other) {
+    protected void onProjectileHit(final GameObject other) {
         // Default: do nothing
     }
 

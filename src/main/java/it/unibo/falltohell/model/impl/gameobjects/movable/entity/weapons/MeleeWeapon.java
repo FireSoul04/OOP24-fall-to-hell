@@ -29,7 +29,7 @@ public abstract class MeleeWeapon implements Weapon {
 	/**
 	 * @return hitbox collider
 	 */
-	protected Collider getCollider() {
+	public Collider getCollider() {
 		return this.collider;
 	}
 }
