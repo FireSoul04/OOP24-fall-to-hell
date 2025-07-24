@@ -13,14 +13,12 @@ import java.util.Map;
 public class TimerManagerImpl implements TimerManager {
 
     private final Map<String, CustomTimer> timers;
-    //private boolean allPaused; TODO --> VERIFY IF NEEDED
 
     /**
      * Initialization of the TimeManager.
      */
     public TimerManagerImpl() {
         this.timers = new HashMap<>();
-        //this.allPaused = false;
     }
 
     /**
@@ -28,6 +26,7 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void addTimer(final String name, final CustomTimer timer) {
+        checkNotExists(name);
         this.timers.put(name, timer);
         timer.start();
     }
@@ -50,7 +49,9 @@ public class TimerManagerImpl implements TimerManager {
     @Override
     public void pauseTimer(final String name) {
         this.checkExists(name);
-        this.timers.get(name).pause();
+        if (!this.timers.get(name).isPaused()) {
+            this.timers.get(name).pause();
+        }
     }
 
     /**
@@ -119,9 +120,25 @@ public class TimerManagerImpl implements TimerManager {
         return this.timers.containsKey(name);
     }
 
+    /**
+     * Method to check if a timer does exist with the given name, otherwise it
+     * throws an exception.
+     * @param name of the timer
+     */
     private void checkExists(final String name) {
         if (!this.searchTimer(name)) {
             throw new IllegalArgumentException("There is no timer with the name:" + name);
+        }
+    }
+
+    /**
+     * Method to check if a timer doesn't exist with the given name, otherwise it
+     * throws an exception.
+     * @param name of the timer
+     */
+    private void checkNotExists(final String name) {
+        if (this.searchTimer(name)) {
+            throw new IllegalArgumentException("There is already a timer with the name:" + name);
         }
     }
 }
