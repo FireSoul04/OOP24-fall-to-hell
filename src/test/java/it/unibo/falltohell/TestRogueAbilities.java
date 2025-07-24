@@ -7,6 +7,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.StatisticsFactory;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.GameEventManager;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.Knife;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.EnemyTimeManagerImpl;
@@ -95,7 +96,7 @@ class TestRogueAbilities {
             10, 0, Vector2.zero(), new Dimensions(5, 5),
             enemyPosition, this.rogue, 0, sf.createOptional()
         );
-        final Enemy dummy = new BaseEnemy(this.level, enemyStats, new EnemyTimeManagerImpl()) {
+        final Enemy dummy = new BaseEnemy(this.level, enemyStats, new EnemyTimeManagerImpl(), new ManagerIngage()) {
             public void update(final double deltaTime) {
                 // Does nothing
             }
