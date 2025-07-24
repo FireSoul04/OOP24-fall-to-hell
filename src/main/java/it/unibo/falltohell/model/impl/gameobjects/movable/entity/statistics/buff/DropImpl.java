@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buf
 
 import java.util.UUID;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -52,8 +53,9 @@ public class DropImpl extends MovableImpl implements Drop {
      * @param position the starting {@link Vector2} position of the drop
      * @param buff     the {@link Buff} to be applied when collected by a
      *                 {@link Character}
+     *@param fileName is the name of the image file associated to the drop
      */
-    public DropImpl(final Level lv, final Vector2 position, final Buff buff) {
+    public DropImpl(final Level lv, final Vector2 position, final Buff buff, final String fileName) {
         super(lv, position, VELOCITY,
                 new BoxCollider(Vector2.zero(), DIMENSIONS));
         this.buff = buff;
@@ -61,6 +63,7 @@ public class DropImpl extends MovableImpl implements Drop {
         this.name = "drop-timer-" + UUID.randomUUID();
         super.getLevel().getTimerManager().addTimer(this.name,
                 new CustomTimerImpl(EXPIRE_TIME, () -> super.getLevel().removeGameObject(this)));
+        this.initDrawable(Priority.VERY_LOW, fileName);
     }
 
     /**

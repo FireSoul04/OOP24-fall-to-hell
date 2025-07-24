@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.projectile;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 
@@ -19,9 +20,18 @@ import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 public class ProjectileImpl extends MovableImpl implements Projectile{
     private boolean hit;
 
-    public ProjectileImpl(Level level, Vector2 position, Vector2 speed, Collider collider) {
+    /**
+     *
+     * @param level the game level this projectile belongs to
+     * @param position the initial position of the projectile
+     * @param speed the initial speed of the projectile
+     * @param collider the collider used for collision detection
+     * @param fileName is the name of the image file associated to the projectile
+     */
+    public ProjectileImpl(Level level, Vector2 position, Vector2 speed, Collider collider, final String fileName) {
         super(level, position, speed, collider);
         this.hit = false;
+        this.initDrawable(Priority.MEDIUM, fileName);
     }
     /**
      *  {@inheritDoc}
