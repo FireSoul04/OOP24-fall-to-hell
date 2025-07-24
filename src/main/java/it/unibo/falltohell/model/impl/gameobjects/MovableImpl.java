@@ -29,8 +29,8 @@ public class MovableImpl extends GameObjectImpl implements Movable{
      * @param speedY the initial vertical speed
      * @param collider the collider for this object
      */
-    public MovableImpl(Level level, Vector2 position, double speedX, double speedY,Collider collider,Optional <Drawable> drawable) {
-        super(level, position, collider, drawable);
+    public MovableImpl(Level level, Vector2 position, double speedX, double speedY,Collider collider) {
+        super(level, position, collider);
         this.speedX = speedX;
         this.speedY = speedY;
     }

@@ -20,8 +20,8 @@ public abstract class BaseItem extends GameObjectImpl implements Item {
     private boolean sold;
     private final long price;
 
-    public BaseItem(final Level lv, final Vector2 position, final Collider collider, final long price, final Optional<Drawable> drawable) {
-        super(lv, position, collider, drawable);
+    public BaseItem(final Level lv, final Vector2 position, final Collider collider, final long price) {
+        super(lv, position, collider);
         this.price = price;
         this.sold = false;
     }

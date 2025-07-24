@@ -22,8 +22,8 @@ import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 public class ProjectileImpl extends MovableImpl implements Projectile{
     private boolean hit;
 
-    public ProjectileImpl(Level level, Vector2 position, double speedX, double speedY, Collider collider, Optional<Drawable> drawable) {
-        super(level, position, speedX, speedY, collider, drawable);
+    public ProjectileImpl(Level level, Vector2 position, double speedX, double speedY, Collider collider) {
+        super(level, position, speedX, speedY, collider);
         this.hit = false;
     }
     /**

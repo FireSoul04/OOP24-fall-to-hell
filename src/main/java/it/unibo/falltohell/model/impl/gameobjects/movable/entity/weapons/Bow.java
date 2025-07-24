@@ -40,8 +40,8 @@ public class Bow extends BaseRangedWeapon{
      * @return a new {@link ReturnableArrow} instance
      */
     @Override
-    public Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY,Collider collider, Optional<Drawable> drawable) {
-        return new ReturnableArrow(level, position, speedX, speedY, collider, owner, drawable);
+    public Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY,Collider collider) {
+        return new ReturnableArrow(level, position, speedX, speedY, collider, owner);
     }
     public void attack(){
 

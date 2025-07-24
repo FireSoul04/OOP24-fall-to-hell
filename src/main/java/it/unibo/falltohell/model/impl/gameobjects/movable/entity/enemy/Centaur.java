@@ -66,9 +66,9 @@ public class Centaur extends BaseEnemy {
      *                    in this context
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager,final Optional<Drawable> drawable) {
+            final EnemyTimerManager manager) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,drawable);
+                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager);
 
         this.stats = (BaseEnemyStatistics) super.getStats();
     }

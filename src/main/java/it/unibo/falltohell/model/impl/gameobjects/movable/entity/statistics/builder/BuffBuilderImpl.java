@@ -35,7 +35,7 @@ public class BuffBuilderImpl implements BuffBuilder {
     private Level level;
     private Vector2 position;
     private Buff buff;
-    private Optional<Drawable> drawable = Optional.empty();
+    
 
     /**
      * {@inheritDoc}
@@ -70,14 +70,7 @@ public class BuffBuilderImpl implements BuffBuilder {
         }
         return this;
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BuffBuilderImpl withDrawable(final Drawable drawable) {
-        this.drawable = Optional.ofNullable(drawable);
-        return this;
-    }
+    
     /**
      * {@inheritDoc}
      */
@@ -86,6 +79,6 @@ public class BuffBuilderImpl implements BuffBuilder {
         if (level == null || position == null || buff == null) {
             throw new IllegalStateException("Level, position, and buff must be set before building DropImpl.");
         }
-        return new DropImpl(level, position, buff, drawable);
+        return new DropImpl(level, position, buff);
     }
 }

@@ -25,8 +25,8 @@ public class SpringsEntrance extends GameObjectImpl {
      * @param collider associated with this entrance
      */
     public SpringsEntrance(final Level lv, final Vector2 position,
-                           final Optional<Drawable> drawable, final Collider collider) {
-        super(lv, position, false, collider, drawable);
+                           final Collider collider) {
+        super(lv, position, false, collider);
     }
 
     /**

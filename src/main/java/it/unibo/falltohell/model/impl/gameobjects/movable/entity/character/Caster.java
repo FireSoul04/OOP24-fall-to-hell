@@ -28,8 +28,8 @@ public class Caster extends BaseCharacter {
      * @param level
      * @param position
      */
-    public Caster(Level level, Vector2 position, Optional<Drawable> drawable) {
-        super(level, position, STATISTICS, drawable);
+    public Caster(Level level, Vector2 position) {
+        super(level, position, STATISTICS);
     }
 
     @Override

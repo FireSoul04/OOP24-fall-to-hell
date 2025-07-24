@@ -56,9 +56,9 @@ public class DropImpl extends MovableImpl implements Drop {
      * @param buff     the {@link Buff} to be applied when collected by a
      *                 {@link Character}
      */
-    public DropImpl(final Level lv, final Vector2 position, final Buff buff, Optional<Drawable> drawable) {
+    public DropImpl(final Level lv, final Vector2 position, final Buff buff) {
         super(lv, position, VELOCITY.x(), VELOCITY.y(),
-                new BoxCollider(Vector2.zero(), DIMENSIONS), drawable);
+                new BoxCollider(Vector2.zero(), DIMENSIONS));
         this.buff = buff;
 
         this.name = "drop-timer-" + UUID.randomUUID();

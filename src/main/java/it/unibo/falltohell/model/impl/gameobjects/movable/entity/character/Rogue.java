@@ -26,8 +26,8 @@ public class Rogue extends BaseCharacter {
      * @param level where it belongs
      * @param position where is it in the level
      */
-    public Rogue(final Level level, final Vector2 position, final Optional<Drawable> drawable) {
-        super(level, position, STATS, drawable);
+    public Rogue(final Level level, final Vector2 position) {
+        super(level, position, STATS);
     }
 
     /**

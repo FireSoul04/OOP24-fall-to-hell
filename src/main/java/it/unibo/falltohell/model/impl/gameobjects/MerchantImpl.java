@@ -49,8 +49,8 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
      * @param height
      * @param collider is the collider associated with the merchant
      */
-    public MerchantImpl(final Level lv, final Vector2 position, final Collider collider, Optional <Drawable> drawable) {
-        super(lv, position, collider, drawable);
+    public MerchantImpl(final Level lv, final Vector2 position, final Collider collider) {
+        super(lv, position, collider);
         final FileController fileController = new FileControllerImpl();
         try {
             this.allMerchFromFile = fileController.read(PATH);
@@ -142,7 +142,6 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
         }
         return new Potion(this.getLevel(),
                 this.computePosition(),
-                0, 0,
                 potionCollider,
                 Long.parseLong(cost), buff);
     }

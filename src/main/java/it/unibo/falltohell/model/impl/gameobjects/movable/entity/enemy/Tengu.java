@@ -67,13 +67,13 @@ public class Tengu extends BaseEnemy {
      * @see CustomTimerImpl
      */
     public Tengu(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final Optional<Drawable> drawable) {
+            final EnemyTimerManager manager) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME),
-                manager, drawable);
+                manager);
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
@@ -117,7 +117,7 @@ public class Tengu extends BaseEnemy {
             new BaseEnemyProjectile(super.getLevel(),
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
                     this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(),
-                    new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A, this.getDrawable());
+                    new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A);
         }
     }
 

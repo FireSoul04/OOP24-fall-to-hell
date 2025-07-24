@@ -35,8 +35,8 @@ public class ReturnableArrow extends ProjectileImpl{
      * @param collider the collider used for collisions
      * @param owner the archer who fired the arrow
      */
-    public ReturnableArrow(Level level, Vector2 position, double speedX, double speedY, Collider collider, Archer owner, Optional<Drawable> drawable) {
-        super(level, position, speedX, speedY, collider, drawable);
+    public ReturnableArrow(Level level, Vector2 position, double speedX, double speedY, Collider collider, Archer owner) {
+        super(level, position, speedX, speedY, collider);
         this.owner = owner;
         this.originalSpeed = Math.sqrt(speedX * speedX + speedY * speedY);
     }

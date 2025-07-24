@@ -53,9 +53,9 @@ public abstract class BaseRangedWeapon implements Weapon {
      * @param height height of the projectile
      * @param collider collider for the projectile
      */
-    public Projectile attack(Level level, Vector2 position, double speedX, double speedY, Collider collider, Optional<Drawable> drawable) {
+    public Projectile attack(Level level, Vector2 position, double speedX, double speedY, Collider collider) {
         if (canShoot()) {
-            Projectile p = createProjectile(level, position, speedX, speedY, collider, drawable);
+            Projectile p = createProjectile(level, position, speedX, speedY, collider);
             ammo--;
             cooldownTimer.start();
             onShoot(p);
@@ -116,8 +116,8 @@ public abstract class BaseRangedWeapon implements Weapon {
     /**
      * Creates a projectile. By default, returns a ProjectileImpl.
      */
-    protected Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY, Collider collider, Optional<Drawable> drawable) {
-        return new ProjectileImpl(level, position, speedX, speedY, collider, drawable);
+    protected Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY, Collider collider) {
+        return new ProjectileImpl(level, position, speedX, speedY, collider);
     }
     
 

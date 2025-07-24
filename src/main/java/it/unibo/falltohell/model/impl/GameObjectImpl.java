@@ -31,13 +31,13 @@ public class GameObjectImpl implements GameObject {
      * @param height the height (in tiles) of the object
      * @param collider the collider for this object
      */
-    public GameObjectImpl(Level lv, Vector2 position, Collider collider,Optional<Drawable> drawable) {
+    public GameObjectImpl(Level lv, Vector2 position, Collider collider) {
         this.pos = position;
         this.isSolid = true; // Default
         this.collider = collider;
         lv.addGameObject(this);
         this.level = lv;
-        this.drawable = drawable;
+        this.drawable = Optional.empty();
         
     }
     /**
@@ -50,13 +50,13 @@ public class GameObjectImpl implements GameObject {
      * @param isSolid whether the object is solid
      * @param collider the collider for this object
      */
-    public GameObjectImpl(Level lv, Vector2 position, boolean isSolid, Collider collider, Optional<Drawable> drawable) {
+    public GameObjectImpl(Level lv, Vector2 position, boolean isSolid, Collider collider) {
         this.pos = position;
         this.isSolid = isSolid; 
         this.collider = collider;
         lv.addGameObject(this);
         this.level = lv;
-        this.drawable = drawable;
+        this.drawable = Optional.empty();
     }
     /**
      * {@inheritDoc}

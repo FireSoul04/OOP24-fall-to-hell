@@ -34,8 +34,8 @@ public class CharacterChanger extends GameObjectImpl implements Interactable {
      * @param characters is the map of all characters in the game
      */
     public CharacterChanger(final Level lv, final Vector2 position, final Collider collider,
-        final Map<CharacterID, Character> characters, Optional<Drawable> drawable) {
-        super(lv, position, collider, drawable);
+        final Map<CharacterID, Character> characters) {
+        super(lv, position, collider);
         this.characters = characters;
         this.characterIDs = Arrays.asList(CharacterID.values());
     }

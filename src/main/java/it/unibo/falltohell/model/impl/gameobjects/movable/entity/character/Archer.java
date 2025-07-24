@@ -25,8 +25,8 @@ public class Archer extends BaseCharacter {
      * @param stats the character statistics<
      * @param bow the ranged weapon used to shoot arrows
      */
-    public Archer(final Level level, final Vector2 position, final CharacterStatistics stats, final Bow bow, final Optional<Drawable> drawable) {
-        super(level, position, stats, drawable);
+    public Archer(final Level level, final Vector2 position, final CharacterStatistics stats, final Bow bow) {
+        super(level, position, stats);
         this.bow = bow;
         
     }
@@ -42,7 +42,7 @@ public class Archer extends BaseCharacter {
     public void shootArrow(Vector2 direction, double speed, double width, double height, Collider collider) {
         double speedX = direction.x() * speed;
         double speedY = direction.y() * speed;
-        Projectile arrow = bow.attack(getLevel(), getPosition(), speedX, speedY, width, height, collider);
+        Projectile arrow = bow.attack(getLevel(), getPosition(), speedX, speedY, collider);
         if (arrow != null) {
             shotedArrows.add(arrow);
         }

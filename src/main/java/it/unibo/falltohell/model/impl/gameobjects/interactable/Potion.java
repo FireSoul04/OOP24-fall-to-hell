@@ -30,8 +30,8 @@ public class Potion extends BaseItem {
      * @param price is the price of the potion
      * @param buff is the buff given by the potion to the character
      */
-    public Potion(final Level lv, final Vector2 position, final Collider collider, final long price, final Buff buff, final Optional<Drawable> drawable) {
-        super(lv, position, collider, price, drawable);
+    public Potion(final Level lv, final Vector2 position, final Collider collider, final long price, final Buff buff) {
+        super(lv, position, collider, price);
         this.buff = buff;
     }
 

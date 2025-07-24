@@ -64,8 +64,8 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * @see Character
      */
     public TrackEnemyProjectile(final Level level, final Vector2 position, final double speedX, final double speedY,
-            final Collider collider, final double damage, final Character character, final double distance, Optional<Drawable> drawable) {
-        super(level, position, speedX, speedY, collider, damage, drawable);
+            final Collider collider, final double damage, final Character character, final double distance) {
+        super(level, position, speedX, speedY, collider, damage);
         this.character = character;
         this.distance = distance + DISTANCE_BUFF;
 

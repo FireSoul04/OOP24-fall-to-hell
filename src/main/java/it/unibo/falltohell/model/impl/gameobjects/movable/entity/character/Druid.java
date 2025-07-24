@@ -62,9 +62,9 @@ public class Druid extends BaseCharacter {
      * @param level    the level this character belongs to
      * @param position the initial spawn position
      */
-    public Druid(final Level level, final Vector2 position, final Optional<Drawable> drawable) {
+    public Druid(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
-                new Dimensions(10, 10), 10, 10), drawable);
+                new Dimensions(10, 10), 10, 10));
         this.stats = (CharacterStatistics) super.getStats();
 
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
