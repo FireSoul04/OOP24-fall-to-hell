@@ -50,8 +50,6 @@ public interface BuffBuilder {
      * @return this builder instance
      */
     BuffBuilderImpl withBuff(BuffNames type, CharacterStatistics stats, double multiplier);
-    
-    
 
     /**
      * Builds the {@link DropImpl} instance.

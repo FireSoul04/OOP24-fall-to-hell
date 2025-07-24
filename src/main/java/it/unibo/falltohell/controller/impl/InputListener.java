@@ -12,6 +12,16 @@ public class InputListener {
     private static final int MAX_KEY = 256;
     private final Map<Integer, Key> keys = new HashMap<>();
     private final Set<Key> keysPressed = new HashSet<>();
+    private final KeyListener keyListener = new KeyAdapter() {
+        @Override
+        public void keyPressed(final KeyEvent e) {
+            keysPressed.add(keys.get(e.getKeyCode()));
+        }
+        @Override
+        public void keyReleased(final KeyEvent e) {
+            keysPressed.remove(keys.get(e.getKeyCode()));
+        }
+    };
 
     /**
      * Create a controller for key pressed.
@@ -55,7 +65,7 @@ public class InputListener {
     public KeyListener getKeyListener() {
         return this.keyListener;
     }
-    private final static class Key {
+    private static final class Key {
         private final int keyCode;
         private boolean alreadyPressed;
 
@@ -74,14 +84,4 @@ public class InputListener {
         }
 
     }
-    private final KeyListener keyListener = new KeyAdapter() {
-        @Override
-        public void keyPressed(final KeyEvent e) {
-            keysPressed.add(keys.get(e.getKeyCode()));
-        }
-        @Override
-        public void keyReleased(final KeyEvent e) {
-            keysPressed.remove(keys.get(e.getKeyCode()));
-        }
-    };
 }

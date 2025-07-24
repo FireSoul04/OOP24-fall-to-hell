@@ -54,7 +54,7 @@ public class LevelLoaderImpl implements LevelLoader {
     @Override
     public void loadLevel() {
         for (int y = 0; y < this.levelFromFile.size(); y++) {
-            char[] identifiers = this.levelFromFile.get(y).toCharArray();
+            final char[] identifiers = this.levelFromFile.get(y).toCharArray();
             for (int x = 0; x < identifiers.length; x++) {
                 final Vector2 position = new Vector2(x, y).multiply(DISTANCE);
                 this.parseToGameObject(identifiers[x], position);

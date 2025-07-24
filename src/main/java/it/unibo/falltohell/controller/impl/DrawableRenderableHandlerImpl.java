@@ -6,7 +6,7 @@ import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.view.api.Renderable;
 
-import java.awt.*;
+import java.awt.Image;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class DrawableRenderableHandlerImpl implements DrawableRenderableHandler 
      * {@inheritDoc}
      */
     @Override
-    public void updateAll(GameCamera camera) {
+    public void updateAll(final GameCamera camera) {
         this.renderableControllers.forEach((k, v) -> v.updateRenderable(camera));
     }
 

@@ -49,7 +49,7 @@ public class SaveFileControllerImpl implements SaveFileController {
             }
         }
         try (
-                final BufferedWriter saveOutput = new BufferedWriter(new FileWriter(DIR_PATH + FILE_NAME)
+                BufferedWriter saveOutput = new BufferedWriter(new FileWriter(DIR_PATH + FILE_NAME)
                 )
         ) {
             final Character character = this.data.getCurrentCharacter();
@@ -66,7 +66,7 @@ public class SaveFileControllerImpl implements SaveFileController {
      */
     @Override
     public GameData load(final Map<CharacterID, Character> characters) {
-        List<String> fileLines = new FileControllerImpl().read(DIR_PATH + FILE_NAME);
+        final List<String> fileLines = new FileControllerImpl().read(DIR_PATH + FILE_NAME);
         final long points = Long.parseLong(fileLines.get(0));
         final CharacterID currentCharacterID = Enum.valueOf(CharacterID.class, fileLines.get(1));
         return new GameDataImpl(points, currentCharacterID, characters);
