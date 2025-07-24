@@ -1,9 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 
-import java.lang.foreign.Linker.Option;
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.abilities.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;

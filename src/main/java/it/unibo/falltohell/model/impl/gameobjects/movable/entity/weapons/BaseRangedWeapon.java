@@ -6,12 +6,8 @@ import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ProjectileImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.Level;
-
-import java.lang.foreign.Linker.Option;
-import java.util.Optional;
-
 import it.unibo.falltohell.model.api.CustomTimer;
-import it.unibo.falltohell.model.api.Drawable;
+;
 
 
 /**

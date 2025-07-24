@@ -8,7 +8,6 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.BaseRan
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import java.util.List;
-import java.util.Optional;
 import java.util.ArrayList;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;

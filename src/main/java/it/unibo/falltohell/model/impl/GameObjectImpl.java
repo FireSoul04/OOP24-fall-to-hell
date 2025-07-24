@@ -125,8 +125,8 @@ public class GameObjectImpl implements GameObject {
         return drawable;
     }
     
-    public void setDrawable(Optional<Drawable> drawable) {
-        this.drawable = drawable;
+    public void setDrawable(Drawable drawable) {
+        this.drawable = Optional.of(drawable);
     }
 }
     

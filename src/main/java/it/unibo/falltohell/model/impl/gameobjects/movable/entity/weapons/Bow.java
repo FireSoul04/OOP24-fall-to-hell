@@ -16,7 +16,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableA
  */
 public class Bow extends BaseRangedWeapon{
 
-    private final Archer owner;
+    private Archer owner;
     /**
      * Constructs a new Bow with the specified ammo and cooldown.
      *
@@ -45,6 +45,9 @@ public class Bow extends BaseRangedWeapon{
     }
     public void attack(){
 
+    }
+    public void setOwner(Archer owner) {
+        this.owner = owner;
     }
     
 }
