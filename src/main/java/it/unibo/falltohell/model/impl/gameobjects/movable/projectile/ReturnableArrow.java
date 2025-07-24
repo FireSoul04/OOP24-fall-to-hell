@@ -1,8 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.projectile;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -11,7 +8,7 @@ import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.Level;
 /**
  * A special projectile that can return to the archer after being fired.
- * 
+ *
  * Behavior:
  * - Initially behaves like a normal arrow: it can hit solid objects and enemies.
  * - When the return is activated via {@code startReturn()}, the arrow becomes non-solid,
@@ -47,8 +44,8 @@ public class ReturnableArrow extends ProjectileImpl{
      */
     public void startReturn() {
         this.returning = true;
-        this.setSolid(false);  
-        this.setHit(false);    
+        this.setSolid(false);
+        this.setHit(false);
     }
      /**
      * @return true if the arrow is currently returning to the owner
@@ -66,7 +63,7 @@ public class ReturnableArrow extends ProjectileImpl{
     @Override
     public void update(double deltaTime) {
         if (isReturning()) {
-            
+
             Vector2 direction = owner.getPosition().subtract(getPosition()).normalize();
 
             setSpeedX(direction.x() * originalSpeed);
@@ -76,14 +73,14 @@ public class ReturnableArrow extends ProjectileImpl{
             setPosition(getPosition().add(displacement));
 
             if (getPosition().distance(owner.getPosition()) < 0.5) {
-                owner.returnArrow(this);  
-                destroy();               
+                owner.returnArrow(this);
+                destroy();
             }
         } else if (!isHit()) {
-            
+
             super.update(deltaTime);
         }
-        
+
     }
      /**
      * Handles collisions based on arrow state.
@@ -96,9 +93,9 @@ public class ReturnableArrow extends ProjectileImpl{
     public void onCollision(GameObject other) {
         if (!returning && other != this && other.isSolid()) {
             super.onCollision(other);
-            this.setHit(true);  
+            this.setHit(true);
         } else if (returning && isEnemy(other)) {
-            this.onProjectileHit(other); 
+            this.onProjectileHit(other);
         }
     }
     /**

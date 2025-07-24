@@ -70,6 +70,7 @@ public class Centaur extends BaseEnemy {
                 initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager);
 
         this.stats = (BaseEnemyStatistics) super.getStats();
+        super.initDrawable();
     }
 
     /**

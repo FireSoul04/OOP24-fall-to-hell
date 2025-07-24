@@ -1,9 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -11,7 +8,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Arche
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
 /**
  * A bow weapon used by the Archer character.
- * 
+ *
  * It creates {@link ReturnableArrow} projectiles when fired, allowing arrows to be recalled later.
  */
 public class Bow extends BaseRangedWeapon{
@@ -46,5 +43,5 @@ public class Bow extends BaseRangedWeapon{
     public void attack(){
 
     }
-    
+
 }

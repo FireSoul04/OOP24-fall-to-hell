@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -11,7 +10,6 @@ import it.unibo.falltohell.util.Vector2;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 import java.util.List;
 
 /**

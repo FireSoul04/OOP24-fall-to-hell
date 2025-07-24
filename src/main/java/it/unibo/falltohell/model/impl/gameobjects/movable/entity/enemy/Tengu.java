@@ -81,6 +81,7 @@ public class Tengu extends BaseEnemy {
             this.attack();
             super.getLevel().getTimerManager().restartTimer(name);
         }));
+        super.initDrawable();
     }
 
     /**

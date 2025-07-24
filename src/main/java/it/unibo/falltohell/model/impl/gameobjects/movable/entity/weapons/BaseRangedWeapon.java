@@ -7,16 +7,12 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ProjectileI
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.Level;
 
-import java.lang.foreign.Linker.Option;
-import java.util.Optional;
-
 import it.unibo.falltohell.model.api.CustomTimer;
-import it.unibo.falltohell.model.api.Drawable;
 
 
 /**
  * An abstract base class for ranged weapons that can shoot projectiles with a cooldown and limited ammo.
- * 
+ *
  * Handles:
  * - Ammo management (current and max)
  * - Cooldown timing between shots
@@ -119,7 +115,7 @@ public abstract class BaseRangedWeapon implements Weapon {
     protected Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY, Collider collider) {
         return new ProjectileImpl(level, position, speedX, speedY, collider);
     }
-    
+
 
     /**
      * Hook for subclasses: called after a projectile is shot.
@@ -129,6 +125,6 @@ public abstract class BaseRangedWeapon implements Weapon {
         // Default: do nothing
     }
 
-    
-    
+
+
 }

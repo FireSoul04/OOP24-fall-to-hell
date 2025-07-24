@@ -1,8 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
-import it.unibo.falltohell.controller.api.ImageController;
-import it.unibo.falltohell.controller.impl.ImageControllerImpl;
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
@@ -11,13 +8,10 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.BuffManager;
 import it.unibo.falltohell.model.impl.GameEventManager;
-import it.unibo.falltohell.model.impl.Sprite;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.BuffManagerImpl;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
-import java.io.IOException;
 import java.util.Optional;
 
 /**

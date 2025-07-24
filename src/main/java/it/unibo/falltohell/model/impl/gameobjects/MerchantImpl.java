@@ -2,7 +2,6 @@ package it.unibo.falltohell.model.impl.gameobjects;
 
 import it.unibo.falltohell.controller.api.FileController;
 import it.unibo.falltohell.controller.impl.FileControllerImpl;
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Item;
 import it.unibo.falltohell.model.api.gameobjects.Merchant;
@@ -22,7 +21,6 @@ import it.unibo.falltohell.util.Vector2;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Collections;
 

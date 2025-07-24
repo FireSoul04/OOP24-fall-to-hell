@@ -1,8 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -65,6 +62,6 @@ public class MovableImpl extends GameObjectImpl implements Movable{
     public void setSpeedY(double speedY) {
         this.speedY = speedY;
     }
-    
-    
+
+
 }
