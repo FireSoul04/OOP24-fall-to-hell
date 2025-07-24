@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.api;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -59,4 +60,6 @@ public interface EnemyFactory {
      * @return a new instance of Lotawiec as an {@link Enemy}
      */
     Enemy createLotawiec(Level level, Vector2 initialCords, Character character);
+
+    ManagerIngage askManager(Level level);
 }
