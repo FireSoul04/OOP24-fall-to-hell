@@ -3,11 +3,9 @@ package it.unibo.falltohell.controller.impl;
 import it.unibo.falltohell.controller.api.ImageController;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -22,7 +20,7 @@ public class ImageControllerImpl implements ImageController {
      *{@inheritDoc}
      */
     @Override
-    public Image loadImage(String fileName) {
+    public Image loadImage(final String fileName) {
         try {
             return ImageIO.read(new File(IMAGE_DIR_PATH + fileName));
         } catch (final IOException e) {

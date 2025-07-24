@@ -9,6 +9,6 @@ public interface LevelLoader {
     /**
      * Method to load a level from file.
      */
-    public void loadLevel();
+    void loadLevel();
 
 }

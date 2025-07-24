@@ -1,14 +1,9 @@
 package it.unibo.falltohell.model.impl.gameobjects.interactable;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.Item;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Buff;
 import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -24,8 +19,6 @@ public class Potion extends BaseItem {
      * Initialization of the Potion class.
      * @param lv is the current level
      * @param position is the position of the potion in the level
-     * @param width
-     * @param height
      * @param collider is the collider associated with the potion
      * @param price is the price of the potion
      * @param buff is the buff given by the potion to the character

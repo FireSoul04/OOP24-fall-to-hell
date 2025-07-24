@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.BuffBuilderImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 
@@ -111,8 +112,10 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         SPEED
     }
 
-    private BaseEnemyStatistics stats;
-    private EnemyTimerManager manager;
+    private final BaseEnemyStatistics stats;
+    private final EnemyTimerManager manager;
+    private final ManagerIngage ingageManager;
+    private boolean ingage = true;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -125,12 +128,16 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param level   the level the enemy belongs to
      * @param stats   the statistics defining the enemy's behavior and attributes
      * @param manager the timer manager responsible for managing enemy timers
+     * @param ingage  the {@link ManagerIngage} used to handle if the player enter a
+     *                safe zone
      */
-    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager) {
+    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
+            final ManagerIngage ingageManager) {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
+        this.ingageManager = ingageManager;
     }
 
     /**
@@ -177,6 +184,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
             this.manager.removeTimersFor(this, super.getLevel());
+            this.ingageManager.removeEnemy(this);
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.getLevel().removeGameObject(this);
@@ -216,6 +224,36 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     protected EnemyTimerManager getEnemyTimerManager() {
         return this.manager;
+    }
+
+    /**
+     * Returns the instance of the {@link ManagerIngage} responsible for
+     * managing
+     * if the player enter or exit a safe zone.
+     *
+     * @return the {@link ManagerIngage} instance
+     */
+    protected ManagerIngage getManagerIngage() {
+        return this.ingageManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setIngage() {
+        this.ingage = !this.ingage;
+    }
+
+    /**
+     * Returns the current engagement state of the entity.
+     *
+     * @return {@code true} if the entity is currently engaged (e.g., in combat or
+     *         alerted),
+     *         {@code false} otherwise.
+     */
+    protected boolean getIngage() {
+        return this.ingage;
     }
 
     /**

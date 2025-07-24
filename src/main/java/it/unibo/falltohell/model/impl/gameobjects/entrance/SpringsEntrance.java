@@ -14,19 +14,16 @@ import it.unibo.falltohell.util.Vector2;
  * Class that represents the entrance of the springs.
  * @author Martina Malagoli
  */
-public class SpringsEntrance extends GameObjectImpl {
+public class SpringsEntrance extends BaseEntrance {
 
     /**
      * Initialization of the SpringsEntrance class.
      * @param lv is the level of the entrance
      * @param position is the position of the entrance in the level
-     * @param width
-     * @param height
      * @param collider associated with this entrance
      */
-    public SpringsEntrance(final Level lv, final Vector2 position,
-                           final Collider collider) {
-        super(lv, position, false, collider);
+    public SpringsEntrance(final Level lv, final Vector2 position, final Collider collider) {
+        super(lv, position, collider);
     }
 
     /**
@@ -38,6 +35,9 @@ public class SpringsEntrance extends GameObjectImpl {
         final Statistics statistics = this.getLevel().getGameData().getCurrentCharacter().getStats();
         if (direction.equals(Vector2.right())) {
             statistics.setLife(statistics.getFullLife());
+            this.getListener().call();
+        } else if (direction.equals(Vector2.left())) {
+            this.getListener().call();
         }
     }
 }

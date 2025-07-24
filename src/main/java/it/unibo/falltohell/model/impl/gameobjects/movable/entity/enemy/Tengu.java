@@ -9,6 +9,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.EnemyTimerManage
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.RestrictedLongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.BaseEnemyProjectile;
@@ -61,18 +62,19 @@ public class Tengu extends BaseEnemy {
      * @param initialCord the initial spawn position of this enemy
      * @param character   the {@link Character} this enemy targets
      * @param manager     the {@link EnemyTimerManager} used to handle enemy timers
+     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
      *
      * @see RestrictedLongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
     public Tengu(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME),
-                manager);
+                manager, ingage);
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
@@ -81,6 +83,7 @@ public class Tengu extends BaseEnemy {
             this.attack();
             super.getLevel().getTimerManager().restartTimer(name);
         }));
+        ingage.addEnemy(this);
         super.initDrawable();
     }
 
@@ -97,7 +100,7 @@ public class Tengu extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseBlock) {
+        if (other instanceof BaseBlock || other instanceof BaseEntrance) {
             if (direction.y() != 0) {
                 this.collided = Optional.of(super.getPosition());
             }
@@ -116,7 +119,7 @@ public class Tengu extends BaseEnemy {
         if (this.stats.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new BaseEnemyProjectile(super.getLevel(),
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
-                    this.stats.getProjectileSpeed().x(), this.stats.getProjectileSpeed().y(),
+                    this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A);
         }
     }
@@ -132,7 +135,7 @@ public class Tengu extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
 
         while (otherX > 0) {
-            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
+            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
                 if (this.stats.getInitialPos()
                         .distance(new Vector2(super.getPosition().x() + (otherX * this.direction), y)) <= this.stats
                                 .getDistance()) {

@@ -38,8 +38,6 @@ class TestCollisions {
     private final Movable dummy1 = new MovableImpl(
             fakeLevel,
             Vector2.zero(),
-            0,
-            0,
             1,
             1,
             new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
@@ -57,8 +55,6 @@ class TestCollisions {
     private final GameObject dummy2 = new MovableImpl(
         fakeLevel,
         Vector2.zero(),
-        0,
-        0,
         -1,
         -1,
         new BoxCollider(Vector2.zero(), new Dimensions(20, 20))
@@ -67,8 +63,6 @@ class TestCollisions {
     private final GameObject block = new GameObjectImpl(
         fakeLevel,
         new Vector2(200, 200),
-        0,
-        0,
         true,
         new BoxCollider(Vector2.zero(), new Dimensions(20, 20))) {
     };

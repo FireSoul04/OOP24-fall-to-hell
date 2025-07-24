@@ -10,6 +10,7 @@ import java.util.Optional;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.util.Dimensions;
@@ -63,13 +64,15 @@ public class Centaur extends BaseEnemy {
      * @param character   the target {@link Character} this enemy reacts to
      * @param manager     the {@link EnemyTimerManager} that handles familiar logic
      *                    in this context
+     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager);
+                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager, ingage);
 
         this.stats = (BaseEnemyStatistics) super.getStats();
+        ingage.addEnemy(this);
         super.initDrawable();
     }
 
@@ -86,7 +89,7 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseBlock) {
+        if (other instanceof BaseBlock || other instanceof BaseEntrance) {
             if (direction.y() != 0) {
                 if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
                     this.collided = Optional.ofNullable(direction);
@@ -118,7 +121,7 @@ public class Centaur extends BaseEnemy {
         final double characterX = this.stats.getCharacter().getPosition().x();
         final int characterDirection;
 
-        if (character.distance(super.getPosition()) > this.stats.getSenseDistance()) {
+        if (character.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
             if (this.collided.isEmpty()) {
                 super.setPosition(super.getPosition().add(
                         (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction,

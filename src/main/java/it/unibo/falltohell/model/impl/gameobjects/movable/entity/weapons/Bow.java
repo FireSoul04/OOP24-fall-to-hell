@@ -13,7 +13,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableA
  */
 public class Bow extends BaseRangedWeapon{
 
-    private final Archer owner;
+    private Archer owner;
     /**
      * Constructs a new Bow with the specified ammo and cooldown.
      *
@@ -37,11 +37,14 @@ public class Bow extends BaseRangedWeapon{
      * @return a new {@link ReturnableArrow} instance
      */
     @Override
-    public Projectile createProjectile(Level level, Vector2 position, double speedX, double speedY,Collider collider) {
-        return new ReturnableArrow(level, position, speedX, speedY, collider, owner);
+    public Projectile createProjectile(Level level, Vector2 position, Vector2 speed, Collider collider) {
+        return new ReturnableArrow(level, position, speed, collider, owner);
     }
     public void attack(){
 
+    }
+    public void setOwner(Archer owner) {
+        this.owner = owner;
     }
 
 }
