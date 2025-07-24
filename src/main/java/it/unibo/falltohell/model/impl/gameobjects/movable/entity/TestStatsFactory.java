@@ -1,14 +1,12 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
-import java.util.stream.Collector.Characteristics;
-
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-public class TestStatsFactory {
+public final class TestStatsFactory {
     private TestStatsFactory() {
-        
+
     }
 
     /**
@@ -18,6 +16,6 @@ public class TestStatsFactory {
      */
     public static CharacterStatistics createDefault() {
         return new StatisticFactoryImpl().createCharacterStatistic(100, 10, new Vector2(2, 2),
-         new Dimensions(1.0,1.0), 0, 0.5);
+                new Dimensions(1.0, 1.0), 0, 0.5);
     }
 }

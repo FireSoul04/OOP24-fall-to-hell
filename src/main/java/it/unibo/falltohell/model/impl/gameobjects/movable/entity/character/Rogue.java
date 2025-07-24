@@ -43,6 +43,7 @@ public class Rogue extends BaseCharacter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void update(final double deltaTime) {
         super.update(deltaTime);
         if (this.getLevel().getGameEventManager().checkCondition("ActiveAbility")) {
