@@ -14,9 +14,9 @@ public class ManagerIngage {
     private final Set<Enemy> listEnemy = new HashSet<>();
     private AggroListener listener = () -> this.change();
 
-    public void addEntrance(final BaseEntrance entrance){
+    public AggroListener addEntrance(final BaseEntrance entrance){
         this.listEntrance.add(entrance);
-        entrance.(listener);
+        return this.listener;
     }
 
     public void addEnemy(final Enemy enemy){
@@ -25,7 +25,6 @@ public class ManagerIngage {
 
     public void removeEntrance(final BaseEntrance entrance){
         this.listEntrance.remove(entrance);
-        entrance.(Optional.empty());
     }
 
     public void removeEnemy(final Enemy enemy){
