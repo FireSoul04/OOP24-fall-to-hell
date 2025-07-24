@@ -39,7 +39,7 @@ public class MerchantTest extends GameObjectImpl implements Merchant {
     private final List<String> allMerchFromFile;
     private int potionCounter;
     /**
-     * Initialization of the Merchant class.
+     * Initialization of the MerchantTest class.
      * @param lv is the current level
      * @param position is the position of the merchant in the level
      * @param width
