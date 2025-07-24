@@ -1,4 +1,4 @@
-package it.unibo.falltohell;
+package it.unibo.falltohell.test.util;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
