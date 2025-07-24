@@ -62,6 +62,7 @@ public class Tengu extends BaseEnemy {
      * @param initialCord the initial spawn position of this enemy
      * @param character   the {@link Character} this enemy targets
      * @param manager     the {@link EnemyTimerManager} used to handle enemy timers
+     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
      *
      * @see RestrictedLongRangeEnemyStatistics
      * @see CustomTimerImpl

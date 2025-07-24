@@ -64,6 +64,7 @@ public class Imp extends BaseEnemy {
      * @param character   the target {@link Character} to track and attack
      * @param manager     the {@link EnemyTimerManager} responsible for managing
      *                    enemy timers
+     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
      */
     public Imp(final Level level, final Vector2 initialCord, final Character character,
             final EnemyTimerManager manager, final ManagerIngage ingage) {

@@ -65,6 +65,7 @@ public class Lotawiec extends BaseEnemy {
      * @param initialCord the initial position of the enemy
      * @param character   the target character this enemy tracks and attacks
      * @param manager     the timer manager handling enemy-specific timers
+     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
      *
      * @see LongRangeEnemyStatistics
      * @see CustomTimerImpl

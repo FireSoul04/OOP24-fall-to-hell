@@ -128,8 +128,11 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param level   the level the enemy belongs to
      * @param stats   the statistics defining the enemy's behavior and attributes
      * @param manager the timer manager responsible for managing enemy timers
+     * @param ingage  the {@link ManagerIngage} used to handle if the player enter a
+     *                safe zone
      */
-    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager, final ManagerIngage ingageManager) {
+    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
+            final ManagerIngage ingageManager) {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
@@ -223,14 +226,32 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         return this.manager;
     }
 
+    /**
+     * Returns the instance of the {@link ManagerIngage} responsible for
+     * managing
+     * if the player enter or exit a safe zone.
+     *
+     * @return the {@link ManagerIngage} instance
+     */
     protected ManagerIngage getManagerIngage() {
         return this.ingageManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setIngage() {
         this.ingage = !this.ingage;
     }
 
+    /**
+     * Returns the current engagement state of the entity.
+     *
+     * @return {@code true} if the entity is currently engaged (e.g., in combat or
+     *         alerted),
+     *         {@code false} otherwise.
+     */
     protected boolean getIngage() {
         return this.ingage;
     }

@@ -14,18 +14,21 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Lotawiec;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.Tengu;
 import it.unibo.falltohell.util.Vector2;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.AggroListener;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 /**
  * Concrete implementation of the {@link EnemyFactory} interface.
  * <p>
- * This class is responsible for creating specific {@link Enemy} instances,
- * such as {@link Centaur}, {@link Imp}, {@link Lotawiec} and {@link Tengu}.
- * </p>
+ * Responsible for creating specific enemy instances ({@link Centaur},
+ * {@link Imp},
+ * {@link Lotawiec}, {@link Tengu}) tied to a given level and player character.
  * <p>
- * This factory also ensures that each {@link Level} has exactly one
- * {@link EnemyTimerManager}, reused by all enemies within that level.
+ * Each {@link Level} is associated with a single shared
+ * {@link EnemyTimerManager}
+ * and a {@link ManagerIngage} to manage timers and enemy aggro state
+ * respectively.
+ * This sharing avoids duplication and eases management of enemy-related
+ * resources.
  * </p>
  *
  * @see Enemy
@@ -84,16 +87,18 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * {@inheritDoc}
      */
     @Override
-    public ManagerIngage askManager(final Level level){
+    public ManagerIngage askManager(final Level level) {
         return ManagerHolder.getManagerIngageFor(level);
     }
 
     /**
-     * Static nested utility class that holds a single {@link EnemyTimerManager}
-     * per {@link Level}.
+     * Static nested utility class that manages shared instances of
+     * {@link EnemyTimerManager} and {@link ManagerIngage} per {@link Level}.
      * <p>
-     * Ensures that all enemies within the same level share the same timer manager.
-     * This avoids duplication and simplifies timer cleanup when the level ends.
+     * Ensures that all enemies within the same level share the same timer manager
+     * and aggro manager. This approach avoids redundant object creation and
+     * simplifies management and cleanup of timers and aggro states when the level
+     * ends.
      * </p>
      */
     private static final class ManagerHolder {
@@ -111,6 +116,13 @@ public class EnemyFactoryImpl implements EnemyFactory {
             return MANAGER_TIMER.computeIfAbsent(level, l -> new EnemyTimeManagerImpl());
         }
 
+        /**
+         * Retrieves the {@link ManagerIngage} associated with the specified level,
+         * creating a new one if it does not already exist.
+         *
+         * @param level the level for which to retrieve the aggro manager
+         * @return the shared {@link ManagerIngage} instance for the level
+         */
         static ManagerIngage getManagerIngageFor(final Level level) {
             return MANAGER_AGGRO.computeIfAbsent(level, l -> new ManagerIngage());
         }

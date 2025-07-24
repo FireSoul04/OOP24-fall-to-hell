@@ -64,6 +64,7 @@ public class Centaur extends BaseEnemy {
      * @param character   the target {@link Character} this enemy reacts to
      * @param manager     the {@link EnemyTimerManager} that handles familiar logic
      *                    in this context
+     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,
             final EnemyTimerManager manager, final ManagerIngage ingage) {
