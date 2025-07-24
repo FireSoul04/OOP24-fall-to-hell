@@ -25,8 +25,6 @@ public class CharacterChanger extends GameObjectImpl implements Interactable {
      * Initialization of the CharacterChanger class.
      * @param lv is the current level
      * @param position is the position of this object in the level
-     * @param width
-     * @param height
      * @param collider is the collider associated with this object
      * @param characters is the map of all characters in the game
      */
