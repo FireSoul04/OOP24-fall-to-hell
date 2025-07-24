@@ -19,9 +19,10 @@ public class Bow extends BaseRangedWeapon{
      *
      * @param ammo the initial amount of ammo
      * @param cooldown the cooldown time between shots
+     * @param fileName is the name of the image file associated to the bow
      */
-    public Bow(int ammo, double cooldown,Archer owner) {
-        super(owner.getLevel(), owner.getPosition(), ammo, cooldown);
+    public Bow(int ammo, double cooldown,Archer owner, final String fileName) {
+        super(owner.getLevel(), owner.getPosition(), ammo, cooldown, fileName);
         this.owner = owner;
     }
      /**
@@ -38,7 +39,7 @@ public class Bow extends BaseRangedWeapon{
      */
     @Override
     public Projectile createProjectile(Level level, Vector2 position, Vector2 speed, Collider collider) {
-        return new ReturnableArrow(level, position, speed, collider, owner);
+        return new ReturnableArrow(level, position, speed, collider, owner, "");
     }
     public void attack(){
 

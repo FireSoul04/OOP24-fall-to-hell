@@ -24,9 +24,11 @@ public class Archer extends BaseCharacter {
      * @param position the initial position
      * @param stats    the character statistics<
      * @param bow      the ranged weapon used to shoot arrows
+     * @param fileName is the name of the image file associated to the archer
      */
-    public Archer(final Level level, final Vector2 position, final CharacterStatistics stats, final Bow bow) {
-        super(level, position, stats);
+    public Archer(final Level level, final Vector2 position, final CharacterStatistics stats, final Bow bow,
+                  final String fileName) {
+        super(level, position, stats, fileName);
         this.bow = bow;
 
     }

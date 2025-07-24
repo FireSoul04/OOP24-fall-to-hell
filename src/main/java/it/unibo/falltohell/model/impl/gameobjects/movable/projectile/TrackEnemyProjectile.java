@@ -55,6 +55,7 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * @param character the target character to track
      * @param distance  the initial tracking range before switching to default
      *                  behavior
+     * @param fileName  is the name of the image file associated to the track enemy projectile
      *
      * @see it.unibo.falltohell.model.api.Level
      * @see Vector2
@@ -62,8 +63,9 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * @see Character
      */
     public TrackEnemyProjectile(final Level level, final Vector2 position, final Vector2 speed,
-            final Collider collider, final double damage, final Character character, final double distance) {
-        super(level, position, speed, collider, damage);
+                                final Collider collider, final double damage, final Character character,
+                                final double distance, final String fileName) {
+        super(level, position, speed, collider, damage, fileName);
         this.character = character;
         this.distance = distance + DISTANCE_BUFF;
 
