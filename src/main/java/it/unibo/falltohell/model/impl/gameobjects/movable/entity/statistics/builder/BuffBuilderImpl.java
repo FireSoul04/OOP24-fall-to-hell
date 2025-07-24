@@ -75,6 +75,6 @@ public class BuffBuilderImpl implements BuffBuilder {
         if (level == null || position == null || buff == null) {
             throw new IllegalStateException("Level, position, and buff must be set before building DropImpl.");
         }
-        return new DropImpl(level, position, buff);
+        return new DropImpl(level, position, buff, "");
     }
 }

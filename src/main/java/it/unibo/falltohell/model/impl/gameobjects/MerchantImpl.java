@@ -140,6 +140,6 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
         return new Potion(this.getLevel(),
                 this.computePosition(),
                 potionCollider,
-                Long.parseLong(cost), buff);
+                Long.parseLong(cost), buff, "");
     }
 }

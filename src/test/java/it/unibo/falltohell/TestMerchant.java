@@ -25,7 +25,7 @@ class TestMerchant {
     void initialization() {
         final Level level = new LevelTest();
         this.merchant = new MerchantTest(level, Vector2.zero(), new BoxCollider());
-        this.character = new Rogue(level, Vector2.zero());
+        this.character = new Rogue(level, Vector2.zero(), "rogue.png");
     }
 
     @Test

@@ -42,18 +42,14 @@ class TestSprings {
     void initialization() {
         final Level level = new LevelTest();
         this.characters = new HashMap<>();
-        this.characters.put(CharacterID.ROGUE, new Rogue(level, Vector2.zero()));
-        this.characters.put(CharacterID.DRUID, new Druid(level, Vector2.zero()));
+        this.characters.put(CharacterID.ROGUE, new Rogue(level, Vector2.zero(), "rogue.png"));
+        this.characters.put(CharacterID.DRUID, new Druid(level, Vector2.zero(), "druid.png"));
         this.data = new GameDataImpl(1000, CharacterID.ROGUE, this.characters);
         level.linkGameData(this.data);
-        this.savePoint = new SavePoint(
-            level,
-            Vector2.zero(),
-            new BoxCollider(),
-            data
-        );
+        this.savePoint = new SavePoint(level, Vector2.zero(), new BoxCollider(), data, "");
         this.saveController = new SaveFileControllerImpl(data);
-        this.characterChanger = new CharacterChanger(level, Vector2.zero(), new BoxCollider(), this.characters );
+        this.characterChanger = new CharacterChanger(level, Vector2.zero(), new BoxCollider(), this.characters,
+                "" );
         this.entrance = new SpringsEntrance(level, Vector2.zero(), new BoxCollider());
     }
 
