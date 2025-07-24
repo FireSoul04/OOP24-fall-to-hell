@@ -1,13 +1,9 @@
 package it.unibo.falltohell.model.impl.gameobjects.entrance;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.util.Vector2;
 
 /**

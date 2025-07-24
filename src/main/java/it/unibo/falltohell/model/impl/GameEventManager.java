@@ -24,7 +24,7 @@ public class GameEventManager<K> {
      * @param key the key identifying the event
      * @param condition the condition to check for this event
      */
-    public void addCondition(K key, GameEventCondition condition) {
+    public void addCondition(final K key, final GameEventCondition condition) {
         this.conditions.put(key, condition);
     }
     /**
@@ -33,7 +33,7 @@ public class GameEventManager<K> {
      * @param key the key identifying the event
      * @return {@code true} if the condition is met, {@code false} otherwise
      */
-    public boolean checkCondition(K key) {
+    public boolean checkCondition(final K key) {
         return this.conditions.get(key).test();
     }
     /**
@@ -42,11 +42,11 @@ public class GameEventManager<K> {
      * @param key the key identifying the event
      * @param action the action to execute
      */
-    public void addAction(K key, GameEvent action) {
+    public void addAction(final K key, final GameEvent action) {
         this.actions.put(key, action);
     }
     /**
-     * Checks all registered conditions and executes the corresponding 
+     * Checks all registered conditions and executes the corresponding
      * actions if the conditions are met.
      */
     public void update() {
@@ -54,7 +54,7 @@ public class GameEventManager<K> {
             if (this.actions.containsKey(key) && cond.test()) {
                 try {
                     this.actions.get(key).execute();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     e.printStackTrace();
                 }
             }

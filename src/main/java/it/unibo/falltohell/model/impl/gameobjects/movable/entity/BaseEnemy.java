@@ -129,7 +129,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param level   the level the enemy belongs to
      * @param stats   the statistics defining the enemy's behavior and attributes
      * @param manager the timer manager responsible for managing enemy timers
-     * @param ingage  the {@link ManagerIngage} used to handle if the player enter a
+     * @param ingageManager  the {@link ManagerIngage} used to handle if the player enter a
      *                safe zone
      */
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,

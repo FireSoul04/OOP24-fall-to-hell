@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Class to maintain the current state of the game.
+ *
  * @author Martina Malagoli
  */
 public class GameDataImpl implements GameData {
@@ -17,11 +18,13 @@ public class GameDataImpl implements GameData {
 
     /**
      * Initialization of GameData when reading an already existent save file.
-     * @param points saved on the save file
+     *
+     * @param points      saved on the save file
      * @param characterID is the ID of last character used before saving
-     * @param characters is the map of characters in the game
+     * @param characters  is the map of characters in the game
      */
-    public GameDataImpl(final long points, final CharacterID characterID, Map<CharacterID, Character> characters) {
+    public GameDataImpl(final long points, final CharacterID characterID,
+            final Map<CharacterID, Character> characters) {
         this.points = points;
         this.currentCharacter = characters.get(characterID);
     }
@@ -29,7 +32,7 @@ public class GameDataImpl implements GameData {
     /**
      * Initialization of GameData when starting a new game.
      */
-    public GameDataImpl(Map<CharacterID, Character> characters) {
+    public GameDataImpl(final Map<CharacterID, Character> characters) {
         this(0, CharacterID.ROGUE, characters);
     }
 
@@ -79,6 +82,7 @@ public class GameDataImpl implements GameData {
 
     /**
      * Method to check if the amount of points is positive.
+     *
      * @param amount of points
      */
     private void checkAmount(final long amount) {

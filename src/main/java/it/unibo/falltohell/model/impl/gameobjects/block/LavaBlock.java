@@ -32,17 +32,17 @@ public class LavaBlock extends BaseBlock {
     }
 
     /**
-     *{@inheritDoc}
+     * {@inheritDoc}
      * It is used to deal damage continuously to an entity as it
      * walks on this type of block.
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
-            final String ID = String.valueOf(Objects.hash(this, entity));
-            final String name = "LavaBlock" + ID;
+            final String id = String.valueOf(Objects.hash(this, entity));
+            final String name = "LavaBlock" + id;
             final TimerManager timerManager = this.getLevel().getTimerManager();
-            if (timerManager.searchTimer(name)){
+            if (timerManager.searchTimer(name)) {
                 timerManager.addTimer(name, new CustomTimerImpl(TIME, () -> {
                     entity.getStats().subLife(DAMAGE);
                     timerManager.restartTimer(name);
@@ -59,8 +59,8 @@ public class LavaBlock extends BaseBlock {
     @Override
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
         if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
-            final String ID = String.valueOf(Objects.hash(this, entity));
-            final String name = "LavaBlock" + ID;
+            final String id = String.valueOf(Objects.hash(this, entity));
+            final String name = "LavaBlock" + id;
             final TimerManager timerManager = this.getLevel().getTimerManager();
             if (timerManager.searchTimer(name)) {
                 timerManager.removeTimer(name);

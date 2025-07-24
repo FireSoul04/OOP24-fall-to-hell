@@ -20,34 +20,34 @@ import java.util.Map;
  */
 public class GameImpl implements Game {
 
-	private final Level level;
-	private final GameData gameData;
+    private final Level level;
+    private final GameData gameData;
     private final Map<CharacterID, Character> characters;
 
-	/**
-	 * Creates the game with the demo level.
-	 */
-	public GameImpl(final Level level, final GameData gameData, final Map<CharacterID, Character> characters) {
-		this.level = level;
-		this.gameData = gameData;
+    /**
+     * Creates the game with the demo level.
+     */
+    public GameImpl(final Level level, final GameData gameData, final Map<CharacterID, Character> characters) {
+        this.level = level;
+        this.gameData = gameData;
         this.characters = characters;
-	}
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Level getLevel() {
-		return this.level;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Level getLevel() {
+        return this.level;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public GameData getGameData() {
-		return this.gameData;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameData getGameData() {
+        return this.gameData;
+    }
 
     /**
      * {@inheritDoc}

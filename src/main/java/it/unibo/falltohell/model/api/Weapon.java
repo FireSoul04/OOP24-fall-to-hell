@@ -5,10 +5,10 @@ package it.unibo.falltohell.model.api;
  *
  * @author Davide Mancini
  */
-public interface Weapon {
+public interface Weapon extends GameObject {
 
-	/**
-	 * Perform an attack.
-	 */
-	void attack();
+    /**
+     * Perform an attack.
+     */
+    void attack();
 }

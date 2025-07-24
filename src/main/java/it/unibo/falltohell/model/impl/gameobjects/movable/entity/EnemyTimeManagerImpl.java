@@ -97,7 +97,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
     public void removeTimersFor(final Enemy enemy, final Level level) {
         final List<String> timers = enemyTimers.remove(enemy);
         if (timers != null) {
-            for (String timer : timers) {
+            for (final String timer : timers) {
                 level.getTimerManager().removeTimer(timer);
             }
         }

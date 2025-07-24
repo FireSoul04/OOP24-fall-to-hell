@@ -1,8 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder;
 
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Buff;
@@ -35,7 +32,6 @@ public class BuffBuilderImpl implements BuffBuilder {
     private Level level;
     private Vector2 position;
     private Buff buff;
-    
 
     /**
      * {@inheritDoc}
@@ -70,7 +66,7 @@ public class BuffBuilderImpl implements BuffBuilder {
         }
         return this;
     }
-    
+
     /**
      * {@inheritDoc}
      */
