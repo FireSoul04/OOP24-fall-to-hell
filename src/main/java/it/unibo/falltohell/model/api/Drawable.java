@@ -9,6 +9,17 @@ import it.unibo.falltohell.util.Vector2;
 public interface Drawable {
 
     /**
+     * Priority of the drawable object when it must be rendered.
+     */
+    enum Priority {
+        GUI,
+        HIGH,
+        MEDIUM,
+        LOW,
+        BACKGROUND
+    }
+
+    /**
      * Method to mirror a drawable object.
      * @param mirroring tells if the drawable object should be mirrored
      */
@@ -36,4 +47,9 @@ public interface Drawable {
      * with the drawable object.
      */
     Vector2 getPosition();
+
+    /**
+     * @return the priority of the drawable object when it has to be rendered
+     */
+    Priority getPriority();
 }
