@@ -29,7 +29,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private final GameEventManager<String> input;
     private final CharacterStatistics stats;
     private final BuffManager buffManager;
-    private Vector2 jumpVelocity;
     private Vector2 gravity;
     private int currentJumpFrames;
     private double jumpingSpeed;
@@ -52,7 +51,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.currentJumpFrames = 0;
         this.jumpingSpeed = this.getStats().getInitialSpeed().y();
         this.jumping = false;
-        this.jumpVelocity = Vector2.zero();
         this.gravity = Vector2.zero();
         this.stats = stats;
         this.input = level.getGameEventManager();
@@ -102,11 +100,11 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
             // This multiplier let the character slow down when the player stop the jump event
             final double multiplier = (MAX_JUMP_HEIGHT - this.currentJumpFrames) / (double) MAX_JUMP_HEIGHT;
             final double corrector = GRAVITY_STEP.y() * (this.jumping ? 1.0 : multiplier);
-            this.jumpVelocity = new Vector2(
+            final Vector2 jumpVelocity = new Vector2(
                 0.0,
                 2 * (currentJumpFrames - MAX_JUMP_HEIGHT) * this.jumpingSpeed * corrector * deltaTime
             );
-            this.setPosition(this.getPosition().add(this.jumpVelocity));
+            this.setPosition(this.getPosition().add(jumpVelocity));
             this.currentJumpFrames++;
         }
     }

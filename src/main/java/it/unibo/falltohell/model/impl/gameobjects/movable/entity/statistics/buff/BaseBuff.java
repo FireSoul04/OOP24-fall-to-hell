@@ -17,7 +17,7 @@ public abstract class BaseBuff implements Buff {
      */
     public BaseBuff(final CharacterStatistics characterStatistics, final double multiplier) {
         this.characterStatistics = characterStatistics;
-        if (multiplier <= 0 && multiplier > 1) {
+        if (multiplier <= 0 || multiplier > 1) {
             throw new IllegalArgumentException("The multiplier should be between the values of 0 and 1");
         }
     }

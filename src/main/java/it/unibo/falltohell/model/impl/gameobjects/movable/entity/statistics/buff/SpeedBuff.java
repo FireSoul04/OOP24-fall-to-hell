@@ -31,7 +31,7 @@ public class SpeedBuff extends BaseBuff {
      */
     @Override
     public void apply() {
-        super.getCharacterStatistics().addSpeed(buffAmount.x(), buffAmount.y());
+        super.getCharacterStatistics().addSpeed(buffAmount);
     }
 
     /**
@@ -39,6 +39,6 @@ public class SpeedBuff extends BaseBuff {
      */
     @Override
     public void remove() {
-        super.getCharacterStatistics().subSpeed(buffAmount.x(), buffAmount.y());
+        super.getCharacterStatistics().subSpeed(buffAmount);
     }
 }

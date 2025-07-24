@@ -69,9 +69,10 @@ public class GameWindowImpl implements GameWindow {
 		mainFrame.pack();
 		mainFrame.setMinimumSize(mainFrame.getSize());
 		mainFrame.addComponentListener(new ComponentAdapter() {
+			@Override
 			public void componentResized(final ComponentEvent e) {
 				final Dimension d = ((JFrame) e.getComponent()).getContentPane().getSize();
-				scale = new Vector2(d.getWidth() / (double) width, d.getHeight() / (double) height);
+				scale = new Vector2(d.getWidth() / width, d.getHeight() / height);
 			}
 		});
 	}

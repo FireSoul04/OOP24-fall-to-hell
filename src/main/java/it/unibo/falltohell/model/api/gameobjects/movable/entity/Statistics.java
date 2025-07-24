@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.api.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -9,7 +10,7 @@ import it.unibo.falltohell.util.Vector2;
  *
  * @author Davide Mancini
  * @author Sara Visani
- * @see it.unibo.falltohell.model.api.gameobjects.movable.Entity
+ * @see Entity
  */
 public interface Statistics {
 
@@ -121,19 +122,17 @@ public interface Statistics {
      * Adds a specified amount to the entity's current Speed.
      * <p>
      *
-     * @param speedX the amount of Speed to add
-     * @param speedY
+     * @param speed the amount of speed to add
      */
-    void addSpeed(double speedX, double speedY);
+    void addSpeed(Vector2 speed);
 
     /**
      * Subtracts a specified amount from the entity's current Speed.
      * <p>
      *
-     * @param speedX the amount of Speed to subtract
-     * @param speedY
+     * @param speed the amount of speed to subtract
      */
-    void subSpeed(double speedX, double speedY);
+    void subSpeed(Vector2 speed);
 
     /**
      * Returns the physical size of the entity.
