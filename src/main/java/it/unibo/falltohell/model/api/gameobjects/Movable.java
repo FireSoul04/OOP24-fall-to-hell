@@ -8,28 +8,21 @@ public interface Movable extends GameObject {
     /**
      * Updates the position of the object based on its speed and the elapsed time.
      *
-     * @param deltaTime the time elapsed since the last update (in seconds)
+     * @param deltaTime the time elapsed since the last update
      */
     void update(double deltaTime);
 
     /**
-     * Returns the horizontal speed of the object.
+     * Returns the speed of the object.
      *
-     * @return the horizontal speed
+     * @return the speed
      */
-    double getSpeedX();
+    Vector2 getSpeed();
 
     /**
-     * Returns the vertical speed of the object.
+     * Sets the speed of the object.
      *
-     * @return the vertical speed
-     */
-    double getSpeedY();
-
-    /**
-     * Sets the horizontal speed of the object.
-     *
-     * @param speedX the new horizontal speed
+     * @param speed the new speed
      */
     void setSpeed(Vector2 speed);
 

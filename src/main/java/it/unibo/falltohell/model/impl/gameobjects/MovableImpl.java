@@ -16,6 +16,7 @@ import it.unibo.falltohell.util.Vector2;
  * </p>
  */
 public class MovableImpl extends GameObjectImpl implements Movable {
+
     private Vector2 speed;
 
     /**
@@ -23,8 +24,6 @@ public class MovableImpl extends GameObjectImpl implements Movable {
      *
      * @param level    the level to which this object belongs
      * @param position the initial position of the object
-     * @param width    the width of the object
-     * @param height   the height of the object
      * @param speed    the initial speed
      * @param collider the collider for this object
      */
@@ -44,8 +43,8 @@ public class MovableImpl extends GameObjectImpl implements Movable {
     /**
      * {@inheritDoc}
      */
-    public double getSpeedX() {
-        return this.speed.x();
+    public Vector2 getSpeed() {
+        return this.speed;
     }
 
     /**
@@ -53,13 +52,6 @@ public class MovableImpl extends GameObjectImpl implements Movable {
      */
     public void setSpeed(final Vector2 speed) {
         this.speed = speed;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public double getSpeedY() {
-        return this.speed.y();
     }
 
 }
