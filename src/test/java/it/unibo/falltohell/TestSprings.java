@@ -49,7 +49,7 @@ class TestSprings {
         this.savePoint = new SavePoint(
             level,
             Vector2.zero(),
-            new BoxCollider(Vector2.zero(),new Dimensions(0,0)),
+            new BoxCollider(),
             data
         );
         this.saveController = new SaveFileControllerImpl(data);
