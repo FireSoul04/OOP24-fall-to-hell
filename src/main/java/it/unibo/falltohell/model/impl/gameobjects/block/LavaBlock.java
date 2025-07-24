@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.block;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.TimerManager;
@@ -10,7 +9,6 @@ import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Class that represents a type of block that deals damage continuously
@@ -26,13 +24,11 @@ public class LavaBlock extends BaseBlock {
      * Initialization of the LavaBlock class.
      * @param lv is the level of the block
      * @param position is the position of the block in the level
-     * @param width
-     * @param height
      * @param collider associated to the block
      */
     public LavaBlock(final Level lv, final Vector2 position,
-                    final Collider collider) {
-        super(lv, position, collider);
+                     final Collider collider, final String fileName) {
+        super(lv, position, collider,fileName);
     }
 
     /**
