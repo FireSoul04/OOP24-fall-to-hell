@@ -1,10 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff;
 
-import java.lang.foreign.Linker.Option;
-import java.util.Optional;
 import java.util.UUID;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -64,6 +61,7 @@ public class DropImpl extends MovableImpl implements Drop {
         this.name = "drop-timer-" + UUID.randomUUID();
         super.getLevel().getTimerManager().addTimer(this.name,
                 new CustomTimerImpl(EXPIRE_TIME, () -> super.getLevel().removeGameObject(this)));
+        super.initDrawable();
     }
 
     /**
