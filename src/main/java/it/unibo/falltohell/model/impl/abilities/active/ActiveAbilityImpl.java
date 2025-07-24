@@ -68,7 +68,7 @@ public class ActiveAbilityImpl extends MovableImpl implements PhysicalActiveAbil
      */
     @Override
     public void onCollision(final GameObject other) {
-        if (!this.collided.isPresent()) {
+        if (this.collided.isEmpty()) {
             if (other instanceof Enemy) {
                 ((Enemy) other).setDamagedLife(this.damage);
                 this.level.removeGameObject(this);
@@ -91,7 +91,7 @@ public class ActiveAbilityImpl extends MovableImpl implements PhysicalActiveAbil
      */
     @Override
     public void update(final double deltaTime) {
-        this.attack.attack(new Vector2(super.getSpeedX(), super.getSpeedY()), deltaTime);
+        this.attack.attack(super.getSpeed(), deltaTime);
     }
 
 }

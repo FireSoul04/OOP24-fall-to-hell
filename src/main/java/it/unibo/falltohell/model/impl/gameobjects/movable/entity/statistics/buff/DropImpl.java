@@ -23,14 +23,14 @@ import it.unibo.falltohell.util.Vector2;
  * collected.
  *
  * <p>
- * This drop moves horizontally until it hits a {@link Block} from above,
+ * This drop moves horizontally until it hits a {@link BaseBlock} from above,
  * in which case it stops moving horizontally.
  * </p>
  *
  * @see Drop
  * @see Buff
  * @see Character
- * @see Block
+ * @see BaseBlock
  * @see CustomTimerImpl
  *
  * @author Sara Visani
@@ -70,20 +70,19 @@ public class DropImpl extends MovableImpl implements Drop {
      * <li>If the object is a {@link Character}, the {@link Buff} is applied,
      * the drop is removed from the level, and its associated timer is
      * cancelled.</li>
-     * <li>If the object is a {@link Block} and the collision is from below (i.e.
+     * <li>If the object is a {@link BaseBlock} and the collision is from below (i.e.
      * the drop lands on it),
      * the vertical movement is stopped.</li>
      * </ul>
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof Character) {
-            final var character = (Character) other;
+        if (other instanceof Character character) {
             character.getBuffManager().addBuff(this.buff);
             super.getLevel().getTimerManager().removeTimer(this.name);
             super.getLevel().removeGameObject(this);
         } else if (other instanceof BaseBlock && direction.y() < 0) {
-            super.setSpeed(new Vector2(this.getSpeedX(), 0));
+            super.setSpeed(new Vector2(this.getSpeed().x(), 0));
         }
     }
 
