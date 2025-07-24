@@ -29,7 +29,7 @@ public class Potion extends BaseItem {
     }
 
     @Override
-    protected void onInteract(Character character) {
+    protected void onInteract(final Character character) {
         character.getBuffManager().addBuff(this.buff);
     }
 }

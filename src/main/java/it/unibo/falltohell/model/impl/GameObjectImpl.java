@@ -34,7 +34,7 @@ public class GameObjectImpl implements GameObject {
      * @param height   the height (in tiles) of the object
      * @param collider the collider for this object
      */
-    public GameObjectImpl(Level lv, Vector2 position, Collider collider) {
+    public GameObjectImpl(final Level lv, final Vector2 position, final Collider collider) {
         this.pos = position;
         this.isSolid = true; // Default
         this.collider = collider;
@@ -55,7 +55,7 @@ public class GameObjectImpl implements GameObject {
      * @param isSolid  whether the object is solid
      * @param collider the collider for this object
      */
-    public GameObjectImpl(Level lv, Vector2 position, boolean isSolid, Collider collider) {
+    public GameObjectImpl(final Level lv, final Vector2 position, final boolean isSolid, final Collider collider) {
         this.pos = position;
         this.isSolid = isSolid;
         this.collider = collider;
@@ -67,6 +67,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Vector2 getPosition() {
         return this.pos;
     }
@@ -74,6 +75,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isSolid() {
         return this.isSolid;
     }
@@ -81,20 +83,23 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
-    public void setPosition(Vector2 position) {
+    @Override
+    public void setPosition(final Vector2 position) {
         this.pos = position;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setSolid(boolean solid) {
+    @Override
+    public void setSolid(final boolean solid) {
         this.isSolid = solid;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Collider getCollider() {
         return this.collider;
     }
@@ -102,27 +107,31 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
-    public void onCollision(GameObject other) {
+    @Override
+    public void onCollision(final GameObject other) {
 
     }
 
     /**
      * {@inheritDoc}
      */
-    public void onCollision(GameObject other, Vector2 direction) {
+    @Override
+    public void onCollision(final GameObject other, final Vector2 direction) {
 
     }
 
     /**
      * {@inheritDoc}
      */
-    public void onCollisionExit(GameObject other, Vector2 direction) {
+    @Override
+    public void onCollisionExit(final GameObject other, final Vector2 direction) {
 
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Level getLevel() {
         return this.level;
     }
@@ -139,7 +148,7 @@ public class GameObjectImpl implements GameObject {
         return drawable;
     }
 
-    public void setDrawable(Optional<Drawable> drawable) {
+    public void setDrawable(final Optional<Drawable> drawable) {
         this.drawable = drawable;
     }
 
@@ -162,7 +171,7 @@ public class GameObjectImpl implements GameObject {
      * @see Sprite
      *
      */
-    protected void initDrawable(Priority priority) {
+    protected void initDrawable(final Priority priority) {
         this.setDrawable(Optional.of(new Sprite(this, priority)));
     }
 
