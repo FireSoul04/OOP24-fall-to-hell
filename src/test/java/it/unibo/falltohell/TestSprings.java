@@ -3,6 +3,7 @@ package it.unibo.falltohell;
 import it.unibo.falltohell.controller.api.SaveFileController;
 import it.unibo.falltohell.controller.impl.SaveFileControllerImpl;
 import it.unibo.falltohell.model.api.GameData;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.impl.GameDataImpl;
 import it.unibo.falltohell.model.impl.LevelImpl;
@@ -26,9 +27,10 @@ class TestSavePoint {
 
     @BeforeEach
     void initialization() {
-        this.data = new GameDataImpl(1000, CharacterID.CASTER);
+        this.data = new GameDataImpl(1000, CharacterID.CASTER, );
+        final Level level = new LevelImpl();
         this.savePoint = new SavePoint(
-            new LevelImpl(),
+            level,
             Vector2.zero(),
             new BoxCollider(Vector2.zero(),new Dimensions(0,0)),
             data
@@ -39,11 +41,7 @@ class TestSavePoint {
     @Test
     void TestIfSavesCorrectly() {
         this.savePoint.interact();
-        try {
-            final List<String> testData = this.saveController.read();
-            assertEquals(testData, List.of("1000", CharacterID.CASTER.name()));
-        } catch (IOException e) {
-            //throw new RuntimeException(e);
-        }
+        final List<String> testData = this.saveController.read();
+        assertEquals(testData, List.of("1000", CharacterID.CASTER.name()));
     }
 }
