@@ -53,8 +53,8 @@ class TestSprings {
             data
         );
         this.saveController = new SaveFileControllerImpl(data);
-        this.characterChanger = new CharacterChanger(level, Vector2.zero(), 0, 0, new BoxCollider(new Dimensions(GameObject.TILE_SIZE, GameObject.TILE_SIZE)), this.characters );
-        this.entrance = new SpringsEntrance(level, Vector2.zero(), 0, 0, new BoxCollider(new Dimensions(GameObject.TILE_SIZE, GameObject.TILE_SIZE)));
+        this.characterChanger = new CharacterChanger(level, Vector2.zero(), new BoxCollider(), this.characters );
+        this.entrance = new SpringsEntrance(level, Vector2.zero(), new BoxCollider());
     }
 
     @Test
