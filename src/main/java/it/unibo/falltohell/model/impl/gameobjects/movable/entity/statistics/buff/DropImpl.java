@@ -9,7 +9,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.B
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Drop;
 
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.gameobjects.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 
