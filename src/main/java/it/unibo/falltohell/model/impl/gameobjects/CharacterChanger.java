@@ -48,5 +48,12 @@ public class CharacterChanger extends GameObjectImpl implements Interactable {
             (character.getCharacterID().ordinal() + 1) % characterIDs.size()
         );
         this.getLevel().getGameData().changeCurrentCharacter(this.characters.get(newCharacterID));
+        final Character newCharacter = this.characters.get(newCharacterID);
+        final Vector2 newPosition = character.getPosition();
+        newCharacter.setPosition(newPosition);
+        this.getLevel().removeGameObject(character);
+        this.getLevel().addGameObject(newCharacter);
+        character.getDrawable().ifPresent(t -> t.setVisible(false));
+        newCharacter.getDrawable().ifPresent(t -> t.setVisible(true));
     }
 }

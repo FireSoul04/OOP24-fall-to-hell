@@ -30,13 +30,10 @@ import java.util.List;
  */
 public class MerchantTest extends GameObjectImpl implements Merchant {
 
-    private static final String PATH = "src/main/resources/merchant/potions.txt";
     private static final Dimensions POTION_DIMENSION = new Dimensions(10, 10);
     private static final double DISTANCE_FROM_ITEMS = 3;
-    private static final int NUMBER_ITEMS_AVAILABLE = 3;
     private static final double BUFF_VALUE = 0.3;
     private final List<Item> merch;
-    private final List<String> allMerchFromFile;
     private int potionCounter;
 
     /**
@@ -47,11 +44,8 @@ public class MerchantTest extends GameObjectImpl implements Merchant {
      */
     public MerchantTest(final Level lv, final Vector2 position, final Collider collider) {
         super(lv, position, collider);
-        final FileController fileController = new FileControllerImpl();
-        this.allMerchFromFile = fileController.read(PATH);
         this.merch = new ArrayList<>();
         this.potionCounter = 0;
-        this.restock();
     }
 
     /**
@@ -59,9 +53,9 @@ public class MerchantTest extends GameObjectImpl implements Merchant {
      */
     @Override
     public void restock() {
-        this.getMerch().add(parseItem("life,100"));
-        this.getMerch().add(parseItem("life,100"));
-        this.getMerch().add(parseItem("life,100"));
+        this.merch.add(parseItem("life,100"));
+        this.merch.add(parseItem("life,100"));
+        this.merch.add(parseItem("life,100"));
     }
 
     /**

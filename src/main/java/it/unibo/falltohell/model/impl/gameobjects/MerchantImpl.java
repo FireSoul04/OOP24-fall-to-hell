@@ -17,6 +17,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
         this.allMerchFromFile = fileController.read(PATH);
         this.merch = new ArrayList<>();
         this.potionCounter = 0;
-        this.restock();
+        this.initDrawable(Priority.VERY_LOW, "merchant.png");
     }
 
     /**
