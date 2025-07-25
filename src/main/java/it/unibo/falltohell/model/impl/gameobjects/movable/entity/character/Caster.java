@@ -13,11 +13,11 @@ public class Caster extends BaseCharacter {
     private static final double LIFE = 10;
     private static final double ATTACK = 20;
     private static final double ATTACK_SPEED = 8;
-    private static final Vector2 SPEED = Vector2.zero();
+    private static final Vector2 SPEED = new Vector2(2, 2);
     private static final double MANA = 20;
     private static final double AMOUNT_MANA_NORMAL_ATTACK = 2;
     private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl() //TODO --> si modificano se è costante? Mi sa va cambiato
-            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(0,0), MANA, ATTACK_SPEED);
+            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,20), MANA, ATTACK_SPEED);
     private final Staff staff;
 
     /**

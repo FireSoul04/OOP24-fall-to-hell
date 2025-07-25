@@ -30,10 +30,10 @@ public class Archer extends BaseCharacter {
     private static final double LIFE = 0;
     private static final double ATTACK = 0;
     private static final double ATTACK_SPEED = 0;
-    private static final Vector2 SPEED = Vector2.zero();
+    private static final Vector2 SPEED = new Vector2(3.0, 3.0);
     private static final double MANA = 0;
     private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
-            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(0,0), MANA, ATTACK_SPEED);
+            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,20), MANA, ATTACK_SPEED);
 
 
     /**

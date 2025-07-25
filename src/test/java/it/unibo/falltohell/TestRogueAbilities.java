@@ -96,7 +96,7 @@ class TestRogueAbilities {
             10, 0, Vector2.zero(), new Dimensions(5, 5),
             enemyPosition, this.rogue, 0, sf.createOptional()
         );
-        final Enemy dummy = new BaseEnemy(this.level, enemyStats, new EnemyTimeManagerImpl(), new ManagerIngage()) {
+        final Enemy dummy = new BaseEnemy(this.level, enemyStats, new EnemyTimeManagerImpl(), new ManagerIngage(),"") {
             public void update(final double deltaTime) {
                 // Does nothing
             }

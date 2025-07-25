@@ -1,8 +1,10 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.GameData;
+import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
+import it.unibo.falltohell.util.Vector2;
 
 import java.util.Map;
 
@@ -15,6 +17,7 @@ public class GameDataImpl implements GameData {
 
     private long points;
     private Character currentCharacter;
+    private Vector2 lastSavedPosition;
 
     /**
      * Initialization of GameData when reading an already existent save file.
@@ -24,16 +27,17 @@ public class GameDataImpl implements GameData {
      * @param characters  is the map of characters in the game
      */
     public GameDataImpl(final long points, final CharacterID characterID,
-            final Map<CharacterID, Character> characters) {
+            final Map<CharacterID, Character> characters, final Vector2 position) {
         this.points = points;
         this.currentCharacter = characters.get(characterID);
+        this.lastSavedPosition = position;
     }
 
     /**
      * Initialization of GameData when starting a new game.
      */
     public GameDataImpl(final Map<CharacterID, Character> characters) {
-        this(0, CharacterID.ROGUE, characters);
+        this(0, CharacterID.ROGUE, characters, Vector2.one().multiply(GameObject.TILE_SIZE));
     }
 
     /**
@@ -78,6 +82,14 @@ public class GameDataImpl implements GameData {
     @Override
     public Character getCurrentCharacter() {
         return this.currentCharacter;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Vector2 getLastSavedPosition() {
+        return this.lastSavedPosition;
     }
 
     /**
