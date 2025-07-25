@@ -81,7 +81,7 @@ public class LevelLoaderImpl implements LevelLoader {
             case 'e' -> Optional.of(new SpringsEntrance(level, position, collider));
             case 'p' -> Optional.of(new ShopEntrance(level, position, collider));
             case 'c' -> Optional.of(new CharacterChanger(level, position, collider, level.getCharacters()));
-            case 's' -> Optional.of(new SavePoint(level, position, collider, level.getGameData()));
+            case 's' -> Optional.of(new SavePoint(level, position, collider));
             case 'm' -> Optional.of(new MerchantImpl(level, position, collider));
             case ' ' -> Optional.empty();
             default -> throw new IllegalStateException("Cannot recognize a character in the file:" + identifier);
