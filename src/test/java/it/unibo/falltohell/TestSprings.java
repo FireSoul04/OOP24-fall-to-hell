@@ -46,8 +46,8 @@ class TestSprings {
         this.characters.put(CharacterID.DRUID, new Druid(level, Vector2.zero()));
         this.data = new GameDataImpl(1000, CharacterID.ROGUE, this.characters, Vector2.one());
         level.linkGameData(this.data);
-        this.savePoint = new SavePoint(level, Vector2.zero(), new BoxCollider(), data);
-        this.saveController = new SaveFileControllerImpl(data);
+        this.savePoint = new SavePoint(level, Vector2.zero(), new BoxCollider());
+        this.saveController = new SaveFileControllerImpl();
         this.characterChanger = new CharacterChanger(level, Vector2.zero(), new BoxCollider(), this.characters);
         this.entrance = new SpringsEntrance(level, Vector2.zero(), new BoxCollider());
     }
