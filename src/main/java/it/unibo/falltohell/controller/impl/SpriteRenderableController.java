@@ -5,7 +5,7 @@ import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.view.api.Renderable;
 import it.unibo.falltohell.view.impl.SpriteRenderable;
 
-import java.awt.*;
+import java.awt.Image;
 
 /**
  * Controller that handles the update of a sprite object using the information

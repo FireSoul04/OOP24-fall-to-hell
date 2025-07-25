@@ -146,16 +146,16 @@ public class StatisticsImpl implements Statistics {
      * {@inheritDoc}
      */
     @Override
-    public void addSpeed(final double speedX, final double speedY) {
-        this.speed.add(new Vector2(speedX, speedY));
+    public void addSpeed(final Vector2 speed) {
+        this.speed = this.speed.add(speed);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void subSpeed(final double speedX, final double speedY) {
-        this.addSpeed(-speedX, -speedY);
+    public void subSpeed(final Vector2 speed) {
+        this.addSpeed(speed.invert());
     }
 
     /**

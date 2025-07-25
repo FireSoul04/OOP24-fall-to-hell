@@ -21,10 +21,11 @@ public class VinesBlock extends BaseBlock {
      * @param lv is the level of the block
      * @param position is the position of the block in the level
      * @param collider associated to the block
+     * @param fileName is the name of the image file associated to the block
      */
     public VinesBlock(final Level lv, final Vector2 position,
-                      final Collider collider, final String fileName) {
-        super(lv, position, collider, fileName);
+                      final Collider collider, final String fileName, Vector2 offset) {
+        super(lv, position, collider, fileName, offset);
     }
 
     /**

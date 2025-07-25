@@ -4,7 +4,7 @@ import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.view.api.Renderable;
 
-import java.awt.*;
+import java.awt.Image;
 import java.util.List;
 
 /**
@@ -16,8 +16,9 @@ public interface DrawableRenderableHandler {
     /**
      * Method that creates a pair of Drawable-SpriteRenderableController and that puts it on the map.
      * @param drawable object that must be added to the map with its associated spriteRenderableController
+     * @param fileName is the name of the image file associated to the drawable object
      */
-    void linkSprite(Drawable drawable, Image image);
+    void linkSprite(Drawable drawable, String fileName);
 
     /**
      * Method that removes the pair of Drawable-RenderableController from the map.

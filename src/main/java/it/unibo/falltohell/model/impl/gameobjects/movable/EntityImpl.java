@@ -31,8 +31,7 @@ public class EntityImpl extends MovableImpl implements Entity {
      *                 speed
      */
     public EntityImpl(final Level level, final Vector2 position, final Statistics stats) {
-        super(level, position, new Vector2(stats.getSpeed().x(), stats.getSpeed().y()),
-                new BoxCollider(Vector2.zero(), stats.getDimensions()));
+        super(level, position, stats.getSpeed(), new BoxCollider(Vector2.zero(), stats.getDimensions()));
         this.stats = stats;
     }
 

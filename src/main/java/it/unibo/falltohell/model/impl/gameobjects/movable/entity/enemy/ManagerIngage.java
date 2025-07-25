@@ -11,7 +11,8 @@ import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
  * A manager that coordinates engagement logic between {@link Enemy} entities
  * and {@link BaseEntrance} triggers via a shared {@link AggroListener}.
  * <p>
- * When a {@link BaseEntrance} triggers the shared listener, all registered enemies
+ * When a {@link BaseEntrance} triggers the shared listener, all registered
+ * enemies
  * toggle their engagement state using {@link Enemy#setIngage()}.
  *
  * @author Sara Visani
@@ -26,13 +27,15 @@ public class ManagerIngage {
     private AggroListener listener = () -> this.listEnemy.forEach(e -> e.setIngage());
 
     /**
-     * Registers a new {@link BaseEntrance} and returns the shared {@link AggroListener}
+     * Registers a new {@link BaseEntrance} and returns the shared
+     * {@link AggroListener}
      * to be assigned to the entrance.
      *
      * @param entrance the entrance to be added
-     * @return the shared {@link AggroListener} that toggles all enemy engagement states
+     * @return the shared {@link AggroListener} that toggles all enemy engagement
+     *         states
      */
-    public AggroListener addEntrance(final BaseEntrance entrance){
+    public AggroListener addEntrance(final BaseEntrance entrance) {
         this.listEntrance.add(entrance);
         return this.listener;
     }
@@ -42,7 +45,7 @@ public class ManagerIngage {
      *
      * @param enemy the enemy to be added
      */
-    public void addEnemy(final Enemy enemy){
+    public void addEnemy(final Enemy enemy) {
         this.listEnemy.add(enemy);
     }
 
@@ -51,7 +54,7 @@ public class ManagerIngage {
      *
      * @param entrance the entrance to remove
      */
-    public void removeEntrance(final BaseEntrance entrance){
+    public void removeEntrance(final BaseEntrance entrance) {
         this.listEntrance.remove(entrance);
     }
 
@@ -60,7 +63,7 @@ public class ManagerIngage {
      *
      * @param enemy the enemy to remove
      */
-    public void removeEnemy(final Enemy enemy){
+    public void removeEnemy(final Enemy enemy) {
         this.listEnemy.remove(enemy);
     }
 }

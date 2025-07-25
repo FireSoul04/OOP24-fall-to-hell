@@ -36,8 +36,15 @@ public class ArcherTest {
         GameCameraImpl camera = new GameCameraImpl(Vector2.zero(), 10, 10, 1.0, 100, 100);
         level = new LevelImpl(camera);
         
+<<<<<<< HEAD
         bow = new Bow(5, 0.5, null);
         archer = new Archer(level, Vector2.zero(), bow);
+=======
+        CharacterStatistics stats = TestStatsFactory.createDefault();
+        
+        bow = new Bow(5, 0.5, null, "");
+        archer = new Archer(level, Vector2.zero(), stats, bow, "");
+>>>>>>> 95740ca72d6a8dde16ea0f5f7ba16adc285bdb67
 
         bow.setOwner(archer);
         

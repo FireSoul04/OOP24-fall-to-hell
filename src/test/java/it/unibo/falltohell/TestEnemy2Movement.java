@@ -6,6 +6,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
+import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,9 +27,9 @@ public class TestEnemy2Movement {
     @BeforeEach
     public void setUp(){
         fact = new EnemyFactoryImpl();
-        chara1 = new Druid(lv, new Vector2(-50, 0));
-        chara1_2 = new Druid(lv, new Vector2(-45, 0));
-        chara2 = new Druid(lv, new Vector2(5, 0));
+        chara1 = new Druid(lv, new Vector2(-50, 0), "druid.png");
+        chara1_2 = new Druid(lv, new Vector2(-45, 0), "druid.png");
+        chara2 = new Druid(lv, new Vector2(5, 0), "druid.png");
         en1 = fact.createTengu(lv, Vector2.zero(), chara1);
         en2 = fact.createTengu(lv, new Vector2(-30, 0), chara1);
         en3 = fact.createTengu(lv, new Vector2(-40, 0), chara1);

@@ -54,7 +54,7 @@ public class LevelLoaderImpl implements LevelLoader {
     @Override
     public void loadLevel() {
         for (int y = 0; y < this.levelFromFile.size(); y++) {
-            char[] identifiers = this.levelFromFile.get(y).toCharArray();
+            final char[] identifiers = this.levelFromFile.get(y).toCharArray();
             for (int x = 0; x < identifiers.length; x++) {
                 final Vector2 position = new Vector2(x, y).multiply(DISTANCE);
                 this.parseToGameObject(identifiers[x], position);
@@ -80,8 +80,8 @@ public class LevelLoaderImpl implements LevelLoader {
             case 'v' -> Optional.of(this.blockFactory.createVinesBlock(level, position));
             case 'e' -> Optional.of(new SpringsEntrance(level, position, collider));
             case 'p' -> Optional.of(new ShopEntrance(level, position, collider));
-            case 'c' -> Optional.of(new CharacterChanger(level, position, collider, level.getCharacters()));
-            case 's' -> Optional.of(new SavePoint(level, position, collider, level.getGameData()));
+            case 'c' -> Optional.of(new CharacterChanger(level, position, collider, level.getCharacters(), ""));
+            case 's' -> Optional.of(new SavePoint(level, position, collider, level.getGameData(), ""));
             case 'm' -> Optional.of(new MerchantImpl(level, position, collider));
             case ' ' -> Optional.empty();
             default -> throw new IllegalStateException("Cannot recognize a character in the file:" + identifier);

@@ -1,10 +1,12 @@
 package it.unibo.falltohell.model.api.gameobjects;
 
 /**
- * Interface that represents an item that the character can buy from the merchant.
+ * Interface that represents an item that the character can buy from the
+ * merchant.
+ *
  * @author Martina Malagoli
  */
-public interface Item extends Interactable{
+public interface Item extends Interactable {
 
     /**
      * @return the price of the item to be sold

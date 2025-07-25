@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
+import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -32,8 +34,9 @@ public class WarScythe extends MeleeWeapon {
      * The collider has origin at (0, 0) and dimensions (10, 10).
      * </p>
      */
-    public WarScythe() {
-        super(new BoxCollider(Vector2.zero(), new Dimensions(10, 10)));
+    public WarScythe(final Level lv, final Vector2 position, final String fileName) {
+        super(lv, position, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), fileName);
+        this.initDrawable(Priority.LOW, fileName);
     }
 
 }

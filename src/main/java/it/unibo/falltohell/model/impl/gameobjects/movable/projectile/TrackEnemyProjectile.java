@@ -48,13 +48,13 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      *
      * @param level     the level this projectile belongs to
      * @param position  the initial position of the projectile
-     * @param speedX    the initial horizontal velocity
-     * @param speedY    the initial vertical velocity
+     * @param speed     the initial velocity
      * @param collider  the collider used for hit detection
      * @param damage    the damage this projectile deals on impact
      * @param character the target character to track
      * @param distance  the initial tracking range before switching to default
      *                  behavior
+     * @param fileName  is the name of the image file associated to the track enemy projectile
      *
      * @see it.unibo.falltohell.model.api.Level
      * @see Vector2
@@ -62,8 +62,9 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * @see Character
      */
     public TrackEnemyProjectile(final Level level, final Vector2 position, final Vector2 speed,
-            final Collider collider, final double damage, final Character character, final double distance) {
-        super(level, position, speed, collider, damage);
+                                final Collider collider, final double damage, final Character character,
+                                final double distance, final String fileName) {
+        super(level, position, speed, collider, damage, fileName);
         this.character = character;
         this.distance = distance + DISTANCE_BUFF;
 
@@ -92,14 +93,11 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
             final Vector2 currentPos = super.getPosition();
             final Vector2 toTarget = characterPos.subtract(currentPos).normalize();
             final Vector2 acceleration = toTarget.multiply(MAX_ACCEL);
-            Vector2 currentVelocity = new Vector2(super.getSpeedX(), super.getSpeedY());
-            currentVelocity = currentVelocity.add(acceleration.multiply(deltaTime));
-
+            Vector2 currentVelocity = super.getSpeed().add(acceleration.multiply(deltaTime));
             if (currentVelocity.magnitude() > MAX_SPEED) {
                 currentVelocity = currentVelocity.normalize().multiply(MAX_SPEED);
             }
-            super.setSpeed(new Vector2(currentVelocity.x(), currentVelocity.y()));
-
+            super.setSpeed(currentVelocity);
             super.setPosition(currentPos.add(currentVelocity.multiply(deltaTime)));
         } else {
             super.onUpdate(deltaTime);

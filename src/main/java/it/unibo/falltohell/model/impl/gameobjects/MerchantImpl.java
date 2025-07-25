@@ -26,6 +26,7 @@ import java.util.Collections;
 /**
  * Class that represents the merchant that handles the character's purchase
  * of items.
+ *
  * @author Martina Malagoli
  */
 public class MerchantImpl extends GameObjectImpl implements Merchant {
@@ -38,9 +39,11 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
     private final List<Item> merch;
     private final List<String> allMerchFromFile;
     private int potionCounter;
+
     /**
      * Initialization of the Merchant class.
-     * @param lv is the current level
+     *
+     * @param lv       is the current level
      * @param position is the position of the merchant in the level
      * @param collider is the collider associated with the merchant
      */
@@ -78,7 +81,8 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
 
     /**
      * {@inheritDoc}
-     * It is used to check at each frame if the items from the merchant's merch are sold.
+     * It is used to check at each frame if the items from the merchant's merch are
+     * sold.
      */
     @Override
     public void update() {
@@ -94,6 +98,7 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
 
     /**
      * Method to compute the position of an item.
+     *
      * @return the item's position
      */
     private Vector2 computePosition() {
@@ -105,6 +110,7 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
 
     /**
      * Method to create a new item depending on the type.
+     *
      * @param itemFileRow is the row with an item's information in the file
      * @return the new item
      */
@@ -118,15 +124,15 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
                 .getGameData()
                 .getCurrentCharacter()
                 .getStats();
-        if (type.equalsIgnoreCase("life")) {
+        if ("life".equalsIgnoreCase(type)) {
             buff = new LifeBuff(currentCharacterStats, BUFF_VALUE);
-        } else if (type.equalsIgnoreCase("attack")) {
+        } else if ("attack".equalsIgnoreCase(type)) {
             buff = new AttackBuff(currentCharacterStats, BUFF_VALUE);
-        } else if (type.equalsIgnoreCase("attsp")) {
+        } else if ("attsp".equalsIgnoreCase(type)) {
             buff = new AttackSpeedBuff(currentCharacterStats, BUFF_VALUE);
-        } else if (type.equalsIgnoreCase("speed")) {
+        } else if ("speed".equalsIgnoreCase(type)) {
             buff = new SpeedBuff(currentCharacterStats, BUFF_VALUE);
-        } else if (type.equalsIgnoreCase("mana")) {
+        } else if ("mana".equalsIgnoreCase(type)) {
             buff = new ManaBuff(currentCharacterStats, BUFF_VALUE);
         } else {
             throw new IllegalArgumentException("The row passed is not correct: there is no item with this name");
@@ -134,6 +140,6 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
         return new Potion(this.getLevel(),
                 this.computePosition(),
                 potionCollider,
-                Long.parseLong(cost), buff);
+                Long.parseLong(cost), buff, "");
     }
 }

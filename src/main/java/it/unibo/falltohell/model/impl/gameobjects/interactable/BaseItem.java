@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.interactable;
 
-import java.util.Optional;
-
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Item;
@@ -20,10 +18,20 @@ public abstract class BaseItem extends GameObjectImpl implements Item {
     private boolean sold;
     private final long price;
 
-    public BaseItem(final Level lv, final Vector2 position, final Collider collider, final long price) {
+    /**
+     * Initialization of the BaseItem class
+     * @param lv is the current level
+     * @param position is the position of the item in the level
+     * @param collider is the collider associated with the item
+     * @param price is the price of the item
+     * @param fileName is the name of the image file associated to the item
+     */
+    public BaseItem(final Level lv, final Vector2 position, final Collider collider,
+                    final long price, final String fileName) {
         super(lv, position, collider);
         this.price = price;
         this.sold = false;
+        this.initDrawable(Drawable.Priority.VERY_LOW, fileName);
     }
 
     /**

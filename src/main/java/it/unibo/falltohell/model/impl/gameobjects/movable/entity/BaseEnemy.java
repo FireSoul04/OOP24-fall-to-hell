@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
@@ -128,16 +129,18 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param level   the level the enemy belongs to
      * @param stats   the statistics defining the enemy's behavior and attributes
      * @param manager the timer manager responsible for managing enemy timers
-     * @param ingage  the {@link ManagerIngage} used to handle if the player enter a
+     * @param ingageManager  the {@link ManagerIngage} used to handle if the player enter a
      *                safe zone
+     * @param fileName is the name of the image file associated to the enemy
      */
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
-            final ManagerIngage ingageManager) {
+            final ManagerIngage ingageManager, final String fileName) {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
         this.ingageManager = ingageManager;
+        this.initDrawable(Priority.MEDIUM, fileName);
     }
 
     /**

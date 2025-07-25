@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.projectile;
 
-import java.util.Vector;
-
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
@@ -31,20 +29,19 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      *
      * @param level    the game level this projectile belongs to
      * @param position the initial position of the projectile
-     * @param speedX   the initial horizontal speed
-     * @param speedY   the initial vertical speed
+     * @param speed    the initial speed
      * @param collider the collider used for collision detection
      * @param damage   the amount of damage inflicted on hit
+     * @param fileName is the name of the image file associated to the enemy projectile
      *
      * @see Level
      * @see Vector2
      * @see Collider
      */
     public BaseEnemyProjectile(final Level level, final Vector2 position, final Vector2 speed,
-                               final Collider collider, final double damage) {
-        super(level, position, speed, collider);
+            final Collider collider, final double damage, final String fileName) {
+        super(level, position, speed, collider, fileName);
         this.damage = damage;
-        super.initDrawable();
     }
 
     /**
@@ -62,7 +59,7 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      */
     @Override
     protected void onUpdate(final double deltaTime) {
-        super.setPosition(getPosition().add(new Vector2(0, super.getSpeedY() * deltaTime)));
+        super.setPosition(getPosition().add(new Vector2(0, super.getSpeed().y() * deltaTime)));
     }
 
     /**
@@ -70,8 +67,8 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      */
     @Override
     protected void onProjectileHit(final GameObject other) {
-        if (other instanceof Character) {
-            ((Character) other).setDamagedLife(damage);
+        if (other instanceof Character character) {
+            character.setDamagedLife(damage);
         }
         super.getLevel().removeGameObject(this);
     }

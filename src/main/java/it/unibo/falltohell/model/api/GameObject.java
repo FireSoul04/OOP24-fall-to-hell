@@ -12,9 +12,9 @@ import it.unibo.falltohell.util.Vector2;
  * @author Casadei Lorenzo
  */
 public interface GameObject {
-    
-    static final double TILE_SIZE = 20.0;
-    
+
+    double TILE_SIZE = 20.0;
+
     /**
      * @return current position of this game object
      */
@@ -29,33 +29,40 @@ public interface GameObject {
      * @return true if the game object is solid, false otherwise
      */
     boolean isSolid();
+
     /**
      * Sets the solid state of this game object.
+     *
      * @param solid true if the game object is solid, false otherwise
      */
     void setSolid(boolean solid);
+
     /**
      * @param vector2
-     *           the new position of this game object
+     *                the new position of this game object
      */
     void setPosition(Vector2 vector2);
 
     /**
      * This function is called every collision with another game object.
+     *
      * @param other game object collided with
      */
     void onCollision(GameObject other);
 
     /**
      * This function is called every collision with another game object.
-     * @param other game object collided with
+     *
+     * @param other     game object collided with
      * @param direction where the collision happened
      */
     void onCollision(GameObject other, Vector2 direction);
 
     /**
-     * This function is called every time this game object stopped colliding with another.
-     * @param other game object was colliding with
+     * This function is called every time this game object stopped colliding with
+     * another.
+     *
+     * @param other     game object was colliding with
      * @param direction where the collision happened
      */
     void onCollisionExit(GameObject other, Vector2 direction);

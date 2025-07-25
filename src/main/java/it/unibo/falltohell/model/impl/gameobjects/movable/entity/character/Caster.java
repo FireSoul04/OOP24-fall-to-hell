@@ -20,12 +20,12 @@ public class Caster extends BaseCharacter {
     /**
      * Base constructor for a new caster character.
      *
-     * @param level
-     * @param position
+     * @param level where the caster actually is
+     * @param position of the caster in the level
+     * @param fileName is the name of the image file associated to the caster
      */
-    public Caster(Level level, Vector2 position) {
-        super(level, position, STATISTICS);
-        super.initDrawable();
+    public Caster(final Level level, final Vector2 position, final String fileName) {
+        super(level, position, STATISTICS, fileName);
     }
 
     @Override

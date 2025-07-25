@@ -2,7 +2,9 @@ package it.unibo.falltohell.model.impl;
 
 import java.util.Optional;
 
+import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import it.unibo.falltohell.model.api.Drawable;
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.Drawable.Sprite;
@@ -35,7 +37,7 @@ public class GameObjectImpl implements GameObject {
      * @param height   the height (in tiles) of the object
      * @param collider the collider for this object
      */
-    public GameObjectImpl(Level lv, Vector2 position, Collider collider) {
+    public GameObjectImpl(final Level lv, final Vector2 position, final Collider collider) {
         this.pos = position;
         this.isSolid = true; // Default
         this.collider = collider;
@@ -56,7 +58,7 @@ public class GameObjectImpl implements GameObject {
      * @param isSolid  whether the object is solid
      * @param collider the collider for this object
      */
-    public GameObjectImpl(Level lv, Vector2 position, boolean isSolid, Collider collider) {
+    public GameObjectImpl(final Level lv, final Vector2 position, final boolean isSolid, final Collider collider) {
         this.pos = position;
         this.isSolid = isSolid;
         this.collider = collider;
@@ -68,6 +70,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Vector2 getPosition() {
         return this.pos;
     }
@@ -75,6 +78,7 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isSolid() {
         return this.isSolid;
     }
@@ -82,20 +86,23 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
-    public void setPosition(Vector2 position) {
+    @Override
+    public void setPosition(final Vector2 position) {
         this.pos = position;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setSolid(boolean solid) {
+    @Override
+    public void setSolid(final boolean solid) {
         this.isSolid = solid;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Collider getCollider() {
         return this.collider;
     }
@@ -103,27 +110,31 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
-    public void onCollision(GameObject other) {
+    @Override
+    public void onCollision(final GameObject other) {
 
     }
 
     /**
      * {@inheritDoc}
      */
-    public void onCollision(GameObject other, Vector2 direction) {
+    @Override
+    public void onCollision(final GameObject other, final Vector2 direction) {
 
     }
 
     /**
      * {@inheritDoc}
      */
-    public void onCollisionExit(GameObject other, Vector2 direction) {
+    @Override
+    public void onCollisionExit(final GameObject other, final Vector2 direction) {
 
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Level getLevel() {
         return this.level;
     }
@@ -140,10 +151,6 @@ public class GameObjectImpl implements GameObject {
         return drawable;
     }
 
-    public void setDrawable(Optional<Drawable> drawable) {
-        this.drawable = drawable;
-    }
-
     /**
      * Initializes the graphical representation of this entity by associating it
      * with a {@link Sprite}.
@@ -152,7 +159,7 @@ public class GameObjectImpl implements GameObject {
      * complete,
      * to ensure that {@code this} refers to the fully initialized subclass
      * instance.
-     * It sets the drawable of the entity using {@link #setDrawable} and wraps the
+     * It sets the drawable object of the entity using {@link #setDrawable} and wraps the
      * sprite in an {@link Optional}.
      *
      * @implNote This method avoids invoking {@code setDrawable(new Sprite(this))}
@@ -163,8 +170,8 @@ public class GameObjectImpl implements GameObject {
      * @see Sprite
      *
      */
-    protected void initDrawable() {
-        this.setDrawable(Optional.of(new Sprite(this)));
+    protected void initDrawable(final Priority priority, final String fileName) {
+        this.initDrawable(Vector2.zero(), priority, fileName);
     }
 
     /**
@@ -183,7 +190,8 @@ public class GameObjectImpl implements GameObject {
      * @param offset the {@link Vector2} offset to apply to the sprite's position
      * @see Sprite
      */
-    protected void initDrawable(final Vector2 offset) {
-        this.setDrawable(Optional.of(new Sprite(this, offset)));
+    protected void initDrawable(final Vector2 offset, final Priority priority, final String fileName) {
+        this.drawable = Optional.of(new Sprite(this, offset, priority));
+        this.drawable.ifPresent(value -> this.level.getDrawableRenderableHandler().linkSprite(value, fileName));
     }
 }

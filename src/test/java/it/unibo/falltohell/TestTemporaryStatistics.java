@@ -2,11 +2,11 @@ package it.unibo.falltohell;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.CharacterStatisticsImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.LifeBuff;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
+import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +44,7 @@ class TestTemporaryStatistics {
             MANA,
             0
         );
-        this.character = new BaseCharacter(new LevelImpl(), Vector2.zero(), this.stats) {
+        this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats) {
             @Override
             public CharacterID getCharacterID() {
                 return CharacterID.ROGUE;
@@ -55,7 +55,7 @@ class TestTemporaryStatistics {
     }
 
     /**
-     * Test to check if the damage taken respects the life and temporary life remaining expected
+     * Test to check if the damage taken respects the life and temporary life remaining expected.
      * @param damage to take
      * @param lifeExpected remaining
      * @param temporaryLifeExpected remaining
@@ -70,7 +70,7 @@ class TestTemporaryStatistics {
      * Test if the character taking an amount of damage less than its current temporary life is calculated correctly.
      */
     @Test
-    void TakeAmountOfDamageLessThanTemporaryLife() {
+    void takeAmountOfDamageLessThanTemporaryLife() {
         final double damage = TEMPORARY_LIFE / 2;
         genericTakeDamageTest(damage, this.stats.getFullLife(), TEMPORARY_LIFE - damage);
     }
@@ -79,7 +79,7 @@ class TestTemporaryStatistics {
      * Test if the character taking an amount of damage greater than its current temporary life is calculated correctly.
      */
     @Test
-    void TakeAmountOfDamageGreaterThanTemporaryLife() {
+    void takeAmountOfDamageGreaterThanTemporaryLife() {
         genericTakeDamageTest(
             TEMPORARY_LIFE * 2,
             this.stats.getFullLife() - TEMPORARY_LIFE,
@@ -91,7 +91,7 @@ class TestTemporaryStatistics {
      * Test if the character taking an amount of damage equal its current temporary life is calculated correctly.
      */
     @Test
-    void TakeAmountOfDamageEqualThanTemporaryLife() {
+    void takeAmountOfDamageEqualThanTemporaryLife() {
         genericTakeDamageTest(
             TEMPORARY_LIFE,
             this.stats.getFullLife(),
