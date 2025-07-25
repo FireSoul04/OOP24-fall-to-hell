@@ -125,22 +125,28 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
                 .getGameData()
                 .getCurrentCharacter()
                 .getStats();
+        final String fileName;
         if ("life".equalsIgnoreCase(type)) {
             buff = new LifeBuff(currentCharacterStats, BUFF_VALUE);
+            fileName = "life_potion.png";
         } else if ("attack".equalsIgnoreCase(type)) {
             buff = new AttackBuff(currentCharacterStats, BUFF_VALUE);
+            fileName = "attack_potion.png";
         } else if ("attsp".equalsIgnoreCase(type)) {
             buff = new AttackSpeedBuff(currentCharacterStats, BUFF_VALUE);
+            fileName = "attsp_potion.png";
         } else if ("speed".equalsIgnoreCase(type)) {
             buff = new SpeedBuff(currentCharacterStats, BUFF_VALUE);
+            fileName = "speed_potion.png";
         } else if ("mana".equalsIgnoreCase(type)) {
             buff = new ManaBuff(currentCharacterStats, BUFF_VALUE);
+            fileName = "mana_potion.png";
         } else {
             throw new IllegalArgumentException("The row passed is not correct: there is no item with this name");
         }
         return new Potion(this.getLevel(),
                 this.computePosition(),
                 potionCollider,
-                Long.parseLong(cost), buff, "LifePotion.png");
+                Long.parseLong(cost), buff, fileName);
     }
 }
