@@ -186,6 +186,10 @@ public class GameObjectImpl implements GameObject {
      */
     protected void initDrawable(final Vector2 offset, final Priority priority, final String fileName) {
         this.drawable = Optional.of(new Sprite(this, offset, priority));
-        this.drawable.ifPresent(value -> this.level.getDrawableRenderableHandler().linkSprite(value, fileName));
+        this.drawable.ifPresent(value -> {
+            if (value instanceof Sprite) {
+                this.level.getDrawableRenderableHandler().linkSprite(value, fileName);
+            }
+        });
     }
 }
