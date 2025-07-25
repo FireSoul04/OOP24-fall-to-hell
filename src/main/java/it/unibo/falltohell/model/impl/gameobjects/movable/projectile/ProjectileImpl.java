@@ -23,7 +23,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
     private boolean hit;
 
     /**
-     *
+     * Creates a projectile with a certain speed.
      * @param level the game level this projectile belongs to
      * @param position the initial position of the projectile
      * @param speed the initial speed of the projectile
