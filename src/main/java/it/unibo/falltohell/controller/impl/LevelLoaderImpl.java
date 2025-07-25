@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.EnemyFactory;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.BlockFactory;
+import it.unibo.falltohell.model.api.gameobjects.Merchant;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
@@ -33,6 +34,7 @@ public class LevelLoaderImpl implements LevelLoader {
     private final Level level;
     private final EnemyFactory enemyFactory;
     private final BlockFactory blockFactory;
+    private final Merchant merchant;
 
     /**
      * Initialization of the LevelLoaderImpl class.
@@ -45,6 +47,7 @@ public class LevelLoaderImpl implements LevelLoader {
         this.levelFromFile.addAll(new FileControllerImpl().read(PATH + fileName));
         this.enemyFactory =  new EnemyFactoryImpl();
         this.blockFactory = new BlockFactoryImpl();
+        this.merchant = new MerchantImpl(level, Vector2.zero(), new BoxCollider());
 
     }
 
@@ -70,21 +73,21 @@ public class LevelLoaderImpl implements LevelLoader {
     private void parseToGameObject(final char identifier, final Vector2 position) {
         final Character character = level.getGameData().getCurrentCharacter();
         final Collider collider = new BoxCollider();
-        final Optional<GameObject> gameObject = switch (identifier) {
-            case 'o' -> Optional.of(this.enemyFactory.createImp(this.level, position, character));
-            case 'k' -> Optional.of(this.enemyFactory.createCentaur(this.level, position, character));
-            case 't' -> Optional.of(this.enemyFactory.createTengu(level, position, character));
-            case 'x' -> Optional.of(this.enemyFactory.createLotawiec(level, position, character));
-            case '#' -> Optional.of(this.blockFactory.createBaseBlock(level, position));
-            case 'l' -> Optional.of(this.blockFactory.createLavaBlock(level, position));
-            case 'v' -> Optional.of(this.blockFactory.createVinesBlock(level, position));
-            case 'e' -> Optional.of(new SpringsEntrance(level, position, collider));
-            case 'p' -> Optional.of(new ShopEntrance(level, position, collider));
-            case 'c' -> Optional.of(new CharacterChanger(level, position, collider, level.getCharacters()));
-            case 's' -> Optional.of(new SavePoint(level, position, collider));
-            case 'm' -> Optional.of(new MerchantImpl(level, position, collider));
-            case ' ' -> Optional.empty();
+        switch (identifier) {
+            case 'o' -> this.enemyFactory.createImp(this.level, position, character);
+            case 'k' -> this.enemyFactory.createCentaur(this.level, position, character);
+            case 't' -> this.enemyFactory.createTengu(level, position, character);
+            case 'x' -> this.enemyFactory.createLotawiec(level, position, character);
+            case '#' -> this.blockFactory.createBaseBlock(level, position);
+            case 'l' -> this.blockFactory.createLavaBlock(level, position);
+            case 'v' -> this.blockFactory.createVinesBlock(level, position);
+            case 'e' -> new SpringsEntrance(level, position, collider);
+            case 'p' -> new ShopEntrance(level, position, collider);
+            case 'c' -> new CharacterChanger(level, position, collider, level.getCharacters());
+            case 's' -> new SavePoint(level, position, collider);
+            case 'm' -> this.merchant.setPosition(position);
+            case ' ' -> {}
             default -> throw new IllegalStateException("Cannot recognize a character in the file:" + identifier);
-        };
+        }
     }
 }
