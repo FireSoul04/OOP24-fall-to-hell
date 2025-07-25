@@ -20,7 +20,7 @@ import it.unibo.falltohell.test.util.LevelTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,7 +40,7 @@ class TestSprings {
     @BeforeEach
     void initialization() {
         final Level level = new LevelTest();
-        this.characters = new HashMap<>();
+        this.characters = new EnumMap<>(CharacterID.class);
         this.characters.put(CharacterID.ROGUE, new Rogue(level, Vector2.zero()));
         this.characters.put(CharacterID.DRUID, new Druid(level, Vector2.zero()));
         this.data = new GameDataImpl(1000, CharacterID.ROGUE, this.characters, Vector2.one());
