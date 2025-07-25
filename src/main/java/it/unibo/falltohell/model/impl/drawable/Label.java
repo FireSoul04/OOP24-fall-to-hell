@@ -1,6 +1,8 @@
-package it.unibo.falltohell.model.impl.Drawable;
+package it.unibo.falltohell.model.impl.drawable;
+
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.util.Vector2;
+
 /**
  * Class representing a label that can be drawn on the screen.
  * @author Casadei Lorenzo
