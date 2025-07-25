@@ -99,8 +99,10 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
         final Iterator<Item> iterator = this.merch.iterator();
         while (iterator.hasNext()) {
             final Item item = iterator.next();
-            this.getLevel().removeGameObject(item);
-            iterator.remove();
+            if (item.isSold()) {
+                this.getLevel().removeGameObject(item);
+                iterator.remove();
+            }
         }
     }
 
