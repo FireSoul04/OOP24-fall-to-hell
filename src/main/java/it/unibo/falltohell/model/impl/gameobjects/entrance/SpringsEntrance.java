@@ -17,10 +17,9 @@ public class SpringsEntrance extends BaseEntrance {
      * Initialization of the SpringsEntrance class.
      * @param lv is the level of the entrance
      * @param position is the position of the entrance in the level
-     * @param collider associated with this entrance
      */
-    public SpringsEntrance(final Level lv, final Vector2 position, final Collider collider) {
-        super(lv, position, collider);
+    public SpringsEntrance(final Level lv, final Vector2 position) {
+        super(lv, position);
     }
 
     /**
