@@ -44,7 +44,7 @@ class TestSprings {
         this.characters = new HashMap<>();
         this.characters.put(CharacterID.ROGUE, new Rogue(level, Vector2.zero()));
         this.characters.put(CharacterID.DRUID, new Druid(level, Vector2.zero()));
-        this.data = new GameDataImpl(1000, CharacterID.ROGUE, this.characters);
+        this.data = new GameDataImpl(1000, CharacterID.ROGUE, this.characters, Vector2.one());
         level.linkGameData(this.data);
         this.savePoint = new SavePoint(level, Vector2.zero(), new BoxCollider(), data);
         this.saveController = new SaveFileControllerImpl(data);
@@ -58,6 +58,8 @@ class TestSprings {
         final GameData testData = this.saveController.load(this.characters);
         assertEquals(testData.getPoints(), this.data.getPoints());
         assertEquals(testData.getCurrentCharacter().getCharacterID(), this.data.getCurrentCharacter().getCharacterID());
+        assertEquals(testData.getLastSavedPosition().x(), this.data.getCurrentCharacter().getPosition().x());
+        assertEquals(testData.getLastSavedPosition().y(), this.data.getCurrentCharacter().getPosition().y());
     }
 
     @Test
