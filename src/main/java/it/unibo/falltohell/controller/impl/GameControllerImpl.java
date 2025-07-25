@@ -57,15 +57,15 @@ public class GameControllerImpl implements GameController {
         final DrawableRenderableHandler drh = new DrawableRenderableHandlerImpl();
         final GameEventManager<String> eventManager = this.addEvents(inputListener);
         // Testing a camera with level width and height based on the virtual screen width and height
-        final GameCamera camera = new GameCameraImpl(Vector2.zero(), WIDTH, HEIGHT, 1.0, WIDTH * 2, HEIGHT * 2);
+        final GameCamera camera = new GameCameraImpl(Vector2.zero(), WIDTH, HEIGHT, 1.0, WIDTH * 4, HEIGHT * 4);
         this.model = new GameBuilderImpl()
             .attachGameEventManager(eventManager)
             .attachDrawableRenderableHandlerToLevel(drh)
             .attachCamera(camera)
             .createLevel()
+            .loadCharacters()
             .loadGameData()
             .linkGameDataToLevel()
-            .loadCharacters()
             .build();
         this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener(), drh);
         this.state = GameState.START;
