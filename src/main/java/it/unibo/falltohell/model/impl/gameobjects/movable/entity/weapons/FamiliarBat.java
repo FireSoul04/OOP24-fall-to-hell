@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
+import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
@@ -71,12 +72,13 @@ public class FamiliarBat extends MovableImpl {
      * @param character the character that this FamiliarBat follows and assists
      * @param listener  the callback to invoke when the familiar finishes an attack
      */
-    public FamiliarBat(final Character character, final AttackFinishListener listener, final String fileName) {
+    public FamiliarBat(final Character character, final AttackFinishListener listener) {
         super(character.getLevel(), character.getPosition(), VELOCITY, COLLIDER);
         this.character = character;
         this.attackFinishListener = listener;
         character.getLevel().getTimerManager().addTimer(this.name,
                 new CustomTimerImpl(1000, () -> this.canAttack = true));
+        this.initDrawable(Priority.LOW, "familiar.png");
     }
 
     /**
