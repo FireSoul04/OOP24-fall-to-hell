@@ -28,7 +28,7 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
     /**
      * {@inheritDoc}
      * Check collisions only for movables game object in a radius of twice
-     * the tile size of the GameObject's interface.
+     * the tile size of the GameObject's interface. When a movable collide with
      */
     @Override
     public void checkCollisions(final List<GameObject> gameObjects) {
@@ -48,12 +48,18 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
 
                     if (collision.isPresent()) {
                         g1.onCollision(g2, collision.get().direction());
-                        g2.onCollision(g1, collision.get().direction());
+                        if (!(g2 instanceof Movable)) { // Prevents redundant calls in the cycle
+                            // The direction will be inverted because the non-movable objects collide in the opposite direction
+                            g2.onCollision(g1, collision.get().direction().invert());
+                        }
                         this.lastFrameCollisions.put(Pair.of(g1, g2), collision.get());
                     } else if (this.lastFrameCollisions.containsKey(Pair.of(g1, g2))) {
                         // If there is not a collision, but in the last frame was a collision
                         g1.onCollisionExit(g2, this.lastFrameCollisions.get(Pair.of(g1, g2)).direction());
-                        g2.onCollisionExit(g1, this.lastFrameCollisions.get(Pair.of(g1, g2)).direction());
+                        if (!(g2 instanceof Movable)) { // Prevents redundant calls in the cycle
+                            // The direction will be inverted because the non-movable objects collide in the opposite direction
+                            g2.onCollisionExit(g1, this.lastFrameCollisions.get(Pair.of(g1, g2)).direction().invert());
+                        }
                         this.lastFrameCollisions.remove(Pair.of(g1, g2));
                     }
                 }
