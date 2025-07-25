@@ -23,15 +23,12 @@ public class SaveFileControllerImpl implements SaveFileController {
 
     private static final String FILE_NAME = "saveFile.txt";
     private static final String DIR_PATH = System.getProperty("user.home") + File.separator + "FTH" + File.separator;
-    private final GameData data;
     private final Logger logger;
 
     /**
      * Initialization of the SaveFileControllerImpl.
-     * @param data is what has to be saved on the file
      */
-    public SaveFileControllerImpl(final GameData data) {
-        this.data = data;
+    public SaveFileControllerImpl() {
         this.logger = Logger.getLogger("SaveFileControllerLogger");
     }
 
@@ -39,7 +36,7 @@ public class SaveFileControllerImpl implements SaveFileController {
      * {@inheritDoc}
      */
     @Override
-    public void save() {
+    public void save(final GameData data) {
         final File saveDir = new File(DIR_PATH);
         if (!saveDir.exists() || !saveDir.isDirectory()) {
             final boolean savedDir = saveDir.mkdir();
@@ -53,8 +50,8 @@ public class SaveFileControllerImpl implements SaveFileController {
                 BufferedWriter saveOutput = new BufferedWriter(new FileWriter(DIR_PATH + FILE_NAME)
                 )
         ) {
-            final Character character = this.data.getCurrentCharacter();
-            saveOutput.write(String.valueOf(this.data.getPoints()));
+            final Character character = data.getCurrentCharacter();
+            saveOutput.write(String.valueOf(data.getPoints()));
             saveOutput.newLine();
             saveOutput.write(character.getCharacterID().name());
             saveOutput.newLine();
