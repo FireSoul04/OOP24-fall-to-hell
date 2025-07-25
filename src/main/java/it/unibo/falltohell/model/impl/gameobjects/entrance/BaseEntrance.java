@@ -26,7 +26,7 @@ public class BaseEntrance extends GameObjectImpl {
         this.listener = new EnemyFactoryImpl().askManager(lv).addEntrance(this);
     }
 
-    AggroListener getListener() {
+    protected AggroListener getListener() {
         return this.listener;
     }
 }
