@@ -159,13 +159,4 @@ public class LevelTest implements Level {
     public Map<Character.CharacterID, Character> getCharacters() {
         return this.characters;
     }
-
-    /**
-     * {@inheritDoc}
-     * Not used
-     */
-    @Override
-    public void setPlayer(final Character player) {
-        throw new UnsupportedOperationException("No use for tests");
-    }
 }

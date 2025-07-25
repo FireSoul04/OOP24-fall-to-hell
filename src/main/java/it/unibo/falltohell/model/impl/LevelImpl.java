@@ -143,6 +143,7 @@ public class LevelImpl implements Level {
     @Override
     public void linkGameData(final GameData gameData) {
         this.gameData = Optional.of(gameData);
+        this.player = Optional.of(gameData.getCurrentCharacter());
     }
 
     /**
@@ -193,7 +194,6 @@ public class LevelImpl implements Level {
     @Override
     public void loadCharacters(final Map<CharacterID, Character> characters) {
         this.characters = Collections.unmodifiableMap(characters);
-        this.player = Optional.of(this.characters.get(CharacterID.CASTER));
     }
 
     /**
@@ -202,13 +202,5 @@ public class LevelImpl implements Level {
     @Override
     public Map<CharacterID, Character> getCharacters() {
         return Collections.unmodifiableMap(this.characters);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setPlayer(final Character player) {
-        this.player = Optional.of(player);
     }
 }
