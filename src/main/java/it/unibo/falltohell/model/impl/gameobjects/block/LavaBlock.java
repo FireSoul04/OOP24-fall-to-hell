@@ -15,7 +15,7 @@ import java.util.Objects;
  * to the character and to enemies while they touch it from above.
  * @author Martina Malagoli
  */
-public class LavaBlock extends BaseBlock {
+public class LavaBlock extends BaseCollidableBlock {
 
     private static final long TIME = 1500;
     private static final double DAMAGE = 2;

@@ -12,7 +12,7 @@ import it.unibo.falltohell.util.Vector2;
  * when it walks over it.
  * @author Martina Malagoli.
  */
-public class VinesBlock extends BaseBlock {
+public class VinesBlock extends BaseCollidableBlock {
 
     private static final double MULTIPLIER = 0.3;
 
