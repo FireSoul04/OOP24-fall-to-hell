@@ -27,7 +27,7 @@ import java.util.Optional;
  */
 public class LevelLoaderImpl implements LevelLoader {
 
-    private static final String PATH = "src/main/resources/level";
+    private static final String PATH = "src/main/resources/level/";
     private static final double DISTANCE = 20;
     private final List<String> levelFromFile;
     private final Level level;

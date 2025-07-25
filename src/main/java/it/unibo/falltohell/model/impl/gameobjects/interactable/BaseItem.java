@@ -1,11 +1,11 @@
 package it.unibo.falltohell.model.impl.gameobjects.interactable;
 
-import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Item;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -31,7 +31,7 @@ public abstract class BaseItem extends GameObjectImpl implements Item {
         super(lv, position, collider);
         this.price = price;
         this.sold = false;
-        this.initDrawable(Drawable.Priority.VERY_LOW, fileName);
+        this.initDrawable(Priority.VERY_LOW, fileName);
     }
 
     /**

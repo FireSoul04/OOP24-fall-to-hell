@@ -1,22 +1,23 @@
-package it.unibo.falltohell.model.impl.Drawable;
+package it.unibo.falltohell.model.impl.drawable;
 
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.util.Priority;
 
 /**
  * Class representing a label that can be drawn on the screen.
- * 
+ *
  * @author Casadei Lorenzo
  */
 public class Label implements Drawable {
     private String text;
-    private Vector2 position;
+    private final Vector2 position;
     private boolean visible;
-    private final boolean mirrored = false;
+    private final boolean mirrored;
 
     /**
      * Constructor for a label.
-     * 
+     *
      * @param text     the text of the label.
      * @param position the position of the label.
      * @param visible  if the label is visible or not.
@@ -25,6 +26,7 @@ public class Label implements Drawable {
         this.text = text;
         this.position = position;
         this.visible = visible;
+        this.mirrored = false;
     }
 
     /**
@@ -76,7 +78,7 @@ public class Label implements Drawable {
 
     /**
      * set the text of the label.
-     * 
+     *
      * @param text
      */
     public void setText(final String text) {
@@ -84,6 +86,6 @@ public class Label implements Drawable {
     }
 
     public Priority getPriority() {
-        return Drawable.Priority.GUI;
+        return Priority.GUI;
     }
 }

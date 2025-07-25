@@ -1,7 +1,7 @@
 package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.model.impl.Drawable.Label;
+import it.unibo.falltohell.model.impl.drawable.Label;
 import it.unibo.falltohell.view.impl.LabelView;
 
 /**

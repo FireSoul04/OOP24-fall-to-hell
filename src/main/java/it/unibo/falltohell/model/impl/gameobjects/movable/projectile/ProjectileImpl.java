@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.projectile;
 
-import it.unibo.falltohell.model.api.Drawable.Priority;
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 

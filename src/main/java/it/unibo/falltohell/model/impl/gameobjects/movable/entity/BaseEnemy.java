@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
-import it.unibo.falltohell.model.api.Drawable.Priority;
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;

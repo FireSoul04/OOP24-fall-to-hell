@@ -1,5 +1,6 @@
 package it.unibo.falltohell.view.api;
 
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -34,5 +35,10 @@ public interface Renderable {
      * @param newPosition is the new position of the image associated to the renderable object
      */
     void translate(Vector2 newPosition);
+
+    /**
+     * @return the priority of the image that has to be rendered
+     */
+    Priority getPriority();
 
 }

@@ -2,6 +2,7 @@ package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.view.api.Renderable;
 import it.unibo.falltohell.view.impl.SpriteRenderable;
 
@@ -19,8 +20,8 @@ public class SpriteRenderableController extends BaseRenderableController {
      * @param drawable associated with the sprite to be updated
      * @param sprite to be updated
      */
-    public SpriteRenderableController(final Drawable drawable, final Image sprite) {
-        super(drawable, new SpriteRenderable(drawable.isVisible(), drawable.getPosition(), sprite));
+    public SpriteRenderableController(final Drawable drawable, final Image sprite, final Priority priority) {
+        super(drawable, new SpriteRenderable(drawable.isVisible(), drawable.getPosition(), sprite, priority));
     }
 
     /**

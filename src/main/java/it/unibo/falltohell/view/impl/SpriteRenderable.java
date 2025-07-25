@@ -1,5 +1,6 @@
 package it.unibo.falltohell.view.impl;
 
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
 import java.awt.Image;
@@ -10,10 +11,13 @@ import java.awt.geom.AffineTransform;
 public class SpriteRenderable extends BaseRenderable {
 
     private final Image sprite;
+    private final Priority priority;
 
-    public SpriteRenderable(final boolean visibility, final Vector2 position, final Image sprite) {
+    public SpriteRenderable(final boolean visibility, final Vector2 position,
+                            final Image sprite, final Priority priority) {
         super(visibility, position);
         this.sprite = sprite;
+        this.priority = priority;
     }
 
     @Override
@@ -26,5 +30,10 @@ public class SpriteRenderable extends BaseRenderable {
             transform.translate(-this.sprite.getWidth(null) / 2.0, -this.sprite.getHeight(null) / 2.0);
             graphics2D.drawImage(this.sprite, transform, null);
         }
+    }
+
+    @Override
+    public Priority getPriority() {
+        return this.priority;
     }
 }
