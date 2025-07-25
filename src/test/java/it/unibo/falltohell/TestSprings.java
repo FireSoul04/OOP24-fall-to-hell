@@ -48,7 +48,7 @@ class TestSprings {
         this.savePoint = new SavePoint(level, Vector2.zero(), new BoxCollider());
         this.saveController = new SaveFileControllerImpl();
         this.characterChanger = new CharacterChanger(level, Vector2.zero(), new BoxCollider(), this.characters);
-        this.entrance = new SpringsEntrance(level, Vector2.zero(), new BoxCollider());
+        this.entrance = new SpringsEntrance(level, Vector2.zero());
     }
 
     @Test

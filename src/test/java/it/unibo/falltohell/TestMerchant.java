@@ -55,7 +55,7 @@ class TestMerchant {
 
     @Test
     void TestShopEntrance() {
-        final BaseEntrance entrance = new ShopEntrance(this.merchant.getLevel(), Vector2.zero(), new BoxCollider());
+        final BaseEntrance entrance = new ShopEntrance(this.merchant.getLevel(), Vector2.zero());
         Assertions.assertEquals(0, this.merchant.getMerch().size());
         entrance.onCollisionExit(this.character, Vector2.left());
         Assertions.assertEquals(3, this.merchant.getMerch().size());
