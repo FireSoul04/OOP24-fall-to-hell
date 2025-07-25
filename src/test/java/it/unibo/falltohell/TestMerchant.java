@@ -1,9 +1,10 @@
 package it.unibo.falltohell;
 
-
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.test.util.LevelTest;
@@ -25,7 +26,7 @@ class TestMerchant {
     void initialization() {
         final Level level = new LevelTest();
         this.merchant = new MerchantTest(level, Vector2.zero(), new BoxCollider());
-        this.character = new Rogue(level, Vector2.zero(), "rogue.png");
+        this.character = new Rogue(level, Vector2.zero());
     }
 
     @Test
@@ -37,6 +38,15 @@ class TestMerchant {
         Assertions.assertNotEquals(0, statistics.getTemporaryLife());
     }
 
-    //TODO --> testare entrata
+    @Test
+    void TestShopEntrance() {
+        final BaseEntrance entrance = new ShopEntrance(this.merchant.getLevel(), Vector2.zero(), new BoxCollider());
+        Assertions.assertEquals(0, this.merchant.getMerch().size());
+        entrance.onCollisionExit(this.character, Vector2.right());
+        Assertions.assertEquals(3, this.merchant.getMerch().size());
+        entrance.onCollisionExit(this.character, Vector2.left());
+        Assertions.assertEquals(0, this.merchant.getMerch().size());
+
+    }
 
 }
