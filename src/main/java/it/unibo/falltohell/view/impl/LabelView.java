@@ -1,5 +1,6 @@
 package it.unibo.falltohell.view.impl;
 
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 import java.awt.Graphics;
 import java.awt.Color;
@@ -12,7 +13,7 @@ import it.unibo.falltohell.model.impl.drawable.Label;
  * @author Casadei Lorenzo
  */
 public class LabelView extends BaseRenderable {
-    private Label text;
+    private final Label text;
     
     /**
      * Constructor for the LabelView.
@@ -61,6 +62,12 @@ public class LabelView extends BaseRenderable {
     public void translate(final Vector2 newPosition) {
         // Labels typically do not move, but if needed, this can be implemented.
     }
+
+    @Override
+    public Priority getPriority() {
+        return Priority.GUI;
+    }
+
     /**
      * Method to render the label on the screen.
      * @param g the graphics context to render the label.
