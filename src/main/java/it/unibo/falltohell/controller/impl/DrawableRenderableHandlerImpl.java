@@ -7,9 +7,9 @@ import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.view.api.Renderable;
 
 import java.awt.Image;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class that handles the drawable-renderable pair associated with a game object.
@@ -23,7 +23,7 @@ public class DrawableRenderableHandlerImpl implements DrawableRenderableHandler 
      * Initialization of the DrawableRenderableHandlerImpl.
      */
     public DrawableRenderableHandlerImpl() {
-        this.renderableControllers = new HashMap<>();
+        this.renderableControllers = new ConcurrentHashMap<>();
     }
 
     /**
