@@ -123,7 +123,7 @@ public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon 
      */
     protected Projectile createProjectile(final Level level, final Vector2 position, final Vector2 speed,
             final Collider collider) {
-        return new ProjectileImpl(level, position, speed, collider, "");
+        return new ProjectileImpl(level, position, speed, collider, "projectile.png");
     }
 
     /**
