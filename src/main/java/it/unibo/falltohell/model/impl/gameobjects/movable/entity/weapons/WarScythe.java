@@ -34,9 +34,8 @@ public class WarScythe extends MeleeWeapon {
      * The collider has origin at (0, 0) and dimensions (10, 10).
      * </p>
      */
-    public WarScythe(final Level lv, final Vector2 position, final String fileName) {
-        super(lv, position, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), fileName);
-        this.initDrawable(Priority.LOW, fileName);
+    public WarScythe(final Level lv, final Vector2 position) {
+        super(lv, position, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), "warscythe.png");
     }
 
 }
