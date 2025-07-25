@@ -80,7 +80,7 @@ public class LevelLoaderImpl implements LevelLoader {
             case 'l' -> this.blockFactory.createLavaBlock(level, position);
             case 'v' -> this.blockFactory.createVinesBlock(level, position);
             case 'e' -> new SpringsEntrance(level, position, collider);
-            case 'p' -> new ShopEntrance(level, position, collider);
+            case 'p' -> new ShopEntrance(level, position, collider).setMerchant(this.merchant);
             case 'c' -> new CharacterChanger(level, position, collider, level.getCharacters());
             case 's' -> new SavePoint(level, position, collider);
             case 'm' -> this.merchant.setPosition(position);
