@@ -38,7 +38,7 @@ public class ShopEntrance extends BaseEntrance {
         if (direction.equals(Vector2.right())) {
             this.merchant.ifPresent(Merchant::restock);
             this.getListener().call();
-        } else {
+        } else if (direction.equals(Vector2.left())) {
             this.merchant.ifPresent(Merchant::destock);
             this.getListener().call();
         }
