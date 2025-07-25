@@ -3,6 +3,8 @@ package it.unibo.falltohell.model.impl.physics.colliders;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
+import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -38,20 +40,20 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
             .toList();
         for (final GameObject g1 : movables) {
             final List<GameObject> closeGameObjects = collidableObjects.stream()
-                .filter(g2 -> g1.getPosition().distance(g2.getPosition()) < GameObject.TILE_SIZE * 2)
+                .filter(g2 -> g1.getPosition().distance(g2.getPosition()) < GameObject.TILE_SIZE * 5)
                 .toList();
             for (final GameObject g2 : closeGameObjects) {
                 if (!g1.equals(g2)) {
                     final Optional<Collision> collision = this.determineCollision(g1, g2);
 
                     if (collision.isPresent()) {
-                        // Notifies for both onCollision with direction and without
-                        g1.onCollision(g2);
                         g1.onCollision(g2, collision.get().direction());
+                        g2.onCollision(g1, collision.get().direction());
                         this.lastFrameCollisions.put(Pair.of(g1, g2), collision.get());
                     } else if (this.lastFrameCollisions.containsKey(Pair.of(g1, g2))) {
                         // If there is not a collision, but in the last frame was a collision
                         g1.onCollisionExit(g2, this.lastFrameCollisions.get(Pair.of(g1, g2)).direction());
+                        g2.onCollisionExit(g1, this.lastFrameCollisions.get(Pair.of(g1, g2)).direction());
                         this.lastFrameCollisions.remove(Pair.of(g1, g2));
                     }
                 }
