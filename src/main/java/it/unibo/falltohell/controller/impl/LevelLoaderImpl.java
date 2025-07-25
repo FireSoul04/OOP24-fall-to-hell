@@ -3,7 +3,7 @@ package it.unibo.falltohell.controller.impl;
 import it.unibo.falltohell.controller.api.LevelLoader;
 import it.unibo.falltohell.model.api.EnemyFactory;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.BlockFactory;
+import it.unibo.falltohell.model.api.gameobjects.CollidableBlockFactory;
 import it.unibo.falltohell.model.api.gameobjects.Merchant;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -32,7 +32,7 @@ public class LevelLoaderImpl implements LevelLoader {
     private final List<String> levelFromFile;
     private final Level level;
     private final EnemyFactory enemyFactory;
-    private final BlockFactory blockFactory;
+    private final CollidableBlockFactory collidableBlockFactory;
     private final Merchant merchant;
 
     /**
@@ -45,7 +45,7 @@ public class LevelLoaderImpl implements LevelLoader {
         this.levelFromFile = new ArrayList<>();
         this.levelFromFile.addAll(new FileControllerImpl().read(PATH + fileName));
         this.enemyFactory =  new EnemyFactoryImpl();
-        this.blockFactory = new CollidableBlockFactoryImpl();
+        this.collidableBlockFactory = new CollidableBlockFactoryImpl();
         this.merchant = new MerchantImpl(level, Vector2.zero(), new BoxCollider());
 
     }
@@ -77,9 +77,9 @@ public class LevelLoaderImpl implements LevelLoader {
             case 'k' -> this.enemyFactory.createCentaur(this.level, position, character);
             case 't' -> this.enemyFactory.createTengu(level, position, character);
             case 'x' -> this.enemyFactory.createLotawiec(level, position, character);
-            case '#' -> this.blockFactory.createBaseBlock(level, position);
-            case 'l' -> this.blockFactory.createLavaBlock(level, position);
-            case 'v' -> this.blockFactory.createVinesBlock(level, position);
+            case '#' -> this.collidableBlockFactory.createCollidableBaseBlock(level, position);
+            case 'l' -> this.collidableBlockFactory.createLavaBlock(level, position);
+            case 'v' -> this.collidableBlockFactory.createVinesBlock(level, position);
             case '-' -> new BaseNonCollidableBlock(level, position);
             case 'e' -> new SpringsEntrance(level, position);
             case 'p' -> new ShopEntrance(level, position).setMerchant(this.merchant);
