@@ -3,7 +3,7 @@ package it.unibo.falltohell.view.impl;
 import it.unibo.falltohell.util.Vector2;
 import java.awt.Graphics;
 import java.awt.Color;
-import it.unibo.falltohell.model.impl.Drawable.Label;
+import it.unibo.falltohell.model.impl.drawable.Label;
 
 /**
  * View class for rendering a label in the game.
