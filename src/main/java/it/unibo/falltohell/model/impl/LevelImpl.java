@@ -4,13 +4,17 @@ import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import it.unibo.falltohell.model.api.*;
+import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.api.GameCamera;
+import it.unibo.falltohell.model.api.GameData;
+import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
@@ -52,16 +56,15 @@ public class LevelImpl implements Level {
      * @param gameObjects the initial list of game objects in the level
      */
     public LevelImpl(final GameCamera camera, final List<GameObject> gameObjects) {
-        this.gameObjects = gameObjects;
+        this.gameObjects = new ArrayList<>(gameObjects);
         this.camera = camera;
         this.player = Optional.empty();
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
         this.eventManager = new GameEventManager<>();
-        this.characters = new HashMap<>();
+        this.characters = new EnumMap<>(CharacterID.class);
         this.drh = new DrawableRenderableHandlerImpl();
         this.gameData = Optional.empty();
-
     }
 
     /**
@@ -81,6 +84,7 @@ public class LevelImpl implements Level {
      *
      * @param gameObject the game object to add
      */
+    @Override
     public void addGameObject(final GameObject gameObject) {
         this.gameObjects.add(gameObject);
     }
@@ -90,6 +94,7 @@ public class LevelImpl implements Level {
      *
      * @param gameObject the game object to remove
      */
+    @Override
     public void removeGameObject(final GameObject gameObject) {
         this.gameObjects.remove(gameObject);
     }
@@ -99,6 +104,7 @@ public class LevelImpl implements Level {
      *
      * @return a new list containing all game objects
      */
+    @Override
     public List<GameObject> getGameObjects() {
         return Collections.unmodifiableList(this.gameObjects);
     }
@@ -108,6 +114,7 @@ public class LevelImpl implements Level {
      *
      * @param deltaTime the time elapsed since the last update
      */
+    @Override
     public void update(final double deltaTime) {
         final Stream<GameObject> gameObjectStream = this.gameObjects.stream();
         for (final GameObject gameObject : gameObjectStream.toList()) {
@@ -186,6 +193,7 @@ public class LevelImpl implements Level {
     @Override
     public void loadCharacters(final Map<CharacterID, Character> characters) {
         this.characters = Collections.unmodifiableMap(characters);
+        this.player = Optional.of(this.characters.get(CharacterID.CASTER));
     }
 
     /**
@@ -193,7 +201,7 @@ public class LevelImpl implements Level {
      */
     @Override
     public Map<CharacterID, Character> getCharacters() {
-        return this.characters;
+        return Collections.unmodifiableMap(this.characters);
     }
 
     /**
