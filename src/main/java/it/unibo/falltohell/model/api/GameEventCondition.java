@@ -1,5 +1,12 @@
 package it.unibo.falltohell.model.api;
-
+/**
+ * Represents a condition that can be tested in the game.
+ * <p>
+ * This interface defines a single method to test the condition.
+ * </p>
+ *
+ * @author Casadei Lorenzo
+ */
 @FunctionalInterface
 public interface GameEventCondition {
     /**

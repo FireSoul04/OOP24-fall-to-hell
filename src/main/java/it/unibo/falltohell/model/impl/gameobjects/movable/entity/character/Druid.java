@@ -62,7 +62,7 @@ public class Druid extends BaseCharacter {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
                 new Dimensions(10, 10), 10, 10));
         this.stats = (CharacterStatistics) super.getStats();
-
+        
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
             final double[][] lifeManaGains = {
                     {}, // 0 kill

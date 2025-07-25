@@ -7,6 +7,14 @@ import java.util.Set;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+/**
+ * InputListener class to handle keyboard input in the game.
+ * <p>
+ * It tracks which keys are pressed and allows checking if a key is currently pressed
+ * or has been pressed once.
+ * </p>
+ * @author Casadei Lorenzo
+ */
 public class InputListener {
 
     private static final int MAX_KEY = 256;

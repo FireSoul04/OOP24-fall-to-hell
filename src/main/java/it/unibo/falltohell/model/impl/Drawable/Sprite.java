@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl;
+package it.unibo.falltohell.model.impl.Drawable;
 
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;

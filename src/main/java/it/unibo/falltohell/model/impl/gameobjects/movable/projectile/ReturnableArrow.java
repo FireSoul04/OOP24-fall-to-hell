@@ -14,6 +14,7 @@ import it.unibo.falltohell.model.api.Level;
  * - When the return is activated via {@code startReturn()}, the arrow becomes non-solid,
  *   flies back toward the owner, and can hit enemies again during its return.
  * - Once it reaches the archer, it is removed from the level and ammo is restored.
+ * @author Lorenzo Casadei
  */
 public class ReturnableArrow extends ProjectileImpl{
 

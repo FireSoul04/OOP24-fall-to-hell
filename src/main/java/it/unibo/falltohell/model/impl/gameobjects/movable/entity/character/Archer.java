@@ -3,17 +3,37 @@ import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.BaseRangedWeapon;
+import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import java.util.List;
 import java.util.ArrayList;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
+
+/**
+ * Represents an Archer character in the game.
+ * The Archer can shoot arrows using a Bow and has the ability to return arrows.
+ * 
+ * This class extends BaseCharacter and implements the shooting mechanism with a Bow.
+ * It manages the arrows shot by the archer and allows for returning arrows to the inventory.
+ * 
+ * @author Casadei Lorenzo
+ */
 public class Archer extends BaseCharacter {
 
     private final Bow bow;
     private List<Projectile> shotedArrows = new ArrayList<>();
+    private static final double LIFE = 0;
+    private static final double ATTACK = 0;
+    private static final double ATTACK_SPEED = 0;
+    private static final Vector2 SPEED = Vector2.zero();
+    private static final double MANA = 0;
+    private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
+            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(0,0), MANA, ATTACK_SPEED);
+
 
     /**
      * Constructs a new ArcherCharacter.
@@ -23,8 +43,8 @@ public class Archer extends BaseCharacter {
      * @param stats the character statistics<
      * @param bow the ranged weapon used to shoot arrows
      */
-    public Archer(final Level level, final Vector2 position, final CharacterStatistics stats, final Bow bow) {
-        super(level, position, stats);
+    public Archer(final Level level, final Vector2 position, final Bow bow) {
+        super(level, position, STATISTICS);
         this.bow = bow;
 
     }

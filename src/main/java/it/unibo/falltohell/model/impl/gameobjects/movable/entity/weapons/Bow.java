@@ -10,6 +10,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableA
  * A bow weapon used by the Archer character.
  *
  * It creates {@link ReturnableArrow} projectiles when fired, allowing arrows to be recalled later.
+ * @author Lorenzo Casadei
  */
 public class Bow extends BaseRangedWeapon{
 

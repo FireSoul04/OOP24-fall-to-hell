@@ -17,6 +17,7 @@ import it.unibo.falltohell.model.api.CustomTimer;
  * - Ammo management (current and max)
  * - Cooldown timing between shots
  * - Projectile creation (can be overridden)
+ * @author Lorenzo Casadei
  */
 public abstract class BaseRangedWeapon implements Weapon {
 

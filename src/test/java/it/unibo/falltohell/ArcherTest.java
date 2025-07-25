@@ -19,7 +19,12 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableA
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
-
+/**
+ * Test class for the Archer character and its interactions with the Bow and ReturnableArrow.
+ * It verifies shooting arrows, returning them, and ammo management.
+ *
+ * @author Lorenzo Casadei
+ */
 public class ArcherTest {
     private Archer archer;
     private LevelImpl level;
@@ -31,10 +36,8 @@ public class ArcherTest {
         GameCameraImpl camera = new GameCameraImpl(Vector2.zero(), 10, 10, 1.0, 100, 100);
         level = new LevelImpl(camera);
         
-        CharacterStatistics stats = TestStatsFactory.createDefault();
-        
         bow = new Bow(5, 0.5, null);
-        archer = new Archer(level, Vector2.zero(), stats, bow);
+        archer = new Archer(level, Vector2.zero(), bow);
 
         bow.setOwner(archer);
         

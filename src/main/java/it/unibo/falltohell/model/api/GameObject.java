@@ -2,7 +2,15 @@ package it.unibo.falltohell.model.api;
 
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
-
+/**
+ * Represents a game object in the game world.
+ * <p>
+ * This interface defines the basic properties and behaviors of a game object,
+ * including its position, collider, solidity, and interactions with other game objects.
+ * </p>
+ *
+ * @author Casadei Lorenzo
+ */
 public interface GameObject {
     
     static final double TILE_SIZE = 20.0;

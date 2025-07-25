@@ -2,7 +2,16 @@ package it.unibo.falltohell.model.api.gameobjects;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.util.Vector2;
-
+/**
+ * Represents a movable game object that can change its position based on speed.
+ * <p>
+ * This interface extends the {@link GameObject} interface and adds methods for
+ * updating the position based on speed and time, as well as getting and setting
+ * the speed of the object.
+ * </p>
+ *
+ * @author Casadei Lorenzo
+ */
 public interface Movable extends GameObject {
     
     /**

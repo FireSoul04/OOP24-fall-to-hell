@@ -1,10 +1,7 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
-import it.unibo.falltohell.controller.api.ImageController;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

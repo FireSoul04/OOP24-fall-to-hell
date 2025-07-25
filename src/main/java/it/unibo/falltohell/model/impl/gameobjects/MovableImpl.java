@@ -11,6 +11,7 @@ import it.unibo.falltohell.util.Vector2;
  * Represents a game object that can move within the level, with horizontal and vertical speed.
  * Provides methods to update its position based on speed and elapsed time, and to get or set its speed.
  * </p>
+ * @author Casadei Lorenzo
  */
 public class MovableImpl extends GameObjectImpl implements Movable{
     private Vector2 speed;

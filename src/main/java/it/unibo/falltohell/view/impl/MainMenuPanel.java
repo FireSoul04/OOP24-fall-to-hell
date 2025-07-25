@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
  * Each button triggers the corresponding action provided via {@link ActionListener}.
  * The layout uses {@link GridBagLayout} to arrange the buttons vertically with spacing.
  * </p>
+ * @author Casadei Lorenzo
  */
 public class MainMenuPanel extends JPanel{
     /**

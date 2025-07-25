@@ -15,6 +15,7 @@ import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
  * The projectile moves according to its speed, can be marked as "hit" when it collides with something solid,
  * and provides hooks for subclasses to customize update and collision behavior.
  * </p>
+ * @author Casadei Lorenzo
  */
 public class ProjectileImpl extends MovableImpl implements Projectile{
     private boolean hit;

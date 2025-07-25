@@ -14,6 +14,7 @@ import it.unibo.falltohell.model.api.GameEventCondition;
  * </p>
  *
  * @param <K> the type of key used to identify events
+ * @author Casadei Lorenzo
  */
 public class GameEventManager<K> {
     private final Map<K, GameEventCondition> conditions = new HashMap<>();

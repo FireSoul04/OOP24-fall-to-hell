@@ -5,6 +5,7 @@ import java.util.Optional;
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.Drawable.Sprite;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.Level;
 
@@ -16,6 +17,7 @@ import it.unibo.falltohell.model.api.Level;
  * object
  * is automatically added to the specified level.
  * </p>
+ * @author Casadei Lorenzo
  */
 public class GameObjectImpl implements GameObject {
     private Vector2 pos;

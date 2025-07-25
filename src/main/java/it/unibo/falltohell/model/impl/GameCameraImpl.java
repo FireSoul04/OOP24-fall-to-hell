@@ -8,6 +8,7 @@ import java.lang.Math;
  * <p>
  * Represents the camera that follows the player within the game level.
  * </p>
+ * @author Casadei Lorenzo
  */
 public class GameCameraImpl implements GameCamera{
     private Vector2 cameraPosition;
