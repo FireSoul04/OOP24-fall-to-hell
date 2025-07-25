@@ -30,6 +30,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private final CharacterStatistics stats;
     private final BuffManager buffManager;
     private Vector2 gravity;
+    private Vector2 velocity;
     private int currentJumpFrames;
     private double jumpingSpeed;
     private boolean onGround;
@@ -51,12 +52,26 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.currentJumpFrames = 0;
         this.jumpingSpeed = this.getStats().getInitialSpeed().y();
         this.jumping = false;
+        this.velocity = Vector2.zero();
         this.gravity = Vector2.zero();
         this.stats = stats;
         this.input = level.getGameEventManager();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
         this.interactingObject = Optional.empty();
         this.initDrawable(Priority.LOW, fileName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final double deltaTime) {
+        this.move(deltaTime);
+        this.jump(deltaTime);
+        this.applyGravity(deltaTime);
+        this.interact();
+        this.setPosition(this.getPosition().add(this.velocity));
+        this.velocity = Vector2.zero();
     }
 
     /**
@@ -67,15 +82,15 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * @param deltaTime difference between two frames
      */
     private void move(final double deltaTime) {
-        Vector2 velocity = Vector2.zero();
+        Vector2 moveVelocity = Vector2.zero();
         if (this.input.checkCondition("MoveLeft")) {
-            velocity = velocity.add(Vector2.left());
+            moveVelocity = moveVelocity.add(Vector2.left());
         }
         if (this.input.checkCondition("MoveRight")) {
-            velocity = velocity.add(Vector2.right());
+            moveVelocity = moveVelocity.add(Vector2.right());
         }
-        velocity = velocity.multiply(this.getStats().getSpeed().x()).multiply(deltaTime);
-        this.setPosition(this.getPosition().add(velocity));
+        moveVelocity = moveVelocity.multiply(this.getStats().getSpeed().x()).multiply(deltaTime);
+        this.velocity = this.velocity.add(moveVelocity);
     }
 
     /**
@@ -104,7 +119,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
                 0.0,
                 2 * (currentJumpFrames - MAX_JUMP_HEIGHT) * this.jumpingSpeed * corrector * deltaTime
             );
-            this.setPosition(this.getPosition().add(jumpVelocity));
+            this.velocity = this.velocity.add(jumpVelocity);
             this.currentJumpFrames++;
         }
     }
@@ -117,19 +132,8 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private void applyGravity(final double deltaTime) {
         if (!this.onGround) {
             this.gravity = this.gravity.add(GRAVITY_STEP.multiply(deltaTime));
-            this.setPosition(this.getPosition().add(this.gravity));
+            this.velocity = this.velocity.add(this.gravity);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final double deltaTime) {
-        this.move(deltaTime);
-        this.jump(deltaTime);
-        this.applyGravity(deltaTime);
-        this.interact();
     }
 
     /**
@@ -139,30 +143,20 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseCollidableBlock && direction.equals(Vector2.down())) {
-            this.currentJumpFrames = 0;
-            this.onGround = true;
-            this.gravity = Vector2.zero();
-            this.moveUpToFloor(other);
+        if (other instanceof BaseCollidableBlock) {
+            if (direction.equals(Vector2.down())) {
+                this.currentJumpFrames = 0;
+                this.onGround = true;
+                this.gravity = Vector2.zero();
+                this.moveUpToFloor(other);
+            } else if (direction.equals(Vector2.up())) {
+                this.currentJumpFrames = 0;
+            } else {
+                this.moveOut(other);
+            }
         }
         if (other instanceof Interactable interactable) {
             this.interactingObject = Optional.of(interactable);
-        }
-    }
-
-    /**
-     * Move the character up until it reaches the floor's height.
-     * @param other block colliding with
-     */
-    private void moveUpToFloor(final GameObject other) {
-        final double distance = this.getPosition().subtract(other.getPosition()).y();
-        final double thisHeight = this.getCollider().orElseThrow().size().height();
-        final double otherHeight = other.getCollider().orElseThrow().size().height();
-        final double idealDistance = (thisHeight + otherHeight) / 2;
-        // Range of values for the y that the character needs to be to reach floor level
-        final double eps = 1 + (distance / thisHeight);
-        if (Math.abs(Math.abs(distance) - idealDistance) > eps) {
-            this.setPosition(this.getPosition().subtract(new Vector2(0, eps)));
         }
     }
 
@@ -177,6 +171,40 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         }
         if (other instanceof Interactable) {
             this.interactingObject = Optional.empty();
+        }
+    }
+
+    /**
+     * Move the character up until it reaches the floor's height.
+     * @param other block colliding with
+     */
+    private void moveUpToFloor(final GameObject other) {
+        final double distance = this.getPosition().subtract(other.getPosition()).y();
+        final double thisHeight = this.getCollider().orElseThrow().size().height();
+        final double otherHeight = other.getCollider().orElseThrow().size().height();
+        final double idealDistance = (thisHeight + otherHeight) / 2;
+        // Range of values for the y that the character needs to be to reach floor level
+        final double eps = 1 + (distance / thisHeight);
+        final double moveTo = Math.abs(distance) - idealDistance;
+        if (Math.abs(moveTo) > eps) {
+            this.velocity = this.velocity.subtract(new Vector2(0, eps));
+        }
+    }
+
+    /**
+     * Move the character left or right based on the direction facing to prevent going
+     * through walls.
+     * @param other block colliding with
+     */
+    private void moveOut(final GameObject other) {
+        final double distance = this.getPosition().subtract(other.getPosition()).x();
+        final double thisWidth = this.getCollider().orElseThrow().size().width();
+        final double otherWidth = other.getCollider().orElseThrow().size().width();
+        final double idealDistance = (thisWidth + otherWidth) / 2;
+        final double eps = 1 + (distance / thisWidth);
+        final double moveTo = Math.abs(Math.abs(distance) - idealDistance);
+        if (moveTo > eps) {
+            this.velocity = this.velocity.add(new Vector2(moveTo * Math.signum(distance), 0));
         }
     }
 
