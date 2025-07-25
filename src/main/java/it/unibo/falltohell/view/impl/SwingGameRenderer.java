@@ -60,6 +60,7 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
 
         this.drh.getAllRenderables()
             .stream()
+			.sorted((a, b) -> Integer.compare(b.getPriority().ordinal(), a.getPriority().ordinal()))
             .map(t -> (BaseRenderable) t)
             .forEach(t -> t.render(g));
 
