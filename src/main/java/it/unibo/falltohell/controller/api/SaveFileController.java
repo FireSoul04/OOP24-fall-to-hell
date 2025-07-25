@@ -14,7 +14,7 @@ public interface SaveFileController {
     /**
      * Method to save the current state of the game in the save file.
      */
-    void save();
+    void save(GameData data);
 
     /**
      * @return the game data loaded from the save file.
