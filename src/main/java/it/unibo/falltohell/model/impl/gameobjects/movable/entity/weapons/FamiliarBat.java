@@ -11,7 +11,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.weapons.AttackFinishListener;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
@@ -167,7 +167,7 @@ public class FamiliarBat extends MovableImpl {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (isAttacking) {
-            if (other instanceof BaseBlock) {
+            if (other instanceof BaseCollidableBlock) {
                 isAttacking = false;
                 attackFinishListener.onAttackFinished(this);
             }

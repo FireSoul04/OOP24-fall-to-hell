@@ -3,7 +3,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.api.gameobjects.Interactable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
@@ -139,7 +139,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseBlock && direction.equals(Vector2.down())) {
+        if (other instanceof BaseCollidableBlock && direction.equals(Vector2.down())) {
             this.currentJumpFrames = 0;
             this.onGround = true;
             this.gravity = Vector2.zero();
@@ -172,7 +172,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseBlock && direction.equals(Vector2.down())) {
+        if (other instanceof BaseCollidableBlock && direction.equals(Vector2.down())) {
             this.onGround = false;
         }
         if (other instanceof Interactable) {
