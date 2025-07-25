@@ -43,9 +43,9 @@ public class Archer extends BaseCharacter {
      * @param position the initial position
      * @param bow      the ranged weapon used to shoot arrows
      */
-    public Archer(final Level level, final Vector2 position, final Bow bow) {
+    public Archer(final Level level, final Vector2 position) {
         super(level, position, STATISTICS, "archer.png");
-        this.bow = bow;
+        this.bow = new Bow(5, 0.5, this);
 
     }
 

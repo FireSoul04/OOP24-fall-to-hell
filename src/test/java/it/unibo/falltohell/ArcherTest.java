@@ -34,10 +34,10 @@ public class ArcherTest {
         GameCameraImpl camera = new GameCameraImpl(Vector2.zero(), 10, 10, 1.0, 100, 100);
         level = new LevelImpl(camera);
 
-        bow = new Bow(5, 0.5, null);
-        archer = new Archer(level, Vector2.zero(), bow);
-
-        bow.setOwner(archer);
+        
+        archer = new Archer(level, Vector2.zero());
+        
+        
         
     }
     @Test
