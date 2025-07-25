@@ -11,7 +11,8 @@ import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
 import it.unibo.falltohell.model.impl.SavePoint;
 import it.unibo.falltohell.model.impl.gameobjects.CharacterChanger;
 import it.unibo.falltohell.model.impl.gameobjects.MerchantImpl;
-import it.unibo.falltohell.model.impl.gameobjects.block.BlockFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseNonCollidableBlock;
+import it.unibo.falltohell.model.impl.gameobjects.block.CollidableBlockFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.entrance.SpringsEntrance;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
@@ -44,7 +45,7 @@ public class LevelLoaderImpl implements LevelLoader {
         this.levelFromFile = new ArrayList<>();
         this.levelFromFile.addAll(new FileControllerImpl().read(PATH + fileName));
         this.enemyFactory =  new EnemyFactoryImpl();
-        this.blockFactory = new BlockFactoryImpl();
+        this.blockFactory = new CollidableBlockFactoryImpl();
         this.merchant = new MerchantImpl(level, Vector2.zero(), new BoxCollider());
 
     }
@@ -79,6 +80,7 @@ public class LevelLoaderImpl implements LevelLoader {
             case '#' -> this.blockFactory.createBaseBlock(level, position);
             case 'l' -> this.blockFactory.createLavaBlock(level, position);
             case 'v' -> this.blockFactory.createVinesBlock(level, position);
+            case '-' -> new BaseNonCollidableBlock(level, position);
             case 'e' -> new SpringsEntrance(level, position);
             case 'p' -> new ShopEntrance(level, position).setMerchant(this.merchant);
             case 'c' -> new CharacterChanger(level, position, collider, level.getCharacters());
