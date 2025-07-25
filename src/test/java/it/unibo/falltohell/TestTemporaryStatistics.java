@@ -44,7 +44,7 @@ class TestTemporaryStatistics {
             MANA,
             0
         );
-        this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats) {
+        this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats,"") {
             @Override
             public CharacterID getCharacterID() {
                 return CharacterID.ROGUE;
