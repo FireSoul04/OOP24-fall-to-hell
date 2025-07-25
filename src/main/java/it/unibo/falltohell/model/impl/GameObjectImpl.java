@@ -158,6 +158,10 @@ public class GameObjectImpl implements GameObject {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Optional<Drawable> getDrawable() {
         return drawable;
     }
