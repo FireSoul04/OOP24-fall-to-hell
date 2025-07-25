@@ -20,6 +20,7 @@ import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,6 +78,7 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
      */
     @Override
     public void destock() {
+        this.merch.forEach(this.getLevel()::removeGameObject);
         this.merch.clear();
     }
 
@@ -94,7 +96,12 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
      * Method to remove items if they are marked as sold.
      */
     private void sell() {
-        this.merch.removeIf(Item::isSold);
+        final Iterator<Item> iterator = this.merch.iterator();
+        while (iterator.hasNext()) {
+            final Item item = iterator.next();
+            this.getLevel().removeGameObject(item);
+            iterator.remove();
+        }
     }
 
     /**
