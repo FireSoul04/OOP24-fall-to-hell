@@ -23,11 +23,10 @@ public class SavePoint extends GameObjectImpl implements Interactable {
      * @param level is the current lever
      * @param position of the save point
      * @param collider to see if the player is close enough to interact
-     * @param data to write on the save file
      */
-    public SavePoint(final Level level, final Vector2 position, final Collider collider, final GameData data) {
+    public SavePoint(final Level level, final Vector2 position, final Collider collider) {
         super(level, position, collider);
-        this.saveController = new SaveFileControllerImpl(data);
+        this.saveController = new SaveFileControllerImpl();
         this.initDrawable(Priority.VERY_LOW, "save_point.png");
     }
 
@@ -36,6 +35,6 @@ public class SavePoint extends GameObjectImpl implements Interactable {
      */
     @Override
     public void interact(final Character character) {
-        this.saveController.save();
+        this.saveController.save(this.getLevel().getGameData());
     }
 }
