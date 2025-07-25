@@ -25,10 +25,9 @@ public class Caster extends BaseCharacter {
      *
      * @param level where the caster actually is
      * @param position of the caster in the level
-     * @param fileName is the name of the image file associated to the caster
      */
-    public Caster(final Level level, final Vector2 position, final String fileName) {
-        super(level, position, STATISTICS, fileName);
+    public Caster(final Level level, final Vector2 position) {
+        super(level, position, STATISTICS, "caster.png");
         this.staff = new Staff(level, position, this);
     }
 
