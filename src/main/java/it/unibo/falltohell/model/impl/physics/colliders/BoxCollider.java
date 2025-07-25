@@ -19,7 +19,7 @@ public record BoxCollider(Vector2 offset, Dimensions size) implements Collider {
      * @param size of the box
      */
     public BoxCollider(final Vector2 offset, final Dimensions size) {
-        this.offset = offset.subtract(new Vector2(size.width(), size.height()).divide(2));
+        this.offset = offset.add(new Vector2(size.width(), size.height()).divide(2));
         this.size = size;
     }
 
