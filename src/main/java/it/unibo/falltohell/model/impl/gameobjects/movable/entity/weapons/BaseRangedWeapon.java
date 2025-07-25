@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
-import it.unibo.falltohell.model.api.Drawable.Priority;
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.Weapon;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -55,10 +55,6 @@ public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon 
      *
      * @param level    the level where the projectile will be spawned
      * @param position spawn position
-     * @param speedX   horizontal speed of the projectile
-     * @param speedY   vertical speed of the projectile
-     * @param width    width of the projectile
-     * @param height   height of the projectile
      * @param collider collider for the projectile
      */
     public Projectile attack(final Level level, final Vector2 position, final Vector2 speed, final Collider collider) {
@@ -75,7 +71,7 @@ public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon 
     /**
      * Checks if the weapon can shoot (cooldown is stopped and has ammo).
      *
-     * @return true if can shoot, false otherwise
+     * @return true if it can shoot, false otherwise
      */
     public boolean canShoot() {
         return ammo > 0 && !cooldownTimer.isStarted();

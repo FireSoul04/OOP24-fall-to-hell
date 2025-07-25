@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
-import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
