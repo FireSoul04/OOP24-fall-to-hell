@@ -65,9 +65,10 @@ public class ActiveAbilityImpl extends MovableImpl implements PhysicalActiveAbil
      * </p>
      *
      * @param other the other {@link GameObject} this ability collided with
+     * @param direction where it collides
      */
     @Override
-    public void onCollision(final GameObject other) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         if (this.collided.isEmpty()) {
             if (other instanceof Enemy) {
                 ((Enemy) other).setDamagedLife(this.damage);

@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.api.gameobjects.movable;
 
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.GameObject;
+import it.unibo.falltohell.util.Vector2;
 
 /**
  * Represents a projectile in the game that can move and hit with other game objects.
@@ -28,21 +29,5 @@ public interface Projectile extends Movable {
      *            otherwise
      */
     void setHit(boolean hit);
-
-    /**
-     * Updates the projectile's position if it has not hit anything.
-     *
-     * @param deltaTime the time elapsed since the last update (in seconds)
-     */
-    void update(double deltaTime);
-
-    /**
-     * Handles collision with another game object.
-     * If the other object is solid and the projectile has not already hit, marks
-     * this projectile as hit
-     *
-     * @param other the other game object involved in the collision
-     */
-    void onCollision(GameObject other);
 
 }

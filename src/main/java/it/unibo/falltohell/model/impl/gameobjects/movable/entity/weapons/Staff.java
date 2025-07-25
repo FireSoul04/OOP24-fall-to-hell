@@ -28,7 +28,7 @@ public class Staff extends MeleeWeapon{
     }
 
     @Override
-    public void onCollision(final GameObject other) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof Enemy enemy) {
             enemy.setDamagedLife(this.caster.getStats().getAttack() * DAMAGE_MULTIPLIER);
         }

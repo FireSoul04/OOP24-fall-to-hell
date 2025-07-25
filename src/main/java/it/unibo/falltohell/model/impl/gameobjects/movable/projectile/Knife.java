@@ -39,7 +39,7 @@ public class Knife extends ProjectileImpl {
      *  If it is, the knife will destroy itself, otherwise it will pass through.
      */
     @Override
-    public void onCollision(final GameObject other) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         final boolean isOtherCollidable = ignoreCollisionsObjects.stream()
             .noneMatch(t -> t.isInstance(other));
         if (isOtherCollidable && other.isSolid() && !this.isHit()) {

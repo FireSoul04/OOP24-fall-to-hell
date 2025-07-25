@@ -29,8 +29,8 @@ public class Fireball extends ProjectileImpl{
     }
 
     @Override
-    public void onCollision(final GameObject other) {
-        super.onCollision(other);
+    public void onCollision(final GameObject other, Vector2 direction) {
+        super.onCollision(other, direction);
     }
 
     @Override

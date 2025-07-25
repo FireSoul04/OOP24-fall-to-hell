@@ -79,7 +79,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
      * {@inheritDoc}
      */
     @Override
-    public void onCollision(final GameObject other) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         if (other != this && other.isSolid() && !hit) {
             this.hit = true;
             this.onProjectileHit(other);

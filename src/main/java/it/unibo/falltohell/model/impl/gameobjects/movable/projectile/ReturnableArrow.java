@@ -87,9 +87,9 @@ public class ReturnableArrow extends ProjectileImpl {
      * @param other the object the arrow collided with
      */
     @Override
-    public void onCollision(final GameObject other) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         if (!this.returning && other != this && other.isSolid()) {
-            super.onCollision(other);
+            super.onCollision(other, direction);
             this.setHit(true);
         } else if (this.returning && isEnemy(other)) {
             this.onProjectileHit(other);
