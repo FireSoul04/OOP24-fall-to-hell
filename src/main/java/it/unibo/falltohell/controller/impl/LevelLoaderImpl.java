@@ -2,7 +2,6 @@ package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.controller.api.LevelLoader;
 import it.unibo.falltohell.model.api.EnemyFactory;
-import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.BlockFactory;
 import it.unibo.falltohell.model.api.gameobjects.Merchant;
@@ -20,7 +19,6 @@ import it.unibo.falltohell.util.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Class that handles the loading of a level from file.
