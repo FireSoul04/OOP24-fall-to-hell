@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.api;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.util.Vector2;
 
 /**
  * Set of data to maintain the current state of the game.
@@ -33,4 +34,9 @@ public interface GameData {
      * @return the current character
      */
     Character getCurrentCharacter();
+
+    /**
+     * @return the last saved position of the character
+     */
+    Vector2 getLastSavedPosition();
 }
