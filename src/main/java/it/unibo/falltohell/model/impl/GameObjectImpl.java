@@ -23,9 +23,25 @@ import it.unibo.falltohell.model.api.Level;
 public class GameObjectImpl implements GameObject {
     private Vector2 pos;
     private boolean isSolid;
-    private Collider collider;
     private Level level;
+    private Optional<Collider> collider;
     private Optional<Drawable> drawable;
+
+    /**
+     * Constructs a solid GameObject and adds it to the specified level.
+     *
+     * @param lv       the level to which this object will be added
+     * @param position the position of the object
+     */
+    public GameObjectImpl(final Level lv, final Vector2 position) {
+        this.pos = position;
+        this.isSolid = true; // Default
+        lv.addGameObject(this);
+        this.level = lv;
+        this.collider = Optional.empty();
+        this.drawable = Optional.empty();
+
+    }
 
     /**
      * Constructs a solid GameObject and adds it to the specified level.
@@ -37,7 +53,7 @@ public class GameObjectImpl implements GameObject {
     public GameObjectImpl(final Level lv, final Vector2 position, final Collider collider) {
         this.pos = position;
         this.isSolid = true; // Default
-        this.collider = collider;
+        this.collider = Optional.of(collider);
         lv.addGameObject(this);
         this.level = lv;
         this.drawable = Optional.empty();
@@ -56,7 +72,7 @@ public class GameObjectImpl implements GameObject {
     public GameObjectImpl(final Level lv, final Vector2 position, final boolean isSolid, final Collider collider) {
         this.pos = position;
         this.isSolid = isSolid;
-        this.collider = collider;
+        this.collider = Optional.of(collider);
         lv.addGameObject(this);
         this.level = lv;
         this.drawable = Optional.empty();
@@ -98,7 +114,7 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     @Override
-    public Collider getCollider() {
+    public Optional<Collider> getCollider() {
         return this.collider;
     }
 

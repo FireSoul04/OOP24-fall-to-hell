@@ -2,6 +2,9 @@ package it.unibo.falltohell.model.api;
 
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
+
+import java.util.Optional;
+
 /**
  * Represents a game object in the game world.
  * <p>
@@ -21,9 +24,9 @@ public interface GameObject {
     Vector2 getPosition();
 
     /**
-     * @return collider attached to this game object.
+     * @return collider attached to this game object if present.
      */
-    Collider getCollider();
+    Optional<Collider> getCollider();
 
     /**
      * @return true if the game object is solid, false otherwise

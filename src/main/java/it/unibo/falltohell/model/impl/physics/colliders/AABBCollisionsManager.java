@@ -19,7 +19,8 @@ public class AABBCollisionsManager extends AbstractCollisionsManager {
      */
     @Override
     protected Optional<Collision> determineCollision(final GameObject g1, final GameObject g2) {
-        if (g1.getCollider() instanceof BoxCollider c1 && g2.getCollider() instanceof BoxCollider c2) {
+        if (g1.getCollider().orElseThrow() instanceof BoxCollider c1
+            && g2.getCollider().orElseThrow() instanceof BoxCollider c2) {
             final Vector2 p1 = g1.getPosition().add(c1.offset());
             final Vector2 p2 = g2.getPosition().add(c2.offset());
             final Dimensions s1 = c1.size();

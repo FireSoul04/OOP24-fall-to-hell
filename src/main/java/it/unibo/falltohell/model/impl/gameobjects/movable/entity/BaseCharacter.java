@@ -129,6 +129,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.move(deltaTime);
         this.jump(deltaTime);
         this.applyGravity(deltaTime);
+        this.interact();
     }
 
     /**
@@ -155,8 +156,8 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     private void moveUpToFloor(final GameObject other) {
         final double distance = this.getPosition().subtract(other.getPosition()).y();
-        final double thisHeight = this.getCollider().size().height();
-        final double otherHeight = other.getCollider().size().height();
+        final double thisHeight = this.getCollider().orElseThrow().size().height();
+        final double otherHeight = other.getCollider().orElseThrow().size().height();
         final double idealDistance = (thisHeight + otherHeight) / 2;
         // Range of values for the y that the character needs to be to reach floor level
         final double eps = 1 + (distance / thisHeight);

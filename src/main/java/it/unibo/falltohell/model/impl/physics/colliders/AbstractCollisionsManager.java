@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.physics.colliders;
 
+import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
 import org.apache.commons.lang3.tuple.Pair;
@@ -27,8 +28,14 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
      */
     @Override
     public void checkCollisions(final List<GameObject> gameObjects) {
-        for (final GameObject g1 : gameObjects) {
-            for (final GameObject g2 : gameObjects) {
+        final List<GameObject> collidableObjects = gameObjects.stream()
+            .filter(t -> t.getCollider().isPresent())
+            .toList();
+        final List<GameObject> movables = collidableObjects.stream()
+            .filter(t -> t instanceof Movable)
+            .toList();
+        for (final GameObject g1 : movables) {
+            for (final GameObject g2 : collidableObjects) {
                 if (!g1.equals(g2)) {
                     final Optional<Collision> collision = this.determineCollision(g1, g2);
 
