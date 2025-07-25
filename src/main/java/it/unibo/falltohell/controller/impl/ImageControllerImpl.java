@@ -24,7 +24,7 @@ public class ImageControllerImpl implements ImageController {
         try {
             return ImageIO.read(new File(IMAGE_DIR_PATH + fileName));
         } catch (final IOException e) {
-            Logger.getLogger("FileLevelLogger").severe("There is no file with the given name");
+            Logger.getLogger("FileLevelLogger").severe("There is no file with the given name:" + fileName);
             System.exit(1);
         }
         throw new IllegalStateException("The program should have already been stopped");

@@ -22,7 +22,7 @@ public class FileControllerImpl implements FileController {
         try {
             return Files.readAllLines(Path.of(path));
         } catch (final IOException e) {
-            Logger.getLogger("FileLevelLogger").severe("There is no file with the given name");
+            Logger.getLogger("FileLevelLogger").severe("There is no file with the given path:" + path);
             System.exit(1);
         }
         throw new IllegalStateException("The program should have already been stopped");
