@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.api.LevelLoader;
 import it.unibo.falltohell.controller.impl.LevelLoaderImpl;
+import it.unibo.falltohell.controller.impl.SaveFileControllerImpl;
 import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.api.GameBuilder;
 import it.unibo.falltohell.model.api.GameCamera;
@@ -10,12 +11,13 @@ import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Archer;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Caster;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,7 +31,7 @@ public class GameBuilderImpl implements GameBuilder {
     private Optional<DrawableRenderableHandler> drh;
 
     public GameBuilderImpl() {
-        this.characters = new HashMap<>();
+        this.characters = new EnumMap<>(CharacterID.class);
         this.level = Optional.empty();
         this.gameData = Optional.empty();
         this.camera = Optional.empty();
@@ -57,8 +59,13 @@ public class GameBuilderImpl implements GameBuilder {
      */
     @Override
     public GameBuilder loadGameData() {
-        // TODO update when game data is going to load from save file
-        this.gameData = Optional.of(new GameDataImpl(this.characters));
+        if (this.level.isEmpty()) {
+            throw new IllegalStateException("The characters needs a level to stay inside");
+        }
+        this.gameData = Optional.of(new SaveFileControllerImpl().load(this.characters));
+        final Character currentCharacter = this.gameData.get().getCurrentCharacter();
+        currentCharacter.setPosition(this.gameData.get().getLastSavedPosition());
+        this.level.get().addGameObject(currentCharacter);
         return this;
     }
 
@@ -98,14 +105,9 @@ public class GameBuilderImpl implements GameBuilder {
         if (this.level.isEmpty()) {
             throw new IllegalStateException("The characters needs a level to stay inside");
         }
-        final Vector2 position;
-        if (gameData.isPresent()) {
-            position = gameData.get().getCurrentCharacter().getPosition();
-        } else {
-            position = Vector2.zero();
-        }
+        final Vector2 position = Vector2.zero();
         final Level lv = this.level.get();
-        this.characters.put(CharacterID.ARCHER, new Caster(lv, position));
+        this.characters.put(CharacterID.ARCHER, new Archer(lv, position));
         this.characters.put(CharacterID.CASTER, new Caster(lv, position));
         this.characters.put(CharacterID.DRUID, new Druid(lv, position));
         this.characters.put(CharacterID.ROGUE, new Rogue(lv, position));
