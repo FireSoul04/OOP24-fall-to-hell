@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobjects.block;
 
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.BlockFactory;
+import it.unibo.falltohell.model.api.gameobjects.CollidableBlockFactory;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
@@ -9,7 +9,7 @@ import it.unibo.falltohell.util.Vector2;
  * Class that handles the creation of different types of block.
  * @author Martina Malagoli
  */
-public class CollidableBlockFactoryImpl implements BlockFactory {
+public class CollidableBlockFactoryImpl implements CollidableBlockFactory {
 
     private static final Vector2 OFFSET_LAVA = new Vector2(0.0, 0.5);
     private static final Vector2 OFFSET_VINES = new Vector2(0.0, 3.0);
@@ -18,7 +18,7 @@ public class CollidableBlockFactoryImpl implements BlockFactory {
      *{@inheritDoc}
      */
     @Override
-    public BaseCollidableBlock createBaseBlock(final Level level, final Vector2 position) {
+    public BaseCollidableBlock createCollidableBaseBlock(final Level level, final Vector2 position) {
         return new BaseCollidableBlock(level, position, new BoxCollider(), "base_block.png");
     }
 
