@@ -17,10 +17,10 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableA
 /**
  * Represents an Archer character in the game.
  * The Archer can shoot arrows using a Bow and has the ability to return arrows.
- * 
+ *
  * This class extends BaseCharacter and implements the shooting mechanism with a Bow.
  * It manages the arrows shot by the archer and allows for returning arrows to the inventory.
- * 
+ *
  * @author Casadei Lorenzo
  */
 public class Archer extends BaseCharacter {
@@ -41,12 +41,10 @@ public class Archer extends BaseCharacter {
      *
      * @param level    the game level
      * @param position the initial position
-     * @param stats    the character statistics<
      * @param bow      the ranged weapon used to shoot arrows
-     * @param fileName is the name of the image file associated to the archer
      */
-    public Archer(final Level level, final Vector2 position, final Bow bow, String fileName) {
-        super(level, position, STATISTICS, fileName);
+    public Archer(final Level level, final Vector2 position, final Bow bow) {
+        super(level, position, STATISTICS, "archer.png");
         this.bow = bow;
 
     }
@@ -56,8 +54,6 @@ public class Archer extends BaseCharacter {
      *
      * @param direction the direction to shoot (normalized vector)
      * @param speed     the speed of the arrow
-     * @param width     the width of the arrow
-     * @param height    the height of the arrow
      * @param collider  the collider for the arrow
      */
     public void shootArrow(final Vector2 direction, final double speed, final Collider collider) {

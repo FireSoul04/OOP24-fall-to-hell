@@ -25,8 +25,8 @@ public class TestEnemy1Movement {
     @BeforeEach
     public void setUp(){
         fact = new EnemyFactoryImpl();
-        chara1 = new Druid(lv, new Vector2(-100, 0), "druid.png");
-        chara2 = new Druid(lv, new Vector2(100, 0), "druid.png");
+        chara1 = new Druid(lv, new Vector2(-100, 0));
+        chara2 = new Druid(lv, new Vector2(100, 0));
         en1 = fact.createCentaur(lv, Vector2.zero(), chara1);
         en2 = fact.createCentaur(lv, new Vector2(-30, 0), chara1);
         en3 = fact.createCentaur(lv, new Vector2(-40, 0), chara1);

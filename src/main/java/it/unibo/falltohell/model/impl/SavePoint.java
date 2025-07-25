@@ -24,13 +24,11 @@ public class SavePoint extends GameObjectImpl implements Interactable {
      * @param position of the save point
      * @param collider to see if the player is close enough to interact
      * @param data to write on the save file
-     * @param fileName is the name of the image file associated to the save point
      */
-    public SavePoint(final Level level, final Vector2 position, final Collider collider, final GameData data,
-                     final String fileName) {
+    public SavePoint(final Level level, final Vector2 position, final Collider collider, final GameData data) {
         super(level, position, collider);
         this.saveController = new SaveFileControllerImpl(data);
-        this.initDrawable(Priority.VERY_LOW, fileName);
+        this.initDrawable(Priority.VERY_LOW, "save_point.png");
     }
 
     /**

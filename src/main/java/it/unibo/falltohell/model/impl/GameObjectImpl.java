@@ -2,7 +2,6 @@ package it.unibo.falltohell.model.impl;
 
 import java.util.Optional;
 
-import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.Drawable.Priority;
 import it.unibo.falltohell.model.api.GameObject;
@@ -33,8 +32,6 @@ public class GameObjectImpl implements GameObject {
      *
      * @param lv       the level to which this object will be added
      * @param position the position of the object
-     * @param width    the width (in tiles) of the object
-     * @param height   the height (in tiles) of the object
      * @param collider the collider for this object
      */
     public GameObjectImpl(final Level lv, final Vector2 position, final Collider collider) {
@@ -53,8 +50,6 @@ public class GameObjectImpl implements GameObject {
      *
      * @param lv       the level to which this object will be added
      * @param position the position of the object
-     * @param width    the width (in tiles) of the object
-     * @param height   the height (in tiles) of the object
      * @param isSolid  whether the object is solid
      * @param collider the collider for this object
      */
@@ -159,7 +154,7 @@ public class GameObjectImpl implements GameObject {
      * complete,
      * to ensure that {@code this} refers to the fully initialized subclass
      * instance.
-     * It sets the drawable object of the entity using {@link #setDrawable} and wraps the
+     * It sets the drawable object of the entity and wraps the
      * sprite in an {@link Optional}.
      *
      * @implNote This method avoids invoking {@code setDrawable(new Sprite(this))}
@@ -179,8 +174,7 @@ public class GameObjectImpl implements GameObject {
      * by associating it with a {@link Sprite}.
      *
      * <p>
-     * Should be called after subclass construction, just like
-     * {@link #initDrawable()}.
+     * Should be called after subclass construction.
      *
      * @implNote This method avoids invoking {@code setDrawable(new Sprite(this))}
      *           inside the constructor

@@ -101,8 +101,8 @@ public class GameBuilderImpl implements GameBuilder {
         final Vector2 position = Vector2.zero();
         final Level lv = this.level.get();
         // TODO add remaining characters
-        this.characters.put(CharacterID.ROGUE, new Rogue(lv, position, "rogue.png"));
-        this.characters.put(CharacterID.DRUID, new Druid(lv, position, "druid.png"));
+        this.characters.put(CharacterID.ROGUE, new Rogue(lv, position));
+        this.characters.put(CharacterID.DRUID, new Druid(lv, position));
         this.level.get().loadCharacters(this.characters);
         return this;
     }

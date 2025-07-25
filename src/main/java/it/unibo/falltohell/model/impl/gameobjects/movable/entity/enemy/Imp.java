@@ -65,16 +65,15 @@ public class Imp extends BaseEnemy {
      * @param manager     the {@link EnemyTimerManager} responsible for managing
      *                    enemy timers
      * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
-     * @param fileName is the name of the image file associated to the enemy
      */
     public Imp(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage, final String fileName) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DISTANCE),
-                manager, ingage, fileName);
+                manager, ingage, "imp.png");
 
         this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
         ingage.addEnemy(this);

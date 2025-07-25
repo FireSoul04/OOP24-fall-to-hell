@@ -28,10 +28,9 @@ public class Knife extends ProjectileImpl {
      * @param level where knife is
      * @param position where knife will be thrown
      * @param velocity is the direction and speed of the knife
-     * @param fileName is the name of the image file associated to the knife
      */
-    public Knife(final Level level, final Vector2 position, final Vector2 velocity, final String fileName) {
-        super(level, position, velocity, new BoxCollider(DIMENSIONS), fileName);
+    public Knife(final Level level, final Vector2 position, final Vector2 velocity) {
+        super(level, position, velocity, new BoxCollider(DIMENSIONS), "knife.png");
     }
 
     /**

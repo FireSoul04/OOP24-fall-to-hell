@@ -8,11 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.GameCameraImpl;
 import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.abilities.active.ReturnArrowAbility;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.TestStatsFactory;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Archer;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
@@ -35,16 +33,9 @@ public class ArcherTest {
         
         GameCameraImpl camera = new GameCameraImpl(Vector2.zero(), 10, 10, 1.0, 100, 100);
         level = new LevelImpl(camera);
-        
-<<<<<<< HEAD
+
         bow = new Bow(5, 0.5, null);
         archer = new Archer(level, Vector2.zero(), bow);
-=======
-        CharacterStatistics stats = TestStatsFactory.createDefault();
-        
-        bow = new Bow(5, 0.5, null, "");
-        archer = new Archer(level, Vector2.zero(), stats, bow, "");
->>>>>>> 95740ca72d6a8dde16ea0f5f7ba16adc285bdb67
 
         bow.setOwner(archer);
         
