@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
 import it.unibo.falltohell.model.impl.GameDataImpl;
+import it.unibo.falltohell.util.Vector2;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -56,6 +57,10 @@ public class SaveFileControllerImpl implements SaveFileController {
             saveOutput.write(String.valueOf(this.data.getPoints()));
             saveOutput.newLine();
             saveOutput.write(character.getCharacterID().name());
+            saveOutput.newLine();
+            saveOutput.write(String.valueOf(character.getPosition().x()));
+            saveOutput.newLine();
+            saveOutput.write(String.valueOf(character.getPosition().y()));
         } catch (final IOException e) {
             this.logger.severe("Something went wrong while saving:" + e);
         }
@@ -69,7 +74,9 @@ public class SaveFileControllerImpl implements SaveFileController {
         final List<String> fileLines = new FileControllerImpl().read(DIR_PATH + FILE_NAME);
         final long points = Long.parseLong(fileLines.get(0));
         final CharacterID currentCharacterID = Enum.valueOf(CharacterID.class, fileLines.get(1));
-        return new GameDataImpl(points, currentCharacterID, characters);
+        final Vector2 position = new Vector2(
+                Double.parseDouble(fileLines.get(2)), Double.parseDouble(fileLines.get(3)));
+        return new GameDataImpl(points, currentCharacterID, characters, position);
     }
 
 }
