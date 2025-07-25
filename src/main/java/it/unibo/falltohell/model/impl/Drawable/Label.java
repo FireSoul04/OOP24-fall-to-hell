@@ -1,34 +1,39 @@
 package it.unibo.falltohell.model.impl.Drawable;
+
 import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.util.Vector2;
+
 /**
  * Class representing a label that can be drawn on the screen.
+ * 
  * @author Casadei Lorenzo
  */
-public class Label implements Drawable{
+public class Label implements Drawable {
     private String text;
     private Vector2 position;
     private boolean visible;
-    private final boolean mirrored = false;  
+    private final boolean mirrored = false;
 
-   /**
-    * Constructor for a label.
-    * @param text the text of the label.
-    * @param position the position of the label.
-    * @param visible if the label is visible or not.
-    */
+    /**
+     * Constructor for a label.
+     * 
+     * @param text     the text of the label.
+     * @param position the position of the label.
+     * @param visible  if the label is visible or not.
+     */
     public Label(final String text, final Vector2 position, final boolean visible) {
         this.text = text;
         this.position = position;
         this.visible = visible;
     }
 
-   /**
-    * @return the text of the label. 
-    */
+    /**
+     * @return the text of the label.
+     */
     public String getText() {
         return text;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -36,6 +41,7 @@ public class Label implements Drawable{
     public void mirror(final boolean mirroring) {
         // Not applicable for text labels, do nothing
     }
+
     /**
      * {@inheritDoc}
      */
@@ -43,6 +49,7 @@ public class Label implements Drawable{
     public boolean isMirrored() {
         return mirrored;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -50,6 +57,7 @@ public class Label implements Drawable{
     public void setVisible(final boolean visibility) {
         this.visible = visibility;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -57,6 +65,7 @@ public class Label implements Drawable{
     public boolean isVisible() {
         return visible;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -64,11 +73,17 @@ public class Label implements Drawable{
     public Vector2 getPosition() {
         return position;
     }
+
     /**
      * set the text of the label.
+     * 
      * @param text
      */
     public void setText(final String text) {
         this.text = text;
+    }
+
+    public Priority getPriority() {
+        return Drawable.Priority.GUI;
     }
 }

@@ -7,12 +7,15 @@ import java.util.Set;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 /**
  * InputListener class to handle keyboard input in the game.
  * <p>
- * It tracks which keys are pressed and allows checking if a key is currently pressed
+ * It tracks which keys are pressed and allows checking if a key is currently
+ * pressed
  * or has been pressed once.
  * </p>
+ * 
  * @author Casadei Lorenzo
  */
 public class InputListener {
@@ -25,6 +28,7 @@ public class InputListener {
         public void keyPressed(final KeyEvent e) {
             keysPressed.add(keys.get(e.getKeyCode()));
         }
+
         @Override
         public void keyReleased(final KeyEvent e) {
             keysPressed.remove(keys.get(e.getKeyCode()));
@@ -42,6 +46,7 @@ public class InputListener {
 
     /**
      * Checks if a key is currently pressed.
+     * 
      * @param keyCode the key code (e.g. KeyEvent.VK_SPACE)
      * @return true if pressed, false otherwise
      */
@@ -51,6 +56,7 @@ public class InputListener {
 
     /**
      * Checks if a key has been pressed once (not held down).
+     * 
      * @param keyCode the key code
      * @return true if pressed once, false otherwise
      */
@@ -68,11 +74,13 @@ public class InputListener {
 
     /**
      * Returns the KeyListener to be added to the view component.
+     * 
      * @return the KeyListener
      */
     public KeyListener getKeyListener() {
         return this.keyListener;
     }
+
     private static final class Key {
         private final int keyCode;
         private boolean alreadyPressed;
@@ -80,12 +88,15 @@ public class InputListener {
         private Key(final int keyCode) {
             this.keyCode = keyCode;
         }
+
         public void setAlreadyPressed(final boolean alreadyPressed) {
             this.alreadyPressed = alreadyPressed;
         }
+
         public boolean isAlreadyPressed() {
             return this.alreadyPressed;
         }
+
         @Override
         public int hashCode() {
             return this.keyCode;

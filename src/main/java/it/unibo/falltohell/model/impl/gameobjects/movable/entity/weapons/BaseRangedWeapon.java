@@ -22,6 +22,7 @@ import it.unibo.falltohell.model.api.CustomTimer;
  * - Ammo management (current and max)
  * - Cooldown timing between shots
  * - Projectile creation (can be overridden)
+ * 
  * @author Lorenzo Casadei
  */
 public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon {
@@ -36,10 +37,10 @@ public abstract class BaseRangedWeapon extends GameObjectImpl implements Weapon 
      *
      * @param maxAmmo      the maximum ammo the weapon can carry
      * @param cooldownTime the cooldown time between attacks, in seconds
-     * @param fileName is the name of the image file associated to the ranged weapon
+     * @param fileName     is the name of the image file associated to the ranged
+     *                     weapon
      */
-    protected BaseRangedWeapon(final Level lv, final Vector2 position, final int maxAmmo, final double cooldownTime,
-                               final String fileName) {
+    protected BaseRangedWeapon(final Level lv, final Vector2 position, final int maxAmmo, final double cooldownTime, String fileName) {
         super(lv, position, new BoxCollider(new Dimensions(0, 0)));
         this.maxAmmo = maxAmmo;
         this.ammo = maxAmmo;

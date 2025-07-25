@@ -14,6 +14,7 @@ import it.unibo.falltohell.util.Vector2;
  * Provides methods to update its position based on speed and elapsed time, and
  * to get or set its speed.
  * </p>
+ * 
  * @author Casadei Lorenzo
  */
 public class MovableImpl extends GameObjectImpl implements Movable {

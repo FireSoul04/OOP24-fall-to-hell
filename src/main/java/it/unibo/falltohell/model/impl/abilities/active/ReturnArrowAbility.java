@@ -19,6 +19,7 @@ import it.unibo.falltohell.model.api.Level;
  * - become non-solid (pass through walls),
  * - can hit enemies during the return,
  * - replenish the archer's ammo when they reach him.
+ * 
  * @author Casadei Lorenzo
  */
 public class ReturnArrowAbility implements SpecialActiveAbility {
