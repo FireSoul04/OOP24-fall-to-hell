@@ -44,7 +44,6 @@ public class LevelImpl implements Level {
     private GameEventManager<String> eventManager;
     private DrawableRenderableHandler drh;
     private Optional<GameData> gameData;
-    private Optional<Character> player;
 
     /**
      * Constructs a new LevelImpl with a given list of game objects.
@@ -58,7 +57,6 @@ public class LevelImpl implements Level {
     public LevelImpl(final GameCamera camera, final List<GameObject> gameObjects) {
         this.gameObjects = new ArrayList<>(gameObjects);
         this.camera = camera;
-        this.player = Optional.empty();
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
         this.eventManager = new GameEventManager<>();
@@ -97,6 +95,7 @@ public class LevelImpl implements Level {
     @Override
     public void removeGameObject(final GameObject gameObject) {
         this.gameObjects.remove(gameObject);
+        gameObject.getDrawable().ifPresent(this.drh::removeLink);
     }
 
     /**
@@ -125,7 +124,7 @@ public class LevelImpl implements Level {
             }
         }
         this.collisionsManager.checkCollisions(this.gameObjects);
-        this.player.ifPresent(p -> this.camera.updateCamera(p.getPosition(), deltaTime));
+        this.gameData.ifPresent(d -> this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime));
         this.drh.updateAll(camera);
     }
 
@@ -143,7 +142,6 @@ public class LevelImpl implements Level {
     @Override
     public void linkGameData(final GameData gameData) {
         this.gameData = Optional.of(gameData);
-        this.player = Optional.of(gameData.getCurrentCharacter());
     }
 
     /**
