@@ -6,7 +6,6 @@ public class SoundPlayerController {
     public SoundPlayerController(final SoundPlayerView view) {
         this.view = view;
     }
-
     public void play() {
         this.view.play();
     }
