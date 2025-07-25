@@ -122,14 +122,6 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     @Override
-    public void onCollision(final GameObject other) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
 
     }
