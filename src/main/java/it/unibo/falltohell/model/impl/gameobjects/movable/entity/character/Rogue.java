@@ -35,10 +35,9 @@ public class Rogue extends BaseCharacter {
      *
      * @param level where it belongs
      * @param position where is it in the level
-     * @param fileName is the name of the image file associated to the rogue
      */
-    public Rogue(final Level level, final Vector2 position, final String fileName) {
-        super(level, position, STATS, fileName);
+    public Rogue(final Level level, final Vector2 position) {
+        super(level, position, STATS, "rogue.png");
     }
 
     /**
@@ -54,7 +53,7 @@ public class Rogue extends BaseCharacter {
 
     private void throwKnifes() {
         for (final Vector2 v : KNIFES_VELOCITIES) {
-            new Knife(this.getLevel(), this.getPosition(), v, "");
+            new Knife(this.getLevel(), this.getPosition(), v);
         }
     }
 

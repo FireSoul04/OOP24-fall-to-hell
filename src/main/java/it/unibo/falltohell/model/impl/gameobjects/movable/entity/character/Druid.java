@@ -44,7 +44,7 @@ public class Druid extends BaseCharacter {
     private final StatisticPassiveAbility sPa;
     private final GameEventManager<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
-    private final WarScythe weapon = new WarScythe(this.getLevel(), this.getPosition(), "");
+    private final WarScythe weapon = new WarScythe(this.getLevel(), this.getPosition());
     private int kills;
     private int passiveCycles = 1;
     private boolean canAttack = true;
@@ -57,11 +57,10 @@ public class Druid extends BaseCharacter {
      *
      * @param level    the level this character belongs to
      * @param position the initial spawn position
-     * @param fileName is the name of the image file associated to the druid
      */
-    public Druid(final Level level, final Vector2 position, final String fileName) {
+    public Druid(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
-                new Dimensions(10, 10), 10, 10), fileName);
+                new Dimensions(10, 10), 10, 10), "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
 
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {

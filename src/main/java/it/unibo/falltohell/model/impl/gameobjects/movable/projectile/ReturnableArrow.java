@@ -32,11 +32,10 @@ public class ReturnableArrow extends ProjectileImpl {
      * @param speed    the initial speed
      * @param collider the collider used for collisions
      * @param owner    the archer who fired the arrow
-     * @param fileName is the name of the image file associated to the returnable arrow
      */
     public ReturnableArrow(final Level level, final Vector2 position, final Vector2 speed, final Collider collider,
-                           final Archer owner, final String fileName) {
-        super(level, position, speed, collider, fileName);
+                           final Archer owner) {
+        super(level, position, speed, collider, "returnable_arrow.png");
         this.owner = owner;
         this.originalSpeed = speed.magnitude();
     }

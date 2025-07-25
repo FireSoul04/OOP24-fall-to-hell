@@ -66,19 +66,18 @@ public class Lotawiec extends BaseEnemy {
      * @param character   the target character this enemy tracks and attacks
      * @param manager     the timer manager handling enemy-specific timers
      * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
-     * @param fileName is the name of the image file associated to the enemy
      *
      * @see LongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage, final String fileName) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF),
                         DAMAGE_A,
                         VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME),
-                manager, ingage, fileName);
+                manager, ingage, "lotawiec.png");
 
         stats = (LongRangeEnemyStatistics) super.getStats();
 
@@ -129,7 +128,7 @@ public class Lotawiec extends BaseEnemy {
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
                     this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
-                    this.stats.getCharacter(), this.stats.getSenseDistance(), "");
+                    this.stats.getCharacter(), this.stats.getSenseDistance());
         }
     }
 

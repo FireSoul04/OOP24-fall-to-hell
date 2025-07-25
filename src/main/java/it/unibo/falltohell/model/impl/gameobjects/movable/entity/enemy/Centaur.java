@@ -65,13 +65,12 @@ public class Centaur extends BaseEnemy {
      * @param manager     the {@link EnemyTimerManager} that handles familiar logic
      *                    in this context
      * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
-     * @param fileName is the name of the image file associated to the enemy
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage, final String fileName) {
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                 initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,
-                ingage, fileName);
+                ingage, "centaur.png");
 
         this.stats = (BaseEnemyStatistics) super.getStats();
         ingage.addEnemy(this);
