@@ -33,8 +33,8 @@ public class ArcherTest {
         
         CharacterStatistics stats = TestStatsFactory.createDefault();
         
-        bow = new Bow(5, 0.5, null, "");
-        archer = new Archer(level, Vector2.zero(), stats, bow, "");
+        bow = new Bow(5, 0.5, null);
+        archer = new Archer(level, Vector2.zero(), stats, bow);
 
         bow.setOwner(archer);
         
