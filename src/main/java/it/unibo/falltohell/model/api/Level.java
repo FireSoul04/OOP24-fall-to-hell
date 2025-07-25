@@ -86,11 +86,4 @@ public interface Level {
      * @return all playable characters
      */
     Map<CharacterID, Character> getCharacters();
-
-    /**
-     * Saves a reference of the player.
-     *
-     * @param player reference
-     */
-    void setPlayer(Character player);
 }

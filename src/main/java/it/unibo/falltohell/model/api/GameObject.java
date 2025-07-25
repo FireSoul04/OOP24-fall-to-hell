@@ -79,4 +79,9 @@ public interface GameObject {
      * Method called every frame to update the game object's state.
      */
     void update();
+
+    /**
+     * @return the drawable attached to this object if present
+     */
+    Optional<Drawable> getDrawable();
 }

@@ -25,6 +25,8 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
 
     /**
      * {@inheritDoc}
+     * Check collisions only for movables game object in a radius of twice
+     * the tile size of the GameObject's interface.
      */
     @Override
     public void checkCollisions(final List<GameObject> gameObjects) {
@@ -35,7 +37,10 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
             .filter(t -> t instanceof Movable)
             .toList();
         for (final GameObject g1 : movables) {
-            for (final GameObject g2 : collidableObjects) {
+            final List<GameObject> closeGameObjects = collidableObjects.stream()
+                .filter(g2 -> g1.getPosition().distance(g2.getPosition()) < GameObject.TILE_SIZE * 2)
+                .toList();
+            for (final GameObject g2 : closeGameObjects) {
                 if (!g1.equals(g2)) {
                     final Optional<Collision> collision = this.determineCollision(g1, g2);
 
