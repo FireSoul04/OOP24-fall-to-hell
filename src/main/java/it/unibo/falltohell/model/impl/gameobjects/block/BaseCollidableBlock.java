@@ -7,10 +7,10 @@ import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Class that represents a base block.
+ * Class that represents a base block which can collide with other objects.
  * @author Martina Malagoli
  */
-public class BaseBlock extends GameObjectImpl {
+public class BaseCollidableBlock extends GameObjectImpl {
 
     /**
      * Initialization of the BaseBlock class.
@@ -19,8 +19,8 @@ public class BaseBlock extends GameObjectImpl {
      * @param collider associated to the block
      * @param fileName is the name of the image file associated to the block
      */
-    public BaseBlock(final Level lv, final Vector2 position,
-                     final Collider collider, final String fileName) {
+    public BaseCollidableBlock(final Level lv, final Vector2 position,
+                               final Collider collider, final String fileName) {
         this(lv, position, collider, fileName, Vector2.zero());
     }
 
@@ -32,8 +32,8 @@ public class BaseBlock extends GameObjectImpl {
      * @param fileName is the name of the image file associated to the block
      * @param offset to apply to the sprite's position
      */
-    public BaseBlock(final Level lv, final Vector2 position,
-                     final Collider collider, final String fileName, final Vector2 offset) {
+    public BaseCollidableBlock(final Level lv, final Vector2 position,
+                               final Collider collider, final String fileName, final Vector2 offset) {
         super(lv, position, collider);
         initDrawable(offset, Priority.HIGH, fileName);
     }

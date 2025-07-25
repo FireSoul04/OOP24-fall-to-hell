@@ -10,7 +10,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.B
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Drop;
 
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 
@@ -24,14 +24,14 @@ import it.unibo.falltohell.util.Vector2;
  * collected.
  *
  * <p>
- * This drop moves horizontally until it hits a {@link BaseBlock} from above,
+ * This drop moves horizontally until it hits a {@link BaseCollidableBlock} from above,
  * in which case it stops moving horizontally.
  * </p>
  *
  * @see Drop
  * @see Buff
  * @see Character
- * @see BaseBlock
+ * @see BaseCollidableBlock
  * @see CustomTimerImpl
  *
  * @author Sara Visani
@@ -73,7 +73,7 @@ public class DropImpl extends MovableImpl implements Drop {
      * <li>If the object is a {@link Character}, the {@link Buff} is applied,
      * the drop is removed from the level, and its associated timer is
      * cancelled.</li>
-     * <li>If the object is a {@link BaseBlock} and the collision is from below (i.e.
+     * <li>If the object is a {@link BaseCollidableBlock} and the collision is from below (i.e.
      * the drop lands on it),
      * the vertical movement is stopped.</li>
      * </ul>
@@ -84,7 +84,7 @@ public class DropImpl extends MovableImpl implements Drop {
             character.getBuffManager().addBuff(this.buff);
             super.getLevel().getTimerManager().removeTimer(this.name);
             super.getLevel().removeGameObject(this);
-        } else if (other instanceof BaseBlock && direction.y() < 0) {
+        } else if (other instanceof BaseCollidableBlock && direction.y() < 0) {
             super.setSpeed(new Vector2(this.getSpeed().x(), 0));
         }
     }

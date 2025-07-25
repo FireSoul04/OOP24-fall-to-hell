@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.impl.gameobjects.block.BaseBlock;
+import it.unibo.falltohell.model.impl.gameobjects.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
@@ -89,7 +89,7 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseBlock || other instanceof BaseEntrance) {
+        if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
             if (direction.y() != 0) {
                 if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
                     this.collided = Optional.ofNullable(direction);
