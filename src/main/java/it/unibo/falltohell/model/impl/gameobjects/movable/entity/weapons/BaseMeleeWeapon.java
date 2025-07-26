@@ -2,6 +2,8 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
 import it.unibo.falltohell.model.api.CustomTimer;
 import it.unibo.falltohell.model.api.TimerManager;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.Level;
@@ -20,6 +22,7 @@ public abstract class BaseMeleeWeapon extends GameObjectImpl implements Weapon {
 
     private static final long COOLDOWN_TIME = 400;
 
+    private final Character owner;
     private boolean canAttack;
 
 	/**
@@ -29,9 +32,10 @@ public abstract class BaseMeleeWeapon extends GameObjectImpl implements Weapon {
 	 * @param collider associated to the melee weapon
 	 * @param fileName is the name of the image file associated to the melee weapon
 	 */
-	public BaseMeleeWeapon(final Level lv, final Vector2 position, final Collider collider, final String fileName) {
+	public BaseMeleeWeapon(final Level lv, final Vector2 position, final Collider collider, final Character owner, final String fileName) {
 		super(lv, position, collider);
 		this.initDrawable(Priority.MEDIUM, fileName);
+        this.owner = owner;
         this.canAttack = true;
 	}
 
@@ -46,7 +50,9 @@ public abstract class BaseMeleeWeapon extends GameObjectImpl implements Weapon {
             final String name = "melee-weapon-cooldown" + this.hashCode();
             final TimerManager tm = this.getLevel().getTimerManager();
             if (!tm.searchTimer(name)) {
-                final CustomTimer attackCooldown = new CustomTimerImpl(COOLDOWN_TIME, () -> this.canAttack = true);
+                final CharacterStatistics stats = (CharacterStatistics) this.owner.getStats();
+                final long attackCooldownTime = (long) (COOLDOWN_TIME * (stats.getInitialAttackSpeed() / stats.getAttackSpeed()));
+                final CustomTimer attackCooldown = new CustomTimerImpl(attackCooldownTime, () -> this.canAttack = true);
                 tm.addTimer(name, attackCooldown);
             } else {
                 tm.restartTimer(name);
