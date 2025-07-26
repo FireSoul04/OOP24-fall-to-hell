@@ -46,12 +46,7 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
             t.mirror(!this.getOwner().isFacingRight());
             t.setVisible(this.attacking);
         });
-        final Vector2 offset;
-        if (this.owner.getCollider().isPresent()) {
-            offset = new Vector2(this.offset.x() * (this.owner.isFacingRight() ? 1.0 : -1.0), 0);
-        } else {
-            offset = Vector2.zero();
-        }
+        final Vector2 offset = new Vector2(this.offset.x() * (this.owner.isFacingRight() ? 1.0 : -1.0), 0);
         this.setPosition(this.owner.getPosition().add(offset));
     }
 
