@@ -46,6 +46,7 @@ public class Tengu extends BaseEnemy {
     private static final double DISTANCE = 10;
 
     private final RestrictedLongRangeEnemyStatistics stats;
+    private boolean facingRight = true;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
 
@@ -163,7 +164,13 @@ public class Tengu extends BaseEnemy {
                             new Vector2(this.stats.getInitialPos().x() + this.stats.getDistance() * this.direction, y));
                     this.direction *= -1;
                 }
+                this.facingRight = this.direction > 0;
             } else {
+                if (chara.x() - super.getPosition().x() > 0) {
+                    this.facingRight = true;
+                } else {
+                    this.facingRight = false;
+                }
                 if ((chara.x() <= this.stats.getDistance() + this.stats.getInitialPos().x())
                         && (chara.x() >= this.stats.getInitialPos().x() - this.stats.getDistance())) {
                     if (chara.distance(super.getPosition()) > super.getPosition()

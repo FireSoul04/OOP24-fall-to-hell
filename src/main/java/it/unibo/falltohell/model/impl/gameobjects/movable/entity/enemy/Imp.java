@@ -48,6 +48,7 @@ public class Imp extends BaseEnemy {
     private static final double DISTANCE = 10;
 
     private final RestrictedBaseEnemyStatistics stats;
+    private boolean facingRight = true;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
 
@@ -64,7 +65,8 @@ public class Imp extends BaseEnemy {
      * @param character   the target {@link Character} to track and attack
      * @param manager     the {@link EnemyTimerManager} responsible for managing
      *                    enemy timers
-     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
+     * @param ingage      the {@link ManagerIngage} used to handle if the player
+     *                    enter a safe zone
      */
     public Imp(final Level level, final Vector2 initialCord, final Character character,
             final EnemyTimerManager manager, final ManagerIngage ingage) {
@@ -151,7 +153,13 @@ public class Imp extends BaseEnemy {
                             new Vector2(this.stats.getInitialPos().x() + this.stats.getDistance() * this.direction, y));
                     this.direction *= -1;
                 }
+                this.facingRight = this.direction > 0;
             } else {
+                if (chara.x() - super.getPosition().x() > 0) {
+                    this.facingRight = true;
+                } else {
+                    this.facingRight = false;
+                }
                 if ((chara.x() <= this.stats.getDistance() + this.stats.getInitialPos().x())
                         && (chara.x() >= this.stats.getInitialPos().x() - this.stats.getDistance())) {
                     if (chara.distance(super.getPosition()) > super.getPosition()
