@@ -62,7 +62,7 @@ public class Druid extends BaseCharacter {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
                 new Dimensions(10, 10), 10, 10), "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
-        
+
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
             final double[][] lifeManaGains = {
                     {}, // 0 kill
@@ -137,7 +137,6 @@ public class Druid extends BaseCharacter {
     }
 
     /**
-     * TODO weapon
      * <p>
      * Handles attack and special ability input from the player.
      * </p>
@@ -155,7 +154,7 @@ public class Druid extends BaseCharacter {
         if (this.input.checkCondition("NormalAttack") && this.canAttack) {
             this.canAttack = false;
             this.restartOrAddTimer("Druid_Attack", new CustomTimerImpl(1000, () -> this.canAttack = true));
-            //this.weapon.attack();
+            this.weapon.attack();
         }
         if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
             this.sAactive = true;
