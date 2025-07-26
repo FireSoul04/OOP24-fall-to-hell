@@ -18,7 +18,7 @@ import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
-import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
@@ -43,7 +43,7 @@ public class LevelImpl implements Level {
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
     private Map<CharacterID, Character> characters;
-    private GameEventManager<String> eventManager;
+    private GameEventManagerImpl<String> eventManager;
     private DrawableRenderableHandler drh;
     private Optional<GameData> gameData;
 
@@ -61,7 +61,7 @@ public class LevelImpl implements Level {
         this.camera = camera;
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
-        this.eventManager = new GameEventManager<>();
+        this.eventManager = new GameEventManagerImpl<>();
         this.characters = new EnumMap<>(CharacterID.class);
         this.drh = new DrawableRenderableHandlerImpl();
         this.gameData = Optional.empty();
@@ -163,7 +163,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void setGameEventManager(final GameEventManager<String> eventManager) {
+    public void setGameEventManager(final GameEventManagerImpl<String> eventManager) {
         this.eventManager = eventManager;
     }
 
@@ -171,7 +171,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public GameEventManager<String> getGameEventManager() {
+    public GameEventManagerImpl<String> getGameEventManager() {
         return this.eventManager;
     }
 

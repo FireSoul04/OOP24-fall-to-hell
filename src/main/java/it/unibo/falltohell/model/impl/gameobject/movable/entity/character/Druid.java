@@ -5,7 +5,7 @@ import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.manager.ManagerFamiliars;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.weapons.WarScythe;
@@ -43,7 +43,7 @@ public class Druid extends BaseCharacter {
     private final CharacterStatistics stats;
     private final AbilityFactoryImpl factory = new AbilityFactoryImpl();
     private final StatisticPassiveAbility sPa;
-    private final GameEventManager<String> input = super.getLevel().getGameEventManager();
+    private final GameEventManagerImpl<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
     private int kills;
     private int passiveCycles = 1;

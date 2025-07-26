@@ -12,7 +12,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.impl.GameDataImpl;
-import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.GameImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Archer;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
@@ -31,7 +31,7 @@ public class GameBuilderImpl implements GameBuilder {
     private Optional<Level> level;
     private Optional<GameData> gameData;
     private Optional<GameCamera> camera;
-    private Optional<GameEventManager<String>> eventManager;
+    private Optional<GameEventManagerImpl<String>> eventManager;
     private Optional<DrawableRenderableHandler> drh;
 
     public GameBuilderImpl() {
@@ -77,7 +77,7 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilder attachGameEventManager(final GameEventManager<String> eventManager) {
+    public GameBuilder attachGameEventManager(final GameEventManagerImpl<String> eventManager) {
         this.eventManager = Optional.of(eventManager);
         return this;
     }

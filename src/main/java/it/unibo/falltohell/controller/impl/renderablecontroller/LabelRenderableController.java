@@ -35,5 +35,6 @@ public class LabelRenderableController extends BaseRenderableController {
         labelRenderable.setVisibility(label.isVisible());
 
     }
+    
 
 }

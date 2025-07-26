@@ -10,7 +10,7 @@ import it.unibo.falltohell.model.api.gameobject.interactable.Interactable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.manager.BuffManager;
-import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.manager.BuffManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 
@@ -27,7 +27,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private static final int MAX_JUMP_HEIGHT = 30;
     private static final double JUMP_STEP = 0.06;
 
-    private final GameEventManager<String> input;
+    private final GameEventManagerImpl<String> input;
     private final CharacterStatistics stats;
     private final BuffManager buffManager;
     private int currentJumpFrames;

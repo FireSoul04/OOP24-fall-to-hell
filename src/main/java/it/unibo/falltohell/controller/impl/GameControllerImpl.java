@@ -6,7 +6,7 @@ import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.model.impl.builder.GameBuilderImpl;
 import it.unibo.falltohell.model.impl.GameCameraImpl;
-import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.GameWindow;
 import it.unibo.falltohell.view.impl.GameWindowImpl;
@@ -55,7 +55,7 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl() {
         final InputListener inputListener = new InputListener();
         final DrawableRenderableHandler drh = new DrawableRenderableHandlerImpl();
-        final GameEventManager<String> eventManager = this.addEvents(inputListener);
+        final GameEventManagerImpl<String> eventManager = this.addEvents(inputListener);
         // Testing a camera with level width and height based on the virtual screen width and height
         final GameCamera camera = new GameCameraImpl(Vector2.zero(), WIDTH, HEIGHT, 1.0, WIDTH * 4, HEIGHT * 4);
         this.model = new GameBuilderImpl()
@@ -77,8 +77,8 @@ public class GameControllerImpl implements GameController {
      * @param inputListener to check for keyboard input
      * @return new event manager with events for the player based on keyboard input
      */
-    private GameEventManager<String> addEvents(final InputListener inputListener) {
-        final GameEventManager<String> eventManager = new GameEventManager<>();
+    private GameEventManagerImpl<String> addEvents(final InputListener inputListener) {
+        final GameEventManagerImpl<String> eventManager = new GameEventManagerImpl<>();
         eventManager.addCondition(
             "MoveLeft",
             () -> inputListener.isKeyPressed(KeyEvent.VK_A) || inputListener.isKeyPressed(KeyEvent.VK_LEFT)

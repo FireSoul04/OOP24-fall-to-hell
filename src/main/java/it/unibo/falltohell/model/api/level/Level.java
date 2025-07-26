@@ -6,7 +6,7 @@ import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.manager.TimerManager;
-import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -61,12 +61,12 @@ public interface Level {
     /**
      * @param eventManager manager to all events of the level
      */
-    void setGameEventManager(GameEventManager<String> eventManager);
+    void setGameEventManager(GameEventManagerImpl<String> eventManager);
 
     /**
      * @return manager to all events of the level
      */
-    GameEventManager<String> getGameEventManager();
+    GameEventManagerImpl<String> getGameEventManager();
 
     /**
      * @param drh handler to all drawables of the level

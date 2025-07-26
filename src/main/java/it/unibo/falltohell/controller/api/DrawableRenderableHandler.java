@@ -3,6 +3,7 @@ package it.unibo.falltohell.controller.api;
 import it.unibo.falltohell.model.api.drawable.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.view.api.renderable.Renderable;
+import it.unibo.falltohell.model.impl.drawable.Label;
 
 import java.util.List;
 
@@ -18,6 +19,12 @@ public interface DrawableRenderableHandler {
      * @param fileName is the name of the image file associated to the drawable object
      */
     void linkSprite(Drawable drawable, String fileName);
+
+    /**
+     * Method that creates a pair of Label-LabelRenderableController and that puts it on the map.
+     * @param label object that must be added to the map with its associated LabelRenderableController
+     */
+    void linkLabel(Label label);
 
     /**
      * Method that removes the pair of Drawable-RenderableController from the map.
