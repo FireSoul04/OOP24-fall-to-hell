@@ -22,7 +22,7 @@ public class Rogue extends BaseCharacter {
     private static final double ATTACK = 10;
     private static final double MANA = 10;
     private static final double ATTACK_SPEED = 10;
-    private static final Vector2 SPEED = new Vector2(2.0, 2.0);
+    private static final Vector2 SPEED = new Vector2(2.0, 1.5);
     private static final CharacterStatistics STATS = new StatisticFactoryImpl()
         .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20, 25), MANA, ATTACK_SPEED);
     private static final List<Vector2> KNIFES_VELOCITIES = List.of(
@@ -30,6 +30,8 @@ public class Rogue extends BaseCharacter {
         new Vector2(2.0, 1.0),
         new Vector2(2.0, -1.0)
     );
+
+    private boolean canDoubleJump;
 
     /**
      * Creates a rogue.
@@ -39,6 +41,7 @@ public class Rogue extends BaseCharacter {
      */
     public Rogue(final Level level, final Vector2 position) {
         super(level, position, STATS, "rogue.png");
+        this.canDoubleJump = false;
         this.equipWeapon(new Dagger(level, position));
     }
 
@@ -48,8 +51,19 @@ public class Rogue extends BaseCharacter {
     @Override
     public void update(final double deltaTime) {
         super.update(deltaTime);
-        if (this.getLevel().getGameEventManager().checkCondition("ActiveAbility")) {
+        this.doubleJump();
+        if (this.getInput().checkCondition("ActiveAbility")) {
             this.throwKnifes();
+        }
+    }
+
+    private void doubleJump() {
+        if (this.getInput().checkCondition("Jump") && !this.isJumping() && this.canDoubleJump) {
+            this.resetJump();
+            this.canDoubleJump = false;
+        }
+        if (this.isOnGround()) {
+            this.canDoubleJump = true;
         }
     }
 
