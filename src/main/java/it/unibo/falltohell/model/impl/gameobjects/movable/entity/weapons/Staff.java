@@ -13,25 +13,17 @@ public class Staff extends BaseMeleeWeapon {
 
     private static final double DAMAGE_MULTIPLIER = 0.3;
     private static final Dimensions DIMENSIONS = new Dimensions(3, 10);
+    private static final long COOLDOWN = 600;
     private final Caster caster;
 
     /**
      * Creates a staff.
      *
-     * @param lv       is the level where there is the melee weapon
-     * @param position is the position of the melee weapon in the level
      * @param caster   associated to the staff
      */
-    public Staff(final Level lv, final Vector2 position, final Caster caster) {
-        super(lv, position, new BoxCollider(DIMENSIONS), "staff.png");
+    public Staff(final Caster caster) {
+        super(caster, new BoxCollider(DIMENSIONS), DAMAGE_MULTIPLIER, COOLDOWN ,"staff.png");
         this.caster = caster;
-    }
-
-    @Override
-    public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof Enemy enemy) {
-            enemy.setDamagedLife(this.caster.getStats().getAttack() * DAMAGE_MULTIPLIER);
-        }
     }
 
 }
