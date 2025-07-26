@@ -4,7 +4,6 @@ import it.unibo.falltohell.model.api.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.view.api.Renderable;
 
-import java.awt.Image;
 import java.util.List;
 
 /**
