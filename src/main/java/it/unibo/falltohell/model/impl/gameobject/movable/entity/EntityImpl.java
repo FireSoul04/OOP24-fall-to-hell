@@ -67,10 +67,7 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     @Override
     public boolean isDead() {
-        if (this.stats.getLife() <= 0) {
-            return true;
-        }
-        return false;
+        return this.stats.getLife() <= 0;
     }
 
     @Override
@@ -78,6 +75,9 @@ public class EntityImpl extends MovableImpl implements Entity {
         return this.isFacingRight;
     }
 
+    /**
+     * @param facingRight tells if an object is facing right
+     */
     protected void setFacingRight(boolean facingRight) {
         this.isFacingRight = facingRight;
     }
