@@ -44,9 +44,9 @@ public class Druid extends BaseCharacter {
     private final StatisticPassiveAbility sPa;
     private final GameEventManager<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
+    private final WarScythe weapon = new WarScythe(super.getLevel(), this);
     private int kills;
     private int passiveCycles = 1;
-    private boolean canAttack = true;
     private boolean sAactive;
 
     /**
@@ -150,10 +150,8 @@ public class Druid extends BaseCharacter {
      * </ul>
      */
     private void handleAttackInput() {
-        if (this.input.checkCondition("NormalAttack") && this.canAttack) {
-            this.canAttack = false;
-            this.restartOrAddTimer("Druid_Attack", new CustomTimerImpl(1000, () -> this.canAttack = true));
-            //this.weapon.attack();
+        if (this.input.checkCondition("NormalAttack")) {
+            this.weapon.attack();
         }
         if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
             this.sAactive = true;
