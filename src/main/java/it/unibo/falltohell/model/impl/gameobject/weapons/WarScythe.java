@@ -27,6 +27,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class WarScythe extends BaseMeleeWeapon {
 
+    private static final Vector2 OFFSET = new Vector2(16, 5);
     private static final double MULTIPLIER = 2.5;
 
     /**
@@ -38,7 +39,7 @@ public class WarScythe extends BaseMeleeWeapon {
      * @param owner character that owns the weapon
      */
     public WarScythe(final Character owner, final long cooldownTime) {
-        super(owner, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), MULTIPLIER, cooldownTime, "warscythe.png");
+        super(owner, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), MULTIPLIER, cooldownTime, "warscythe.png", OFFSET);
     }
 
     @Override
