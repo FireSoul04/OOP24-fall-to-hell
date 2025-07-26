@@ -61,4 +61,10 @@ public abstract class BaseMeleeWeapon extends GameObjectImpl implements Weapon {
         }
 	}
 
+    /**
+     * @return owner of the weapon
+     */
+    protected Character getOwner() {
+        return this.owner;
+    }
 }
