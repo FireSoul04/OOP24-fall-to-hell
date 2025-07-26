@@ -1,13 +1,18 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.projectile;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
+import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
+import it.unibo.falltohell.model.impl.gameobject.weapons.Tome;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
+
+import java.util.Set;
 
 /**
  * Class that represents a fireball evoked by a caster.
@@ -18,6 +23,13 @@ public class Fireball extends ProjectileImpl{
     private static final Dimensions DIMENSIONS = new Dimensions(5.0,5.0);
     private static final double SPEED = 10;
     private final Caster caster;
+
+    private final Set<Class<? extends GameObject>> ignoreCollisionsObjects = Set.of(
+            Character.class,
+            Weapon.class,
+            Projectile.class,
+            BaseEntrance.class
+    );
 
     /**
      * Creates a fireball with a certain speed.
@@ -32,6 +44,21 @@ public class Fireball extends ProjectileImpl{
 
     /**
      * {@inheritDoc}
+     * If the other object of the collision has not to be ignored
+     * the fireball will hit.
+     */
+    @Override
+    public void onCollision(GameObject other, Vector2 direction) {
+        final boolean isOtherCollidable = ignoreCollisionsObjects.stream()
+                .noneMatch(t -> t.isInstance(other));
+        if (isOtherCollidable && other.isSolid() && !this.isHit()) {
+            this.setHit(true);
+            this.onProjectileHit(other);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
      * If an enemy is hit it will be damaged.
      * When the fireball hits an object which is not the character
      * or an entrance will disappear.
@@ -40,9 +67,6 @@ public class Fireball extends ProjectileImpl{
     protected void onProjectileHit(final GameObject other) {
         if (other instanceof Enemy enemy) {
             enemy.setDamagedLife(this.caster.getStats().getAttack());
-        }
-        if (!(other instanceof BaseEntrance) && !(other instanceof Character)) {
-            this.getLevel().removeGameObject(this);
         }
     }
 
