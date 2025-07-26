@@ -22,8 +22,16 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
     private final long cooldownTime;
     private boolean attacking;
 
+    /**
+     * Creates an abstract weapon.
+     * @param owner of the weapon
+     * @param collider of the weapon if it has one
+     * @param cooldownTime time to elapse between every attack
+     * @param fileName of the weapon's drawable
+     * @param offset where to set the position based on the owner's position
+     */
     public BaseWeapon(final Character owner, final Optional<Collider> collider,
-                      final long cooldownTime, final Vector2 offset, final String fileName) {
+                      final long cooldownTime, final String fileName, final Vector2 offset) {
         super(owner.getLevel(), owner.getPosition(), collider.orElse(new BoxCollider(new Dimensions(0, 0))));
         this.owner = owner;
         this.offset = offset;
