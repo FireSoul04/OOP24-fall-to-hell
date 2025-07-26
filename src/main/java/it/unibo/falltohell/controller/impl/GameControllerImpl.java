@@ -95,31 +95,11 @@ public class GameControllerImpl implements GameController {
             "MoveDown",
             () -> inputListener.isKeyPressed(KeyEvent.VK_W) || inputListener.isKeyPressed(KeyEvent.VK_DOWN)
         );
-        eventManager.addCondition(
-            "ActiveAbility",
-            () -> inputListener.isKeyPressedOnce(KeyEvent.VK_SHIFT)
-        );
-        eventManager.addCondition(
-                "SecondActiveAbility",
-                () -> inputListener.isKeyPressedOnce(KeyEvent.VK_ALT)
-        );
-        eventManager.addCondition(
-            "Reload",
-            () -> inputListener.isKeyPressedOnce(KeyEvent.VK_R) || inputListener.isKeyPressedOnce(KeyEvent.VK_X)
-        );
-        eventManager.addCondition(
-            "Interact",
-            () -> inputListener.isKeyPressedOnce(KeyEvent.VK_E) || inputListener.isKeyPressedOnce(KeyEvent.VK_Z)
-        );
+        eventManager.addCondition("Interact", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_F));
         eventManager.addCondition("Jump", () -> inputListener.isKeyPressed(KeyEvent.VK_SPACE));
-        eventManager.addCondition(
-            "NormalAttack",
-            () -> inputListener.isKeyPressed(KeyEvent.VK_F)
-            );
-        eventManager.addCondition(
-            "SpecialAbility",
-            () -> inputListener.isKeyPressed(KeyEvent.VK_Q)
-            );
+        eventManager.addCondition("NormalAttack", () -> inputListener.isKeyPressed(KeyEvent.VK_E));
+        eventManager.addCondition("ActiveAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_SHIFT));
+        eventManager.addCondition("SpecialAbility", () -> inputListener.isKeyPressed(KeyEvent.VK_Q));
         eventManager.addCondition(
             "SpAttackLeft",
             () -> inputListener.isKeyPressed(KeyEvent.VK_A) && inputListener.isKeyPressed(KeyEvent.VK_C)
