@@ -192,7 +192,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         final double eps = 1 + (distance / thisHeight);
         final double moveTo = Math.abs(distance) - idealDistance;
         if (Math.abs(moveTo) > eps) {
-            this.velocity = this.velocity.subtract(new Vector2(0, eps));
+            this.setPosition(this.getPosition().subtract(new Vector2(0, eps)));
         }
     }
 
@@ -209,7 +209,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         final double eps = 1 + (distance / thisWidth);
         final double moveTo = Math.abs(Math.abs(distance) - idealDistance);
         if (moveTo > eps) {
-            this.velocity = this.velocity.add(new Vector2(moveTo * Math.signum(distance), 0));
+            this.setPosition(this.getPosition().add(new Vector2(moveTo * Math.signum(distance), 0)));
         }
     }
 
@@ -275,5 +275,32 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     @Override
     public BuffManager getBuffManager() {
         return this.buffManager;
+    }
+
+    protected GameEventManager<String> getInput() {
+        return this.input;
+    }
+
+    /**
+     * @return if the character is on ground
+     */
+    protected boolean isOnGround() {
+        return this.onGround;
+    }
+
+    /**
+     * @return if the event jump is true
+     */
+    protected boolean isJumping() {
+        return this.jumping;
+    }
+
+    /**
+     * Let the character jump again.
+     */
+    protected void resetJump() {
+        this.currentJumpFrames = 1;
+        this.gravity = Vector2.zero();
+        this.jumping = true;
     }
 }
