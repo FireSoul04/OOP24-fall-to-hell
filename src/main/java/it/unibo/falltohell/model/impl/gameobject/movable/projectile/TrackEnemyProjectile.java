@@ -54,7 +54,6 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * @param character the target character to track
      * @param distance  the initial tracking range before switching to default
      *                  behavior
-     * @param fileName  is the name of the image file associated to the track enemy projectile
      *
      * @see Level
      * @see Vector2
