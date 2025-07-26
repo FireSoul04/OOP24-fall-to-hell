@@ -41,7 +41,7 @@ public abstract class BaseMeleeWeapon extends BaseWeapon {
      */
     public BaseMeleeWeapon(final Character owner, final Collider collider, final double damageMultiplier,
                            final long cooldownTime, final String fileName, final Vector2 offset) {
-        super(owner, Optional.of(collider), cooldownTime, offset, fileName);
+        super(owner, Optional.of(collider), cooldownTime, fileName, offset);
         this.damageMultiplier = damageMultiplier;
     }
 

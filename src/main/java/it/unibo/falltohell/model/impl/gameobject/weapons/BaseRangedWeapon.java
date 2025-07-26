@@ -27,7 +27,7 @@ public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
     private Optional<Projectile> shotProjectile;
 
     /**
-     * Constructs a ranged weapon with specified maximum ammo and cooldown time.
+     * Constructs a ranged weapon with offset zero and with specified maximum ammo and cooldown time.
      *
      * @param maxAmmo      the maximum ammo the weapon can carry
      * @param cooldownTime the cooldown time between attacks, in seconds
@@ -35,7 +35,20 @@ public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
      *                     weapon
      */
     protected BaseRangedWeapon(final Character owner,final Optional<Collider> collider, final int maxAmmo, final long cooldownTime, final String fileName) {
-        super(owner, collider, cooldownTime, fileName);
+        this(owner, collider, maxAmmo, cooldownTime, fileName, Vector2.zero());
+    }
+
+    /**
+     * Constructs a ranged weapon with specified maximum ammo and cooldown time.
+     *
+     * @param maxAmmo      the maximum ammo the weapon can carry
+     * @param cooldownTime the cooldown time between attacks, in seconds
+     * @param fileName     is the name of the image file associated to the ranged
+     *                     weapon
+     * @param offset       where to set the position based on the owner's position
+     */
+    protected BaseRangedWeapon(final Character owner,final Optional<Collider> collider, final int maxAmmo, final long cooldownTime, final String fileName, final Vector2 offset) {
+        super(owner, collider, cooldownTime, fileName, offset);
         this.maxAmmo = maxAmmo;
         this.ammo = maxAmmo;
         this.shotProjectile = Optional.empty();
