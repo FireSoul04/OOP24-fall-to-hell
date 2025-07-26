@@ -11,19 +11,16 @@ import it.unibo.falltohell.view.impl.LabelView;
  * @author Casadei Lorenzo
  */
 public class LabelController extends BaseRenderableController {
-    private final Label label;
-    private final LabelView view;
-
+    
     /**
      * Constructor for the LabelController.
      * 
      * @param label the model object associated with this controller
      * @param view  the view object associated with this controller
      */
-    public LabelController(final Label label, final LabelView view) {
-        super(label, view);
-        this.view = view;
-        this.label = label;
+    public LabelController(final Label label) {
+        super(label, new LabelView(label.isVisible(), label.getPosition(), label.getText()));
+        
 
     }
 
@@ -32,7 +29,11 @@ public class LabelController extends BaseRenderableController {
      */
     @Override
     public void updateRenderable(final GameCamera camera) {
-        super.updateRenderable(camera);
-        view.setText(label.getText());
+        LabelView labelView = (LabelView)this.getRenderable();
+        Label label = (Label)this.getDrawable();
+        labelView.setText(label.getText());
+        labelView.setVisibility(label.isVisible());
+
     }
+
 }

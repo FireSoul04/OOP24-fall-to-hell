@@ -4,7 +4,7 @@ import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 import java.awt.Graphics;
 import java.awt.Color;
-import it.unibo.falltohell.model.impl.drawable.Label;
+
 
 /**
  * View class for rendering a label in the game.
@@ -13,14 +13,14 @@ import it.unibo.falltohell.model.impl.drawable.Label;
  * @author Casadei Lorenzo
  */
 public class LabelView extends BaseRenderable {
-    private final Label text;
+    private String text;
     
     /**
      * Constructor for the LabelView.
      * @param text the label model to be represented by this view
      */
-    public LabelView(final Label text) {
-        super(text.isVisible(), text.getPosition());
+    public LabelView(final Boolean isVisible, final Vector2 position, final String text) {
+        super(isVisible, position);
         this.text = text;
     }
     /**
@@ -30,33 +30,13 @@ public class LabelView extends BaseRenderable {
     public void mirror(final boolean mirroring) {
         
     }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isVisible() {
-        return text.isVisible();
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setVisibility(final boolean visibility) {
-        this.text.setVisible(visibility);
-    }
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Vector2 getPosition() {
-        return text.getPosition();
-    }
+
     /**
      * Method to change the current text of the label.
      * @param text is the new text of the label
      */
     public void setText(final String text) {
-        this.text.setText(text);
+        this.text = text;
     }
 
     public void translate(final Vector2 newPosition) {
@@ -76,7 +56,7 @@ public class LabelView extends BaseRenderable {
     public void render(Graphics g) {
         if(isVisible()) {
             g.setColor(Color.WHITE);
-            g.drawString(text.getText(), (int) getPosition().x(), (int) getPosition().y());
+            g.drawString(text, (int) getPosition().x(), (int) getPosition().y());
         }
     }
 }
