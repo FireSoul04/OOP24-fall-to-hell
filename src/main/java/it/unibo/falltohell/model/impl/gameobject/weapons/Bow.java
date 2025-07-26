@@ -28,8 +28,8 @@ public class Bow extends BaseRangedWeapon {
      * @param ammo     the initial amount of ammo
      * @param cooldown the cooldown time between shots
      */
-    public Bow(final Character owner, final int ammo, final Optional<Collider> collider, final long cooldown, final String fileName , final Vector2 projectileSpeed) {
-        super(owner, collider, ammo, cooldown, fileName);
+    public Bow(final Character owner, final int ammo, final long cooldown, final String fileName , final Vector2 projectileSpeed) {
+        super(owner, ammo, cooldown, fileName);
         this.projectileSpeed = projectileSpeed;
     }
 
@@ -38,11 +38,6 @@ public class Bow extends BaseRangedWeapon {
      *
      * @param level    the level in which the arrow will be spawned
      * @param position the initial position of the arrow
-     * @param speedX   the horizontal speed of the arrow
-     * @param speedY   the vertical speed of the arrow
-     * @param width    the width of the arrow
-     * @param height   the height of the arrow
-     * @param collider the collider that defines the arrow's shape
      * @return a new {@link ReturnableArrow} instance
      */
     @Override

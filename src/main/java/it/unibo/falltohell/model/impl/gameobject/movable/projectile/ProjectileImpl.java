@@ -36,6 +36,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
         super(level, position, speed, collider);
         this.hit = false;
         this.initDrawable(Priority.MEDIUM, fileName);
+        this.getDrawable().ifPresent(drawable -> drawable.mirror(speed.x() < 0));
     }
 
     /**

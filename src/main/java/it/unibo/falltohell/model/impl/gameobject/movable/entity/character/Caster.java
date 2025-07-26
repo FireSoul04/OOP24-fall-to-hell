@@ -36,7 +36,6 @@ public class Caster extends BaseCharacter {
     private final Weapon staff;
     private final Weapon tome;
 
-    private final StatisticPassiveAbility manaRecharge;
     private final SpecialActiveAbility healing;
     private final SpecialActiveAbility blast;
 
@@ -49,11 +48,11 @@ public class Caster extends BaseCharacter {
     public Caster(final Level level, final Vector2 position) {
         super(level, position, STATISTICS, "caster.png");
         this.staff = new Staff(this);
-        this.tome = new Tome(level, position,  this);
+        this.tome = new Tome(this);
         this.equipWeapon(tome);
         final TimerManager timerManager = this.getLevel().getTimerManager();
         final String timerName = "mana_recharge";
-        this.manaRecharge = new AbilityFactoryImpl().createPassiveAbility(this,
+        final StatisticPassiveAbility manaRecharge = new AbilityFactoryImpl().createPassiveAbility(this,
                 character -> timerManager.addTimer(
                         timerName, new CustomTimerImpl(COOLDOWN_MANA_RECHARGE,
                                 () -> {
@@ -61,13 +60,14 @@ public class Caster extends BaseCharacter {
                                     statistics.addMana(AMOUNT_MANA_RECHARGED);
                                     timerManager.restartTimer(timerName);
                                 })));
+        manaRecharge.carryOut();
         this.blast = new BlastAbility(this);
         this.healing = new HealAbility(this);
 
     }
 
     /**
-     *{@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public CharacterID getCharacterID() {
@@ -87,7 +87,7 @@ public class Caster extends BaseCharacter {
         } else {
             this.changeEquippedWeapon(this.staff);
         }
-        this.getEquippedWeapon().ifPresent(Weapon::attack);
+        super.attack();
     }
 
     /**
@@ -104,17 +104,15 @@ public class Caster extends BaseCharacter {
     }
 
     /**
-     *{@inheritDoc}
-     * This method also checks if an active attack was used
-     * and carries out the caster's passive ability.
+     * {@inheritDoc}
+     * This method also checks if an active attack was used.
      */
     @Override
     public void update(double deltaTime) {
         super.update(deltaTime);
-        this.manaRecharge.carryOut();
         if (this.getLevel().getGameEventManager().checkCondition("ActiveAbility")) {
             this.blast.activate();
-        } else if (this.getLevel().getGameEventManager().checkCondition("SecondActiveAbility")) {
+        } else if (this.getLevel().getGameEventManager().checkCondition("SpecialAbility")) {
             this.healing.activate();
         }
     }
