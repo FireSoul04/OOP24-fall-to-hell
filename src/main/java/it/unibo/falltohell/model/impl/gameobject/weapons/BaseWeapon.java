@@ -11,22 +11,41 @@ import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Priority;
+import it.unibo.falltohell.util.Vector2;
 
 import java.util.Optional;
 
 public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
 
     private final Character owner;
+    private final Vector2 offset;
     private final long cooldownTime;
     private boolean attacking;
 
     public BaseWeapon(final Character owner, final Optional<Collider> collider,
-                      final long cooldownTime, final String fileName) {
+                      final long cooldownTime, final Vector2 offset, final String fileName) {
         super(owner.getLevel(), owner.getPosition(), collider.orElse(new BoxCollider(new Dimensions(0, 0))));
         this.owner = owner;
+        this.offset = offset;
         this.cooldownTime = cooldownTime;
         this.attacking = false;
-        this.initDrawable(Priority.MEDIUM, fileName);
+        this.initDrawable(offset, Priority.MEDIUM, fileName);
+    }
+
+    @Override
+    public void update() {
+        this.getDrawable().ifPresent(t -> {
+            t.mirror(!this.getOwner().isFacingRight());
+            t.setVisible(this.attacking);
+        });
+        final Vector2 offset;
+        if (this.owner.getCollider().isPresent()) {
+            final Vector2 offsetDirection = new Vector2(this.offset.x() * (this.owner.isFacingRight() ? 1.0 : -1.0), 0);
+            offset = offsetDirection.subtract(new Vector2(this.owner.getCollider().get().size().width() / 2, 0));
+        } else {
+            offset = Vector2.zero();
+        }
+        this.setPosition(this.owner.getPosition().add(offset));
     }
 
     /**
