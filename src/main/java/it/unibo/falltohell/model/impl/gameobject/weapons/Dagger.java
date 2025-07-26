@@ -18,6 +18,6 @@ public class Dagger extends BaseMeleeWeapon {
      * @param owner    is the owner of the dagger
      */
     public Dagger(final Rogue owner) {
-        super(owner, new BoxCollider(OFFSET, SIZE), DAMAGE_MULTIPLIER, COOLDOWN_TIME, "dagger.png", OFFSET);
+        super(owner, new BoxCollider(SIZE), DAMAGE_MULTIPLIER, COOLDOWN_TIME, "dagger.png", OFFSET);
     }
 }

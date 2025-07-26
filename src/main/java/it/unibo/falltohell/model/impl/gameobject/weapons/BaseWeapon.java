@@ -37,7 +37,7 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
         this.offset = offset;
         this.cooldownTime = cooldownTime;
         this.attacking = false;
-        this.initDrawable(offset, Priority.MEDIUM, fileName);
+        this.initDrawable(Priority.MEDIUM, fileName);
     }
 
     @Override
@@ -48,8 +48,7 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
         });
         final Vector2 offset;
         if (this.owner.getCollider().isPresent()) {
-            final Vector2 offsetDirection = new Vector2(this.offset.x() * (this.owner.isFacingRight() ? 1.0 : -1.0), 0);
-            offset = offsetDirection.subtract(new Vector2(this.owner.getCollider().get().size().width() / 2, 0));
+            offset = new Vector2(this.offset.x() * (this.owner.isFacingRight() ? 1.0 : -1.0), 0);
         } else {
             offset = Vector2.zero();
         }
