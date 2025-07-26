@@ -14,8 +14,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class CollidableBlockFactoryImpl implements CollidableBlockFactory {
 
-    private static final Vector2 OFFSET_LAVA = new Vector2(0.0, 0.5);
-    private static final Vector2 OFFSET_VINES = new Vector2(0.0, 3.0);
+    private static final Vector2 OFFSET_LAVA = Vector2.up().multiply(0.5);
+    private static final Vector2 OFFSET_VINES = Vector2.up().multiply(3);
 
     /**
      *{@inheritDoc}
