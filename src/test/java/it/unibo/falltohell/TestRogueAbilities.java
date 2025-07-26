@@ -6,7 +6,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.factory.StatisticsFactory;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
-import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Knife;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
@@ -34,7 +34,7 @@ class TestRogueAbilities {
      */
     @BeforeEach
     void initialization() {
-        final GameEventManager<String> eventManager = new GameEventManager<>();
+        final GameEventManagerImpl<String> eventManager = new GameEventManagerImpl<>();
         eventManager.addCondition("ActiveAbility", () -> steps < 1);
         eventManager.addCondition("MoveLeft", () -> false);
         eventManager.addCondition("MoveRight", () -> false);

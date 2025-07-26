@@ -10,7 +10,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
-import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 
@@ -27,7 +27,7 @@ public class LevelTest implements Level {
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
     private final Map<CharacterID, Character> characters;
-    private GameEventManager<String> eventManager;
+    private GameEventManagerImpl<String> eventManager;
     private Optional<GameData> gameData;
 
     /**
@@ -38,7 +38,7 @@ public class LevelTest implements Level {
         this.gameObjects = new ArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
-        this.eventManager = new GameEventManager<>();
+        this.eventManager = new GameEventManagerImpl<>();
         this.gameData = Optional.empty();
         this.characters = new EnumMap<>(CharacterID.class);
     }
@@ -111,7 +111,7 @@ public class LevelTest implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void setGameEventManager(final GameEventManager<String> eventManager) {
+    public void setGameEventManager(final GameEventManagerImpl<String> eventManager) {
         this.eventManager = eventManager;
     }
 
@@ -119,7 +119,7 @@ public class LevelTest implements Level {
      * {@inheritDoc}
      */
     @Override
-    public GameEventManager<String> getGameEventManager() {
+    public GameEventManagerImpl<String> getGameEventManager() {
         return this.eventManager;
     }
 
