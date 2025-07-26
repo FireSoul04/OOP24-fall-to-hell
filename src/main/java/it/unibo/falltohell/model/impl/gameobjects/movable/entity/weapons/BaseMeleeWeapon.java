@@ -51,7 +51,8 @@ public abstract class BaseMeleeWeapon extends GameObjectImpl implements Weapon {
             final TimerManager tm = this.getLevel().getTimerManager();
             if (!tm.searchTimer(name)) {
                 final CharacterStatistics stats = (CharacterStatistics) this.owner.getStats();
-                final long attackCooldownTime = (long) (COOLDOWN_TIME * (stats.getInitialAttackSpeed() / stats.getAttackSpeed()));
+                final double reduceTimeMultiplier = stats.getInitialAttackSpeed() / stats.getAttackSpeed();
+                final long attackCooldownTime = (long) (COOLDOWN_TIME * reduceTimeMultiplier);
                 final CustomTimer attackCooldown = new CustomTimerImpl(attackCooldownTime, () -> this.canAttack = true);
                 tm.addTimer(name, attackCooldown);
             } else {
