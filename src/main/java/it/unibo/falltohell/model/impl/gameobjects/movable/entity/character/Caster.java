@@ -42,7 +42,7 @@ public class Caster extends BaseCharacter {
      */
     public Caster(final Level level, final Vector2 position) {
         super(level, position, STATISTICS, "caster.png");
-        this.staff = new Staff(level, position, this);
+        this.staff = new Staff(this);
         this.tome = new Tome(level, position,  this);
         this.equipWeapon(tome);
         this.manaRecharge = new AbilityFactoryImpl().createPassiveAbility(this,
