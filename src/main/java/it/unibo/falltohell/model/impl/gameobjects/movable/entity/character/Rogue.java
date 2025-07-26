@@ -42,8 +42,7 @@ public class Rogue extends BaseCharacter {
     public Rogue(final Level level, final Vector2 position) {
         super(level, position, STATS, "rogue.png");
         this.canDoubleJump = false;
-        this.equipWeapon(new Dagger(level, position));
-
+        this.equipWeapon(new Dagger(this));
         this.evadeAbility = new AbilityFactoryImpl()
             .createPassiveAbility(this, character -> {
                 final Buff speedBuff = new SpeedBuff(STATS, 0.5);
