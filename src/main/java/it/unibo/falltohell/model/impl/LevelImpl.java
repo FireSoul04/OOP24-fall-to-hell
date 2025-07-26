@@ -109,7 +109,7 @@ public class LevelImpl implements Level {
     }
 
     /**
-     * Updates all movable game objects in the level and checks for collisions.
+     * Updates all game objects in the level and checks for collisions.
      * Only the selected character is updated.
      *
      * @param deltaTime the time elapsed since the last update
@@ -120,9 +120,8 @@ public class LevelImpl implements Level {
         for (final GameObject gameObject : gameObjectStream.toList()) {
             if (gameObject instanceof Movable movable) {
                 movable.update(deltaTime);
-            } else {
-                gameObject.update();
             }
+            gameObject.update();
         }
         this.collisionsManager.checkCollisions(this.gameObjects);
         this.gameData.ifPresent(d -> {

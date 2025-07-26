@@ -133,7 +133,7 @@ public class Tengu extends BaseEnemy {
         final double y = super.getPosition().y();
         final Vector2 chara = this.stats.getCharacter().getPosition();
 
-        while (otherX > 0) {
+        if (otherX > 0) {
             if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
                 if (this.stats.getInitialPos()
                         .distance(new Vector2(super.getPosition().x() + (otherX * this.direction), y)) <= this.stats
