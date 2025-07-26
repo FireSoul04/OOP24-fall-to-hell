@@ -57,7 +57,7 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
         final Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-        g2.scale(this.window.getScale().x() / 2, this.window.getScale().y() / 2);
+        g2.scale(this.window.getScale().x(), this.window.getScale().y());
 
         this.drh.getAllRenderables()
             .stream()
