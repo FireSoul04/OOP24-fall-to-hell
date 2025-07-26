@@ -102,6 +102,7 @@ public class Centaur extends BaseEnemy {
         }
         // TODO delete when the tests works without this
         this.direction *= -1;
+        this.setFacingRight(this.direction > 0);
     }
 
     /**
