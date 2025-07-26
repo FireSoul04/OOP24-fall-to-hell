@@ -37,4 +37,9 @@ public interface Entity extends Movable {
      * @return {@code true} if the entity is dead; {@code false} otherwise
      */
     boolean isDead();
+
+    /**
+     * @return if the entity is facing right
+     */
+    boolean isFacingRight();
 }

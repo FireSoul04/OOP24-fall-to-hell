@@ -24,6 +24,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     private static final Vector2 GRAVITY_STEP = new Vector2(0.0, 0.06);
 
     private Statistics stats;
+    private boolean isFacingRight;
     private Vector2 gravity;
     private Vector2 velocity;
     private boolean onGround;
@@ -72,6 +73,15 @@ public class EntityImpl extends MovableImpl implements Entity {
         return false;
     }
 
+    @Override
+    public boolean isFacingRight() {
+        return this.isFacingRight;
+    }
+
+    protected void setFacingRight(boolean facingRight) {
+        this.isFacingRight = facingRight;
+    }
+
     /**
      * Removes this entity from the level if it is considered dead.
      */
@@ -112,6 +122,7 @@ public class EntityImpl extends MovableImpl implements Entity {
         this.applyGravity(deltaTime);
         this.setPosition(this.getPosition().add(this.velocity));
         this.velocity = Vector2.zero();
+        this.getDrawable().ifPresent(drawable -> drawable.mirror(this.isFacingRight));
     }
 
     /**

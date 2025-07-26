@@ -169,18 +169,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * {@inheritDoc}
      */
     @Override
-    public abstract void update(double deltaTime);
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract void onCollision(GameObject other, Vector2 direction);
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected void removeEntity() {
         if (super.isDead()) {
             if (this.stats.getCharacter() instanceof Druid) {
@@ -290,7 +278,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         final List<Map.Entry<BuffNames, Double>> sorted = this.stats.getBuffMap().entrySet().stream()
                 .sorted(Comparator.comparingDouble(Map.Entry::getValue))
                 .toList();
-        // Find the key, if it exist, of said percentage
+        // Find the key, if it exists, of said percentage
         final Optional<BuffNames> typeBuff = IntStream.range(0, sorted.size() - 1)
                 .filter(i -> {
                     final double lower = sorted.get(i).getValue();

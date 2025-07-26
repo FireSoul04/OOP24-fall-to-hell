@@ -82,9 +82,11 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         Vector2 moveVelocity = Vector2.zero();
         if (this.input.checkCondition("MoveLeft")) {
             moveVelocity = moveVelocity.add(Vector2.left());
+            this.setFacingRight(false);
         }
         if (this.input.checkCondition("MoveRight")) {
             moveVelocity = moveVelocity.add(Vector2.right());
+            this.setFacingRight(true);
         }
         moveVelocity = moveVelocity.multiply(this.getStats().getSpeed().x()).multiply(deltaTime);
         this.addForce(moveVelocity);
