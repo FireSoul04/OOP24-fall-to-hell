@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
 import it.unibo.falltohell.util.Priority;
-import it.unibo.falltohell.model.api.Weapon;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.weapons.Weapon;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
