@@ -20,7 +20,7 @@ public abstract class BaseMeleeWeapon extends BaseWeapon {
     private final double damageMultiplier;
 
 	/**
-	 * Creates an abstract close ranged weapon.
+	 * Creates an abstract close ranged weapon with offset zero.
      * @param owner of the weapon
 	 * @param collider associated to the melee weapon
      * @param damageMultiplier based on owner's attack stat
@@ -28,9 +28,22 @@ public abstract class BaseMeleeWeapon extends BaseWeapon {
 	 */
 	public BaseMeleeWeapon(final Character owner, final Collider collider,
                            final double damageMultiplier, final long cooldownTime, final String fileName) {
-		super(owner, Optional.of(collider), cooldownTime, fileName);
-        this.damageMultiplier = damageMultiplier;
+		this(owner, collider, damageMultiplier, cooldownTime, fileName, Vector2.zero());
 	}
+
+    /**
+     * Creates an abstract close ranged weapon.
+     * @param owner of the weapon
+     * @param collider associated to the melee weapon
+     * @param damageMultiplier based on owner's attack stat
+     * @param fileName is the name of the image file associated to the melee weapon
+     * @param offset where to set the position based on the owner's position
+     */
+    public BaseMeleeWeapon(final Character owner, final Collider collider, final double damageMultiplier,
+                           final long cooldownTime, final String fileName, final Vector2 offset) {
+        super(owner, Optional.of(collider), cooldownTime, offset, fileName);
+        this.damageMultiplier = damageMultiplier;
+    }
 
     /**
      * {@inheritDoc}
