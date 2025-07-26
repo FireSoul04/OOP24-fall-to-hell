@@ -44,7 +44,6 @@ public class Druid extends BaseCharacter {
     private final StatisticPassiveAbility sPa;
     private final GameEventManager<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
-    private final WarScythe weapon = new WarScythe(this.getLevel(), this.getPosition());
     private int kills;
     private int passiveCycles = 1;
     private boolean canAttack = true;
@@ -62,7 +61,7 @@ public class Druid extends BaseCharacter {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
                 new Dimensions(10, 10), 10, 10), "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
-        
+        this.equipWeapon(new WarScythe(level, position));
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
             final double[][] lifeManaGains = {
                     {}, // 0 kill

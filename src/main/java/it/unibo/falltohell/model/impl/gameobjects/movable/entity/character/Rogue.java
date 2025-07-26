@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.character;
 
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Dagger;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.Knife;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
@@ -38,6 +39,7 @@ public class Rogue extends BaseCharacter {
      */
     public Rogue(final Level level, final Vector2 position) {
         super(level, position, STATS, "rogue.png");
+        this.equipWeapon(new Dagger(level, position));
     }
 
     /**

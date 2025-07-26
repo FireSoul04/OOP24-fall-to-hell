@@ -18,7 +18,6 @@ public class Caster extends BaseCharacter {
     private static final double AMOUNT_MANA_NORMAL_ATTACK = 2;
     private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl() //TODO --> si modificano se è costante? Mi sa va cambiato
             .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,20), MANA, ATTACK_SPEED);
-    private final Staff staff;
 
     /**
      * Base constructor for a new caster character.
@@ -28,7 +27,7 @@ public class Caster extends BaseCharacter {
      */
     public Caster(final Level level, final Vector2 position) {
         super(level, position, STATISTICS, "caster.png");
-        this.staff = new Staff(level, position, this);
+        this.equipWeapon(new Staff(level, position, this));
     }
 
     @Override
