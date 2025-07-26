@@ -16,7 +16,7 @@ import it.unibo.falltohell.util.Vector2;
  *
  * @author Davide Mancini
  */
-public abstract class MeleeWeapon extends GameObjectImpl implements Weapon {
+public abstract class BaseMeleeWeapon extends GameObjectImpl implements Weapon {
 
     private static final long COOLDOWN_TIME = 400;
 
@@ -29,7 +29,7 @@ public abstract class MeleeWeapon extends GameObjectImpl implements Weapon {
 	 * @param collider associated to the melee weapon
 	 * @param fileName is the name of the image file associated to the melee weapon
 	 */
-	public MeleeWeapon(final Level lv, final Vector2 position, final Collider collider, final String fileName) {
+	public BaseMeleeWeapon(final Level lv, final Vector2 position, final Collider collider, final String fileName) {
 		super(lv, position, collider);
 		this.initDrawable(Priority.MEDIUM, fileName);
         this.canAttack = true;
@@ -37,6 +37,7 @@ public abstract class MeleeWeapon extends GameObjectImpl implements Weapon {
 
     /**
      * {@inheritDoc}
+     * The owner can attack every time interval based on a cooldown time.
      */
 	@Override
 	public void attack() {

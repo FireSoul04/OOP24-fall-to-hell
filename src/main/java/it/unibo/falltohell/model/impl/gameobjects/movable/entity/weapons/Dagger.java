@@ -5,7 +5,7 @@ import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-public class Dagger extends MeleeWeapon {
+public class Dagger extends BaseMeleeWeapon {
 
     private static final Dimensions SIZE = new Dimensions(15, 10);
 

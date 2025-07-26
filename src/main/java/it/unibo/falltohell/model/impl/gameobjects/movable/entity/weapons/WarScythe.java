@@ -19,10 +19,10 @@ import it.unibo.falltohell.util.Vector2;
  * </ul>
  *
  * @author Sara Visani
- * @see MeleeWeapon
+ * @see BaseMeleeWeapon
  * @see BoxCollider
  */
-public class WarScythe extends MeleeWeapon {
+public class WarScythe extends BaseMeleeWeapon {
 
     /**
      * <p>
