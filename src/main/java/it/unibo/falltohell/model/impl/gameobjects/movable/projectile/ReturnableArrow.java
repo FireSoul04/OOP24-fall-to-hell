@@ -105,6 +105,12 @@ public class ReturnableArrow extends ProjectileImpl {
     private boolean isEnemy(final GameObject obj) {
         return obj instanceof Enemy && obj != owner;
     }
+    @Override
+    public void onProjectileHit(final GameObject other){
+        if(other instanceof Enemy){
+            
+        }
+    }
 
     /**
      * Removes the arrow from the level.

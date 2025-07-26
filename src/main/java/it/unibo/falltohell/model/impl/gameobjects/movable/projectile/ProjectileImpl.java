@@ -75,6 +75,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
         // Default: do nothing
     }
 
+
     /**
      * {@inheritDoc}
      */

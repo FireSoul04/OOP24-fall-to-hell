@@ -2,11 +2,14 @@ package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 
+import java.util.Optional;
+
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Archer;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 /**
  * A bow weapon used by the Archer character.
@@ -17,6 +20,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableA
 public class Bow extends BaseRangedWeapon {
 
     private Archer owner;
+    private final Vector2 projectileSpeed;
 
     /**
      * Constructs a new Bow with the specified ammo and cooldown.
@@ -24,9 +28,9 @@ public class Bow extends BaseRangedWeapon {
      * @param ammo     the initial amount of ammo
      * @param cooldown the cooldown time between shots
      */
-    public Bow(final int ammo, final double cooldown, final Archer owner) {
-        super(owner.getLevel(), owner.getPosition(), ammo, cooldown, "bow.png");
-        this.owner = owner;
+    public Bow(final Character owner, final int ammo, final Optional<Collider> collider, final long cooldown, final String fileName , final Vector2 projectileSpeed) {
+        super(owner, collider, ammo, cooldown, fileName);
+        this.projectileSpeed = projectileSpeed;
     }
 
     /**
@@ -42,8 +46,8 @@ public class Bow extends BaseRangedWeapon {
      * @return a new {@link ReturnableArrow} instance
      */
     @Override
-    public Projectile createProjectile(final Level level, final Vector2 position, final Vector2 speed, final Collider collider) {
-        return new ReturnableArrow(level, position, speed, collider, owner);
+    public Projectile createProjectile(final Level level, final Vector2 position) {
+        return new ReturnableArrow(level, position, projectileSpeed, this.getCollider().get(), (Archer)this.getOwner());
     }
 
     public void attack() {

@@ -10,7 +10,6 @@ import javax.sound.sampled.FloatControl;
 import it.unibo.falltohell.model.api.AudioPlayer;
 /**
  * A class that implements the AudioPlayer interface to handle sound playback.
- * It uses Java's Clip and AudioInputStream for audio management.
  */
 public class SoundPlayer implements AudioPlayer{
     private final int loop;

@@ -10,9 +10,12 @@ import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
+import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import java.util.Optional;
 
 /**
  * Represents an Archer character in the game.
@@ -26,12 +29,14 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableA
 public class Archer extends BaseCharacter {
 
     private final Bow bow;
-    private List<Projectile> shotedArrows = new ArrayList<>();
+    private final List<Projectile> shotedArrows = new ArrayList<>();
     private static final double LIFE = 0;
     private static final double ATTACK = 0;
     private static final double ATTACK_SPEED = 0;
     private static final Vector2 SPEED = new Vector2(3.0, 3.0);
     private static final double MANA = 0;
+    private static final long COOLDONW = 500;
+    private static final Vector2 PROJECTILE_SPEED = new Vector2(3.5,3.5);
     private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
             .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,20), MANA, ATTACK_SPEED);
 
@@ -45,7 +50,7 @@ public class Archer extends BaseCharacter {
      */
     public Archer(final Level level, final Vector2 position) {
         super(level, position, STATISTICS, "archer.png");
-        this.bow = new Bow(5, 0.5, this);
+        this.bow = new Bow(this, 5,Optional.empty(), COOLDONW, "bow.png", PROJECTILE_SPEED);
 
     }
 
@@ -57,8 +62,9 @@ public class Archer extends BaseCharacter {
      * @param collider  the collider for the arrow
      */
     public void shootArrow(final Vector2 direction, final double speed, final Collider collider) {
-        final Vector2 velocity = direction.multiply(speed);
-        final Projectile arrow = bow.attack(getLevel(), getPosition(), velocity, collider);
+        bow.attack();
+        Projectile arrow = bow.getShotProjectile().get();
+        
         if (arrow != null) {
             shotedArrows.add(arrow);
         }

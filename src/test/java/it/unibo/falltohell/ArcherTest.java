@@ -12,7 +12,6 @@ import it.unibo.falltohell.model.impl.GameCameraImpl;
 import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.abilities.active.ReturnArrowAbility;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Archer;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
@@ -26,7 +25,6 @@ import it.unibo.falltohell.util.Vector2;
 public class ArcherTest {
     private Archer archer;
     private LevelImpl level;
-    private Bow bow;
 
     @BeforeEach
     void setUp() {
@@ -42,12 +40,12 @@ public class ArcherTest {
     }
     @Test
     void testShootArrowConsumesAmmoAndAddsToList() {
-        int initialAmmo = bow.getAmmo();
+        int initialAmmo = archer.getBow().getAmmo();
 
         archer.shootArrow(Vector2.right(), 1.0, 
         new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
 
-        assertEquals(initialAmmo - 1, bow.getAmmo());
+        assertEquals(initialAmmo - 1, archer.getBow().getAmmo());
         assertEquals(1, archer.getShotArrows().size());
     }
 
@@ -68,7 +66,7 @@ public class ArcherTest {
     }
     @Test
     void testArrowReturnRestoresAmmoAndRemovesArrow() {
-        int initialAmmo = bow.getAmmo();
+        int initialAmmo = archer.getBow().getAmmo();
 
         archer.shootArrow(Vector2.up(), 5.0, 
             new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
@@ -82,7 +80,7 @@ public class ArcherTest {
         for (int i = 0; i < 60; i++) {
             arrow.update(0.016);  
         }
-        assertEquals(initialAmmo, bow.getAmmo());
+        assertEquals(initialAmmo, archer.getBow().getAmmo());
         assertFalse(archer.getShotArrows().contains(arrow));
     }
 }
