@@ -68,7 +68,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.jump(deltaTime);
         this.interact();
         this.attack();
-        this.equippedWeapon.ifPresent(t -> t.setPosition(this.getPosition()));
     }
 
     /**
