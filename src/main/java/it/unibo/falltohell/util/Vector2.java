@@ -91,7 +91,8 @@ public record Vector2(double x, double y) {
      * @return the vector with the sign of both coordinates inverted
      */
     public Vector2 invert() {
-        return new Vector2(-this.x, -this.y);
+        // This checks avoid having any -0.0 component
+        return new Vector2(this.x != 0.0 ? -this.x : 0.0, this.y != 0.0 ? -this.y : 0.0);
     }
 
     /**

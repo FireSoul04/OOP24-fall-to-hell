@@ -36,10 +36,10 @@ public class ShopEntrance extends BaseEntrance {
     @Override
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
         if (other instanceof Character) {
-            if (direction.equals(Vector2.left())) {
+            if (direction.equals(Vector2.right())) {
                 this.merchant.ifPresent(Merchant::restock);
                 this.getListener().call();
-            } else if (direction.equals(Vector2.right())) {
+            } else if (direction.equals(Vector2.left())) {
                 this.merchant.ifPresent(Merchant::destock);
                 this.getListener().call();
             }

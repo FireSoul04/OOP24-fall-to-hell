@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.weapons.Weapon;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
@@ -35,6 +36,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private double jumpingSpeed;
     private boolean onGround;
     private boolean jumping;
+    private Optional<Weapon> equippedWeapon;
     private Optional<Interactable> interactingObject;
 
     /**
@@ -57,6 +59,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.stats = stats;
         this.input = level.getGameEventManager();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
+        this.equippedWeapon = Optional.empty();
         this.interactingObject = Optional.empty();
         this.initDrawable(Priority.LOW, fileName);
     }
@@ -70,8 +73,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.jump(deltaTime);
         this.applyGravity(deltaTime);
         this.interact();
+        this.attack();
         this.setPosition(this.getPosition().add(this.velocity));
         this.velocity = Vector2.zero();
+        this.equippedWeapon.ifPresent(t -> t.setPosition(this.getPosition()));
     }
 
     /**
@@ -148,11 +153,11 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
                 this.currentJumpFrames = 0;
                 this.onGround = true;
                 this.gravity = Vector2.zero();
-                this.moveUpToFloor(other);
+                this.pushUpToFloor(other);
             } else if (direction.equals(Vector2.up())) {
                 this.currentJumpFrames = 0;
             } else {
-                this.moveOut(other);
+                this.pushFarFromBlock(other);
             }
         }
         if (other instanceof Interactable interactable) {
@@ -175,10 +180,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     }
 
     /**
-     * Move the character up until it reaches the floor's height.
+     * Push up the character until it reaches the floor's height.
      * @param other block colliding with
      */
-    private void moveUpToFloor(final GameObject other) {
+    private void pushUpToFloor(final GameObject other) {
         final double distance = this.getPosition().subtract(other.getPosition()).y();
         final double thisHeight = this.getCollider().orElseThrow().size().height();
         final double otherHeight = other.getCollider().orElseThrow().size().height();
@@ -187,16 +192,16 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         final double eps = 1 + (distance / thisHeight);
         final double moveTo = Math.abs(distance) - idealDistance;
         if (Math.abs(moveTo) > eps) {
-            this.velocity = this.velocity.subtract(new Vector2(0, eps));
+            this.setPosition(this.getPosition().subtract(new Vector2(0, eps)));
         }
     }
 
     /**
-     * Move the character left or right based on the direction facing to prevent going
-     * through walls.
+     * Push the character left or right based on the direction facing to prevent going
+     * through blocks.
      * @param other block colliding with
      */
-    private void moveOut(final GameObject other) {
+    private void pushFarFromBlock(final GameObject other) {
         final double distance = this.getPosition().subtract(other.getPosition()).x();
         final double thisWidth = this.getCollider().orElseThrow().size().width();
         final double otherWidth = other.getCollider().orElseThrow().size().width();
@@ -204,7 +209,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         final double eps = 1 + (distance / thisWidth);
         final double moveTo = Math.abs(Math.abs(distance) - idealDistance);
         if (moveTo > eps) {
-            this.velocity = this.velocity.add(new Vector2(moveTo * Math.signum(distance), 0));
+            this.setPosition(this.getPosition().add(new Vector2(moveTo * Math.signum(distance), 0)));
         }
     }
 
@@ -216,6 +221,34 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         if (this.input.checkCondition("Interact")) {
             this.interactingObject.ifPresent(i -> i.interact(this));
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attack() {
+        this.equippedWeapon.ifPresent(w -> {
+            if (this.input.checkCondition("NormalAttack")) {
+                w.attack();
+            }
+        });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Weapon> getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipWeapon(final Weapon weapon) {
+        this.equippedWeapon = Optional.of(weapon);
     }
 
     /**
@@ -242,5 +275,28 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     @Override
     public BuffManager getBuffManager() {
         return this.buffManager;
+    }
+
+    /**
+     * @return if the character is on ground
+     */
+    protected boolean isOnGround() {
+        return this.onGround;
+    }
+
+    /**
+     * @return if the event jump is true
+     */
+    protected boolean isJumping() {
+        return this.jumping;
+    }
+
+    /**
+     * Let the character jump again.
+     */
+    protected void resetJump() {
+        this.currentJumpFrames = 1;
+        this.gravity = Vector2.zero();
+        this.jumping = true;
     }
 }

@@ -30,10 +30,10 @@ public class SpringsEntrance extends BaseEntrance {
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
         if (other instanceof Character) {
             final Statistics statistics = this.getLevel().getGameData().getCurrentCharacter().getStats();
-            if (direction.equals(Vector2.right())) {
+            if (direction.equals(Vector2.left())) {
                 statistics.setLife(statistics.getFullLife());
                 this.getListener().call();
-            } else if (direction.equals(Vector2.left())) {
+            } else if (direction.equals(Vector2.right())) {
                 this.getListener().call();
             }
         }

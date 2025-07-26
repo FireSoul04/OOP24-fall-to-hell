@@ -9,7 +9,7 @@ import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 
-public class Staff extends MeleeWeapon{
+public class Staff extends BaseMeleeWeapon {
 
     private static final double DAMAGE_MULTIPLIER = 0.3;
     private static final Dimensions DIMENSIONS = new Dimensions(3, 10);
