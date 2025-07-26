@@ -39,7 +39,7 @@ public class Druid extends BaseCharacter {
     private static final long KILL_RESET = 10_000;
     private static final double CREATION_COST = 30;
     private static final double ATTACK_COST = 10;
-    private static final long ATTACK_COOLDOWN = 2500;
+    private static final long ATTACK_COOLDOWN = 500;
     private final CharacterStatistics stats;
     private final AbilityFactoryImpl factory = new AbilityFactoryImpl();
     private final StatisticPassiveAbility sPa;
