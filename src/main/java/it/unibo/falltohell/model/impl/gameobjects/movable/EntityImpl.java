@@ -20,6 +20,7 @@ import it.unibo.falltohell.util.Vector2;
 public class EntityImpl extends MovableImpl implements Entity {
 
     private Statistics stats;
+    private boolean isFacingRight;
 
     /**
      * Constructs an {@code EntityImpl} with the given parameters.
@@ -62,6 +63,15 @@ public class EntityImpl extends MovableImpl implements Entity {
         return false;
     }
 
+    @Override
+    public boolean isFacingRight() {
+        return this.isFacingRight;
+    }
+
+    protected void setFacingRight(boolean facingRight) {
+        this.isFacingRight = facingRight;
+    }
+
     /**
      * Removes this entity from the level if it is considered dead.
      */
@@ -69,5 +79,10 @@ public class EntityImpl extends MovableImpl implements Entity {
         if (this.isDead()) {
             super.getLevel().removeGameObject(this);
         }
+    }
+
+    @Override
+    public void update() {
+        this.getDrawable().ifPresent(drawable -> drawable.mirror(this.isFacingRight));
     }
 }
