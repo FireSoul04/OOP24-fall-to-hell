@@ -3,8 +3,8 @@ package it.unibo.falltohell;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import it.unibo.falltohell.model.api.CustomTimer;
-import it.unibo.falltohell.model.impl.CustomTimerImpl;
+import it.unibo.falltohell.model.api.timer.CustomTimer;
+import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,11 +1,11 @@
 package it.unibo.falltohell;
 
-import it.unibo.falltohell.model.api.EnemyFactory;
-import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
-import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
+import it.unibo.falltohell.model.api.factory.EnemyFactory;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
+import it.unibo.falltohell.model.impl.factory.EnemyFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.BeforeEach;

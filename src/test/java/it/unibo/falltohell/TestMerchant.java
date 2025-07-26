@@ -1,14 +1,14 @@
 package it.unibo.falltohell;
 
-import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
+import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.GameDataImpl;
-import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
-import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
+import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
+import it.unibo.falltohell.model.impl.gameobject.entrance.ShopEntrance;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.test.util.MerchantTest;

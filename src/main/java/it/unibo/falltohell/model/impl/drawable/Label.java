@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.drawable;
 
-import it.unibo.falltohell.model.api.Drawable;
+import it.unibo.falltohell.model.api.drawable.Drawable;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.util.Priority;
 

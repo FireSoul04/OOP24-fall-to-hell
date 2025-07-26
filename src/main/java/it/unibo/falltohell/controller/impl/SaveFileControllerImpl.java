@@ -2,8 +2,8 @@ package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.controller.api.SaveFileController;
 import it.unibo.falltohell.model.api.GameData;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.impl.GameDataImpl;
 import it.unibo.falltohell.util.Vector2;
 

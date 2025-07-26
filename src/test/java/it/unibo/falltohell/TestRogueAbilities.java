@@ -1,15 +1,15 @@
 package it.unibo.falltohell;
 
-import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.StatisticsFactory;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
-import it.unibo.falltohell.model.impl.GameEventManager;
-import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.Knife;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
+import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
+import it.unibo.falltohell.model.api.factory.StatisticsFactory;
+import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Knife;
+import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.test.util.DummyEnemyTest;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Dimensions;

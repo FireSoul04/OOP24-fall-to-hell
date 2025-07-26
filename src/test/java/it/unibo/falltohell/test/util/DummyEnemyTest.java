@@ -1,11 +1,11 @@
 package it.unibo.falltohell.test.util;
 
-import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.EnemyTimeManagerImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
+import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy;
+import it.unibo.falltohell.model.impl.manager.EnemyTimeManagerImpl;
+import it.unibo.falltohell.model.impl.manager.ManagerIngage;
 import it.unibo.falltohell.util.Vector2;
 
 public class DummyEnemyTest extends BaseEnemy {

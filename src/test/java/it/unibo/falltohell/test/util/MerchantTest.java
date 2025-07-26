@@ -1,15 +1,15 @@
 package it.unibo.falltohell.test.util;
 
-import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.Item;
-import it.unibo.falltohell.model.api.gameobjects.Merchant;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.buff.Buff;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.gameobject.interactable.Item;
+import it.unibo.falltohell.model.api.gameobject.Merchant;
+import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.api.buff.Buff;
 import it.unibo.falltohell.model.api.physics.Collider;
 
-import it.unibo.falltohell.model.impl.GameObjectImpl;
-import it.unibo.falltohell.model.impl.gameobjects.interactable.Potion;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.*;
+import it.unibo.falltohell.model.impl.buff.*;
+import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
+import it.unibo.falltohell.model.impl.gameobject.interactable.Potion;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;

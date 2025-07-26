@@ -1,20 +1,20 @@
 package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.controller.api.LevelLoader;
-import it.unibo.falltohell.model.api.EnemyFactory;
-import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.api.gameobjects.CollidableBlockFactory;
-import it.unibo.falltohell.model.api.gameobjects.Merchant;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.factory.EnemyFactory;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.factory.CollidableBlockFactory;
+import it.unibo.falltohell.model.api.gameobject.Merchant;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
-import it.unibo.falltohell.model.impl.SavePoint;
-import it.unibo.falltohell.model.impl.gameobjects.CharacterChanger;
-import it.unibo.falltohell.model.impl.gameobjects.MerchantImpl;
-import it.unibo.falltohell.model.impl.gameobjects.block.BaseNonCollidableBlock;
-import it.unibo.falltohell.model.impl.gameobjects.block.CollidableBlockFactoryImpl;
-import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
-import it.unibo.falltohell.model.impl.gameobjects.entrance.SpringsEntrance;
+import it.unibo.falltohell.model.impl.factory.EnemyFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobject.interactable.SavePoint;
+import it.unibo.falltohell.model.impl.gameobject.interactable.CharacterChanger;
+import it.unibo.falltohell.model.impl.gameobject.MerchantImpl;
+import it.unibo.falltohell.model.impl.gameobject.block.BaseNonCollidableBlock;
+import it.unibo.falltohell.model.impl.factory.CollidableBlockFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobject.entrance.ShopEntrance;
+import it.unibo.falltohell.model.impl.gameobject.entrance.SpringsEntrance;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 

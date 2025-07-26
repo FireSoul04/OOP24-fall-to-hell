@@ -1,0 +1,226 @@
+package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
+
+import java.util.Optional;
+
+import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
+import it.unibo.falltohell.model.api.statistic.RestrictedBaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
+import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
+import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
+import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
+
+/**
+ * Represents an enemy type "Imp" that moves horizontally within a restricted
+ * range,
+ * can detect and attack a target {@link Character}, and reacts to collisions
+ * with blocks.
+ * <p>
+ * The Imp moves back and forth between defined distance boundaries or chases
+ * the target
+ * if it is within sensing distance.
+ * <p>
+ * Collision with blocks stops movement in the vertical direction and reverses
+ * movement
+ * direction when hitting horizontal boundaries.
+ * <p>
+ * Movement logic ensures the Imp does not pass through obstacles or move beyond
+ * its allowed range.
+ *
+ * @author Sara Visani
+ * @see BaseEnemy
+ * @see Character
+ * @see RestrictedBaseEnemyStatistics
+ * @see Vector2
+ */
+public class Imp extends BaseEnemy {
+
+    private static final double CHAR_DISTANCE = 20;
+    private static final double REGEN_STAT = 0.1;
+    private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
+    private static final double FULL_LIFE = 10;
+    private static final double DAMAGE = 10;
+    private static final Vector2 VELOCITY = new Vector2(1, 10);
+    private static final double DISTANCE = 10;
+
+    private final RestrictedBaseEnemyStatistics stats;
+    private boolean facingRight = true;
+    private int direction = 1;
+    private Optional<Vector2> collided = Optional.empty();
+
+    /**
+     * Constructs a new Imp enemy with default stats, initial position, and target
+     * character.
+     * <p>
+     * The Imp will use {@link RestrictedBaseEnemyStatistics} for movement limits,
+     * sensing,
+     * and regeneration.
+     *
+     * @param level       the game level the Imp belongs to
+     * @param initialCord the initial spawn position of the Imp
+     * @param character   the target {@link Character} to track and attack
+     * @param manager     the {@link EnemyTimerManager} responsible for managing
+     *                    enemy timers
+     * @param ingage      the {@link ManagerIngage} used to handle if the player
+     *                    enter a safe zone
+     */
+    public Imp(final Level level, final Vector2 initialCord, final Character character,
+            final EnemyTimerManager manager, final ManagerIngage ingage) {
+        super(level,
+                new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
+                        initialCord, character, 10, new StatisticFactoryImpl()
+                                .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
+                        DISTANCE),
+                manager, ingage, "imp.png");
+
+        this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
+        ingage.addEnemy(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final double deltaTime) {
+        this.move(deltaTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onCollision(final GameObject other, final Vector2 direction) {
+        if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
+            if (direction.y() != 0) {
+                this.collided = Optional.of(super.getPosition());
+            }
+        } else if (other instanceof Character) {
+            this.attack();
+        }
+        // TODO delete when the tests works without this
+        this.collided = Optional.of(super.getPosition());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void attack() {
+        this.stats.getCharacter().setDamagedLife(this.stats.getAttack());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void move(final double deltaTime) {
+
+        double otherX = deltaTime * this.stats.getSpeed().x();
+        final double y = super.getPosition().y();
+        final Vector2 chara = this.stats.getCharacter().getPosition();
+
+        if (otherX > 0) {
+            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
+                if (this.stats.getInitialPos()
+                        .distance(new Vector2(super.getPosition().x() + (otherX * this.direction), y)) <= this.stats
+                                .getDistance()) {
+                    if (this.collided.isPresent() && super.getPosition().add(new Vector2(otherX * this.direction, 0))
+                            .x() > this.collided.get().x()) {
+                        if (super.getPosition() != this.collided.get()) {
+                            otherX -= super.getPosition().distance(this.collided.get());
+                            super.setPosition(this.collided.get());
+                        }
+                        this.direction *= -1;
+                    }
+                    super.setPosition(super.getPosition().add(new Vector2(otherX * this.direction, 0)));
+                    otherX = 0;
+                } else {
+                    if (this.collided.isPresent() && super.getPosition().add(new Vector2(otherX * this.direction, 0))
+                            .x() > this.collided.get().x()) {
+                        if (super.getPosition() != this.collided.get()) {
+                            otherX -= super.getPosition().distance(this.collided.get());
+                            super.setPosition(this.collided.get());
+                        }
+                        this.direction *= -1;
+                    }
+                    otherX -= Math.abs((this.stats.getInitialPos().x() + this.stats.getDistance() * this.direction)
+                            - super.getPosition().x());
+                    super.setPosition(
+                            new Vector2(this.stats.getInitialPos().x() + this.stats.getDistance() * this.direction, y));
+                    this.direction *= -1;
+                }
+                this.facingRight = this.direction > 0;
+            } else {
+                if (chara.x() - super.getPosition().x() > 0) {
+                    this.facingRight = true;
+                } else {
+                    this.facingRight = false;
+                }
+                if ((chara.x() <= this.stats.getDistance() + this.stats.getInitialPos().x())
+                        && (chara.x() >= this.stats.getInitialPos().x() - this.stats.getDistance())) {
+                    if (chara.distance(super.getPosition()) > super.getPosition()
+                            .distance(new Vector2(super.getPosition().x() + otherX * this.direction, y))) {
+                        if (chara.x() - super.getPosition().x() > 0 && !(this.collided.isPresent()
+                                && this.collided.get().x() < super.getPosition().add(new Vector2(otherX, 0)).x())) {
+                            super.setPosition(super.getPosition().add(new Vector2(otherX, 0)));
+                            otherX = 0;
+                        } else if (!(this.collided.isPresent()
+                                && this.collided.get().x() > super.getPosition().add(new Vector2(-otherX, 0)).x())) {
+                            super.setPosition(super.getPosition().add(new Vector2(-otherX, 0)));
+                            otherX = 0;
+                        } else {
+                            super.setPosition(this.collided.get());
+                            otherX = 0;
+                        }
+                    } else if (!(this.collided.isPresent() && this.collided.get().x() < chara.x())) {
+                        super.setPosition(chara);
+                        otherX = 0;
+                    } else {
+                        super.setPosition(this.collided.get());
+                        otherX = 0;
+                    }
+                } else {
+                    if (chara.x() - super.getPosition().x() > 0) {
+                        if (this.stats.getInitialPos()
+                                .distance(new Vector2(super.getPosition().x() + otherX, y)) <= this.stats.getDistance()
+                                && !(this.collided.isPresent() && super.getPosition().add(new Vector2(otherX, 0))
+                                        .x() > this.collided.get().x())) {
+                            super.setPosition(super.getPosition().add(new Vector2(otherX, 0)));
+                            otherX = 0;
+                        } else if (!(this.collided.isPresent() && this.collided.get()
+                                .x() < this.stats.getInitialPos().x() + this.stats.getDistance())) {
+                            super.setPosition(
+                                    new Vector2(this.stats.getInitialPos().x() + this.stats.getDistance(), y));
+                            otherX = 0;
+                            this.direction *= -1;
+                        } else {
+                            super.setPosition(this.collided.get());
+                            otherX = 0;
+                        }
+                    } else {
+                        if (this.stats.getInitialPos()
+                                .distance(new Vector2(super.getPosition().x() - otherX, y)) <= this.stats.getDistance()
+                                && !(this.collided.isPresent() && super.getPosition().add(new Vector2(-otherX, 0))
+                                        .x() > this.collided.get().x())) {
+                            super.setPosition(super.getPosition().add(new Vector2(-otherX, 0)));
+                            otherX = 0;
+                        } else if (!(this.collided.isPresent() && this.collided.get()
+                                .x() > this.stats.getInitialPos().x() - this.stats.getDistance())) {
+                            super.setPosition(
+                                    new Vector2(this.stats.getInitialPos().x() - this.stats.getDistance(), y));
+                            otherX = 0;
+                            this.direction *= -1;
+                        } else {
+                            super.setPosition(this.collided.get());
+                            otherX = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

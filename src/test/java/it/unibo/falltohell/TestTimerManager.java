@@ -1,9 +1,9 @@
 package it.unibo.falltohell;
 
-import it.unibo.falltohell.model.api.CustomTimer;
-import it.unibo.falltohell.model.api.TimerManager;
-import it.unibo.falltohell.model.impl.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.TimerManagerImpl;
+import it.unibo.falltohell.model.api.timer.CustomTimer;
+import it.unibo.falltohell.model.api.manager.TimerManager;
+import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
+import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

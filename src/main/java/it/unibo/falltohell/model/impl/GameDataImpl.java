@@ -1,9 +1,9 @@
 package it.unibo.falltohell.model.impl;
 
 import it.unibo.falltohell.model.api.GameData;
-import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
+import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.Map;

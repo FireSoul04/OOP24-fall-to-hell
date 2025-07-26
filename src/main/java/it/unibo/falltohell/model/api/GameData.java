@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api;
 
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.util.Vector2;
 
 /**

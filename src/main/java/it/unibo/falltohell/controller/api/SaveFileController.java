@@ -1,7 +1,7 @@
 package it.unibo.falltohell.controller.api;
 
 import it.unibo.falltohell.model.api.GameData;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 
 import java.util.Map;
 

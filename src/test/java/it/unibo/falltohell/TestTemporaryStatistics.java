@@ -1,11 +1,11 @@
 package it.unibo.falltohell;
 
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
-import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseCharacter;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.CharacterStatisticsImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.LifeBuff;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.BaseCharacter;
+import it.unibo.falltohell.model.impl.statistics.CharacterStatisticsImpl;
+import it.unibo.falltohell.model.impl.buff.LifeBuff;
+import it.unibo.falltohell.model.impl.buff.ManaBuff;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;

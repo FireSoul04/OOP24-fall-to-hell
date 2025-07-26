@@ -1,10 +1,11 @@
 package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
-import it.unibo.falltohell.controller.api.RenderableController;
-import it.unibo.falltohell.model.api.Drawable;
+import it.unibo.falltohell.controller.api.renderablecontroller.RenderableController;
+import it.unibo.falltohell.controller.impl.renderablecontroller.SpriteRenderableController;
+import it.unibo.falltohell.model.api.drawable.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.view.api.Renderable;
+import it.unibo.falltohell.view.api.renderable.Renderable;
 
 import java.awt.Image;
 import java.util.List;

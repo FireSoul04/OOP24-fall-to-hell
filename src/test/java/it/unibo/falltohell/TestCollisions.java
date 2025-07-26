@@ -1,14 +1,14 @@
 package it.unibo.falltohell;
 
-import it.unibo.falltohell.model.api.gameobjects.Movable;
+import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.test.util.LevelTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.api.Level;
-import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
-import it.unibo.falltohell.model.impl.GameObjectImpl;
+import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
+import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 

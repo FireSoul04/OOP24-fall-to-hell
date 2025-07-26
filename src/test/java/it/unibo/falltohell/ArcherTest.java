@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
+import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import it.unibo.falltohell.model.impl.GameCameraImpl;
-import it.unibo.falltohell.model.impl.LevelImpl;
-import it.unibo.falltohell.model.impl.abilities.active.ReturnArrowAbility;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Archer;
-import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
+import it.unibo.falltohell.model.impl.level.LevelImpl;
+import it.unibo.falltohell.model.impl.ability.active.ReturnArrowAbility;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Archer;
+import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableArrow;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;

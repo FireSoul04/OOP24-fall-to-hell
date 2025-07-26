@@ -1,8 +1,8 @@
 package it.unibo.falltohell.controller.api;
 
-import it.unibo.falltohell.model.api.Drawable;
+import it.unibo.falltohell.model.api.drawable.Drawable;
 import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.view.api.Renderable;
+import it.unibo.falltohell.view.api.renderable.Renderable;
 
 import java.util.List;
 
