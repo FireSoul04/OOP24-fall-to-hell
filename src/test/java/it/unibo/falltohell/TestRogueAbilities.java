@@ -7,12 +7,10 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.StatisticsFactory;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.GameEventManager;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.Knife;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.BaseEnemy;
-import it.unibo.falltohell.model.impl.gameobjects.movable.entity.EnemyTimeManagerImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
+import it.unibo.falltohell.test.util.DummyEnemyTest;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -96,20 +94,7 @@ class TestRogueAbilities {
             10, 0, Vector2.zero(), new Dimensions(5, 5),
             enemyPosition, this.rogue, 0, sf.createOptional()
         );
-        final Enemy dummy = new BaseEnemy(this.level, enemyStats, new EnemyTimeManagerImpl(), new ManagerIngage(),"") {
-            public void update(final double deltaTime) {
-                // Does nothing
-            }
-            public void onCollision(final GameObject other, final Vector2 direction) {
-                // Damage handled by knife
-            }
-            protected void attack() {
-                // Doesn't attack
-            }
-            protected void move(final double deltaTime) {
-                // Doesn't move
-            }
-        };
+        final Enemy dummy = new DummyEnemyTest(this.level, Vector2.zero(), enemyStats);
         final double initialLife = dummy.getStats().getLife();
         while (steps < STEPS) {
             this.level.update(1.0);
