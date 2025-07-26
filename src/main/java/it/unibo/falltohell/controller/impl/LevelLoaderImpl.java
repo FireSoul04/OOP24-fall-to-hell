@@ -23,6 +23,7 @@ import java.util.List;
 
 /**
  * Class that handles the loading of a level from file.
+ *
  * @author Martina Malagoli
  */
 public class LevelLoaderImpl implements LevelLoader {
@@ -37,14 +38,15 @@ public class LevelLoaderImpl implements LevelLoader {
 
     /**
      * Initialization of the LevelLoaderImpl class.
+     *
      * @param fileName is the name of the file
-     * @param level corresponding to the level in the file
+     * @param level    corresponding to the level in the file
      */
     public LevelLoaderImpl(final String fileName, final Level level) {
         this.level = level;
         this.levelFromFile = new ArrayList<>();
         this.levelFromFile.addAll(new FileControllerImpl().read(PATH + fileName));
-        this.enemyFactory =  new EnemyFactoryImpl();
+        this.enemyFactory = new EnemyFactoryImpl();
         this.collidableBlockFactory = new CollidableBlockFactoryImpl();
         this.merchant = new MerchantImpl(level, Vector2.zero(), new BoxCollider());
 
@@ -66,8 +68,10 @@ public class LevelLoaderImpl implements LevelLoader {
 
     /**
      * Method to create the correct game object corresponding to the file input.
-     * @param identifier is the char associated to a specific game object in the file
-     * @param position of the game object in the level
+     *
+     * @param identifier is the char associated to a specific game object in the
+     *                   file
+     * @param position   of the game object in the level
      */
     private void parseToGameObject(final char identifier, final Vector2 position) {
         final Character character = level.getGameData().getCurrentCharacter();
@@ -86,7 +90,7 @@ public class LevelLoaderImpl implements LevelLoader {
             case 'c' -> new CharacterChanger(level, position, collider, level.getCharacters());
             case 's' -> new SavePoint(level, position, collider);
             case 'm' -> this.merchant.setPosition(position);
-            case ' ' -> {}
+            case ' ' -> { } 
             default -> throw new IllegalStateException("Cannot recognize a character in the file:" + identifier);
         }
     }

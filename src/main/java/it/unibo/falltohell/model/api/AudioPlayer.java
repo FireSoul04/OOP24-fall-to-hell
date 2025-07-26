@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.api;
 
 public interface AudioPlayer {
-    static final String PATH_TO_AUDIO = "src/main/resources/audio/";
+    String PATH_TO_AUDIO = "src/main/resources/audio/";
 
     void playOnce();
 
