@@ -277,10 +277,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         return this.buffManager;
     }
 
-    protected GameEventManager<String> getInput() {
-        return this.input;
-    }
-
     /**
      * @return if the character is on ground
      */
