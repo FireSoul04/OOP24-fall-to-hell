@@ -214,6 +214,24 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void enable() {
+        this.getDrawable().ifPresent(t -> t.setVisible(true));
+        this.getEquippedWeapon().flatMap(GameObject::getDrawable).ifPresent(t -> t.setVisible(true));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void disable() {
+        this.getDrawable().ifPresent(t -> t.setVisible(false));
+        this.getEquippedWeapon().flatMap(GameObject::getDrawable).ifPresent(t -> t.setVisible(false));
+    }
+
+    /**
      * @return if the event jump is true
      */
     protected boolean isJumping() {
