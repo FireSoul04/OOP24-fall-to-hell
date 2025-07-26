@@ -17,8 +17,8 @@ import java.util.Objects;
  */
 public class LavaBlock extends BaseCollidableBlock {
 
-    private static final long TIME = 1500;
-    private static final double DAMAGE = 2;
+    private static final long TIME = 500;
+    private static final double DAMAGE = 0.2;
 
     /**
      * Initialization of the LavaBlock class.
@@ -43,11 +43,12 @@ public class LavaBlock extends BaseCollidableBlock {
             final String id = String.valueOf(Objects.hash(this, entity));
             final String name = "LavaBlock" + id;
             final TimerManager timerManager = this.getLevel().getTimerManager();
-            if (timerManager.searchTimer(name)) {
-                timerManager.addTimer(name, new CustomTimerImpl(TIME, () -> {
-                    entity.getStats().subLife(DAMAGE);
-                    timerManager.restartTimer(name);
-                }));
+            if (!timerManager.searchTimer(name)) {
+                timerManager.addTimer(name, new CustomTimerImpl(TIME, () ->
+                        entity.setDamagedLife(DAMAGE)
+                ));
+            } else {
+                timerManager.restartTimer(name);
             }
         }
     }
