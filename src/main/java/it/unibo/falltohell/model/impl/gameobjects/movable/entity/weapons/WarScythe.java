@@ -1,7 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
 import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
@@ -28,6 +27,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class WarScythe extends BaseMeleeWeapon {
 
+    private static final double MULTIPLIER = 2.5;
+
     /**
      * <p>
      * Constructs a {@code WarScythe} with a default collider.
@@ -36,8 +37,8 @@ public class WarScythe extends BaseMeleeWeapon {
      * @param lv level in whitch the weapon is
      * @param owner character that owns the weapon
      */
-    public WarScythe(final Level lv, final Character owner) {
-        super(lv, owner.getPosition(), new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), owner, "warscythe.png");
+    public WarScythe(final Character owner, final long cooldownTime) {
+        super(owner, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), MULTIPLIER, cooldownTime, "warscythe.png");
     }
 
     @Override

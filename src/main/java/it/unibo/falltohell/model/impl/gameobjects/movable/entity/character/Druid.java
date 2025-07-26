@@ -36,15 +36,15 @@ import it.unibo.falltohell.util.Vector2;
 public class Druid extends BaseCharacter {
 
     private static final int END_KILL = 5;
-    private static final int KILL_RESET = 10_000;
+    private static final long KILL_RESET = 10_000;
     private static final double CREATION_COST = 30;
     private static final double ATTACK_COST = 10;
+    private static final long ATTACK_COOLDOWN = 2500;
     private final CharacterStatistics stats;
     private final AbilityFactoryImpl factory = new AbilityFactoryImpl();
     private final StatisticPassiveAbility sPa;
     private final GameEventManager<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
-    private final WarScythe weapon = new WarScythe(super.getLevel(), this);
     private int kills;
     private int passiveCycles = 1;
     private boolean sAactive;
@@ -61,7 +61,7 @@ public class Druid extends BaseCharacter {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
                 new Dimensions(10, 10), 10, 10), "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
-        this.equipWeapon(new WarScythe(level, this));
+        this.equipWeapon(new WarScythe(this, ATTACK_COOLDOWN));
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
             final double[][] lifeManaGains = {
                     {}, // 0 kill
@@ -151,7 +151,7 @@ public class Druid extends BaseCharacter {
      */
     private void handleAttackInput() {
         if (this.input.checkCondition("NormalAttack")) {
-            this.weapon.attack();
+            super.attack();
         }
         if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
             this.sAactive = true;
