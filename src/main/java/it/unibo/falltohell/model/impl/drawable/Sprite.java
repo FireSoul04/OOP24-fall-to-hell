@@ -77,7 +77,8 @@ public class Sprite implements Drawable {
      */
     @Override
     public Vector2 getPosition() {
-        return this.gameObject.getPosition().add(this.offset);
+        final double mirrorOffset = this.mirrored ? -1.0 : 1.0;
+        return this.gameObject.getPosition().add(new Vector2(this.offset.x() * mirrorOffset, this.offset.y()));
     }
 
     /**
