@@ -148,11 +148,11 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
                 this.currentJumpFrames = 0;
                 this.onGround = true;
                 this.gravity = Vector2.zero();
-                this.moveUpToFloor(other);
+                this.pushUpToFloor(other);
             } else if (direction.equals(Vector2.up())) {
                 this.currentJumpFrames = 0;
             } else {
-                this.moveOut(other);
+                this.pushFarFromBlock(other);
             }
         }
         if (other instanceof Interactable interactable) {
@@ -175,10 +175,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     }
 
     /**
-     * Move the character up until it reaches the floor's height.
+     * Push up the character until it reaches the floor's height.
      * @param other block colliding with
      */
-    private void moveUpToFloor(final GameObject other) {
+    private void pushUpToFloor(final GameObject other) {
         final double distance = this.getPosition().subtract(other.getPosition()).y();
         final double thisHeight = this.getCollider().orElseThrow().size().height();
         final double otherHeight = other.getCollider().orElseThrow().size().height();
@@ -192,11 +192,11 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     }
 
     /**
-     * Move the character left or right based on the direction facing to prevent going
-     * through walls.
+     * Push the character left or right based on the direction facing to prevent going
+     * through blocks.
      * @param other block colliding with
      */
-    private void moveOut(final GameObject other) {
+    private void pushFarFromBlock(final GameObject other) {
         final double distance = this.getPosition().subtract(other.getPosition()).x();
         final double thisWidth = this.getCollider().orElseThrow().size().width();
         final double otherWidth = other.getCollider().orElseThrow().size().width();
