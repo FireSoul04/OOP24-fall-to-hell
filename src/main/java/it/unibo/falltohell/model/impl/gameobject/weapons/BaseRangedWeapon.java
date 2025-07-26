@@ -34,8 +34,8 @@ public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
      * @param fileName     is the name of the image file associated to the ranged
      *                     weapon
      */
-    protected BaseRangedWeapon(final Character owner,final Optional<Collider> collider, final int maxAmmo, final long cooldownTime, final String fileName) {
-        this(owner, collider, maxAmmo, cooldownTime, fileName, Vector2.zero());
+    protected BaseRangedWeapon(final Character owner, final int maxAmmo, final long cooldownTime, final String fileName) {
+        this(owner, maxAmmo, cooldownTime, fileName, Vector2.zero());
     }
 
     /**
@@ -47,8 +47,8 @@ public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
      *                     weapon
      * @param offset       where to set the position based on the owner's position
      */
-    protected BaseRangedWeapon(final Character owner,final Optional<Collider> collider, final int maxAmmo, final long cooldownTime, final String fileName, final Vector2 offset) {
-        super(owner, collider, cooldownTime, fileName, offset);
+    protected BaseRangedWeapon(final Character owner, final int maxAmmo, final long cooldownTime, final String fileName, final Vector2 offset) {
+        super(owner, Optional.empty(), cooldownTime, fileName, offset);
         this.maxAmmo = maxAmmo;
         this.ammo = maxAmmo;
         this.shotProjectile = Optional.empty();
@@ -146,11 +146,5 @@ public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
      * Creates a projectile. By default, returns a ProjectileImpl.
      */
     protected abstract Projectile createProjectile(final Level level, final Vector2 position);
-    /**
-     * Hook for subclasses: called after a projectile is shot.
-     *
-     * @param projectile the projectile that was shot
-     */
-    
 
 }
