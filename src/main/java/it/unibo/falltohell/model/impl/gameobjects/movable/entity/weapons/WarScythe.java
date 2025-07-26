@@ -1,6 +1,10 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
+import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.Enemy;
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -29,12 +33,19 @@ public class WarScythe extends BaseMeleeWeapon {
      * Constructs a {@code WarScythe} with a default collider.
      * </p>
      *
-     * <p>
-     * The collider has origin at (0, 0) and dimensions (10, 10).
-     * </p>
+     * @param lv level in whitch the weapon is
+     * @param owner character that owns the weapon
      */
-    public WarScythe(final Level lv, final Vector2 position) {
-        super(lv, position, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), "warscythe.png");
+    public WarScythe(final Level lv, final Character owner) {
+        super(lv, owner.getPosition(), new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), owner, "warscythe.png");
+    }
+
+    @Override
+    public void onCollision(final GameObject other, final Vector2 direction){
+        if(other instanceof Enemy){
+            final var damage = ((CharacterStatistics)super.getOwner().getStats()).getAttack();
+            ((Enemy)other).setDamagedLife(damage);
+        }
     }
 
 }
