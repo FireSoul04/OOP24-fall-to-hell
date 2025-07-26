@@ -129,7 +129,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         super.onCollision(other, direction);
-        if (other instanceof BaseCollidableBlock && direction.equals(Vector2.down())) {
+        if (other instanceof BaseCollidableBlock && direction.y() != 0.0) {
             this.currentJumpFrames = 0;
         }
         if (other instanceof Interactable interactable) {
