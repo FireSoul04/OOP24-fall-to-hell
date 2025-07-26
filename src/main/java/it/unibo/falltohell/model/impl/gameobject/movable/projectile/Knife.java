@@ -1,9 +1,12 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.projectile;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
+import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
+import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -20,7 +23,9 @@ public class Knife extends ProjectileImpl {
 
     private final Set<Class<? extends GameObject>> ignoreCollisionsObjects = Set.of(
         Character.class,
-        Knife.class
+        Weapon.class,
+        Projectile.class,
+        BaseEntrance.class
     );
 
     /**
@@ -42,7 +47,7 @@ public class Knife extends ProjectileImpl {
     public void onCollision(final GameObject other, final Vector2 direction) {
         final boolean isOtherCollidable = ignoreCollisionsObjects.stream()
             .noneMatch(t -> t.isInstance(other));
-        if (isOtherCollidable && other.isSolid() && !this.isHit()) {
+        if (isOtherCollidable && !this.isHit()) {
             this.setHit(true);
             this.onProjectileHit(other);
         }
