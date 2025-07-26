@@ -8,7 +8,11 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.weapons.Weapon;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
+import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Priority;
+
+import java.util.Optional;
 
 public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
 
@@ -16,9 +20,9 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
     private final long cooldownTime;
     private boolean attacking;
 
-    public BaseWeapon(final Character owner, final Collider collider,
+    public BaseWeapon(final Character owner, final Optional<Collider> collider,
                       final long cooldownTime, final String fileName) {
-        super(owner.getLevel(), owner.getPosition(), collider);
+        super(owner.getLevel(), owner.getPosition(), collider.orElse(new BoxCollider(new Dimensions(0, 0))));
         this.owner = owner;
         this.cooldownTime = cooldownTime;
         this.attacking = false;
