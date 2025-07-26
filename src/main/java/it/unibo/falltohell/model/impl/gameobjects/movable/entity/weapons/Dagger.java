@@ -20,6 +20,9 @@ public class Dagger extends BaseMeleeWeapon {
         super(lv, position, new BoxCollider(SIZE), owner, "dagger.png");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void attack() {
         super.attack();
