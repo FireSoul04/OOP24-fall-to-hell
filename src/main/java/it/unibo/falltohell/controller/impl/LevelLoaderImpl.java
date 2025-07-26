@@ -15,7 +15,7 @@ import it.unibo.falltohell.model.impl.gameobjects.block.BaseNonCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobjects.block.CollidableBlockFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.entrance.SpringsEntrance;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.ArrayList;

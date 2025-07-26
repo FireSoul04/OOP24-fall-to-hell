@@ -6,7 +6,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.Entity;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Statistics;
 import it.unibo.falltohell.model.impl.gameobjects.MovableImpl;
 import it.unibo.falltohell.model.impl.gameobjects.block.BaseCollidableBlock;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
 /**

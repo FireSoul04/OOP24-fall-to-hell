@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 
 public class Dagger extends BaseMeleeWeapon {

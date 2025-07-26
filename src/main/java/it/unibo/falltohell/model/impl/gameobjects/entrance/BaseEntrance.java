@@ -2,10 +2,9 @@ package it.unibo.falltohell.model.impl.gameobjects.entrance;
 
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.AggroListener;
-import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.EnemyFactoryImpl;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 

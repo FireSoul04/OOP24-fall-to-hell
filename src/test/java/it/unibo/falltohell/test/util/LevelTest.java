@@ -12,7 +12,7 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.Charac
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.impl.GameEventManager;
 import it.unibo.falltohell.model.impl.TimerManagerImpl;
-import it.unibo.falltohell.model.impl.physics.colliders.AABBCollisionsManager;
+import it.unibo.falltohell.model.impl.physics.AABBCollisionsManager;
 
 import java.util.*;
 import java.util.stream.Stream;

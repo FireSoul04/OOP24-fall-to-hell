@@ -1,6 +1,5 @@
 package it.unibo.falltohell;
 
-import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
@@ -10,7 +9,7 @@ import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.test.util.MerchantTest;
 import it.unibo.falltohell.util.Vector2;

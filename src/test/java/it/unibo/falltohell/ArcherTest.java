@@ -13,7 +13,7 @@ import it.unibo.falltohell.model.impl.LevelImpl;
 import it.unibo.falltohell.model.impl.abilities.active.ReturnArrowAbility;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Archer;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 /**

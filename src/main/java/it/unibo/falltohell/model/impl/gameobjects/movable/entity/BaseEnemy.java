@@ -5,7 +5,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.EntityImpl;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.enemy.ManagerIngage;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.builder.BuffBuilderImpl;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 
 import java.util.Comparator;
 import java.util.List;

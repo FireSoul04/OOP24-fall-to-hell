@@ -15,7 +15,7 @@ import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.AttackSpeedBuff;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.SpeedBuff;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.ManaBuff;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;

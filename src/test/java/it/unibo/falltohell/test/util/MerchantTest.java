@@ -1,7 +1,5 @@
 package it.unibo.falltohell.test.util;
 
-import it.unibo.falltohell.controller.api.FileController;
-import it.unibo.falltohell.controller.impl.FileControllerImpl;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.Item;
 import it.unibo.falltohell.model.api.gameobjects.Merchant;
@@ -12,7 +10,7 @@ import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobjects.interactable.Potion;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.statistics.buff.*;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 

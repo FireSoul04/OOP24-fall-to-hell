@@ -1,21 +1,13 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons;
 
-import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.weapons.Weapon;
 import it.unibo.falltohell.model.api.gameobjects.movable.Projectile;
 import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.GameObjectImpl;
-import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ProjectileImpl;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
-import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 
 import java.util.Optional;
-
-import it.unibo.falltohell.model.api.CustomTimer;
 
 /**
  * An abstract base class for ranged weapons that can shoot projectiles with a

@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.impl.physics.colliders;
+package it.unibo.falltohell.model.impl.physics;
 
 import it.unibo.falltohell.util.Vector2;
 

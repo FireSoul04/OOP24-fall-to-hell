@@ -14,8 +14,6 @@ import java.util.Optional;
 import java.util.ArrayList;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobjects.movable.projectile.ReturnableArrow;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
-import java.util.Optional;
 
 /**
  * Represents an Archer character in the game.

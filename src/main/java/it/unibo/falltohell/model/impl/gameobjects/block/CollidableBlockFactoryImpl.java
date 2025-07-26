@@ -2,7 +2,7 @@ package it.unibo.falltohell.model.impl.gameobjects.block;
 
 import it.unibo.falltohell.model.api.Level;
 import it.unibo.falltohell.model.api.gameobjects.CollidableBlockFactory;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
 /**

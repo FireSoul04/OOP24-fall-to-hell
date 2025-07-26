@@ -1,10 +1,8 @@
-package it.unibo.falltohell.model.impl.physics.colliders;
+package it.unibo.falltohell.model.impl.physics;
 
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 import it.unibo.falltohell.model.api.GameObject;
-import it.unibo.falltohell.model.impl.gameobjects.entrance.BaseEntrance;
-import it.unibo.falltohell.model.impl.gameobjects.entrance.ShopEntrance;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;

@@ -18,7 +18,7 @@ import it.unibo.falltohell.model.api.TimerManager;
 import it.unibo.falltohell.model.api.gameobjects.Movable;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
-import it.unibo.falltohell.model.impl.physics.colliders.AABBCollisionsManager;
+import it.unibo.falltohell.model.impl.physics.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.physics.CollisionsManager;
 
 /**

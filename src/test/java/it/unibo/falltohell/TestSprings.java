@@ -14,7 +14,7 @@ import it.unibo.falltohell.model.impl.gameobjects.entrance.SpringsEntrance;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobjects.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.api.gameobjects.movable.entity.Character.CharacterID;
-import it.unibo.falltohell.model.impl.physics.colliders.BoxCollider;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.test.util.LevelTest;
 import org.junit.jupiter.api.BeforeEach;
