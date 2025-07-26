@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.ability.active;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.gameobject.Blast;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
@@ -33,11 +34,14 @@ public class BlastAbility implements SpecialActiveAbility {
      */
     @Override
     public void activate() {
-        final GameObject blast = new Blast(this.caster);
-        final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
-        statistics.subMana(COST_MANA_BLAST);
-        final String timerName = "blast_timer";
         final Level level = this.caster.getLevel();
-        level.getTimerManager().addTimer(timerName, new CustomTimerImpl(DURATION, () -> level.removeGameObject(blast)));
+        final TimerManager timerManager = level.getTimerManager();
+        final String timerName = "blast_timer";
+        if (!timerManager.searchTimer(timerName)) {
+            final GameObject blast = new Blast(this.caster);
+            final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
+            statistics.subMana(COST_MANA_BLAST);
+            timerManager.addTimer(timerName, new CustomTimerImpl(DURATION, () -> level.removeGameObject(blast)));
+        }
     }
 }

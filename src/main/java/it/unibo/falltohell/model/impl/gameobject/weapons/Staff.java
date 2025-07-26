@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.gameobject.weapons;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Vector2;
 
 /**
  * Class that represents a caster's staff.
@@ -11,7 +12,8 @@ import it.unibo.falltohell.util.Dimensions;
 public class Staff extends BaseMeleeWeapon {
 
     private static final double DAMAGE_MULTIPLIER = 0.3;
-    private static final Dimensions DIMENSIONS = new Dimensions(3, 10);
+    private static final Dimensions DIMENSIONS = new Dimensions(20.0, 16.0);
+    private static final Vector2 OFFSET = new Vector2(8.0,8.0);
     private static final long COOLDOWN = 600;
 
     /**
@@ -20,6 +22,6 @@ public class Staff extends BaseMeleeWeapon {
      * @param caster   associated to the staff
      */
     public Staff(final Caster caster) {
-        super(caster, new BoxCollider(DIMENSIONS), DAMAGE_MULTIPLIER, COOLDOWN ,"staff.png");
+        super(caster, new BoxCollider(DIMENSIONS), DAMAGE_MULTIPLIER, COOLDOWN ,"staff.png", OFFSET);
     }
 }
