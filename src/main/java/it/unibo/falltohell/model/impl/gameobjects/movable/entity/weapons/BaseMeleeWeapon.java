@@ -7,6 +7,8 @@ import it.unibo.falltohell.model.api.gameobjects.movable.entity.statistic.Charac
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
 
+import java.util.Optional;
+
 /**
  * Weapon that attack on close range.
  * This weapon uses a collider to check for any hits.
@@ -26,7 +28,7 @@ public abstract class BaseMeleeWeapon extends BaseWeapon {
 	 */
 	public BaseMeleeWeapon(final Character owner, final Collider collider,
                            final double damageMultiplier, final long cooldownTime, final String fileName) {
-		super(owner, collider, cooldownTime, fileName);
+		super(owner, Optional.of(collider), cooldownTime, fileName);
         this.damageMultiplier = damageMultiplier;
 	}
 
