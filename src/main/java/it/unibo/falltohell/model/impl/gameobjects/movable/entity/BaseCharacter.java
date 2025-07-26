@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobjects.movable.entity;
 
+import it.unibo.falltohell.model.api.gameobjects.movable.entity.weapons.Weapon;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.GameObject;
 import it.unibo.falltohell.model.api.Level;
@@ -35,6 +36,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private double jumpingSpeed;
     private boolean onGround;
     private boolean jumping;
+    private Optional<Weapon> equippedWeapon;
     private Optional<Interactable> interactingObject;
 
     /**
@@ -57,6 +59,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.stats = stats;
         this.input = level.getGameEventManager();
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
+        this.equippedWeapon = Optional.empty();
         this.interactingObject = Optional.empty();
         this.initDrawable(Priority.LOW, fileName);
     }
@@ -70,8 +73,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.jump(deltaTime);
         this.applyGravity(deltaTime);
         this.interact();
+        this.attack();
         this.setPosition(this.getPosition().add(this.velocity));
         this.velocity = Vector2.zero();
+        this.equippedWeapon.ifPresent(t -> t.setPosition(this.getPosition()));
     }
 
     /**
@@ -216,6 +221,34 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         if (this.input.checkCondition("Interact")) {
             this.interactingObject.ifPresent(i -> i.interact(this));
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void attack() {
+        this.equippedWeapon.ifPresent(w -> {
+            if (this.input.checkCondition("NormalAttack")) {
+                w.attack();
+            }
+        });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Weapon> getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipWeapon(final Weapon weapon) {
+        this.equippedWeapon = Optional.of(weapon);
     }
 
     /**
