@@ -38,11 +38,6 @@ public class Bow extends BaseRangedWeapon {
      *
      * @param level    the level in which the arrow will be spawned
      * @param position the initial position of the arrow
-     * @param speedX   the horizontal speed of the arrow
-     * @param speedY   the vertical speed of the arrow
-     * @param width    the width of the arrow
-     * @param height   the height of the arrow
-     * @param collider the collider that defines the arrow's shape
      * @return a new {@link ReturnableArrow} instance
      */
     @Override
