@@ -3,7 +3,9 @@ package it.unibo.falltohell.model.impl.manager;
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.physics.Collision;
+import it.unibo.falltohell.util.Dimensions;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
@@ -38,13 +40,15 @@ public abstract class AbstractCollisionsManager implements CollisionsManager {
             .filter(t -> t instanceof Movable)
             .toList();
         for (final GameObject g1 : movables) {
+            // Checks collisions only for objects closer than twice the major dimension of the object's collider
+            final Dimensions c1 = g1.getCollider().orElseThrow().size();
+            final double range = Math.max(c1.width(), c1.height());
             final List<GameObject> closeGameObjects = collidableObjects.stream()
-                .filter(g2 -> g1.getPosition().distance(g2.getPosition()) < GameObject.TILE_SIZE * 5)
+                .filter(g2 -> !g1.equals(g2))
+                .filter(g2 -> g1.getPosition().distance(g2.getPosition()) < range * 2)
                 .toList();
             for (final GameObject g2 : closeGameObjects) {
-                if (!g1.equals(g2)) {
-                    this.checkCollision(g1, g2);
-                }
+                this.checkCollision(g1, g2);
             }
         }
     }
