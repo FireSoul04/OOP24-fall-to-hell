@@ -1,12 +1,9 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.projectile;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
-import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
-import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.api.level.Level;
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
-import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
+import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -21,11 +18,9 @@ public class Knife extends ProjectileImpl {
     private static final double DAMAGE = 5.0;
     private static final Dimensions DIMENSIONS = new Dimensions(5, 2);
 
-    private final Set<Class<? extends GameObject>> ignoreCollisionsObjects = Set.of(
-        Character.class,
-        Weapon.class,
-        Projectile.class,
-        BaseEntrance.class
+    private final Set<Class<? extends GameObject>> detectCollisionsObjects = Set.of(
+        Enemy.class,
+        BaseCollidableBlock.class
     );
 
     /**
@@ -45,8 +40,8 @@ public class Knife extends ProjectileImpl {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        final boolean isOtherCollidable = ignoreCollisionsObjects.stream()
-            .noneMatch(t -> t.isInstance(other));
+        final boolean isOtherCollidable = detectCollisionsObjects.stream()
+            .anyMatch(t -> t.isInstance(other));
         if (isOtherCollidable && !this.isHit()) {
             this.setHit(true);
             this.onProjectileHit(other);

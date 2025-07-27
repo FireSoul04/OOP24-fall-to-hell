@@ -23,7 +23,7 @@ public class SpeedBuff extends BaseBuff {
      */
     public SpeedBuff(final CharacterStatistics characterStatistics, final double multiplier) {
         super(characterStatistics, multiplier);
-        this.buffAmount = super.getCharacterStatistics().getInitialSpeed().multiply(multiplier);
+        this.buffAmount = this.getCharacterStatistics().getInitialSpeed().multiply(multiplier);
     }
 
     /**
@@ -31,7 +31,7 @@ public class SpeedBuff extends BaseBuff {
      */
     @Override
     public void apply() {
-        super.getCharacterStatistics().addSpeed(buffAmount);
+        this.getCharacterStatistics().addSpeed(buffAmount);
     }
 
     /**
@@ -39,6 +39,11 @@ public class SpeedBuff extends BaseBuff {
      */
     @Override
     public void remove() {
-        super.getCharacterStatistics().subSpeed(buffAmount);
+        final CharacterStatistics statistics = this.getCharacterStatistics();
+        if (statistics.getInitialSpeed().magnitude() < statistics.getSpeed().magnitude()) {
+            statistics.subSpeed(buffAmount);
+        } else {
+            statistics.setSpeed(statistics.getInitialSpeed());
+        }
     }
 }
