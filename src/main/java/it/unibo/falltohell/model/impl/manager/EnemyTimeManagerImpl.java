@@ -51,7 +51,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
         });
 
         level.getTimerManager().addTimer(name, timer);
-        registerTimer(enemy, name);
+        this.registerTimer(enemy, name);
     }
 
     /**
@@ -62,7 +62,6 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      */
     private String getNextNoAggroName(final Enemy enemy) {
         final String name = "NoAggro_" + enemy.getClass().getSimpleName() + "_" + countNoAggro++;
-        registerTimer(enemy, name);
         return name;
     }
 
@@ -139,7 +138,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
                 }
             }
         }
-        throw new IllegalStateException("No NoAggro timer found for enemy: " + enemy);
+        throw new IllegalStateException("No attack timer found for enemy: " + enemy);
     }
 
     /**
