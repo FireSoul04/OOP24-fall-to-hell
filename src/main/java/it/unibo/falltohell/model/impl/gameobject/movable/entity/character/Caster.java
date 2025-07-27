@@ -88,7 +88,7 @@ public class Caster extends BaseCharacter {
      */
     @Override
     public void attack() {
-        if (this.subManaIfEnough(AMOUNT_MANA_NORMAL_ATTACK)) {
+        if (this.hasEnoughMana(AMOUNT_MANA_NORMAL_ATTACK)) {
             this.changeEquippedWeapon(this.tome);
         } else {
             this.changeEquippedWeapon(this.staff);
@@ -121,5 +121,12 @@ public class Caster extends BaseCharacter {
         } else if (this.getLevel().getGameEventManager().checkCondition("SpecialAbility")) {
             this.healing.activate();
         }
+    }
+
+    /**
+     * @return the mana needed to make a magic normal attack
+     */
+    public double getAmountManaNormalAttack() {
+        return AMOUNT_MANA_NORMAL_ATTACK;
     }
 }
