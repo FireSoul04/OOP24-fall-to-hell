@@ -1,8 +1,10 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
 import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.manager.GameEventManager;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.ability.active.ReturnArrowAbility;
 import it.unibo.falltohell.model.impl.ability.passive.StatisticPassiveAbilityImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.weapons.BaseRangedWeapon;
@@ -10,7 +12,10 @@ import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import it.unibo.falltohell.model.impl.gameobject.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableArrow;
 
@@ -26,15 +31,16 @@ import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableAr
 public class Archer extends BaseCharacter {
 
     private final Bow bow;
-    private final List<Projectile> shotedArrows = new ArrayList<>();
+    private final Set<Projectile> shotedArrows = new HashSet<>();
     private static final double LIFE = 0;
     private static final double ATTACK = 0;
     private static final double ATTACK_SPEED = 0;
     private static final Vector2 SPEED = new Vector2(3.0, 3.0);
     private static final double MANA = 0;
     private static final long COOLDOWN = 500;
-    private static final Vector2 PROJECTILE_SPEED = new Vector2(3.5,3.5);
+    private static final Vector2 PROJECTILE_SPEED = new Vector2(5.0,0.0);
     private final StatisticPassiveAbilityImpl bonusDamage;
+    private final ReturnArrowAbility returnAbility;
     private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
             .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,20), MANA, ATTACK_SPEED);
 
@@ -55,6 +61,9 @@ public class Archer extends BaseCharacter {
             final double bonusPerArrow = 0.2; 
             ch.getStats().setAttack(baseDamage + baseDamage * arrowsInFlight * bonusPerArrow);
         });
+        this.equipWeapon(bow);
+        this.returnAbility = new ReturnArrowAbility(this);
+        
 
     }
 
@@ -65,12 +74,10 @@ public class Archer extends BaseCharacter {
      * @param speed     the speed of the arrow
      * @param collider  the collider for the arrow
      */
-    public void shootArrow(final Vector2 direction, final double speed, final Collider collider) {
-        bow.attack();
-        Projectile arrow = bow.getShotProjectile().get();
-        if (arrow != null) {
-            shotedArrows.add(arrow);
-        }
+    public void attack() {
+        super.attack();
+        bow.getShotProjectile().ifPresent(shotedArrows :: add);
+        System.out.println(shotedArrows.size());
         bonusDamage.carryOut();
     }
 
@@ -86,7 +93,7 @@ public class Archer extends BaseCharacter {
     /**
      * @return the list of arrows shot by this archer
      */
-    public List<Projectile> getShotedArrows() {
+    public Set<Projectile> getShotedArrows() {
         return this.shotedArrows;
     }
 
@@ -97,8 +104,7 @@ public class Archer extends BaseCharacter {
     public CharacterID getCharacterID() {
         return CharacterID.ARCHER;
     }
-
-
+    
     /**
      * Returns an arrow to the archer's inventory.
      * This method is called when an arrow returns after being shot.
@@ -109,6 +115,14 @@ public class Archer extends BaseCharacter {
         this.bow.reload(1);
         this.shotedArrows.remove(arrow);
         this.bonusDamage.carryOut();
+    }
+    @Override
+    public void update(double deltatime){
+        super.update(deltatime);
+        if(this.getLevel().getGameEventManager().checkCondition("ActiveAbility")){
+            this.returnAbility.activate();
+        }
+
     }
 
 }

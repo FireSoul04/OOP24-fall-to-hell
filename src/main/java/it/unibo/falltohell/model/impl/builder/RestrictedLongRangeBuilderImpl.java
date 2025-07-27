@@ -60,6 +60,6 @@ public class RestrictedLongRangeBuilderImpl extends LongRangeStatBuilderImpl<Res
      */
     @Override
     protected RestrictedLongRangeBuilderImpl self() {
-        return (RestrictedLongRangeBuilderImpl) this;
+        return this;
     }
 }

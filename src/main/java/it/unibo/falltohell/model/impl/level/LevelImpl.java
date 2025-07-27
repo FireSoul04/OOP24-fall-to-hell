@@ -48,9 +48,10 @@ public class LevelImpl implements Level {
     private GameEventManagerImpl<String> eventManager;
     private DrawableRenderableHandler drh;
     private Optional<GameData> gameData;
-
+    
     private final Label pointsLabel;
     private final Label statsLabel;
+    private final Label attackLabel;
 
     /**
      * Constructs a new LevelImpl with a given list of game objects.
@@ -73,6 +74,7 @@ public class LevelImpl implements Level {
 
         this.pointsLabel = new Label("Points: 0", Vector2.zero(), true);
         this.statsLabel = new Label("HP: 0", Vector2.down().multiply(10), true);
+        this.attackLabel = new Label("Attack: 0", Vector2.down().multiply(15), true);
     }
 
     /**
@@ -131,6 +133,7 @@ public class LevelImpl implements Level {
             this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime);
             this.pointsLabel.setText("Points: " + d.getPoints());
             this.statsLabel.setText("HP: " + d.getCurrentCharacter().getStats().getLife());
+            this.attackLabel.setText("Attack: " + d.getCurrentCharacter().getStats().getAttack());
         });
         final Stream<GameObject> gameObjectStream = this.gameObjects.stream().filter(t -> !(t instanceof Character));
         for (final GameObject gameObject : gameObjectStream.toList()) {

@@ -3,10 +3,14 @@ package it.unibo.falltohell.model.impl.gameobject.movable.projectile;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
+
+import java.util.Set;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
 
 /**
@@ -22,6 +26,11 @@ import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
  */
 public class ProjectileImpl extends MovableImpl implements Projectile {
     private boolean hit;
+    private final Set<Class<? extends GameObject>> detectCollisionsObjects = Set.of(
+        Enemy.class,
+        BaseCollidableBlock.class
+    );
+    
 
     /**
      * Creates a projectile with a certain speed.
@@ -61,7 +70,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
         if (!hit) {
             super.update(deltaTime);
             this.onUpdate(deltaTime);
-        } else if (isHit()) {
+        } else {
             this.getLevel().removeGameObject(this);
         }
     }
@@ -82,7 +91,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other != this && other.isSolid() && !hit) {
+        if (detectCollisionsObjects.stream().anyMatch(t -> t.isInstance(other))) {
             this.hit = true;
             this.onProjectileHit(other);
         }

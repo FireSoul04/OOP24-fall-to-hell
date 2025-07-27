@@ -94,7 +94,7 @@ public interface StatisticsFactory {
          * @return a new instance of {@link LongRangeEnemyStatistics}
          */
         LongRangeEnemyStatistics createLongRangeEnemyStatistic(double life, double attack, Vector2 speed,
-                                                               Dimensions dimension, Vector2 position, it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character character, long points,
+                                                               Dimensions dimension, Vector2 position, Character character, long points,
                                                                ParamBuilderOptional optionalParams, double projectileAttack, Vector2 projectileVelocity,
                                                                Dimensions projectileDimensions, int timeAttack);
 
@@ -115,7 +115,7 @@ public interface StatisticsFactory {
          * @return a new instance of {@link RestrictedBaseEnemyStatistics}
          */
         RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed,
-                                                                           Dimensions dimension, Vector2 position, it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character character, long points,
+                                                                           Dimensions dimension, Vector2 position, Character character, long points,
                                                                            ParamBuilderOptional optionalParams, double distance);
 
         /**
