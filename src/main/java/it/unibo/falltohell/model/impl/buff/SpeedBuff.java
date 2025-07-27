@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.buff;
 
-import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.api.statistic.Statistics;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -15,15 +15,15 @@ public class SpeedBuff extends BaseBuff {
     /**
      * Initialization of the SpeedBuff class.
      *
-     * @param characterStatistics is the set of statistics associated with the
+     * @param statistics is the set of statistics associated with the
      *                            character
      * @param multiplier          is the value used to compute the buff amount that
      *                            should be
-     *                            between 0 and 1
+     *                            between -1 and 1
      */
-    public SpeedBuff(final CharacterStatistics characterStatistics, final double multiplier) {
-        super(characterStatistics, multiplier);
-        this.buffAmount = this.getCharacterStatistics().getInitialSpeed().multiply(multiplier);
+    public SpeedBuff(final Statistics statistics, final double multiplier) {
+        super(statistics, multiplier);
+        this.buffAmount = statistics.getInitialSpeed().multiply(multiplier);
     }
 
     /**
@@ -39,7 +39,7 @@ public class SpeedBuff extends BaseBuff {
      */
     @Override
     public void remove() {
-        final CharacterStatistics statistics = this.getCharacterStatistics();
+        final Statistics statistics = this.getCharacterStatistics();
         if (statistics.getInitialSpeed().magnitude() < statistics.getSpeed().magnitude()) {
             statistics.subSpeed(buffAmount);
         } else {
