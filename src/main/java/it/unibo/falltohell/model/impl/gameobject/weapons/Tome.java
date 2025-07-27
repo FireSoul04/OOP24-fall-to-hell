@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobject.weapons;
 
-import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Fireball;
@@ -20,7 +19,7 @@ public class Tome extends BaseRangedWeapon{
     /**
      * Constructs a tome which can evoke fireballs with a certain cooldown time.
      *
-     * @param caster       is the caster user of the tome
+     * @param caster is the caster user of the tome
      */
     public Tome(Caster caster) {
         super(caster, MAX_AMMO, COOLDOWN, "tome.png", OFFSET);
@@ -34,5 +33,19 @@ public class Tome extends BaseRangedWeapon{
     protected Projectile createProjectile() {
         final Vector2 direction = this.caster.isFacingRight() ? Vector2.right() : Vector2.left();
         return new Fireball(direction, this.caster);
+    }
+
+    /**
+     * {@inheritDoc}
+     * If there is no fireball to shoot it will be reloaded
+     * and mana will be subtracted.
+     */
+    @Override
+    protected void onAttack() {
+        if (!this.canShoot()) {
+            this.reload();
+        }
+        this.caster.subMana(this.caster.getAmountManaNormalAttack());
+        super.onAttack();
     }
 }
