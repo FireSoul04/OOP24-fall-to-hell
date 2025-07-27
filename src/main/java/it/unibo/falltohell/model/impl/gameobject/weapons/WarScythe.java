@@ -35,19 +35,10 @@ public class WarScythe extends BaseMeleeWeapon {
      * Constructs a {@code WarScythe} with a default collider.
      * </p>
      *
-     * @param lv level in whitch the weapon is
      * @param owner character that owns the weapon
+     * @param cooldownTime the time in nanoseconds between hits
      */
     public WarScythe(final Character owner, final long cooldownTime) {
         super(owner, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), MULTIPLIER, cooldownTime, "warscythe.png", OFFSET);
     }
-
-    @Override
-    public void onCollision(final GameObject other, final Vector2 direction){
-        if(other instanceof Enemy){
-            final var damage = ((CharacterStatistics)super.getOwner().getStats()).getAttack();
-            ((Enemy)other).setDamagedLife(damage);
-        }
-    }
-
 }
