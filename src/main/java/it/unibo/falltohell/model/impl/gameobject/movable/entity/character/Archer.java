@@ -33,7 +33,7 @@ public class Archer extends BaseCharacter {
     private final Bow bow;
     private final Set<Projectile> shotedArrows = new HashSet<>();
     private static final double LIFE = 0;
-    private static final double ATTACK = 0;
+    private static final double ATTACK = 10;
     private static final double ATTACK_SPEED = 0;
     private static final Vector2 SPEED = new Vector2(3.0, 3.0);
     private static final double MANA = 0;
