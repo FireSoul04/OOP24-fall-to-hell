@@ -52,13 +52,19 @@ public class DummyEnemyTest extends BaseEnemy {
 
     }
 
+    /**
+     * Does nothing.
+     */
     @Override
-    protected void patrol(Vector2 currentPos, Vector2 speed) {
+    protected void patrol(final Vector2 currentPos, final Vector2 speed) {
 
     }
 
+    /**
+     * Does nothing.
+     */
     @Override
-    protected void chase(Vector2 charaPos, Vector2 currentPos, Vector2 speed) {
+    protected void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed) {
        
     }
 }
