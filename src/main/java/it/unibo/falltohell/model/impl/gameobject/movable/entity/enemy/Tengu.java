@@ -120,7 +120,7 @@ public class Tengu extends BaseEnemy {
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
                     this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
-                    "base_enemy_projectile");
+                    "base_enemy_projectile.png");
         }
     }
 
