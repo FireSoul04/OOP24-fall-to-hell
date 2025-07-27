@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
+import it.unibo.falltohell.model.impl.gameobject.Blast;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
@@ -27,7 +28,8 @@ public class Fireball extends ProjectileImpl{
             Character.class,
             Weapon.class,
             Projectile.class,
-            BaseEntrance.class
+            BaseEntrance.class,
+            Blast.class
     );
 
     /**
