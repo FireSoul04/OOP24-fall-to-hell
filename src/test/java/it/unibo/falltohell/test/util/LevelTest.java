@@ -11,6 +11,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
+import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
@@ -160,8 +161,13 @@ public class LevelTest implements Level {
     public Map<Character.CharacterID, Character> getCharacters() {
         return this.characters;
     }
-    
+
     public void setLevelSize(Vector2 size){
-        
+
+    }
+
+    @Override
+    public StaticCollisionManager getJumpCollisionManager() {
+        return null;
     }
 }
