@@ -44,11 +44,10 @@ public class LavaBlock extends BaseCollidableBlock {
             final String name = "LavaBlock" + id;
             final TimerManager timerManager = this.getLevel().getTimerManager();
             if (!timerManager.searchTimer(name)) {
-                timerManager.addTimer(name, new CustomTimerImpl(TIME, () ->
-                        entity.setDamagedLife(DAMAGE)
-                ));
-            } else {
-                timerManager.restartTimer(name);
+                timerManager.addTimer(name, new CustomTimerImpl(TIME, () -> {
+                    entity.setDamagedLife(DAMAGE);
+                    timerManager.restartTimer(name);
+                }));
             }
         }
     }
