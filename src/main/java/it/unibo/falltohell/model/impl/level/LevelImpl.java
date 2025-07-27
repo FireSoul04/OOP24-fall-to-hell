@@ -19,7 +19,10 @@ import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.impl.drawable.Label;
+import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
+import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
+import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
@@ -44,6 +47,7 @@ public class LevelImpl implements Level {
     private final GameCamera camera;
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
+    private final StaticCollisionManager jumpCollisionManager;
     private Map<CharacterID, Character> characters;
     private GameEventManagerImpl<String> eventManager;
     private DrawableRenderableHandler drh;
@@ -70,6 +74,13 @@ public class LevelImpl implements Level {
         this.characters = new EnumMap<>(CharacterID.class);
         this.drh = new DrawableRenderableHandlerImpl();
         this.gameData = Optional.empty();
+        this.jumpCollisionManager = new StaticCollisionManager();
+
+        for (final GameObject go : this.gameObjects) {
+            if (go instanceof BaseCollidableBlock || go instanceof BaseEntrance) {
+                this.jumpCollisionManager.addObstacle(go);
+            }
+        }
 
         this.pointsLabel = new Label("Points: 0", Vector2.zero(), true);
         this.statsLabel = new Label("HP: 0", Vector2.down().multiply(10), true);
@@ -95,6 +106,10 @@ public class LevelImpl implements Level {
     @Override
     public void addGameObject(final GameObject gameObject) {
         this.gameObjects.add(gameObject);
+
+        if (gameObject instanceof BaseCollidableBlock || gameObject instanceof BaseEntrance) {
+            this.jumpCollisionManager.addObstacle(gameObject);
+        }
     }
 
     /**
@@ -217,5 +232,13 @@ public class LevelImpl implements Level {
     @Override
     public Map<CharacterID, Character> getCharacters() {
         return Collections.unmodifiableMap(this.characters);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public StaticCollisionManager getJumpCollisionManager() {
+        return this.jumpCollisionManager;
     }
 }

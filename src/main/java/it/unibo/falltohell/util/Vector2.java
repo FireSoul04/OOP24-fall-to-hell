@@ -150,4 +150,23 @@ public record Vector2(double x, double y) {
     public double magnitude() {
         return Math.sqrt(this.x() * this.x() + this.y() * this.y());
     }
+
+    /**
+     * Returns a new {@code Vector2} that is the component-wise multiplication
+     * of this vector and the given vector.
+     * <p>
+     * Each component of the resulting vector is the product of the corresponding
+     * components of this vector and the other vector:
+     *
+     * <pre>
+     * result.x = this.x * other.x
+     * result.y = this.y * other.y
+     * </pre>
+     *
+     * @param other the other vector to multiply with
+     * @return a new {@code Vector2} representing the component-wise product
+     */
+    public Vector2 multiply(Vector2 other) {
+        return new Vector2(this.x * other.x(), this.y * other.y());
+    }
 }
