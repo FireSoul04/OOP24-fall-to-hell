@@ -30,14 +30,11 @@ public class GameCameraImpl implements GameCamera {
      * @param levelHeight     the height of the level
      */
     public GameCameraImpl(final Vector2 initialPosition, final double cameraWidth, final double cameraHeight,
-            final double followSpeed, final double levelWidth, final double levelHeight) {
+            final double followSpeed) {
         this.cameraPosition = initialPosition;
         this.cameraWidth = cameraWidth;
         this.cameraHeight = cameraHeight;
         this.followSpeed = followSpeed;
-        this.levelHeight = levelHeight;
-        this.levelWidth = levelWidth;
-
     }
 
     public void setLevelWidth(double levelWidth){
