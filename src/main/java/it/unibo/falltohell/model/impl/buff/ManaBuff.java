@@ -18,22 +18,29 @@ public class ManaBuff extends BaseBuff {
      */
     public ManaBuff(final CharacterStatistics characterStatistics, final double multiplier) {
         super(characterStatistics, multiplier);
-        this.buffAmount = super.getCharacterStatistics().getInitialMana() * multiplier;
+        if (multiplier <= 0) {
+            throw new IllegalArgumentException("The mana multiplier should be between 0 and 1");
+        }
+        this.buffAmount = characterStatistics.getInitialMana() * multiplier;
     }
 
     /**
      * {@inheritDoc}
+     * It works only for characters.
      */
     @Override
     public void apply() {
-        super.getCharacterStatistics().addTemporaryMana(buffAmount);
+        final CharacterStatistics characterStatistics =  (CharacterStatistics) this.getCharacterStatistics();
+        characterStatistics.addTemporaryMana(buffAmount);
     }
 
     /**
      * {@inheritDoc}
+     * It works only for characters.
      */
     @Override
     public void remove() {
-        super.getCharacterStatistics().subTemporaryMana(buffAmount);
+        final CharacterStatistics characterStatistics =  (CharacterStatistics) this.getCharacterStatistics();
+        characterStatistics.subTemporaryMana(buffAmount);
     }
 }

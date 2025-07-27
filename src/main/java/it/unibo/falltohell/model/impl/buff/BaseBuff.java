@@ -1,7 +1,7 @@
 package it.unibo.falltohell.model.impl.buff;
 
-import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.buff.Buff;
+import it.unibo.falltohell.model.api.statistic.Statistics;
 
 /**
  * Class that represents a generic buff.
@@ -9,16 +9,18 @@ import it.unibo.falltohell.model.api.buff.Buff;
  */
 public abstract class BaseBuff implements Buff {
 
-    private final CharacterStatistics characterStatistics;
+    private final Statistics statistics;
 
     /**
      * Initialization of the BaseBuff class.
-     * @param characterStatistics is the set of statistics associated with the character
+     * @param statistics is the set of statistics associated with an entity
+     * @param multiplier is the value used to compute the buff amount that should be
+     *      *                   between -1 and 1
      */
-    public BaseBuff(final CharacterStatistics characterStatistics, final double multiplier) {
-        this.characterStatistics = characterStatistics;
-        if (multiplier <= 0 || multiplier > 1) {
-            throw new IllegalArgumentException("The multiplier should be between the values of 0 and 1");
+    public BaseBuff(final Statistics statistics, final double multiplier) {
+        this.statistics = statistics;
+        if (multiplier <= -1 || multiplier > 1) {
+            throw new IllegalArgumentException("The multiplier should be between the values of -1 and 1");
         }
     }
 
@@ -35,10 +37,10 @@ public abstract class BaseBuff implements Buff {
     public abstract void remove();
 
     /**
-     * @return the set of statistics associated with the character
+     * @return the set of statistics associated with the entity
      */
-    protected CharacterStatistics getCharacterStatistics() {
-        return this.characterStatistics;
+    protected Statistics getCharacterStatistics() {
+        return this.statistics;
     }
 
 }

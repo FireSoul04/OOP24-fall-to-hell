@@ -22,22 +22,29 @@ public class LifeBuff extends BaseBuff {
      */
     public LifeBuff(final CharacterStatistics characterStatistics, final double multiplier) {
         super(characterStatistics, multiplier);
-        this.buffAmount = super.getCharacterStatistics().getFullLife() * multiplier;
+        if (multiplier <= 0) {
+            throw new IllegalArgumentException("The life multiplier should be between 0 and 1");
+        }
+        this.buffAmount = characterStatistics.getFullLife() * multiplier;
     }
 
     /**
      * {@inheritDoc}
+     * It works only for characters.
      */
     @Override
     public void apply() {
-        super.getCharacterStatistics().addTemporaryLife(buffAmount);
+        final CharacterStatistics characterStatistics =  (CharacterStatistics) this.getCharacterStatistics();
+        characterStatistics.addTemporaryLife(buffAmount);
     }
 
     /**
      * {@inheritDoc}
+     * It works only for characters.
      */
     @Override
     public void remove() {
-        super.getCharacterStatistics().subTemporaryLife(buffAmount);
+        final CharacterStatistics characterStatistics =  (CharacterStatistics) this.getCharacterStatistics();
+        characterStatistics.subTemporaryLife(buffAmount);
     }
 }
