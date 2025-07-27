@@ -1,7 +1,6 @@
 package it.unibo.falltohell.model.api.gameobject.movable.entity.character;
 
 import it.unibo.falltohell.model.api.gameobject.movable.entity.Entity;
-import it.unibo.falltohell.model.api.manager.BuffManager;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 
 import java.util.Optional;
@@ -69,4 +68,17 @@ public interface Character extends Entity {
      * Disable the current character.
      */
     void disable();
+
+    /**
+     * Adds mana to the character.
+     * @param mana to add
+     */
+    void addMana(double mana);
+
+    /**
+     * Subtracts mana to the character if it has enough mana.
+     * @param mana to remove
+     * @return if character has enough mana
+     */
+    boolean subManaIfEnough(double mana);
 }
