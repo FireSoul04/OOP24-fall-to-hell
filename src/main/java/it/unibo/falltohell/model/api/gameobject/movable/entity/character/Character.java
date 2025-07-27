@@ -81,4 +81,11 @@ public interface Character extends Entity {
      * @return if character has enough mana
      */
     boolean subManaIfEnough(double mana);
+
+    /**
+     * Check if the current character's mana is more than the mana passed.
+     * @param mana to check if it's more than character's current mana
+     * @return if character has enough mana
+     */
+    boolean hasEnoughMana(double mana);
 }
