@@ -19,7 +19,8 @@ import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
  * </p>
  *
  * <p>
- * It provides a shared {@link EnterSafeZoneListener} and {@link ExitSafeZoneListener}
+ * It provides a shared {@link EnterSafeZoneListener} and
+ * {@link ExitSafeZoneListener}
  * that can be assigned to entrances.
  * When triggered, this listener toggles the state of all registered enemies:
  * <ul>
@@ -43,24 +44,30 @@ public class SafeZoneManager {
 
     /**
      * <p>
-     * The shared {@link AggroListener} used to toggle the safe zone state.
+     * The shared {@link EnterSafeZoneListener}.
      * </p>
      * <p>
      * When invoked:
-     * <ul>
-     * <li>If entering the safe zone: removes all registered enemies from the
-     * game</li>
-     * <li>If exiting the safe zone: re-adds enemies and triggers their respawn</li>
-     * </ul>
-     * </p>
+     * /p>
+     * Removes all registered enemies from the
+     * game
      */
     private final EnterSafeZoneListener entranceListener = () -> {
         this.handleSafeZoneEnter();
         this.hasFirstEntered = true;
     };
 
+    /**
+     * <p>
+     * The shared {@link ExitSafeZoneListener}.
+     * </p>
+     * <p>
+     * When invoked:
+     * </p>
+     * re-adds enemies and triggers their respawn
+     */
     private final ExitSafeZoneListener exitListener = () -> {
-        if(this.hasFirstEntered){
+        if (this.hasFirstEntered) {
             this.handleSafeZoneExit();
         }
     };
