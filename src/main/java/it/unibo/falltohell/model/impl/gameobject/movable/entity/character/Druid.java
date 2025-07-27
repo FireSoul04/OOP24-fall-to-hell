@@ -103,16 +103,6 @@ public class Druid extends BaseCharacter {
      * {@inheritDoc}
      */
     @Override
-    protected void move(double deltaTime) {
-        if (!this.input.checkCondition("SpecialAttack")) {
-            super.move(deltaTime);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public CharacterID getCharacterID() {
         return CharacterID.DRUID;
     }
