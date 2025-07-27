@@ -18,6 +18,7 @@ import it.unibo.falltohell.util.Vector2;
  * @see Enemy
  * @see Level
  * @see Character
+ * @see SafeZoneManager
  * @author Sara Visani
  */
 public interface EnemyFactory {
@@ -62,5 +63,17 @@ public interface EnemyFactory {
      */
     Enemy createLotawiec(Level level, Vector2 initialCords, Character character);
 
+    /**
+     * Retrieves or creates a shared instance of {@link SafeZoneManager} for the
+     * specified {@link Level}.
+     * <p>
+     * This manager coordinates the behavior of enemies when the player enters or
+     * exits a safe zone,
+     * allowing grouped reset and visibility logic to be applied consistently.
+     * </p>
+     *
+     * @param level the current game level
+     * @return a {@link SafeZoneManager} instance associated with the given level
+     */
     SafeZoneManager askManager(Level level);
 }

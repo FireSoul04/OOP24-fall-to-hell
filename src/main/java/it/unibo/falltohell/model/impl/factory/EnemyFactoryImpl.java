@@ -49,8 +49,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createCentaur(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        final SafeZoneManager ingage = ManagerHolder.getManagerIngageFor(level);
-        return new Centaur(level, initialCords, character, manager, ingage);
+        final SafeZoneManager safeZoneManager = ManagerHolder.getSafeZoneManagerFor(level);
+        return new Centaur(level, initialCords, character, manager, safeZoneManager);
     }
 
     /**
@@ -59,8 +59,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createTengu(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        final SafeZoneManager ingage = ManagerHolder.getManagerIngageFor(level);
-        return new Tengu(level, initialCords, character, manager, ingage);
+        final SafeZoneManager safeZoneManager = ManagerHolder.getSafeZoneManagerFor(level);
+        return new Tengu(level, initialCords, character, manager, safeZoneManager);
     }
 
     /**
@@ -69,8 +69,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createImp(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        final SafeZoneManager ingage = ManagerHolder.getManagerIngageFor(level);
-        return new Imp(level, initialCords, character, manager, ingage);
+        final SafeZoneManager safeZoneManager = ManagerHolder.getSafeZoneManagerFor(level);
+        return new Imp(level, initialCords, character, manager, safeZoneManager);
     }
 
     /**
@@ -79,8 +79,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createLotawiec(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        final SafeZoneManager ingage = ManagerHolder.getManagerIngageFor(level);
-        return new Lotawiec(level, initialCords, character, manager, ingage);
+        final SafeZoneManager safeZoneManager = ManagerHolder.getSafeZoneManagerFor(level);
+        return new Lotawiec(level, initialCords, character, manager, safeZoneManager);
     }
 
     /**
@@ -88,12 +88,12 @@ public class EnemyFactoryImpl implements EnemyFactory {
      */
     @Override
     public SafeZoneManager askManager(final Level level) {
-        return ManagerHolder.getManagerIngageFor(level);
+        return ManagerHolder.getSafeZoneManagerFor(level);
     }
 
     /**
      * Static nested utility class that manages shared instances of
-     * {@link EnemyTimerManager} and {@link ManagerIngage} per {@link Level}.
+     * {@link EnemyTimerManager} and {@link SafeZoneManager} per {@link Level}.
      * <p>
      * Ensures that all enemies within the same level share the same timer manager
      * and aggro manager. This approach avoids redundant object creation and
@@ -103,7 +103,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
      */
     private static final class ManagerHolder {
         private static final Map<Level, EnemyTimerManager> MANAGER_TIMER = new HashMap<>();
-        private static final Map<Level, SafeZoneManager> MANAGER_AGGRO = new HashMap<>();
+        private static final Map<Level, SafeZoneManager> MANAGER_SAFE_ZONE = new HashMap<>();
 
         /**
          * Returns the {@link EnemyTimerManager} associated with the given level,
@@ -117,14 +117,14 @@ public class EnemyFactoryImpl implements EnemyFactory {
         }
 
         /**
-         * Retrieves the {@link ManagerIngage} associated with the specified level,
+         * Retrieves the {@link SafeZoneManager} associated with the specified level,
          * creating a new one if it does not already exist.
          *
          * @param level the level for which to retrieve the aggro manager
-         * @return the shared {@link ManagerIngage} instance for the level
+         * @return the shared {@link SafeZoneManager} instance for the level
          */
-        static SafeZoneManager getManagerIngageFor(final Level level) {
-            return MANAGER_AGGRO.computeIfAbsent(level, l -> new SafeZoneManager());
+        static SafeZoneManager getSafeZoneManagerFor(final Level level) {
+            return MANAGER_SAFE_ZONE.computeIfAbsent(level, l -> new SafeZoneManager());
         }
     }
 }
