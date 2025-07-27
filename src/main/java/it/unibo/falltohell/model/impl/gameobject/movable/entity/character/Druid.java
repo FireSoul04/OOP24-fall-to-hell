@@ -150,9 +150,7 @@ public class Druid extends BaseCharacter {
      * </ul>
      */
     private void handleAttackInput() {
-        if (this.input.checkCondition("NormalAttack")) {
-            super.attack();
-        }
+        super.attack();
         if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
             this.sAactive = true;
             this.factory.createGhostActiveAbility(this.manager::createFamiliar, this).action();

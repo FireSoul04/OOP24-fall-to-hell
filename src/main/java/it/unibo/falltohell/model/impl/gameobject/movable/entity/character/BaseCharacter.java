@@ -65,7 +65,9 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.move(deltaTime);
         this.jump(deltaTime);
         this.interact();
-        this.attack();
+        if (this.input.checkCondition("NormalAttack")) {
+            this.attack();
+        }
     }
 
     /**
@@ -162,11 +164,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void attack() {
-        this.equippedWeapon.ifPresent(w -> {
-            if (this.input.checkCondition("NormalAttack")) {
-                w.attack();
-            }
-        });
+        this.equippedWeapon.ifPresent(Weapon::attack);
     }
 
     /**
