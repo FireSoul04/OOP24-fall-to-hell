@@ -3,7 +3,7 @@ package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.EntityImpl;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.builder.BuffBuilderImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 
@@ -114,8 +114,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     private final BaseEnemyStatistics stats;
     private final EnemyTimerManager manager;
-    private final ManagerIngage ingageManager;
-    private boolean ingage = true;
+    private final SafeZoneManager safeZoneManager;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -125,20 +124,24 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * "NoAggro" timer using the provided timer manager.
      * </p>
      *
-     * @param level   the level the enemy belongs to
-     * @param stats   the statistics defining the enemy's behavior and attributes
-     * @param manager the timer manager responsible for managing enemy timers
-     * @param ingageManager  the {@link ManagerIngage} used to handle if the player enter a
-     *                safe zone
-     * @param fileName is the name of the image file associated to the enemy
+     * @param level           the level the enemy belongs to
+     * @param stats           the statistics defining the enemy's behavior and
+     *                        attributes
+     * @param manager         the timer manager responsible for managing enemy
+     *                        timers
+     * @param safeZoneManager the {@link SafeZoneManager} used to handle if the
+     *                        player enter a
+     *                        safe zone
+     * @param fileName        is the name of the image file associated to the enemy
      */
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
-            final ManagerIngage ingageManager, final String fileName) {
+            final SafeZoneManager safeZoneManager, final String fileName) {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
-        this.ingageManager = ingageManager;
+        this.safeZoneManager = safeZoneManager;
+        this.safeZoneManager.addEnemyCall(this::resetEnemy);
         this.initDrawable(Priority.MEDIUM, fileName);
     }
 
@@ -174,7 +177,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
                 ((Druid) this.stats.getCharacter()).addKill();
             }
             this.manager.removeTimersFor(this, super.getLevel());
-            this.ingageManager.removeEnemy(this);
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.getLevel().removeGameObject(this);
@@ -217,33 +219,42 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     }
 
     /**
-     * Returns the instance of the {@link ManagerIngage} responsible for
-     * managing
-     * if the player enter or exit a safe zone.
+     * Returns the {@link SafeZoneManager} that handles safe zone transitions
+     * for this enemy.
      *
-     * @return the {@link ManagerIngage} instance
+     * @return the safe zone manager
      */
-    protected ManagerIngage getManagerIngage() {
-        return this.ingageManager;
+    protected SafeZoneManager getSafeZoneManager() {
+        return this.safeZoneManager;
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setIngage() {
-        this.ingage = !this.ingage;
-    }
-
-    /**
-     * Returns the current engagement state of the entity.
+     * <p>
+     * Resets the enemy to its initial state when re-entering the game world
+     * after exiting a safe zone.
+     * </p>
      *
-     * @return {@code true} if the entity is currently engaged (e.g., in combat or
-     *         alerted),
-     *         {@code false} otherwise.
+     * <p>
+     * This method performs the following actions:
+     * </p>
+     * <ul>
+     * <li>Restores the enemy's life to its maximum value using
+     * {@link BaseEnemyStatistics#getFullLife()}</li>
+     * <li>Moves the enemy back to its original spawn position defined by
+     * {@link BaseEnemyStatistics#getInitialPos()}</li>
+     * </ul>
+     *
+     * <p>
+     * This method is typically invoked by the {@link SafeZoneManager} when
+     * reactivating enemies after the player leaves a safe zone.
+     * </p>
+     *
+     * @see SafeZoneManager#resetEnemy()
+     * @see BaseEnemyStatistics
      */
-    protected boolean getIngage() {
-        return this.ingage;
+    private void resetEnemy() {
+        this.stats.setLife(this.stats.getFullLife());
+        super.setPosition(this.stats.getInitialPos());
     }
 
     /**
