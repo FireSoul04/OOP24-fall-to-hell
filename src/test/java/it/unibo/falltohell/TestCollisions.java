@@ -93,6 +93,9 @@ class TestCollisions {
         }
     }
 
+    /**
+     * Test that check if a dummy going into a block is going to collide.
+     */
     @Test
     void testGameDummyVsBlock() {
         final Level level = new LevelTest();
@@ -105,6 +108,9 @@ class TestCollisions {
         assertTrue(exitedCollision, "Dummy should have exited collision");
     }
 
+    /**
+     * Test that check if two dummies going into each other are going to collide.
+     */
     @Test
     void testGameDummyVsGameDummy() {
         final Level level = new LevelTest();
@@ -116,6 +122,9 @@ class TestCollisions {
         assertTrue(exitedCollision, "Dummy should have exited collision");
     }
 
+    /**
+     * Test that check if a dummy moving close to a block is not going to collide.
+     */
     @Test
     void testGameDummyShouldNotCollide() {
         final Level level = new LevelTest();
@@ -128,6 +137,9 @@ class TestCollisions {
         assertFalse(exitedCollision, "Dummy should have never collided");
     }
 
+    /**
+     * Test to check if the collision direction is correct on the x axis.
+     */
     @Test
     void testCollisionDirectionX() {
         dummy1.setSpeed(Vector2.right());
@@ -145,6 +157,9 @@ class TestCollisions {
         assertEquals(direction, Vector2.left(), "Collision direction should be left");
     }
 
+    /**
+     * Test to check if the collision direction is correct on the y axis.
+     */
     @Test
     void testCollisionDirectionY() {
         dummy1.setSpeed(Vector2.down());
@@ -162,6 +177,9 @@ class TestCollisions {
         assertEquals(direction, Vector2.up(), "Collision direction should be up");
     }
 
+    /**
+     * Test to check if the collision direction is correct on the both x and y axes.
+     */
     @Test
     void testCollisionDirectionXandY() {
         dummy1.setSpeed(Vector2.one());
