@@ -45,7 +45,7 @@ class TestTemporaryStatistics {
             MANA,
             0
         );
-        this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats,"") {
+        this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats,"test.png") {
             @Override
             public CharacterID getCharacterID() {
                 return CharacterID.ROGUE;
@@ -73,7 +73,7 @@ class TestTemporaryStatistics {
     @Test
     void takeAmountOfDamageLessThanTemporaryLife() {
         final double damage = TEMPORARY_LIFE / 2;
-        genericTakeDamageTest(damage, this.stats.getFullLife(), TEMPORARY_LIFE - damage);
+        this.genericTakeDamageTest(damage, this.stats.getFullLife(), TEMPORARY_LIFE - damage);
     }
 
     /**
@@ -81,7 +81,7 @@ class TestTemporaryStatistics {
      */
     @Test
     void takeAmountOfDamageGreaterThanTemporaryLife() {
-        genericTakeDamageTest(
+        this.genericTakeDamageTest(
             TEMPORARY_LIFE * 2,
             this.stats.getFullLife() - TEMPORARY_LIFE,
             0
@@ -93,12 +93,55 @@ class TestTemporaryStatistics {
      */
     @Test
     void takeAmountOfDamageEqualThanTemporaryLife() {
-        genericTakeDamageTest(
+        this.genericTakeDamageTest(
             TEMPORARY_LIFE,
             this.stats.getFullLife(),
             0
         );
     }
 
-    // TODO Add tests for temporary mana
+    /**
+     * Test to check if the mana used respects the mana and temporary mana remaining expected.
+     * @param mana to use
+     * @param manaExpected remaining
+     * @param temporaryManaExpected remaining
+     */
+    void genericUseManaTest(final double mana, final double manaExpected, final double temporaryManaExpected) {
+        this.character.subManaIfEnough(mana);
+        assertEquals(manaExpected, this.stats.getMana());
+        assertEquals(temporaryManaExpected, this.stats.getTemporaryMana());
+    }
+
+    /**
+     * Test if the character using an amount of mana less than its current temporary mana is calculated correctly.
+     */
+    @Test
+    void useManaLessThanTemporaryMana() {
+        final double mana = TEMPORARY_MANA / 2;
+        this.genericUseManaTest(mana, this.stats.getInitialMana(), TEMPORARY_MANA - mana);
+    }
+
+    /**
+     * Test if the character using an amount of mana greater than its current temporary mana is calculated correctly.
+     */
+    @Test
+    void useManaGreaterThanTemporaryMana() {
+        this.genericUseManaTest(
+            TEMPORARY_MANA * 2,
+            this.stats.getInitialMana() - TEMPORARY_MANA,
+            0
+        );
+    }
+
+    /**
+     * Test if the character using an amount of mana equal its current temporary mana is calculated correctly.
+     */
+    @Test
+    void useManaEqualThanTemporaryMana() {
+        this.genericUseManaTest(
+            TEMPORARY_MANA,
+            this.stats.getInitialMana(),
+            0
+        );
+    }
 }
