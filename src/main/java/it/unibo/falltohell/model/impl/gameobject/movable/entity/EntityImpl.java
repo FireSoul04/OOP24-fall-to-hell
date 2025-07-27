@@ -168,7 +168,7 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     @Override
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
-        if (other instanceof BaseCollidableBlock && direction.equals(Vector2.down())) {
+        if (other instanceof BaseCollidableBlock) {
             this.onGround = false;
         }
     }
