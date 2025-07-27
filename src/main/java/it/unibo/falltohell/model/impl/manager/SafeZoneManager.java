@@ -54,7 +54,7 @@ public class SafeZoneManager {
      * </ul>
      * </p>
      */
-    private final EnterSafeZoneListener listener = () -> {
+    private final EnterSafeZoneListener entranceListener = () -> {
         this.handleSafeZoneEnter();
         this.hasFirstEntered = true;
     };
@@ -66,16 +66,15 @@ public class SafeZoneManager {
     };
 
     /**
-     * Registers a new {@link BaseEntrance} and returns the shared
-     * {@link AggroListener}
+     * Registers a new {@link BaseEntrance}
      * to be assigned to the entrance.
      *
      * @param entrance the entrance to be added
-     * @return the shared {@link AggroListener} that toggles all enemy engagement
-     *         states
      */
     public void addEntrance(final BaseEntrance entrance) {
         this.entrances.add(entrance);
+        entrance.setListenerEnter(entranceListener);
+        entrance.setListenerExit(exitListener);
 
     }
 

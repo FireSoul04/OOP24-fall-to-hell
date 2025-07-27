@@ -58,8 +58,8 @@ public class Druid extends BaseCharacter {
      * @param position the initial spawn position
      */
     public Druid(final Level level, final Vector2 position) {
-        super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(10, 10),
-                new Dimensions(10, 10), 10, 10), "druid.png");
+        super(level, position, new StatisticFactoryImpl().createCharacterStatistic(10, 10, new Vector2(2, 2),
+                new Dimensions(20, 20), 50, 10), "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
         this.equipWeapon(new WarScythe(this, ATTACK_COOLDOWN));
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
@@ -97,6 +97,16 @@ public class Druid extends BaseCharacter {
     public void update(final double deltaTime) {
         super.update(deltaTime);
         this.handleAttackInput();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void move(double deltaTime) {
+        if (!this.input.checkCondition("SpecialAttack")) {
+            super.move(deltaTime);
+        }
     }
 
     /**
@@ -150,21 +160,21 @@ public class Druid extends BaseCharacter {
      * </ul>
      */
     private void handleAttackInput() {
-        super.attack();
         if (this.input.checkCondition("SpecialAbility") && super.subManaIfEnough(CREATION_COST)) {
             this.sAactive = true;
             this.factory.createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
+
         if (this.sAactive && this.spAtkCalled() && this.manager.isFree() && super.subManaIfEnough(ATTACK_COST)) {
             Vector2 direction = Vector2.zero();
 
-            if (this.input.checkCondition("SaAttackRight")) {
+            if (this.input.checkCondition("MoveRight")) {
                 direction = direction.add(Vector2.right());
-            } else if (this.input.checkCondition("SaAttackLeft")) {
+            } else if (this.input.checkCondition("MoveLeft")) {
                 direction = direction.add(Vector2.left());
-            } else if (this.input.checkCondition("SaAttackUp")) {
+            } else if (this.input.checkCondition("MoveUp")) {
                 direction = direction.add(Vector2.up());
-            } else if (this.input.checkCondition("SaAttackDown")) {
+            } else if (this.input.checkCondition("MoveDown")) {
                 direction = direction.add(Vector2.down());
             }
 
@@ -198,9 +208,10 @@ public class Druid extends BaseCharacter {
      * @return true if a special attack direction was triggered
      */
     private boolean spAtkCalled() {
-        return this.input.checkCondition("SaAttackRight")
-                || this.input.checkCondition("SaAttackLeft")
-                || this.input.checkCondition("SaAttackUp")
-                || this.input.checkCondition("SaAttackDown");
+        return this.input.checkCondition("SpecialAttack")
+            && (this.input.checkCondition("MoveRight")
+                || this.input.checkCondition("MoveLeft")
+                || this.input.checkCondition("MoveUp")
+                || this.input.checkCondition("MoveDown"));
     }
 }

@@ -38,10 +38,10 @@ public class FamiliarBat extends MovableImpl {
     private static final int P_40 = 70;
     private static final int CASE_5 = 5;
     private static final double REGEN_RATE = 0.1;
-    private static final int OFFSET_B_TO_C = 5;
+    private static final int OFFSET_B_TO_C = -(int) GameObject.TILE_SIZE;
     private static final double DAMAGE = 15;
-    private static final double DISTANCE = 20;
-    private static final Vector2 VELOCITY = new Vector2(20, 10);
+    private static final double DISTANCE = 20 * GameObject.TILE_SIZE;
+    private static final Vector2 VELOCITY = new Vector2(2, 1);
     private static final Dimensions DIMENSIONS = new Dimensions(5, 5);
     private static final BoxCollider COLLIDER = new BoxCollider(Vector2.zero(), DIMENSIONS);
     private final String name = "Bat-" + UUID.randomUUID();
