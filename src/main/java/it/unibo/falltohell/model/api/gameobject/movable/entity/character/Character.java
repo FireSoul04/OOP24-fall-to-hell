@@ -76,6 +76,12 @@ public interface Character extends Entity {
     void addMana(double mana);
 
     /**
+     * Subtracts mana to the character.
+     * @param mana to remove
+     */
+    void subMana(double mana);
+
+    /**
      * Subtracts mana to the character if it has enough mana.
      * @param mana to remove
      * @return if character has enough mana

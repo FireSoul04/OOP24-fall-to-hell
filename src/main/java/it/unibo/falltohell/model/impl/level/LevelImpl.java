@@ -2,12 +2,12 @@ package it.unibo.falltohell.model.impl.level;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 
 import it.unibo.falltohell.model.api.level.Level;
@@ -68,7 +68,7 @@ public class LevelImpl implements Level {
      * @param gameObjects the initial list of game objects in the level
      */
     public LevelImpl(final GameCamera camera, final List<GameObject> gameObjects) {
-        this.gameObjects = new ArrayList<>(gameObjects);
+        this.gameObjects = new CopyOnWriteArrayList<>(gameObjects);
         this.camera = camera;
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
@@ -98,7 +98,7 @@ public class LevelImpl implements Level {
      * @param camera that follows the player
      */
     public LevelImpl(final GameCamera camera) {
-        this(camera, new ArrayList<>());
+        this(camera, List.of());
     }
 
     /**

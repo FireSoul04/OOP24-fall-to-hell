@@ -218,10 +218,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * {@inheritDoc}
      */
     @Override
-    public boolean subManaIfEnough(final double mana) {
-        if (!this.hasEnoughMana(mana)) {
-            return false;
-        }
+    public void subMana(double mana) {
         final double remainingTemporaryMana = this.stats.getTemporaryMana() - mana;
         if (remainingTemporaryMana == 0) {
             this.stats.setTemporaryMana(0);
@@ -231,6 +228,17 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
             this.stats.setTemporaryMana(0);
             this.stats.subMana(-remainingTemporaryMana);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean subManaIfEnough(final double mana) {
+        if (!this.hasEnoughMana(mana)) {
+            return false;
+        }
+        this.subMana(mana);
         return true;
     }
 
