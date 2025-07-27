@@ -7,7 +7,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.RestrictedLongRangeEnemyStatistics;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
@@ -46,7 +46,6 @@ public class Tengu extends BaseEnemy {
     private static final double DISTANCE = 10;
 
     private final RestrictedLongRangeEnemyStatistics stats;
-    private boolean facingRight = true;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
 
@@ -63,13 +62,13 @@ public class Tengu extends BaseEnemy {
      * @param initialCord the initial spawn position of this enemy
      * @param character   the {@link Character} this enemy targets
      * @param manager     the {@link EnemyTimerManager} used to handle enemy timers
-     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
+     * @param ingage     the {@link SafeZoneManager} used to handle if the player enter a safe zone
      *
      * @see RestrictedLongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
     public Tengu(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage) {
+            final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
@@ -135,7 +134,7 @@ public class Tengu extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
 
         if (otherX > 0) {
-            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
+            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
                 if (this.stats.getInitialPos()
                         .distance(new Vector2(super.getPosition().x() + (otherX * this.direction), y)) <= this.stats
                                 .getDistance()) {

@@ -3,7 +3,7 @@ package it.unibo.falltohell.model.api.factory;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -62,5 +62,5 @@ public interface EnemyFactory {
      */
     Enemy createLotawiec(Level level, Vector2 initialCords, Character character);
 
-    ManagerIngage askManager(Level level);
+    SafeZoneManager askManager(Level level);
 }

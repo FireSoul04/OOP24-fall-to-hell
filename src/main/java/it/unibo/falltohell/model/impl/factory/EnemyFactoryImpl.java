@@ -11,7 +11,7 @@ import it.unibo.falltohell.model.impl.manager.EnemyTimeManagerImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Centaur;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Imp;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Lotawiec;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Tengu;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -25,7 +25,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
  * <p>
  * Each {@link Level} is associated with a single shared
  * {@link EnemyTimerManager}
- * and a {@link ManagerIngage} to manage timers and enemy aggro state
+ * and a {@link SafeZoneManager} to manage timers and enemy aggro state
  * respectively.
  * This sharing avoids duplication and eases management of enemy-related
  * resources.
@@ -49,7 +49,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createCentaur(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        final ManagerIngage ingage = ManagerHolder.getManagerIngageFor(level);
+        final SafeZoneManager ingage = ManagerHolder.getManagerIngageFor(level);
         return new Centaur(level, initialCords, character, manager, ingage);
     }
 
@@ -59,7 +59,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createTengu(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        final ManagerIngage ingage = ManagerHolder.getManagerIngageFor(level);
+        final SafeZoneManager ingage = ManagerHolder.getManagerIngageFor(level);
         return new Tengu(level, initialCords, character, manager, ingage);
     }
 
@@ -69,7 +69,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createImp(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        final ManagerIngage ingage = ManagerHolder.getManagerIngageFor(level);
+        final SafeZoneManager ingage = ManagerHolder.getManagerIngageFor(level);
         return new Imp(level, initialCords, character, manager, ingage);
     }
 
@@ -79,7 +79,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createLotawiec(final Level level, final Vector2 initialCords, final Character character) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
-        final ManagerIngage ingage = ManagerHolder.getManagerIngageFor(level);
+        final SafeZoneManager ingage = ManagerHolder.getManagerIngageFor(level);
         return new Lotawiec(level, initialCords, character, manager, ingage);
     }
 
@@ -87,7 +87,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * {@inheritDoc}
      */
     @Override
-    public ManagerIngage askManager(final Level level) {
+    public SafeZoneManager askManager(final Level level) {
         return ManagerHolder.getManagerIngageFor(level);
     }
 
@@ -103,7 +103,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
      */
     private static final class ManagerHolder {
         private static final Map<Level, EnemyTimerManager> MANAGER_TIMER = new HashMap<>();
-        private static final Map<Level, ManagerIngage> MANAGER_AGGRO = new HashMap<>();
+        private static final Map<Level, SafeZoneManager> MANAGER_AGGRO = new HashMap<>();
 
         /**
          * Returns the {@link EnemyTimerManager} associated with the given level,
@@ -123,8 +123,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
          * @param level the level for which to retrieve the aggro manager
          * @return the shared {@link ManagerIngage} instance for the level
          */
-        static ManagerIngage getManagerIngageFor(final Level level) {
-            return MANAGER_AGGRO.computeIfAbsent(level, l -> new ManagerIngage());
+        static SafeZoneManager getManagerIngageFor(final Level level) {
+            return MANAGER_AGGRO.computeIfAbsent(level, l -> new SafeZoneManager());
         }
     }
 }

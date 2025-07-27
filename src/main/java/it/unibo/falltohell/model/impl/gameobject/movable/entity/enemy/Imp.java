@@ -10,7 +10,7 @@ import it.unibo.falltohell.model.api.statistic.RestrictedBaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -64,11 +64,11 @@ public class Imp extends BaseEnemy {
      * @param character   the target {@link Character} to track and attack
      * @param manager     the {@link EnemyTimerManager} responsible for managing
      *                    enemy timers
-     * @param ingage      the {@link ManagerIngage} used to handle if the player
+     * @param ingage      the {@link SafeZoneManager} used to handle if the player
      *                    enter a safe zone
      */
     public Imp(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage) {
+            final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl()
@@ -123,7 +123,7 @@ public class Imp extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
 
         if (otherX > 0) {
-            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
+            if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
                 if (this.stats.getInitialPos()
                         .distance(new Vector2(super.getPosition().x() + (otherX * this.direction), y)) <= this.stats
                                 .getDistance()) {

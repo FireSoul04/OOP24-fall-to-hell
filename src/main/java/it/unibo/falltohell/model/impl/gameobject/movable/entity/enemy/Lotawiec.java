@@ -6,7 +6,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
@@ -65,13 +65,13 @@ public class Lotawiec extends BaseEnemy {
      * @param initialCord the initial position of the enemy
      * @param character   the target character this enemy tracks and attacks
      * @param manager     the timer manager handling enemy-specific timers
-     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
+     * @param ingage     the {@link SafeZoneManager} used to handle if the player enter a safe zone
      *
      * @see LongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage) {
+            final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF),
@@ -141,7 +141,7 @@ public class Lotawiec extends BaseEnemy {
         final Vector2 chara = this.stats.getCharacter().getPosition();
         final double charX = this.stats.getCharacter().getPosition().x();
 
-        if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
+        if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
             super.setPosition(super.getPosition().add(
                     (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction, super.getPosition().y()))));
         } else {

@@ -12,7 +12,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -64,10 +64,10 @@ public class Centaur extends BaseEnemy {
      * @param character   the target {@link Character} this enemy reacts to
      * @param manager     the {@link EnemyTimerManager} that handles familiar logic
      *                    in this context
-     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
+     * @param ingage     the {@link SafeZoneManager} used to handle if the player enter a safe zone
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage) {
+            final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                 initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,
                 ingage, "centaur.png");
@@ -122,7 +122,7 @@ public class Centaur extends BaseEnemy {
         final double characterX = this.stats.getCharacter().getPosition().x();
         final int characterDirection;
 
-        if (character.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
+        if (character.distance(super.getPosition()) > this.stats.getSenseDistance()) {
             if (this.collided.isEmpty()) {
                 super.setPosition(super.getPosition().add(
                         (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction,
