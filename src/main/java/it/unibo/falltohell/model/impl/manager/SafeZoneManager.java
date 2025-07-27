@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import it.unibo.falltohell.model.api.listener.AggroListener;
 import it.unibo.falltohell.model.api.listener.EnemyRespawnListener;
 import it.unibo.falltohell.model.api.listener.EnterSafeZoneListener;
 import it.unibo.falltohell.model.api.listener.ExitSafeZoneListener;
@@ -20,7 +19,8 @@ import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
  * </p>
  *
  * <p>
- * It provides a shared {@link AggroListener} that can be assigned to entrances.
+ * It provides a shared {@link EnterSafeZoneListener} and {@link ExitSafeZoneListener}
+ * that can be assigned to entrances.
  * When triggered, this listener toggles the state of all registered enemies:
  * <ul>
  * <li>Enemies are removed when entering a safe zone</li>
@@ -76,6 +76,7 @@ public class SafeZoneManager {
      */
     public void addEntrance(final BaseEntrance entrance) {
         this.entrances.add(entrance);
+
     }
 
     /**
