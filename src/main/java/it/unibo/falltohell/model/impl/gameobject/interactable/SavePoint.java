@@ -11,7 +11,7 @@ import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Class to save the current state of the game or change the current character.
+ * Class to save the current state of the game.
  * @author Martina Malagoli
  */
 public class SavePoint extends GameObjectImpl implements Interactable {
