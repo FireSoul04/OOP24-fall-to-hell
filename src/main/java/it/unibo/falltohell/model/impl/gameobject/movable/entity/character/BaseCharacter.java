@@ -217,6 +217,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     public void disable() {
         this.getDrawable().ifPresent(t -> t.setVisible(false));
         this.getEquippedWeapon().flatMap(GameObject::getDrawable).ifPresent(t -> t.setVisible(false));
+        this.getBuffManager().removeBuffs();
     }
 
     /**
