@@ -48,15 +48,21 @@ class TestBlocks {
                 this.entity.getLevel(), this.entity.getPosition());
         lavaBlock1.onCollision(this.entity, Vector2.up());
         final Statistics statistics = this.entity.getStats();
-        final double currentLife = statistics.getLife();
-        assertTrue(currentLife < statistics.getFullLife(), "When there is a collision" +
-                "with a lava block ");
+        final double currentLife1 = statistics.getLife();
         lavaBlock2.onCollision(this.entity, Vector2.up());
-        assertEquals(currentLife, statistics.getLife(),
+        final double currentLife2 = statistics.getLife();
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        assertTrue(currentLife1 < statistics.getFullLife(), "When there is a collision" +
+                "with a lava block ");
+        assertEquals(currentLife1, currentLife2,
                 "If there are two concomitant collisions only one must reduce life");
         lavaBlock1.onCollisionExit(this.entity, Vector2.up());
         lavaBlock2.onCollisionExit(this.entity, Vector2.up());
-        Assertions.assertEquals(currentLife, statistics.getLife(),
+        Assertions.assertEquals(currentLife1, statistics.getLife(),
                 "On exit from collision life should stop being removed");
     }
 
