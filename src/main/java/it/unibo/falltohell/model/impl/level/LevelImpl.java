@@ -126,6 +126,12 @@ public class LevelImpl implements Level {
      */
     @Override
     public void update(final double deltaTime) {
+        this.gameData.ifPresent(d -> {
+            this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime);
+            d.getCurrentCharacter().update(deltaTime);
+            this.pointsLabel.setText("Points: " + d.getPoints());
+            this.statsLabel.setText("HP: " + d.getCurrentCharacter().getStats().getLife());
+        });
         final Stream<GameObject> gameObjectStream = this.gameObjects.stream().filter(t -> !(t instanceof Character));
         for (final GameObject gameObject : gameObjectStream.toList()) {
             if (gameObject instanceof Movable movable) {
@@ -134,12 +140,6 @@ public class LevelImpl implements Level {
             gameObject.update();
         }
         this.collisionsManager.checkCollisions(this.gameObjects);
-        this.gameData.ifPresent(d -> {
-            this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime);
-            d.getCurrentCharacter().update(deltaTime);
-            this.pointsLabel.setText("Points: " + d.getPoints());
-            this.statsLabel.setText("HP: " + d.getCurrentCharacter().getStats().getLife());
-        });
         this.drh.updateAll(camera);
     }
 
