@@ -25,11 +25,4 @@ public interface Enemy extends Entity {
      * @param character the character instance to target
      */
     void setCharacter(Character character);
-
-    /**
-     * Toggles the engagement state of the entity.
-     * <p>
-     * If the entity is currently engaged, it becomes disengaged, and vice versa.
-     */
-    void setIngage();
 }
