@@ -18,26 +18,30 @@ public class AttackSpeedBuff extends BaseBuff {
      *                            character
      * @param multiplier          is the value used to compute the buff amount that
      *                            should be
-     *                            between 0 and 1
+     *                            between -1 and 1
      */
     public AttackSpeedBuff(final CharacterStatistics characterStatistics, final double multiplier) {
         super(characterStatistics, multiplier);
-        this.buffAmount = super.getCharacterStatistics().getInitialAttackSpeed() * multiplier;
+        this.buffAmount = characterStatistics.getInitialAttackSpeed() * multiplier;
     }
 
     /**
      * {@inheritDoc}
+     * It works only for characters.
      */
     @Override
     public void apply() {
-        super.getCharacterStatistics().addAttackSpeed(buffAmount);
+        final CharacterStatistics characterStatistics =  (CharacterStatistics) this.getCharacterStatistics();
+        characterStatistics.addAttackSpeed(buffAmount);
     }
 
     /**
      * {@inheritDoc}
+     * It works only for characters.
      */
     @Override
     public void remove() {
-        super.getCharacterStatistics().subAttackSpeed(buffAmount);
+        final CharacterStatistics characterStatistics =  (CharacterStatistics) this.getCharacterStatistics();
+        characterStatistics.subAttackSpeed(buffAmount);
     }
 }

@@ -61,11 +61,6 @@ public interface Character extends Entity {
     CharacterID getCharacterID();
 
     /**
-     * @return buff manager of the character
-     */
-    BuffManager getBuffManager();
-
-    /**
      * Enable the current character as the player.
      */
     void enable();
