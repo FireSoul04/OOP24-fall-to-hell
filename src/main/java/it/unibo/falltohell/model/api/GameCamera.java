@@ -8,6 +8,17 @@ import it.unibo.falltohell.util.Vector2;
  */
 public interface GameCamera {
     /**
+     * set the height of the level for the game camera.
+     * @param levelHeight the height of the level.
+     */
+    void setLevelHigh(double levelHeight);
+
+    /**
+     * set the level width for the game camera.
+     * @param levelWidth the width of the level.
+     */
+    void setLevelWidth(double levelWidth);
+    /**
      * Updates the camera position based on the player position and the time elapsed
      * since the last update.
      *

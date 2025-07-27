@@ -42,7 +42,7 @@ public class Blast extends GameObjectImpl {
      *{@inheritDoc}
      */
     @Override
-    public void onCollision(GameObject other, Vector2 direction) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof Enemy enemy) {
             enemy.setDamagedLife(AMOUNT_DAMAGE);
         }

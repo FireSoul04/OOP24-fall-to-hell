@@ -25,7 +25,7 @@ public class VinesBlock extends BaseCollidableBlock {
      * @param fileName is the name of the image file associated to the block
      */
     public VinesBlock(final Level lv, final Vector2 position,
-                      final Collider collider, final String fileName, Vector2 offset) {
+                      final Collider collider, final String fileName, final Vector2 offset) {
         super(lv, position, collider, fileName, offset);
     }
 

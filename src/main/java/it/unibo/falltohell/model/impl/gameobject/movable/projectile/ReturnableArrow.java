@@ -70,7 +70,7 @@ public class ReturnableArrow extends ProjectileImpl {
             this.setSpeed(direction.multiply(originalSpeed));
             final Vector2 displacement = this.getSpeed().multiply(deltaTime);
             this.setPosition(this.getPosition().add(displacement));
-            if (this.getPosition().distance(owner.getPosition()) < 0.5) {
+            if (this.getPosition().distance(owner.getPosition()) < 2) {
                 owner.returnArrow(this);
                 this.destroy();
             }
@@ -88,9 +88,8 @@ public class ReturnableArrow extends ProjectileImpl {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (!this.returning && other != this && other.isSolid()) {
+        if (!this.returning) {
             super.onCollision(other, direction);
-            this.setHit(true);
         } else if (this.returning && isEnemy(other)) {
             this.onProjectileHit(other);
         }
