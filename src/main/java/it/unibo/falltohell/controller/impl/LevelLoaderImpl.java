@@ -57,13 +57,15 @@ public class LevelLoaderImpl implements LevelLoader {
      */
     @Override
     public void loadLevel() {
+        Vector2 position = Vector2.zero();
         for (int y = 0; y < this.levelFromFile.size(); y++) {
             final char[] identifiers = this.levelFromFile.get(y).toCharArray();
             for (int x = 0; x < identifiers.length; x++) {
-                final Vector2 position = new Vector2(x, y).multiply(DISTANCE);
+                 position = new Vector2(x, y).multiply(DISTANCE);
                 this.parseToGameObject(identifiers[x], position);
             }
         }
+        this.level.setLevelSize(position);
     }
 
     /**
