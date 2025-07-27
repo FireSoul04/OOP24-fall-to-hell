@@ -102,5 +102,10 @@ public class InputListener {
             return this.keyCode;
         }
 
+            @Override
+        public boolean equals(final Object obj) {
+            return obj instanceof Key other && this.keyCode == other.keyCode;
+        }
+
     }
 }
