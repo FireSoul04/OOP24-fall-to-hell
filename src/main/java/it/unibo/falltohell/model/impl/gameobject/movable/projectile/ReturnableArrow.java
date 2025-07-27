@@ -107,7 +107,7 @@ public class ReturnableArrow extends ProjectileImpl {
     }
     @Override
     public void onProjectileHit(final GameObject other){
-        if(other instanceof Enemy){
+        if(isEnemy(other)){
             ((Enemy)other).setDamagedLife(this.owner.getStats().getAttack());
         }
     }

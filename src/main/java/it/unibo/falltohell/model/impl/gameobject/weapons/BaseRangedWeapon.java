@@ -70,7 +70,7 @@ public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
      */
     @Override
     protected void onAttack() {
-        final Projectile p = createProjectile(this.getLevel(), this.getPosition());
+        final Projectile p = createProjectile();
         ammo--;
         if (!this.canShoot()) {
             this.reload();
@@ -148,6 +148,6 @@ public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
     /**
      * Creates a projectile. By default, returns a ProjectileImpl.
      */
-    protected abstract Projectile createProjectile(final Level level, final Vector2 position);
+    protected abstract Projectile createProjectile();
 
 }

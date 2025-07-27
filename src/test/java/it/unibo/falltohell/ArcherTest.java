@@ -46,7 +46,7 @@ public class ArcherTest {
         new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
 
         assertEquals(initialAmmo - 1, archer.getBow().getAmmo());
-        assertEquals(1, archer.getShotArrows().size());
+        assertEquals(1, archer.getShotedArrows().size());
     }
 
     @Test
@@ -57,10 +57,10 @@ public class ArcherTest {
             new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
         }
 
-        ReturnArrowAbility ability = new ReturnArrowAbility(archer, level);
+        ReturnArrowAbility ability = new ReturnArrowAbility(archer);
         ability.activate();
 
-        for (Projectile p : archer.getShotArrows()) {
+        for (Projectile p : archer.getShotedArrows()) {
             assertTrue(((ReturnableArrow) p).isReturning());
         }
     }
@@ -71,7 +71,7 @@ public class ArcherTest {
         archer.shootArrow(Vector2.up(), 5.0, 
             new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
 
-        ReturnableArrow arrow = (ReturnableArrow) archer.getShotArrows().get(0);
+        ReturnableArrow arrow = (ReturnableArrow) archer.getShotedArrows().get(0);
 
         archer.setPosition(new Vector2(0.0, 1.0));
 
@@ -81,7 +81,7 @@ public class ArcherTest {
             arrow.update(0.016);  
         }
         assertEquals(initialAmmo, archer.getBow().getAmmo());
-        assertFalse(archer.getShotArrows().contains(arrow));
+        assertFalse(archer.getShotedArrows().contains(arrow));
     }
 }
 
