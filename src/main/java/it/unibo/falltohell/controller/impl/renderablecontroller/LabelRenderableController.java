@@ -28,8 +28,8 @@ public class LabelRenderableController extends BaseRenderableController {
      */
     @Override
     public void updateRenderable(final GameCamera camera) {
-        LabelRenderable labelRenderable = (LabelRenderable)this.getRenderable();
-        Label label = (Label)this.getDrawable();
+        final LabelRenderable labelRenderable = (LabelRenderable)this.getRenderable();
+        final Label label = (Label)this.getDrawable();
         labelRenderable.setText(label.getText());
         labelRenderable.setVisibility(label.isVisible());
 
