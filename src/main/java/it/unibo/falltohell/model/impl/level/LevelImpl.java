@@ -52,6 +52,7 @@ public class LevelImpl implements Level {
     private GameEventManagerImpl<String> eventManager;
     private DrawableRenderableHandler drh;
     private Optional<GameData> gameData;
+    private Vector2 levelSize;
     
     private final Label pointsLabel;
     private final Label statsLabel;
@@ -243,5 +244,14 @@ public class LevelImpl implements Level {
     @Override
     public StaticCollisionManager getJumpCollisionManager() {
         return this.jumpCollisionManager;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLevelSize(Vector2 size){
+        this.levelSize = size;
+
     }
 }
