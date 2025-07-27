@@ -24,7 +24,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemyStatistics {
 
-    private static final double STANDARD_MULTIPLIER = 15.5;
+    private static final double STANDARD_MULTIPLIER = 0.3;
     private static final double MIN_R = 0.05;
     private static final double MAX_R = 0.9;
     private static final double STANDARD_SENSE = 100;
