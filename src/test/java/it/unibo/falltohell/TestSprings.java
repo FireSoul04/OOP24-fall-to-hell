@@ -1,20 +1,19 @@
 package it.unibo.falltohell;
 
-import it.unibo.falltohell.controller.api.SaveFileController;
-import it.unibo.falltohell.controller.impl.SaveFileControllerImpl;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.interactable.Interactable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.impl.GameDataImpl;
-import it.unibo.falltohell.model.impl.gameobject.interactable.SavePoint;
 import it.unibo.falltohell.model.impl.gameobject.interactable.CharacterChanger;
 import it.unibo.falltohell.model.impl.gameobject.entrance.SpringsEntrance;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
+import it.unibo.falltohell.test.util.SaveFileControllerTest;
+import it.unibo.falltohell.test.util.SavePointTest;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.test.util.LevelTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class TestSprings {
     private Interactable savePoint;
-    private SaveFileController saveController;
+    private SaveFileControllerTest saveController;
     private GameData data;
     private Map<CharacterID, Character> characters;
     private Interactable characterChanger;
@@ -45,8 +44,8 @@ class TestSprings {
         this.characters.put(CharacterID.DRUID, new Druid(level, Vector2.zero()));
         this.data = new GameDataImpl(1000, CharacterID.ROGUE, this.characters, Vector2.one());
         level.linkGameData(this.data);
-        this.savePoint = new SavePoint(level, Vector2.zero(), new BoxCollider());
-        this.saveController = new SaveFileControllerImpl();
+        this.savePoint = new SavePointTest(level, Vector2.zero(), new BoxCollider());
+        this.saveController = new SaveFileControllerTest();
         this.characterChanger = new CharacterChanger(level, Vector2.zero(), new BoxCollider(), this.characters);
         this.entrance = new SpringsEntrance(level, Vector2.zero());
     }
@@ -59,6 +58,7 @@ class TestSprings {
         assertEquals(testData.getCurrentCharacter().getCharacterID(), this.data.getCurrentCharacter().getCharacterID());
         assertEquals(testData.getLastSavedPosition().x(), this.data.getCurrentCharacter().getPosition().x());
         assertEquals(testData.getLastSavedPosition().y(), this.data.getCurrentCharacter().getPosition().y());
+        this.saveController.removeTestFile();
     }
 
     @Test
