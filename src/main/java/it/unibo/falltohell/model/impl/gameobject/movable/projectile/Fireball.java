@@ -7,7 +7,6 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
-import it.unibo.falltohell.model.impl.gameobject.weapons.Tome;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
@@ -21,7 +20,7 @@ import java.util.Set;
 public class Fireball extends ProjectileImpl{
 
     private static final Dimensions DIMENSIONS = new Dimensions(5.0,5.0);
-    private static final double SPEED = 10;
+    private static final double SPEED = 5;
     private final Caster caster;
 
     private final Set<Class<? extends GameObject>> ignoreCollisionsObjects = Set.of(
