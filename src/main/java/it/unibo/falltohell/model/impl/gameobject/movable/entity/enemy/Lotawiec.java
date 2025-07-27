@@ -97,7 +97,7 @@ public class Lotawiec extends BaseEnemy {
      */
     @Override
     public void update(final double deltaTime) {
-        this.move(deltaTime);
+        super.move(deltaTime);
         super.getDrawable().ifPresent(d -> d.mirror(!super.isFacingRight()));
     }
 
@@ -136,45 +136,29 @@ public class Lotawiec extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void move(final double deltaTime) {
-        if (canSeePlayer()) {
-            chasePlayer(deltaTime);
-        } else {
-            patrol(deltaTime);
-        }
-    }
-
-    /**
-     * Moves the enemy back and forth horizontally as a patrol behavior.
-     *
-     * @param deltaTime time elapsed since last update
-     */
-    private void patrol(final double deltaTime) {
-        final double speed = this.stats.getSpeed().x();
-        final Vector2 step = new Vector2(speed * direction, 0);
-        final Vector2 target = this.getPosition().add(step);
+    protected void patrol(final Vector2 current, final Vector2 speed) {
+        final double speedX = speed.x();
+        final Vector2 step = new Vector2(speedX * direction, 0);
+        final Vector2 target = current.add(step);
 
         this.setPosition(target);
         setFacingRight(direction > 0);
     }
 
     /**
-     * Moves the enemy toward the player position, attempting to navigate obstacles.
-     *
-     * @param deltaTime time elapsed since last update
+     * {@inheritDoc}
      */
-    private void chasePlayer(final double deltaTime) {
-        final Vector2 current = this.getPosition();
-        final Vector2 target = this.stats.getCharacter().getPosition();
+    @Override
+    protected void chase(final Vector2 target, final Vector2 current, final Vector2 speed) {
         final Vector2 diff = target.subtract(current).normalize();
-        final Vector2 moveStep = diff.multiply(this.stats.getSpeed());
+        final Vector2 moveStep = diff.multiply(speed);
         final var manager = super.getLevel().getJumpCollisionManager();
 
         Vector2 tryMove = current.add(moveStep);
 
         if (manager.isBlocked(tryMove, stats.getDimensions().width(), stats.getDimensions().height())) {
-            final Vector2 up = current.add(new Vector2(0, -this.stats.getSpeed().y()));
-            final Vector2 down = current.add(new Vector2(0, this.stats.getSpeed().y()));
+            final Vector2 up = current.add(new Vector2(0, -speed.y()));
+            final Vector2 down = current.add(new Vector2(0, speed.y()));
 
             if (!manager.isBlocked(up, stats.getDimensions().width(), stats.getDimensions().height())) {
                 tryMove = up;
@@ -187,14 +171,5 @@ public class Lotawiec extends BaseEnemy {
 
         this.setPosition(tryMove);
         setFacingRight(moveStep.x() > 0);
-    }
-
-    /**
-     * Checks if the enemy can detect the player within its sensing distance.
-     *
-     * @return true if player is within sensing distance, false otherwise
-     */
-    private boolean canSeePlayer() {
-        return this.getPosition().distance(this.stats.getCharacter().getPosition()) <= this.stats.getSenseDistance();
     }
 }

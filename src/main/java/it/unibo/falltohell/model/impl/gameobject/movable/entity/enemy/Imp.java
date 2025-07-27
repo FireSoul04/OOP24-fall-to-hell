@@ -84,15 +84,6 @@ public class Imp extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    public void update(final double deltaTime) {
-        super.update(deltaTime);
-        this.move(deltaTime);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         super.onCollision(other, direction);
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
@@ -118,27 +109,8 @@ public class Imp extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void move(final double deltaTime) {
-        final double speedX = deltaTime * this.stats.getSpeed().x();
-        final Vector2 currentPos = super.getPosition();
-        final Vector2 charaPos = this.stats.getCharacter().getPosition();
-
-        if (charaPos.distance(currentPos) > this.stats.getSenseDistance()) {
-            this.patrol(currentPos, speedX);
-        } else {
-            this.chase(charaPos, currentPos, speedX);
-        }
-    }
-
-    /**
-     * Executes patrol behavior for the enemy. The enemy moves back and forth
-     * within a defined distance from its initial position, reversing direction
-     * when reaching a boundary or a collision.
-     *
-     * @param currentPos the current position of the enemy
-     * @param speedX     the horizontal movement amount for this frame
-     */
-    private void patrol(final Vector2 currentPos, final double speedX) {
+    protected void patrol(final Vector2 currentPos, final Vector2 speed) {
+        final double speedX = speed.x();
         final double y = currentPos.y();
         final Vector2 target = currentPos.add(new Vector2(speedX * this.direction, 0));
         final double distanceFromInitial = this.stats.getInitialPos().distance(target);
@@ -160,17 +132,11 @@ public class Imp extends BaseEnemy {
     }
 
     /**
-     * Executes chase behavior when the player is within the enemy's detection
-     * range.
-     * The enemy attempts to move toward the player while respecting patrol
-     * boundaries
-     * and potential obstacles.
-     *
-     * @param charaPos   the position of the player character
-     * @param currentPos the current position of the enemy
-     * @param speedX     the horizontal movement amount for this frame
+     * {@inheritDoc}
      */
-    private void chase(final Vector2 charaPos, final Vector2 currentPos, final double speedX) {
+    @Override
+    protected void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed) {
+        final double speedX = speed.x();
         final double y = currentPos.y();
         super.setFacingRight(charaPos.x() - currentPos.x() > 0);
 

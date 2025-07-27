@@ -200,12 +200,63 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     protected abstract void attack();
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final double deltaTime) {
+        super.update(deltaTime);
+        this.move(deltaTime);
+    }
+
+    /**
      * Defines how the enemy moves each frame.
      * <p>
      *
      * @param deltaTime time elapsed since the last update, in seconds
      */
-    protected abstract void move(double deltaTime);
+    protected void move(double deltaTime){
+        final Vector2 speed = this.stats.getSpeed().multiply(deltaTime);
+        final Vector2 currentPos = super.getPosition();
+        final Vector2 charaPos = this.stats.getCharacter().getPosition();
+
+        if (this.canSeePlayer()) {
+            this.chase(charaPos, currentPos, speed);
+        } else {
+            this.patrol(currentPos, speed);
+        }
+    }
+
+    /**
+     * Executes patrol behavior for the enemy. The enemy moves back and forth
+     * within a defined distance from its initial position, reversing direction
+     * when reaching a boundary or a collision.
+     *
+     * @param currentPos the current position of the enemy
+     * @param speed     the movement amount for this frame
+     */
+    protected abstract void patrol(final Vector2 currentPos, final Vector2 speed);
+
+    /**
+     * Executes chase behavior when the player is within the enemy's detection
+     * range.
+     * The enemy attempts to move toward the player while respecting patrol
+     * boundaries
+     * and potential obstacles.
+     *
+     * @param charaPos   the position of the player character
+     * @param currentPos the current position of the enemy
+     * @param speed     the movement amount for this frame
+     */
+    protected abstract void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed);
+
+    /**
+     * Checks if the enemy can detect the player within its sensing distance.
+     *
+     * @return true if player is within sensing distance, false otherwise
+     */
+    protected boolean canSeePlayer() {
+        return this.getPosition().distance(this.stats.getCharacter().getPosition()) <= this.stats.getSenseDistance();
+    }
 
     /**
      * Returns the instance of the {@link EnemyTimerManager} responsible for
