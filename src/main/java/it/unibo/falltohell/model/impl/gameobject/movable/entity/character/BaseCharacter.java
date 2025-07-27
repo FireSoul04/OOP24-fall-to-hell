@@ -226,10 +226,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         if (remainingTemporaryMana == 0) {
             this.stats.setTemporaryMana(0);
         } else if (remainingTemporaryMana > 0) {
-            this.stats.subMana(mana);
+            this.stats.subTemporaryMana(mana);
         } else {
             this.stats.setTemporaryMana(0);
-            this.stats.subMana(remainingTemporaryMana);
+            this.stats.subMana(-remainingTemporaryMana);
         }
         return true;
     }
