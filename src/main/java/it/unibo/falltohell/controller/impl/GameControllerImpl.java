@@ -97,7 +97,7 @@ public class GameControllerImpl implements GameController {
         );
         eventManager.addCondition("Interact", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_F));
         eventManager.addCondition("Jump", () -> inputListener.isKeyPressed(KeyEvent.VK_SPACE));
-        eventManager.addCondition("NormalAttack", () -> inputListener.isKeyPressed(KeyEvent.VK_E));
+        eventManager.addCondition("NormalAttack", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_E));
         eventManager.addCondition("ActiveAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_SHIFT));
         eventManager.addCondition("SpecialAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_Q));
         eventManager.addCondition(
