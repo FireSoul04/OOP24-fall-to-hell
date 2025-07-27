@@ -81,6 +81,7 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     public void update(final double deltaTime) {
+        super.update(deltaTime);
         this.move(deltaTime);
     }
 
@@ -89,8 +90,9 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
+        super.onCollision(other, direction);
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
-            if (direction.y() != 0) {
+            if (direction == Vector2.right() || direction == Vector2.left()) {
                 if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
                     this.collided = Optional.ofNullable(direction);
                 } else {
@@ -118,38 +120,65 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     protected void move(final double deltaTime) {
-        final Vector2 character = this.stats.getCharacter().getPosition();
-        final double characterX = this.stats.getCharacter().getPosition().x();
-        final int characterDirection;
-
-        if (character.distance(super.getPosition()) > this.stats.getSenseDistance()) {
-            if (this.collided.isEmpty()) {
-                super.setPosition(super.getPosition().add(
-                        (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction,
-                                super.getPosition().y()))));
-            } else {
-                final double jumpDirection = this.collided.get().x();
-                super.setPosition(super.getPosition().add(
-                        (new Vector2(2 * deltaTime / 3 * super.getPosition().x(),
-                                deltaTime / 3 * this.stats.getSpeed().y() * jumpDirection))));
-            }
+        if (canSeePlayer()) {
+            chasePlayer(deltaTime);
         } else {
-            if (characterX - super.getPosition().x() > 0) {
-                characterDirection = 1;
+            patrol(deltaTime);
+        }
+    }
+
+    /**
+     * Moves the enemy back and forth horizontally as a patrol behavior.
+     *
+     * @param deltaTime time elapsed since last update
+     */
+    private void patrol(final double deltaTime) {
+        final double speed = this.stats.getSpeed().x();
+        final Vector2 step = new Vector2(speed * direction, 0);
+        final Vector2 target = this.getPosition().add(step);
+
+        this.setPosition(target);
+        setFacingRight(direction > 0);
+    }
+
+    /**
+     * Moves the enemy toward the player position, attempting to navigate obstacles.
+     *
+     * @param deltaTime time elapsed since last update
+     */
+    private void chasePlayer(final double deltaTime) {
+        final Vector2 current = this.getPosition();
+        final Vector2 target = this.stats.getCharacter().getPosition();
+        final Vector2 diff = target.subtract(current).normalize();
+        final Vector2 moveStep = diff.multiply(this.stats.getSpeed());
+        final var manager = super.getLevel().getJumpCollisionManager();
+
+        Vector2 tryMove = current.add(moveStep);
+
+        if (manager.isBlocked(tryMove, stats.getDimensions().width(), stats.getDimensions().height())) {
+
+            final Vector2 up = current.add(new Vector2(0, -this.stats.getSpeed().y()));
+            final Vector2 down = current.add(new Vector2(0, this.stats.getSpeed().y()));
+
+            if (!manager.isBlocked(up, stats.getDimensions().width(), stats.getDimensions().height())) {
+                tryMove = up;
+            } else if (!manager.isBlocked(down, stats.getDimensions().width(), stats.getDimensions().height())) {
+                tryMove = down;
             } else {
-                characterDirection = -1;
-            }
-            if (this.direction > 0) {
-                if (this.collided.isEmpty()) {
-                    super.setPosition(super.getPosition().add(
-                            (new Vector2(characterDirection * deltaTime * this.stats.getSpeed().x(),
-                                    super.getPosition().y()))));
-                } else {
-                    super.setPosition(super.getPosition().add(
-                            (new Vector2(characterDirection * 2 * deltaTime / 3 * super.getPosition().x(),
-                                    deltaTime / 3 * this.stats.getSpeed().y()))));
-                }
+                return;
             }
         }
+
+        this.setPosition(tryMove);
+        setFacingRight(moveStep.x() > 0);
+    }
+
+    /**
+     * Checks if the enemy can detect the player within its sensing distance.
+     *
+     * @return true if player is within sensing distance, false otherwise
+     */
+    private boolean canSeePlayer() {
+        return this.getPosition().distance(this.stats.getCharacter().getPosition()) <= this.stats.getSenseDistance();
     }
 }

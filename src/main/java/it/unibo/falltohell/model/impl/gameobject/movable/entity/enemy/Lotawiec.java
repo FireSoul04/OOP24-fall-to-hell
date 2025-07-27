@@ -1,11 +1,13 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
 
 import java.util.Map;
+
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
+
 import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
@@ -13,6 +15,7 @@ import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.TrackEnemyProjectile;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
+
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -52,7 +55,6 @@ public class Lotawiec extends BaseEnemy {
 
     private LongRangeEnemyStatistics stats;
     private int direction = 1;
-    private Vector2 jump = Vector2.zero();
 
     /**
      * Constructs a new Lotawiec enemy with specified initial position, target
@@ -65,7 +67,8 @@ public class Lotawiec extends BaseEnemy {
      * @param initialCord the initial position of the enemy
      * @param character   the target character this enemy tracks and attacks
      * @param manager     the timer manager handling enemy-specific timers
-     * @param ingage     the {@link SafeZoneManager} used to handle if the player enter a safe zone
+     * @param ingage      the {@link SafeZoneManager} used to handle if the player
+     *                    enter a safe zone
      *
      * @see LongRangeEnemyStatistics
      * @see CustomTimerImpl
@@ -95,6 +98,7 @@ public class Lotawiec extends BaseEnemy {
     @Override
     public void update(final double deltaTime) {
         this.move(deltaTime);
+        super.getDrawable().ifPresent(d -> d.mirror(!super.isFacingRight()));
     }
 
     /**
@@ -103,13 +107,8 @@ public class Lotawiec extends BaseEnemy {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
-            if (direction.y() != 0) {
+            if (direction.x() != 0) {
                 this.direction *= -1;
-            }
-            if (direction.y() > 0) {
-                this.jump = Vector2.down();
-            } else {
-                this.jump = Vector2.up();
             }
         } else if (other instanceof Character) {
             this.stats.getCharacter().setDamagedLife(DAMAGE);
@@ -138,40 +137,64 @@ public class Lotawiec extends BaseEnemy {
      */
     @Override
     protected void move(final double deltaTime) {
-        final Vector2 chara = this.stats.getCharacter().getPosition();
-        final double charX = this.stats.getCharacter().getPosition().x();
-
-        if (chara.distance(super.getPosition()) > this.stats.getSenseDistance()) {
-            super.setPosition(super.getPosition().add(
-                    (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction, super.getPosition().y()))));
+        if (canSeePlayer()) {
+            chasePlayer(deltaTime);
         } else {
-            if (charX - super.getPosition().x() > 0) {
-                if (this.direction > 0) {
-                    super.setPosition(super.getPosition()
-                            .add((new Vector2(deltaTime * this.stats.getSpeed().x(), super.getPosition().y()))));
-                } else {
-                    if (this.jump.y() > 0) {
-                        super.setPosition(super.getPosition()
-                                .add((new Vector2(this.stats.getSpeed().x(), deltaTime * super.getPosition().y()))));
-                    } else if (this.jump.y() < 0) {
-                        super.setPosition(super.getPosition()
-                                .add((new Vector2(this.stats.getSpeed().x(), -deltaTime * super.getPosition().y()))));
-                    }
-                }
+            patrol(deltaTime);
+        }
+    }
+
+    /**
+     * Moves the enemy back and forth horizontally as a patrol behavior.
+     *
+     * @param deltaTime time elapsed since last update
+     */
+    private void patrol(final double deltaTime) {
+        final double speed = this.stats.getSpeed().x();
+        final Vector2 step = new Vector2(speed * direction, 0);
+        final Vector2 target = this.getPosition().add(step);
+
+        this.setPosition(target);
+        setFacingRight(direction > 0);
+    }
+
+    /**
+     * Moves the enemy toward the player position, attempting to navigate obstacles.
+     *
+     * @param deltaTime time elapsed since last update
+     */
+    private void chasePlayer(final double deltaTime) {
+        final Vector2 current = this.getPosition();
+        final Vector2 target = this.stats.getCharacter().getPosition();
+        final Vector2 diff = target.subtract(current).normalize();
+        final Vector2 moveStep = diff.multiply(this.stats.getSpeed());
+        final var manager = super.getLevel().getJumpCollisionManager();
+
+        Vector2 tryMove = current.add(moveStep);
+
+        if (manager.isBlocked(tryMove, stats.getDimensions().width(), stats.getDimensions().height())) {
+            final Vector2 up = current.add(new Vector2(0, -this.stats.getSpeed().y()));
+            final Vector2 down = current.add(new Vector2(0, this.stats.getSpeed().y()));
+
+            if (!manager.isBlocked(up, stats.getDimensions().width(), stats.getDimensions().height())) {
+                tryMove = up;
+            } else if (!manager.isBlocked(down, stats.getDimensions().width(), stats.getDimensions().height())) {
+                tryMove = down;
             } else {
-                if (this.direction > 0) {
-                    super.setPosition(super.getPosition()
-                            .add((new Vector2(-deltaTime * this.stats.getSpeed().x(), super.getPosition().y()))));
-                } else {
-                    if (this.jump.y() > 0) {
-                        super.setPosition(super.getPosition()
-                                .add((new Vector2(this.stats.getSpeed().x(), deltaTime * super.getPosition().y()))));
-                    } else if (this.jump.y() < 0) {
-                        super.setPosition(super.getPosition()
-                                .add((new Vector2(this.stats.getSpeed().x(), -deltaTime * super.getPosition().y()))));
-                    }
-                }
+                return;
             }
         }
+
+        this.setPosition(tryMove);
+        setFacingRight(moveStep.x() > 0);
+    }
+
+    /**
+     * Checks if the enemy can detect the player within its sensing distance.
+     *
+     * @return true if player is within sensing distance, false otherwise
+     */
+    private boolean canSeePlayer() {
+        return this.getPosition().distance(this.stats.getCharacter().getPosition()) <= this.stats.getSenseDistance();
     }
 }
