@@ -71,7 +71,7 @@ public interface StatisticsFactory {
          * @return a new instance of {@link BaseEnemyStatistics}
          */
         BaseEnemyStatistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
-                                                     Vector2 position, Character character, long points, ParamBuilderOptional optionalParams);
+                        Vector2 position, Character character, long points, ParamBuilderOptional optionalParams);
 
         /**
          * Creates a {@link LongRangeEnemyStatistics} instance for enemies with long
@@ -94,9 +94,9 @@ public interface StatisticsFactory {
          * @return a new instance of {@link LongRangeEnemyStatistics}
          */
         LongRangeEnemyStatistics createLongRangeEnemyStatistic(double life, double attack, Vector2 speed,
-                                                               Dimensions dimension, Vector2 position, it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character character, long points,
-                                                               ParamBuilderOptional optionalParams, double projectileAttack, Vector2 projectileVelocity,
-                                                               Dimensions projectileDimensions, int timeAttack);
+                        Dimensions dimension, Vector2 position, Character character, long points,
+                        ParamBuilderOptional optionalParams, double projectileAttack, Vector2 projectileVelocity,
+                        Dimensions projectileDimensions, int timeAttack);
 
         /**
          * Creates a {@link RestrictedBaseEnemyStatistics} instance for enemies with
@@ -115,8 +115,8 @@ public interface StatisticsFactory {
          * @return a new instance of {@link RestrictedBaseEnemyStatistics}
          */
         RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed,
-                                                                           Dimensions dimension, Vector2 position, it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character character, long points,
-                                                                           ParamBuilderOptional optionalParams, double distance);
+                        Dimensions dimension, Vector2 position, Character character, long points,
+                        ParamBuilderOptional optionalParams, double distance);
 
         /**
          * Creates a {@link RestrictedLongRangeEnemyStatistics} instance for enemies
@@ -140,9 +140,9 @@ public interface StatisticsFactory {
          * @return a new instance of {@link RestrictedLongRangeEnemyStatistics}
          */
         RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(double life, double attack, Vector2 speed,
-                                                                              Dimensions dimension, Vector2 position, Character character, long points,
-                                                                              ParamBuilderOptional optionalParams, double projectileAttack, Vector2 projectileVelocity,
-                                                                              Dimensions projectileDimensions, double distance, int timeAttack);
+                        Dimensions dimension, Vector2 position, Character character, long points,
+                        ParamBuilderOptional optionalParams, double projectileAttack, Vector2 projectileVelocity,
+                        Dimensions projectileDimensions, double distance, int timeAttack);
 
         /**
          * <p>

@@ -52,7 +52,7 @@ public class SafeZoneManager {
      * </ul>
      * </p>
      */
-    final private AggroListener listener = () -> {
+    private final AggroListener listener = () -> {
         if (this.isEnteringSafeZone) {
             this.handleSafeZoneEnter();
         } else {
@@ -118,7 +118,7 @@ public class SafeZoneManager {
 
     /**
      * <p>
-     * Triggers the respawn logic by calling {@link EnemyRespawnListener#respawn()}
+     * Triggers the respawn logic by calling {@link EnemyRespawnListener#respawn()}.
      * </p>
      */
     public void resetEnemy() {
