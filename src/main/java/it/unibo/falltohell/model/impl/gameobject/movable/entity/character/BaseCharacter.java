@@ -77,7 +77,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      *
      * @param deltaTime difference between two frames
      */
-    private void move(final double deltaTime) {
+    protected void move(final double deltaTime) {
         Vector2 moveVelocity = Vector2.zero();
         if (this.input.checkCondition("MoveLeft")) {
             moveVelocity = moveVelocity.add(Vector2.left());
