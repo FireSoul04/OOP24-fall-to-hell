@@ -1,18 +1,21 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
 
 import java.util.Map;
+
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.TrackEnemyProjectile;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
+
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -52,7 +55,6 @@ public class Lotawiec extends BaseEnemy {
 
     private LongRangeEnemyStatistics stats;
     private int direction = 1;
-    private Vector2 jump = Vector2.zero();
 
     /**
      * Constructs a new Lotawiec enemy with specified initial position, target
@@ -65,13 +67,14 @@ public class Lotawiec extends BaseEnemy {
      * @param initialCord the initial position of the enemy
      * @param character   the target character this enemy tracks and attacks
      * @param manager     the timer manager handling enemy-specific timers
-     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
+     * @param ingage      the {@link SafeZoneManager} used to handle if the player
+     *                    enter a safe zone
      *
      * @see LongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
     public Lotawiec(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage) {
+            final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                         initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF),
@@ -94,7 +97,8 @@ public class Lotawiec extends BaseEnemy {
      */
     @Override
     public void update(final double deltaTime) {
-        this.move(deltaTime);
+        super.move(deltaTime);
+        super.getDrawable().ifPresent(d -> d.mirror(!super.isFacingRight()));
     }
 
     /**
@@ -103,13 +107,8 @@ public class Lotawiec extends BaseEnemy {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
-            if (direction.y() != 0) {
+            if (direction.x() != 0) {
                 this.direction *= -1;
-            }
-            if (direction.y() > 0) {
-                this.jump = Vector2.down();
-            } else {
-                this.jump = Vector2.up();
             }
         } else if (other instanceof Character) {
             this.stats.getCharacter().setDamagedLife(DAMAGE);
@@ -137,41 +136,40 @@ public class Lotawiec extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void move(final double deltaTime) {
-        final Vector2 chara = this.stats.getCharacter().getPosition();
-        final double charX = this.stats.getCharacter().getPosition().x();
+    protected void patrol(final Vector2 current, final Vector2 speed) {
+        final double speedX = speed.x();
+        final Vector2 step = new Vector2(speedX * direction, 0);
+        final Vector2 target = current.add(step);
 
-        if (chara.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
-            super.setPosition(super.getPosition().add(
-                    (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction, super.getPosition().y()))));
-        } else {
-            if (charX - super.getPosition().x() > 0) {
-                if (this.direction > 0) {
-                    super.setPosition(super.getPosition()
-                            .add((new Vector2(deltaTime * this.stats.getSpeed().x(), super.getPosition().y()))));
-                } else {
-                    if (this.jump.y() > 0) {
-                        super.setPosition(super.getPosition()
-                                .add((new Vector2(this.stats.getSpeed().x(), deltaTime * super.getPosition().y()))));
-                    } else if (this.jump.y() < 0) {
-                        super.setPosition(super.getPosition()
-                                .add((new Vector2(this.stats.getSpeed().x(), -deltaTime * super.getPosition().y()))));
-                    }
-                }
+        this.setPosition(target);
+        setFacingRight(direction > 0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void chase(final Vector2 target, final Vector2 current, final Vector2 speed) {
+        final Vector2 diff = target.subtract(current).normalize();
+        final Vector2 moveStep = diff.multiply(speed);
+        final var manager = super.getLevel().getJumpCollisionManager();
+
+        Vector2 tryMove = current.add(moveStep);
+
+        if (manager.isBlocked(tryMove, stats.getDimensions().width(), stats.getDimensions().height())) {
+            final Vector2 up = current.add(new Vector2(0, -speed.y()));
+            final Vector2 down = current.add(new Vector2(0, speed.y()));
+
+            if (!manager.isBlocked(up, stats.getDimensions().width(), stats.getDimensions().height())) {
+                tryMove = up;
+            } else if (!manager.isBlocked(down, stats.getDimensions().width(), stats.getDimensions().height())) {
+                tryMove = down;
             } else {
-                if (this.direction > 0) {
-                    super.setPosition(super.getPosition()
-                            .add((new Vector2(-deltaTime * this.stats.getSpeed().x(), super.getPosition().y()))));
-                } else {
-                    if (this.jump.y() > 0) {
-                        super.setPosition(super.getPosition()
-                                .add((new Vector2(this.stats.getSpeed().x(), deltaTime * super.getPosition().y()))));
-                    } else if (this.jump.y() < 0) {
-                        super.setPosition(super.getPosition()
-                                .add((new Vector2(this.stats.getSpeed().x(), -deltaTime * super.getPosition().y()))));
-                    }
-                }
+                return;
             }
         }
+
+        this.setPosition(tryMove);
+        setFacingRight(moveStep.x() > 0);
     }
 }

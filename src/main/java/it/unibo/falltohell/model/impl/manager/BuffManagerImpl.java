@@ -14,10 +14,8 @@ import java.util.Map;
  */
 public class BuffManagerImpl implements BuffManager {
 
-    private static final long DURATION = 15 * 1000;
     private final TimerManager timerManager;
     private final Map<String, Buff> buffs;
-    private long counter;
 
     /**
      * Initialization of the BufferManagerClass.
@@ -26,19 +24,33 @@ public class BuffManagerImpl implements BuffManager {
     public BuffManagerImpl(final TimerManager timerManager) {
         this.timerManager = timerManager;
         this.buffs = new HashMap<>();
-        this.counter = 0;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addBuff(final Buff buff) {
-        final String name = "Buff" + this.counter;
-        this.buffs.put(name, buff);
-        buff.apply();
-        this.timerManager.addTimer(name, new CustomTimerImpl(DURATION, buff::remove));
-        this.counter++;
+    public void addBuff(final Buff buff, final long duration, String name) {
+        if (!this.searchBuff(name)) {
+            this.addToManager(buff, name);
+            this.timerManager.addTimer(name, new CustomTimerImpl(duration, buff::remove));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addInfiniteBuff(final Buff buff, String name) {;
+        if (!this.searchBuff(name)) {
+            this.addToManager(buff, name);
+        }
+    }
+
+    @Override
+    public void removeInfiniteBuff(String name) {
+        this.buffs.get(name).remove();
+        this.buffs.remove(name);
     }
 
     /**
@@ -47,9 +59,29 @@ public class BuffManagerImpl implements BuffManager {
     @Override
     public void removeBuffs() {
         for (final var buffEntry : buffs.entrySet()) {
-            this.timerManager.removeTimer(buffEntry.getKey());
+            if (this.timerManager.searchTimer(buffEntry.getKey())) {
+                this.timerManager.removeTimer(buffEntry.getKey());
+            }
             buffEntry.getValue().remove();
         }
         this.buffs.clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean searchBuff(String name) {
+        return this.buffs.containsKey(name);
+    }
+
+    /**
+     * Method to add a buff to the active buffs.
+     * @param buff to be added
+     * @param name of the buff
+     */
+    private void addToManager(final Buff buff, final String name) {
+        this.buffs.put(name, buff);
+        buff.apply();
     }
 }

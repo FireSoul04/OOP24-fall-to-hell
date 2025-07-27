@@ -7,6 +7,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
+import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
 
 import java.util.List;
 import java.util.Map;
@@ -89,4 +90,12 @@ public interface Level {
      * @return all playable characters
      */
     Map<CharacterID, Character> getCharacters();
+
+    /**
+     * Returns the StaticCollisionManager responsible for managing collision checks
+     * specific to jump mechanics.
+     *
+     * @return the StaticCollisionManager used to check collisions during jumps
+     */
+    StaticCollisionManager getJumpCollisionManager();
 }
