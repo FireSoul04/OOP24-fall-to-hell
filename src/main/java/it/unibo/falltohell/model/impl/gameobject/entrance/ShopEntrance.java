@@ -4,6 +4,8 @@ import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.Merchant;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.listener.EnterSafeZoneListener;
+import it.unibo.falltohell.model.api.listener.ExitSafeZoneListener;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.Optional;
@@ -37,10 +39,10 @@ public class ShopEntrance extends BaseEntrance {
         if (other instanceof Character) {
             if (direction.equals(Vector2.right())) {
                 this.merchant.ifPresent(Merchant::restock);
-                this.getListener().call();
+                this.getListenerEnter().ifPresent(EnterSafeZoneListener::call);
             } else if (direction.equals(Vector2.left())) {
                 this.merchant.ifPresent(Merchant::destock);
-                this.getListener().call();
+                this.getListenerExit().ifPresent(ExitSafeZoneListener::call);
             }
         }
     }
