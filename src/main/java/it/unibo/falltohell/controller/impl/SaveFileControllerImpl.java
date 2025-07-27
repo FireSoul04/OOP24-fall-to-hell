@@ -37,7 +37,9 @@ public class SaveFileControllerImpl implements SaveFileController {
      */
     @Override
     public void save(final GameData data) {
-        this.checkExistenceOfFile();
+        if (this.checkExistenceOfFile()) {
+            this.createNewSaveFile();
+        }
         try (
                 BufferedWriter saveOutput = new BufferedWriter(new FileWriter(DIR_PATH + FILE_NAME)
                 )
@@ -74,7 +76,6 @@ public class SaveFileControllerImpl implements SaveFileController {
 
     /**
      * Method to check the existence of the save file and its directory.
-     * If one of them is non-existent, this method creates a new save file.
      *
      * @return if the save file already existed
      */
@@ -83,12 +84,10 @@ public class SaveFileControllerImpl implements SaveFileController {
         boolean existent = true;
         if (!saveDir.exists() || !saveDir.isDirectory()) {
             final boolean savedDir = saveDir.mkdir();
-            this.createNewSaveFile();
             existent = false;
         } else {
             final File saveFile = new File(DIR_PATH + FILE_NAME);
             if (!saveFile.exists()) {
-                this.createNewSaveFile();
                 existent = false;
             }
         }
