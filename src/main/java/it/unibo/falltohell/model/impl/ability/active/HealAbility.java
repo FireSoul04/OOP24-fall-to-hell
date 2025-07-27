@@ -28,8 +28,9 @@ public class HealAbility implements SpecialActiveAbility {
      */
     @Override
     public void activate() {
-        final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
-        statistics.addLife(AMOUNT_MANA_HEAL);
-        statistics.subMana(COST_MANA_HEAL);
+        if (this.caster.subManaIfEnough(COST_MANA_HEAL)) {
+            final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
+            statistics.addLife(AMOUNT_MANA_HEAL);
+        }
     }
 }

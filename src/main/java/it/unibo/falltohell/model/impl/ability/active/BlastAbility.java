@@ -37,11 +37,13 @@ public class BlastAbility implements SpecialActiveAbility {
         final Level level = this.caster.getLevel();
         final TimerManager timerManager = level.getTimerManager();
         final String timerName = "blast_timer";
-        if (!timerManager.searchTimer(timerName)) {
-            final GameObject blast = new Blast(this.caster);
-            final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
-            statistics.subMana(COST_MANA_BLAST);
-            timerManager.addTimer(timerName, new CustomTimerImpl(DURATION, () -> level.removeGameObject(blast)));
+        if (this.caster.hasEnoughMana(COST_MANA_BLAST)) {
+            if (!timerManager.searchTimer(timerName)) {
+                final GameObject blast = new Blast(this.caster);
+                final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
+                statistics.subMana(COST_MANA_BLAST);
+                timerManager.addTimer(timerName, new CustomTimerImpl(DURATION, () -> level.removeGameObject(blast)));
+            }
         }
     }
 }
