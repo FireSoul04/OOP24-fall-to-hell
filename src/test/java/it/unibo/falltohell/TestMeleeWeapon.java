@@ -8,6 +8,7 @@ import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.gameobject.weapons.Dagger;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.test.util.DummyEnemyTest;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Dimensions;
@@ -34,7 +35,7 @@ class TestMeleeWeapon {
     void testDamageOnEnemy() {
         final StatisticsFactory sf = new StatisticFactoryImpl();
         final BaseEnemyStatistics dummyStats = sf.createBaseEnemyStatistic(
-            10, 0, Vector2.zero(), new Dimensions(5, 5),
+            10, 0, Vector2.zero(), new Dimensions(20, 20),
             Vector2.zero(), this.rogue, 0, sf.createOptional()
         );
         final Enemy dummy = new DummyEnemyTest(this.level, Vector2.zero(), dummyStats);
