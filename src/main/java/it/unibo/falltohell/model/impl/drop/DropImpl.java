@@ -39,6 +39,7 @@ import it.unibo.falltohell.util.Vector2;
 public class DropImpl extends MovableImpl implements Drop {
 
     private static final int EXPIRE_TIME = 5000;
+    private static final long BUFF_DURATION = 7000;
     private static final Vector2 VELOCITY = new Vector2(0, -10);
     private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
     private final String name;
@@ -81,7 +82,8 @@ public class DropImpl extends MovableImpl implements Drop {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof Character character) {
-            character.getBuffManager().addBuff(this.buff);
+            final String name = "buff" + this.hashCode();
+            character.getBuffManager().addBuff(this.buff, BUFF_DURATION, name);
             super.getLevel().getTimerManager().removeTimer(this.name);
             super.getLevel().removeGameObject(this);
         } else if (other instanceof BaseCollidableBlock && direction.y() < 0) {

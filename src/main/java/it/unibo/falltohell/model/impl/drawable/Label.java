@@ -84,7 +84,10 @@ public class Label implements Drawable {
     public void setText(final String text) {
         this.text = text;
     }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Priority getPriority() {
         return Priority.GUI;
     }

@@ -3,8 +3,9 @@ package it.unibo.falltohell.model.impl.gameobject.block;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.Entity;
-import it.unibo.falltohell.model.api.statistic.Statistics;
+import it.unibo.falltohell.model.api.manager.BuffManager;
 import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.buff.SpeedBuff;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -14,7 +15,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class VinesBlock extends BaseCollidableBlock {
 
-    private static final double MULTIPLIER = 0.3;
+    private static final double MULTIPLIER = -0.5;
 
     /**
      * Initialization of the VinesBlock class.
@@ -24,7 +25,7 @@ public class VinesBlock extends BaseCollidableBlock {
      * @param fileName is the name of the image file associated to the block
      */
     public VinesBlock(final Level lv, final Vector2 position,
-                      final Collider collider, final String fileName, Vector2 offset) {
+                      final Collider collider, final String fileName, final Vector2 offset) {
         super(lv, position, collider, fileName, offset);
     }
 
@@ -36,8 +37,11 @@ public class VinesBlock extends BaseCollidableBlock {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
-            final Statistics statistics = entity.getStats();
-            statistics.setSpeed(statistics.getInitialSpeed().multiply(MULTIPLIER));
+            final BuffManager buffManager = entity.getBuffManager();
+            final String name = "vines_buff" + entity.hashCode();
+            if (!buffManager.searchBuff(name)) {
+                buffManager.addInfiniteBuff(new SpeedBuff(entity.getStats(), MULTIPLIER),name);
+            }
         }
     }
 
@@ -49,8 +53,12 @@ public class VinesBlock extends BaseCollidableBlock {
     @Override
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
         if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
-            final Statistics statistics = entity.getStats();
-            statistics.setSpeed(statistics.getInitialSpeed());
+            final BuffManager buffManager = entity.getBuffManager();
+            final String name = "vines_buff" + entity.hashCode();
+            if (buffManager.searchBuff(name)) {
+                buffManager.removeInfiniteBuff(name);
+
+            }
         }
     }
 }

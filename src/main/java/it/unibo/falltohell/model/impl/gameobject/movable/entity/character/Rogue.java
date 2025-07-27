@@ -34,6 +34,7 @@ public class Rogue extends BaseCharacter {
         .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20, 25), MANA, ATTACK_SPEED);
 
     private static final long PASSIVE_COOLDOWN_TIME = 2000;
+    private static final long PASSIVE_DURATION = 500;
 
     private final StatisticPassiveAbility evadeAbility;
     private final SpecialActiveAbility knifeAbility;
@@ -57,7 +58,8 @@ public class Rogue extends BaseCharacter {
                     final TimerManager tm = this.getLevel().getTimerManager();
                     final String passiveCooldownTimerName = "cooldown";
                     final Buff speedBuff = new SpeedBuff(STATS, 0.5);
-                    this.getBuffManager().addBuff(speedBuff);
+                    final String name = "buff" + this.hashCode();
+                    this.getBuffManager().addBuff(speedBuff, PASSIVE_DURATION, name);
                     this.canUsePassive = false;
                     if (!tm.searchTimer(passiveCooldownTimerName)) {
                         tm.addTimer(

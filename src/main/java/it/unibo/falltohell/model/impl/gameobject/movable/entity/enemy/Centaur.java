@@ -12,7 +12,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -38,7 +38,7 @@ public class Centaur extends BaseEnemy {
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 20;
-    private static final Vector2 VELOCITY = new Vector2(2, 20);
+    private static final Vector2 VELOCITY = new Vector2(2, 2);
     private static final Map<BuffNames, Double> BUFF = Map.of(
             BuffNames.ATTACK, 10.0,
             BuffNames.ATTACK_SPEED, 20.0,
@@ -64,10 +64,10 @@ public class Centaur extends BaseEnemy {
      * @param character   the target {@link Character} this enemy reacts to
      * @param manager     the {@link EnemyTimerManager} that handles familiar logic
      *                    in this context
-     * @param ingage     the {@link ManagerIngage} used to handle if the player enter a safe zone
+     * @param ingage     the {@link SafeZoneManager} used to handle if the player enter a safe zone
      */
     public Centaur(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final ManagerIngage ingage) {
+            final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                 initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,
                 ingage, "centaur.png");
@@ -80,17 +80,10 @@ public class Centaur extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    public void update(final double deltaTime) {
-        this.move(deltaTime);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
+        super.onCollision(other, direction);
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
-            if (direction.y() != 0) {
+            if (direction == Vector2.right() || direction == Vector2.left()) {
                 if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
                     this.collided = Optional.ofNullable(direction);
                 } else {
@@ -100,8 +93,6 @@ public class Centaur extends BaseEnemy {
         } else if (other instanceof Character) {
             attack();
         }
-        // TODO delete when the tests works without this
-        this.direction *= -1;
         this.setFacingRight(this.direction > 0);
     }
 
@@ -117,39 +108,41 @@ public class Centaur extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void move(final double deltaTime) {
-        final Vector2 character = this.stats.getCharacter().getPosition();
-        final double characterX = this.stats.getCharacter().getPosition().x();
-        final int characterDirection;
+    protected void patrol(final Vector2 current, final Vector2 speed) {
+        final double speedX = speed.x();
+        final Vector2 step = new Vector2(speedX * direction, 0);
+        final Vector2 target = current.add(step);
 
-        if (character.distance(super.getPosition()) > this.stats.getSenseDistance() || !this.getIngage()) {
-            if (this.collided.isEmpty()) {
-                super.setPosition(super.getPosition().add(
-                        (new Vector2(deltaTime * this.stats.getSpeed().x() * this.direction,
-                                super.getPosition().y()))));
+        this.setPosition(target);
+        super.setFacingRight(direction > 0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void chase(final Vector2 target, final Vector2 current, final Vector2 speed) {
+        final Vector2 diff = target.subtract(current).normalize();
+        final Vector2 moveStep = diff.multiply(speed);
+        final var manager = super.getLevel().getJumpCollisionManager();
+
+        Vector2 tryMove = current.add(moveStep);
+
+        if (manager.isBlocked(tryMove, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
+
+            final Vector2 up = current.add(new Vector2(0, -speed.y()));
+            final Vector2 down = current.add(new Vector2(0, speed.y()));
+
+            if (!manager.isBlocked(up, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
+                tryMove = up;
+            } else if (!manager.isBlocked(down, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
+                tryMove = down;
             } else {
-                final double jumpDirection = this.collided.get().x();
-                super.setPosition(super.getPosition().add(
-                        (new Vector2(2 * deltaTime / 3 * super.getPosition().x(),
-                                deltaTime / 3 * this.stats.getSpeed().y() * jumpDirection))));
-            }
-        } else {
-            if (characterX - super.getPosition().x() > 0) {
-                characterDirection = 1;
-            } else {
-                characterDirection = -1;
-            }
-            if (this.direction > 0) {
-                if (this.collided.isEmpty()) {
-                    super.setPosition(super.getPosition().add(
-                            (new Vector2(characterDirection * deltaTime * this.stats.getSpeed().x(),
-                                    super.getPosition().y()))));
-                } else {
-                    super.setPosition(super.getPosition().add(
-                            (new Vector2(characterDirection * 2 * deltaTime / 3 * super.getPosition().x(),
-                                    deltaTime / 3 * this.stats.getSpeed().y()))));
-                }
+                return;
             }
         }
+
+        this.setPosition(tryMove);
+        super.setFacingRight(moveStep.x() > 0);
     }
 }

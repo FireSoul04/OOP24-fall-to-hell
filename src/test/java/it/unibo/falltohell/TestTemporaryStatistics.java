@@ -27,6 +27,7 @@ class TestTemporaryStatistics {
     private static final double TEMPORARY_MANA_MULTIPLIER = 0.5;
     private static final double TEMPORARY_LIFE = LIFE * TEMPORARY_LIFE_MULTIPLIER;
     private static final double TEMPORARY_MANA = MANA * TEMPORARY_MANA_MULTIPLIER;
+    private static final long BUFF_DURATION = 3000;
 
     private Character character;
     private CharacterStatistics stats;
@@ -50,8 +51,8 @@ class TestTemporaryStatistics {
                 return CharacterID.ROGUE;
             }
         };
-        this.character.getBuffManager().addBuff(new LifeBuff(stats, TEMPORARY_LIFE_MULTIPLIER));
-        this.character.getBuffManager().addBuff(new ManaBuff(stats, TEMPORARY_MANA_MULTIPLIER));
+        this.character.getBuffManager().addBuff(new LifeBuff(stats, TEMPORARY_LIFE_MULTIPLIER), BUFF_DURATION, "buff1");
+        this.character.getBuffManager().addBuff(new ManaBuff(stats, TEMPORARY_MANA_MULTIPLIER), BUFF_DURATION, "buff2");
     }
 
     /**

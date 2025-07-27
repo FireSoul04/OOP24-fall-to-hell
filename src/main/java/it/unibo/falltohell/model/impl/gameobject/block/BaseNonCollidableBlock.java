@@ -16,7 +16,7 @@ public class BaseNonCollidableBlock extends GameObjectImpl {
      * @param lv is the level of the block
      * @param position of the block in the level
      */
-    public BaseNonCollidableBlock(Level lv, Vector2 position) {
+    public BaseNonCollidableBlock(final Level lv, final Vector2 position) {
         super(lv, position);
         initDrawable(Priority.HIGH, "base_block.png");
     }

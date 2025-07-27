@@ -52,6 +52,6 @@ public class RestrictedGrEnStatImpl extends GroundEnemyStatBuilderImpl<Restricte
      */
     @Override
     protected RestrictedGrEnStatImpl self() {
-        return (RestrictedGrEnStatImpl) this;
+        return this;
     }
 }

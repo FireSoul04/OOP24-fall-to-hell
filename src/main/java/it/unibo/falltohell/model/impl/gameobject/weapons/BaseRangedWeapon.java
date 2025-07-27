@@ -69,9 +69,6 @@ public abstract class BaseRangedWeapon extends BaseWeapon  {
     protected void onAttack() {
         final Projectile p = createProjectile();
         ammo--;
-        if (!this.canShoot()) {
-            this.reload();
-        }
         this.onShoot(p);
         this.shotProjectile = Optional.of(p);
     }

@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api.listener;
 
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 
 /**
  * Functional interface representing a listener that gets triggered when an
@@ -14,7 +14,7 @@ import it.unibo.falltohell.model.impl.manager.ManagerIngage;
  * It is meant to be implemented as a lambda or method reference.
  *
  * @author Sara Visani
- * @see ManagerIngage
+ * @see SafeZoneManager
  */
 @FunctionalInterface
 public interface AggroListener {

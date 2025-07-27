@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.impl;
 
+import java.awt.Dimension;
+
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.util.Vector2;
 
@@ -16,8 +18,7 @@ public class GameCameraImpl implements GameCamera {
     private final double cameraWidth;
     private final double cameraHeight;
     private final double followSpeed;
-    private final double levelWidth;
-    private final double levelHeight;
+    private Vector2 levelSize;
 
     /**
      * Constructor for the game camera.
@@ -30,13 +31,19 @@ public class GameCameraImpl implements GameCamera {
      * @param levelHeight     the height of the level
      */
     public GameCameraImpl(final Vector2 initialPosition, final double cameraWidth, final double cameraHeight,
-            final double followSpeed, final double levelWidth, final double levelHeight) {
+            final double followSpeed) {
         this.cameraPosition = initialPosition;
         this.cameraWidth = cameraWidth;
         this.cameraHeight = cameraHeight;
         this.followSpeed = followSpeed;
-        this.levelWidth = levelWidth;
-        this.levelHeight = levelHeight;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setLevelSize(Vector2 size){
+        this.levelSize = size;
     }
 
     /**
@@ -75,8 +82,8 @@ public class GameCameraImpl implements GameCamera {
 
         this.cameraPosition = this.cameraPosition.add(difference.multiply(followSpeed * deltaTime));
         this.cameraPosition = new Vector2(
-                Math.max(0, Math.min(this.cameraPosition.x(), levelWidth - cameraWidth)),
-                Math.max(0, Math.min(this.cameraPosition.y(), levelHeight - cameraHeight)));
+                Math.max(0, Math.min(this.cameraPosition.x(), levelSize.x() - cameraWidth)),
+                Math.max(0, Math.min(this.cameraPosition.y(), levelSize.y() - cameraHeight)));
     }
 
 }

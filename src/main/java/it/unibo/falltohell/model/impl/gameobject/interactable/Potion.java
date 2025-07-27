@@ -13,6 +13,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Potion extends BaseItem {
 
+    private static final long POTION_DURATION = 12000;
     private final Buff buff;
 
     /**
@@ -32,6 +33,7 @@ public class Potion extends BaseItem {
 
     @Override
     protected void onInteract(final Character character) {
-        character.getBuffManager().addBuff(this.buff);
+        final String name = "buff" + this.hashCode();
+        character.getBuffManager().addBuff(this.buff, POTION_DURATION, name);
     }
 }

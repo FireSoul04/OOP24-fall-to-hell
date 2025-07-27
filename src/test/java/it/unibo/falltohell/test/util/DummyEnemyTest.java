@@ -5,7 +5,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy;
 import it.unibo.falltohell.model.impl.manager.EnemyTimeManagerImpl;
-import it.unibo.falltohell.model.impl.manager.ManagerIngage;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.util.Vector2;
 
 public class DummyEnemyTest extends BaseEnemy {
@@ -16,7 +16,7 @@ public class DummyEnemyTest extends BaseEnemy {
      * @param stats of the enemy
      */
     public DummyEnemyTest(final Level level, final Vector2 position, final BaseEnemyStatistics stats) {
-        super(level, stats, new EnemyTimeManagerImpl(), new ManagerIngage(), "test.png");
+        super(level, stats, new EnemyTimeManagerImpl(), new SafeZoneManager(), "test.png");
         this.setPosition(position);
     }
 
@@ -50,5 +50,15 @@ public class DummyEnemyTest extends BaseEnemy {
     @Override
     protected void move(final double deltaTime) {
 
+    }
+
+    @Override
+    protected void patrol(Vector2 currentPos, Vector2 speed) {
+
+    }
+
+    @Override
+    protected void chase(Vector2 charaPos, Vector2 currentPos, Vector2 speed) {
+       
     }
 }
