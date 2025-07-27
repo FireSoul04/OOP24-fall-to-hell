@@ -41,7 +41,8 @@ public class DrawableRenderableHandlerImpl implements DrawableRenderableHandler 
     /**
      * {@inheritDoc}
      */
-    public void linkLabel(final Label label){
+    @Override
+    public void linkLabel(final Label label) {
         this.renderableControllers.put(label, new LabelRenderableController(label));
     }
 

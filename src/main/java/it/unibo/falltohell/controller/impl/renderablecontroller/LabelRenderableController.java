@@ -11,12 +11,11 @@ import it.unibo.falltohell.view.impl.renderable.LabelRenderable;
  * @author Casadei Lorenzo
  */
 public class LabelRenderableController extends BaseRenderableController {
-    
+
     /**
      * Constructor for the LabelController.
      * 
      * @param label the model object associated with this controller
-     * @param view  the view object associated with this controller
      */
     public LabelRenderableController(final Label label) {
         super(label, new LabelRenderable(label.isVisible(), label.getPosition(), label.getText()));

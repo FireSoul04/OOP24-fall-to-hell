@@ -34,9 +34,10 @@ public interface DrawableRenderableHandler {
 
     /**
      * Method to update all the renderable objects with their associate drawable's information.
+     * @param camera the camera used to determine the visible elements.
      */
     void updateAll(GameCamera camera);
-
+    
     /**
      * @return a list with all the renderable objects
      */
