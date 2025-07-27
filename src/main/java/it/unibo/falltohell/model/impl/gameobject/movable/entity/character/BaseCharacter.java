@@ -229,7 +229,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
             this.stats.subMana(mana);
         } else {
             this.stats.setTemporaryMana(0);
-            this.stats.subMana(remainingTemporaryMana);
+            this.stats.subMana(-remainingTemporaryMana);
         }
         return true;
     }
