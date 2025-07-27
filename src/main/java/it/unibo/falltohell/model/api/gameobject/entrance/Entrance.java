@@ -12,10 +12,10 @@ public interface Entrance {
     /**
      * @param listener to give to the entrance that tells if the character has entered
      */
-    public void setListenerEnter(EnterSafeZoneListener listener);
+    void setListenerEnter(EnterSafeZoneListener listener);
 
     /**
      * @param listener to give to the entrance that tells if the character has exited
      */
-    public void setListenerExit(ExitSafeZoneListener listener);
+    void setListenerExit(ExitSafeZoneListener listener);
 }
