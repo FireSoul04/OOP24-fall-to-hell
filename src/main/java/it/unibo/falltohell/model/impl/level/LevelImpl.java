@@ -86,7 +86,7 @@ public class LevelImpl implements Level {
 
         this.pointsLabel = new Label("Points: 0", Vector2.zero(), true);
         this.statsLabel = new Label("HP: 0", Vector2.down().multiply(10), true);
-        this.attackLabel = new Label("Attack: 0", Vector2.down().multiply(30), true);
+        this.attackLabel = new Label("Attack: 0", Vector2.down().multiply(20), true);
     }
 
     /**
@@ -212,6 +212,7 @@ public class LevelImpl implements Level {
         this.drh = drh;
         drh.linkLabel(pointsLabel);
         drh.linkLabel(statsLabel);
+        drh.linkLabel(attackLabel);
     }
 
     /**
@@ -245,7 +246,7 @@ public class LevelImpl implements Level {
     public StaticCollisionManager getJumpCollisionManager() {
         return this.jumpCollisionManager;
     }
-    
+
     /**
      * {@inheritDoc}
      */
