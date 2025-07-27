@@ -28,21 +28,21 @@ public class ArcherTest {
 
     @BeforeEach
     void setUp() {
-        
+
         GameCameraImpl camera = new GameCameraImpl(Vector2.zero(), 10, 10, 1.0, 100, 100);
         level = new LevelImpl(camera);
 
-        
+
         archer = new Archer(level, Vector2.zero());
-        
-        
-        
+
+
+
     }
     @Test
     void testShootArrowConsumesAmmoAndAddsToList() {
         int initialAmmo = archer.getBow().getAmmo();
 
-        archer.shootArrow(Vector2.right(), 1.0, 
+        archer.shootArrow(Vector2.right(), 1.0,
         new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
 
         assertEquals(initialAmmo - 1, archer.getBow().getAmmo());
@@ -51,7 +51,7 @@ public class ArcherTest {
 
     @Test
     void testReturnArrowAbilityActivatesReturning() {
-        
+
         for (int i = 0; i < 2; i++) {
             archer.shootArrow(Vector2.left(), 8.0,
             new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
@@ -68,7 +68,7 @@ public class ArcherTest {
     void testArrowReturnRestoresAmmoAndRemovesArrow() {
         int initialAmmo = archer.getBow().getAmmo();
 
-        archer.shootArrow(Vector2.up(), 5.0, 
+        archer.shootArrow(Vector2.up(), 5.0,
             new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
 
         ReturnableArrow arrow = (ReturnableArrow) archer.getShotedArrows().get(0);
@@ -78,7 +78,7 @@ public class ArcherTest {
         arrow.startReturn();
 
         for (int i = 0; i < 60; i++) {
-            arrow.update(0.016);  
+            arrow.update(0.016);
         }
         assertEquals(initialAmmo, archer.getBow().getAmmo());
         assertFalse(archer.getShotedArrows().contains(arrow));

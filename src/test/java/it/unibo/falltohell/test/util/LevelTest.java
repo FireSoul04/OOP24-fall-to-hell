@@ -14,6 +14,8 @@ import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
+import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 
 import java.util.*;
@@ -31,6 +33,7 @@ public class LevelTest implements Level {
     private final Map<CharacterID, Character> characters;
     private GameEventManagerImpl<String> eventManager;
     private Optional<GameData> gameData;
+    private StaticCollisionManager jumpCollisionManager;
 
     /**
      * Creates a new level with default managers.
@@ -43,6 +46,7 @@ public class LevelTest implements Level {
         this.eventManager = new GameEventManagerImpl<>();
         this.gameData = Optional.empty();
         this.characters = new EnumMap<>(CharacterID.class);
+        this.jumpCollisionManager = new StaticCollisionManager();
     }
 
     /**
@@ -59,6 +63,10 @@ public class LevelTest implements Level {
     @Override
     public void addGameObject(final GameObject gameObject) {
         this.gameObjects.add(gameObject);
+
+        if (gameObject instanceof BaseCollidableBlock || gameObject instanceof BaseEntrance) {
+            this.jumpCollisionManager.addObstacle(gameObject);
+        }
     }
 
     /**
@@ -168,6 +176,6 @@ public class LevelTest implements Level {
 
     @Override
     public StaticCollisionManager getJumpCollisionManager() {
-        return null;
+        return this.jumpCollisionManager;
     }
 }

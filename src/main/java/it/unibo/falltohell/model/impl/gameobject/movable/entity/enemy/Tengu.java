@@ -41,7 +41,7 @@ public class Tengu extends BaseEnemy {
     private static final double FULL_LIFE = 10;
     private static final double DAMAGE = 10; // Physical damage
     private static final double DAMAGE_A = 10; // Damage of projectile
-    private static final Vector2 VELOCITY = new Vector2(1, 10);
+    private static final Vector2 VELOCITY = new Vector2(1, 1);
     private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
     private static final double DISTANCE = 10;
 
@@ -108,8 +108,6 @@ public class Tengu extends BaseEnemy {
         } else if (other instanceof Character) {
             this.stats.getCharacter().setDamagedLife(DAMAGE);
         }
-        // TODO delete when the tests works without this
-        this.collided = Optional.of(super.getPosition());
     }
 
     /**

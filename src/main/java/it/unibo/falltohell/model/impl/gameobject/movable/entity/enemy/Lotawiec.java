@@ -7,7 +7,6 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
-
 import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
@@ -41,7 +40,7 @@ public class Lotawiec extends BaseEnemy {
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 20;
-    private static final Vector2 VELOCITY = new Vector2(2, 20);
+    private static final Vector2 VELOCITY = new Vector2(2, 2);
     private static final Dimensions DIMENSIONS_ARROW = new Dimensions(10, 10);
     private static final double DAMAGE_A = 10;
     private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
@@ -113,8 +112,6 @@ public class Lotawiec extends BaseEnemy {
         } else if (other instanceof Character) {
             this.stats.getCharacter().setDamagedLife(DAMAGE);
         }
-        // TODO delete when the tests works without this
-        this.direction *= -1;
         this.setFacingRight(this.direction > 0);
     }
 

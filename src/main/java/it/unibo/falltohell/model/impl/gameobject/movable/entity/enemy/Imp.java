@@ -44,7 +44,7 @@ public class Imp extends BaseEnemy {
     private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
     private static final double FULL_LIFE = 10;
     private static final double DAMAGE = 10;
-    private static final Vector2 VELOCITY = new Vector2(1, 10);
+    private static final Vector2 VELOCITY = new Vector2(1, 1);
     private static final double DISTANCE = 10;
 
     private final RestrictedBaseEnemyStatistics stats;
@@ -93,8 +93,6 @@ public class Imp extends BaseEnemy {
         } else if (other instanceof Character) {
             this.attack();
         }
-        // TODO delete when the tests works without this
-        this.collided = Optional.of(super.getPosition());
     }
 
     /**
