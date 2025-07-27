@@ -101,22 +101,7 @@ public class GameControllerImpl implements GameController {
         eventManager.addCondition("NormalAttack", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_E));
         eventManager.addCondition("ActiveAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_SHIFT));
         eventManager.addCondition("SpecialAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_Q));
-        eventManager.addCondition(
-            "SpAttackLeft",
-            () -> inputListener.isKeyPressed(KeyEvent.VK_A) && inputListener.isKeyPressed(KeyEvent.VK_C)
-        );
-        eventManager.addCondition(
-            "SpAttackRight",
-            () -> inputListener.isKeyPressed(KeyEvent.VK_D) && inputListener.isKeyPressed(KeyEvent.VK_C)
-        );
-        eventManager.addCondition(
-            "SpAttackUp",
-            () -> inputListener.isKeyPressed(KeyEvent.VK_W) && inputListener.isKeyPressed(KeyEvent.VK_C)
-        );
-        eventManager.addCondition(
-            "SpAttackDown",
-            () -> inputListener.isKeyPressed(KeyEvent.VK_S) && inputListener.isKeyPressed(KeyEvent.VK_C)
-        );
+        eventManager.addCondition("SpecialAttack", () -> inputListener.isKeyPressed(KeyEvent.VK_C));
         return eventManager;
     }
 
