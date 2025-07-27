@@ -133,11 +133,7 @@ public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
      * Creates a projectile. By default, returns a ProjectileImpl.
      */
     protected abstract Projectile createProjectile(final Level level, final Vector2 position);
-    /**
-     * Hook for subclasses: called after a projectile is shot.
-     *
-     * @param projectile the projectile that was shot
-     */
+    
     
 
 }

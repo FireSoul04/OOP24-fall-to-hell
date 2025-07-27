@@ -35,19 +35,11 @@ public class Bow extends BaseRangedWeapon {
 
     /**
      * Creates a new {@link ReturnableArrow} when the bow is fired.
-     *
-     * @param level    the level in which the arrow will be spawned
-     * @param position the initial position of the arrow
-     * @param speedX   the horizontal speed of the arrow
-     * @param speedY   the vertical speed of the arrow
-     * @param width    the width of the arrow
-     * @param height   the height of the arrow
-     * @param collider the collider that defines the arrow's shape
      * @return a new {@link ReturnableArrow} instance
      */
     @Override
-    public Projectile createProjectile(final Level level, final Vector2 position) {
-        return new ReturnableArrow(level, position, projectileSpeed, this.getCollider().get(), (Archer)this.getOwner());
+    public Projectile createProjectile() {
+        return new ReturnableArrow(this.getOwner().getLevel(), this.owner.getPosition(), projectileSpeed, this.getCollider().get(), (Archer)this.getOwner());
     }
 
     public void attack() {

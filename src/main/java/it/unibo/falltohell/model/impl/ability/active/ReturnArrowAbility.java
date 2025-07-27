@@ -7,7 +7,7 @@ import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableAr
 
 import java.util.ArrayList;
 
-import it.unibo.falltohell.model.api.level.Level;
+
 
 /**
  * A special ability that causes all arrows previously shot by the archer to
@@ -25,7 +25,7 @@ import it.unibo.falltohell.model.api.level.Level;
 public class ReturnArrowAbility implements SpecialActiveAbility {
 
     private final Archer archer;
-    private final Level level;
+
 
     /**
      * Creates a new ReturnArrowAbility for a specific archer in a given level.
@@ -33,9 +33,8 @@ public class ReturnArrowAbility implements SpecialActiveAbility {
      * @param archer the archer who can activate this ability
      * @param level  the current game level
      */
-    public ReturnArrowAbility(final Archer archer, final Level level) {
+    public ReturnArrowAbility(final Archer archer) {
         this.archer = archer;
-        this.level = level;
     }
 
     /**
@@ -46,7 +45,7 @@ public class ReturnArrowAbility implements SpecialActiveAbility {
      */
     @Override
     public void activate() {
-        for (final Projectile arrow : new ArrayList<>(archer.getShotArrows())) {
+        for (final Projectile arrow : new ArrayList<>(archer.getShotedArrows())) {
             if (arrow instanceof ReturnableArrow r && !r.isReturning()) {
                 r.startReturn();
             }

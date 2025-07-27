@@ -32,7 +32,7 @@ public class Archer extends BaseCharacter {
     private static final double ATTACK_SPEED = 0;
     private static final Vector2 SPEED = new Vector2(3.0, 3.0);
     private static final double MANA = 0;
-    private static final long COOLDONW = 500;
+    private static final long COOLDOWN = 500;
     private static final Vector2 PROJECTILE_SPEED = new Vector2(3.5,3.5);
     private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
             .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,20), MANA, ATTACK_SPEED);
@@ -47,7 +47,7 @@ public class Archer extends BaseCharacter {
      */
     public Archer(final Level level, final Vector2 position) {
         super(level, position, STATISTICS, "archer.png");
-        this.bow = new Bow(this, 5,Optional.empty(), COOLDONW, "bow.png", PROJECTILE_SPEED);
+        this.bow = new Bow(this, 5,Optional.empty(), COOLDOWN, "bow.png", PROJECTILE_SPEED);
 
     }
 
@@ -91,14 +91,6 @@ public class Archer extends BaseCharacter {
         return CharacterID.ARCHER;
     }
 
-    /**
-     * Gets the list of arrows shot by this archer.
-     *
-     * @return the list of shot arrows
-     */
-    public List<Projectile> getShotArrows() {
-        return shotedArrows;
-    }
 
     /**
      * Returns an arrow to the archer's inventory.
