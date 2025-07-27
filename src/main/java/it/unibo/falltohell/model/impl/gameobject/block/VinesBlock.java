@@ -41,8 +41,6 @@ public class VinesBlock extends BaseCollidableBlock {
             final String name = "vines_buff" + entity.hashCode();
             if (!buffManager.searchBuff(name)) {
                 buffManager.addInfiniteBuff(new SpeedBuff(entity.getStats(), MULTIPLIER),name);
-                System.out.println(entity.getStats().getSpeed());
-                System.out.println(entity.getStats().getInitialSpeed());
             }
         }
     }
