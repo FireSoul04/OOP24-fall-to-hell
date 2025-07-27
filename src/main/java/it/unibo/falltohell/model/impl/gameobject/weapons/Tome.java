@@ -15,7 +15,6 @@ public class Tome extends BaseRangedWeapon{
 
     private static final long COOLDOWN = 500;
     private static final int MAX_AMMO = 1;
-    private static final double COST_MANA = 1;
     private static final Vector2 OFFSET = new Vector2(10.0, 5.0);
 
     private final Caster caster;
@@ -35,7 +34,6 @@ public class Tome extends BaseRangedWeapon{
     @Override
     protected Projectile createProjectile(Level level, Vector2 position) {
         final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
-        statistics.subMana(COST_MANA);
         final Vector2 direction = this.caster.isFacingRight() ? Vector2.right() : Vector2.left();
         return new Fireball(direction, this.caster);
     }
