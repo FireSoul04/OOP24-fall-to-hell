@@ -14,6 +14,7 @@ public class Tome extends BaseRangedWeapon{
 
     private static final long COOLDOWN = 500;
     private static final int MAX_AMMO = 1;
+    private static final Vector2 OFFSET = new Vector2(10.0, 5.0);
 
     private final Caster caster;
     /**
@@ -22,7 +23,7 @@ public class Tome extends BaseRangedWeapon{
      * @param caster       is the caster user of the tome
      */
     public Tome(Caster caster) {
-        super(caster, MAX_AMMO, COOLDOWN, "tome.png");
+        super(caster, MAX_AMMO, COOLDOWN, "tome.png", OFFSET);
         this.caster = caster;
     }
 
