@@ -234,7 +234,11 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         return true;
     }
 
-    private boolean hasEnoughMana(final double mana) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasEnoughMana(final double mana) {
         return this.stats.getMana() + this.stats.getTemporaryMana() >= mana;
     }
 
