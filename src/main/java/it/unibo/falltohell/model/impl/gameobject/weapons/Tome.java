@@ -2,7 +2,6 @@ package it.unibo.falltohell.model.impl.gameobject.weapons;
 
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
-import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Fireball;
 import it.unibo.falltohell.util.Vector2;
@@ -33,7 +32,6 @@ public class Tome extends BaseRangedWeapon{
      */
     @Override
     protected Projectile createProjectile(Level level, Vector2 position) {
-        final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
         final Vector2 direction = this.caster.isFacingRight() ? Vector2.right() : Vector2.left();
         return new Fireball(direction, this.caster);
     }
