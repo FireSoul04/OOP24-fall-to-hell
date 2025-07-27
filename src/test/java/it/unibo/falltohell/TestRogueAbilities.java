@@ -6,6 +6,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.factory.StatisticsFactory;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.GameDataImpl;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Knife;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,6 +38,7 @@ class TestRogueAbilities {
     void initialization() {
         final GameEventManagerImpl<String> eventManager = new GameEventManagerImpl<>();
         eventManager.addCondition("ActiveAbility", () -> steps < 1);
+        eventManager.addCondition("NormalAttack", () -> false);
         eventManager.addCondition("MoveLeft", () -> false);
         eventManager.addCondition("MoveRight", () -> false);
         eventManager.addCondition("MoveUp", () -> false);
@@ -45,6 +48,7 @@ class TestRogueAbilities {
         this.level = new LevelTest();
         this.level.setGameEventManager(eventManager);
         this.rogue = new Rogue(this.level, Vector2.zero());
+        this.level.linkGameData(new GameDataImpl(Map.of(this.rogue.getCharacterID(), this.rogue)));
     }
 
     /**
@@ -92,7 +96,7 @@ class TestRogueAbilities {
         final StatisticsFactory sf = new StatisticFactoryImpl();
         final BaseEnemyStatistics enemyStats = sf.createBaseEnemyStatistic(
             10, 0, Vector2.zero(), new Dimensions(5, 5),
-            enemyPosition, this.rogue, 0, sf.createOptional()
+            enemyPosition, this.rogue, 1, sf.createOptional()
         );
         final Enemy dummy = new DummyEnemyTest(this.level, Vector2.zero(), enemyStats);
         final double initialLife = dummy.getStats().getLife();
