@@ -32,7 +32,7 @@ public class AABBCollisionsManager extends AbstractCollisionsManager {
                 && p1.y() + s1.height() > p2.y()
                 && p1.y() < p2.y() + s2.height();
             if (collided) {
-                return Optional.of(new Collision(this.getDirection(p1, p2)));
+                return Optional.of(new Collision(this.getDirection(p1, p2, s1, s2)));
             }
             return Optional.empty();
         } else {
@@ -40,8 +40,10 @@ public class AABBCollisionsManager extends AbstractCollisionsManager {
         }
     }
 
-    private Vector2 getDirection(final Vector2 p1, final Vector2 p2) {
-        final Vector2 direction = p2.subtract(p1);
+    private Vector2 getDirection(final Vector2 p1, final Vector2 p2, final Dimensions s1, final Dimensions s2) {
+        final Vector2 offset1 = new Vector2(s1.width(), s1.height()).divide(2);
+        final Vector2 offset2 = new Vector2(s2.width(), s2.height()).divide(2);
+        final Vector2 direction = p2.subtract(offset1).subtract(p1.subtract(offset2));
         if (Math.abs(direction.x()) >= Math.abs(direction.y())) {
             return new Vector2(Math.signum(direction.x()), 0);
         } else {
