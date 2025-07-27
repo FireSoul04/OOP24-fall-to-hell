@@ -127,8 +127,8 @@ public class LevelImpl implements Level {
     @Override
     public void update(final double deltaTime) {
         this.gameData.ifPresent(d -> {
-            this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime);
             d.getCurrentCharacter().update(deltaTime);
+            this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime);
             this.pointsLabel.setText("Points: " + d.getPoints());
             this.statsLabel.setText("HP: " + d.getCurrentCharacter().getStats().getLife());
         });
