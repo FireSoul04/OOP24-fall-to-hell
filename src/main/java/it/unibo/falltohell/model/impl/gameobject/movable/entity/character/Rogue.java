@@ -106,15 +106,6 @@ public class Rogue extends BaseCharacter {
 
     /**
      * {@inheritDoc}
-     * Active passive ability on take damage.
-     */
-    @Override
-    public void setDamagedLife(final double damage) {
-        super.setDamagedLife(damage);
-    }
-
-    /**
-     * {@inheritDoc}
      * Activate passive ability when rogue get hit by enemy or enemy projectile.
      */
     @Override

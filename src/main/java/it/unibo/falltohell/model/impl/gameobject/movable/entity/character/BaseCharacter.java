@@ -205,6 +205,43 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * {@inheritDoc}
      */
     @Override
+    public void addMana(final double mana) {
+        final double exceedingMana = this.stats.getMana() + mana - this.stats.getInitialMana();
+        if (exceedingMana <= 0) {
+            this.stats.addMana(mana);
+        } else {
+            this.stats.setMana(this.stats.getInitialMana());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean subManaIfEnough(final double mana) {
+        if (!this.hasEnoughMana(mana)) {
+            return false;
+        }
+        final double remainingTemporaryMana = this.stats.getTemporaryMana() - mana;
+        if (remainingTemporaryMana == 0) {
+            this.stats.setTemporaryMana(0);
+        } else if (remainingTemporaryMana > 0) {
+            this.stats.subMana(mana);
+        } else {
+            this.stats.setTemporaryMana(0);
+            this.stats.subMana(remainingTemporaryMana);
+        }
+        return true;
+    }
+
+    private boolean hasEnoughMana(final double mana) {
+        return this.stats.getMana() + this.stats.getTemporaryMana() >= mana;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void enable() {
         this.getDrawable().ifPresent(t -> t.setVisible(true));
         this.getEquippedWeapon().flatMap(GameObject::getDrawable).ifPresent(t -> t.setVisible(true));

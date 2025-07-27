@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.ability.active;
 
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.manager.TimerManager;
+import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Knife;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class ThrowKnifeAbility implements SpecialActiveAbility {
 
+    private static final double ABILITY_COST = 3;
     private static final long COOLDOWN_TIME = 3000;
     private static final List<Vector2> KNIFES_VELOCITIES = List.of(
         new Vector2(4.0, 0.0),
@@ -36,7 +38,8 @@ public class ThrowKnifeAbility implements SpecialActiveAbility {
      */
     @Override
     public void activate() {
-        if (this.canActivate) {
+        final CharacterStatistics stats = (CharacterStatistics) this.rogue.getStats();
+        if (this.canActivate && this.rogue.subManaIfEnough(ABILITY_COST)) {
             final String timerName = "knife-ability-cooldown";
             if (!this.tm.searchTimer(timerName)) {
                 this.tm.addTimer(timerName, this.cooldownTimer);

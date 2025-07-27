@@ -94,7 +94,7 @@ public class GameControllerImpl implements GameController {
         );
         eventManager.addCondition(
             "MoveDown",
-            () -> inputListener.isKeyPressed(KeyEvent.VK_W) || inputListener.isKeyPressed(KeyEvent.VK_DOWN)
+            () -> inputListener.isKeyPressed(KeyEvent.VK_S) || inputListener.isKeyPressed(KeyEvent.VK_DOWN)
         );
         eventManager.addCondition("Interact", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_F));
         eventManager.addCondition("Jump", () -> inputListener.isKeyPressed(KeyEvent.VK_SPACE));
@@ -115,7 +115,7 @@ public class GameControllerImpl implements GameController {
         );
         eventManager.addCondition(
             "SpAttackDown",
-            () -> inputListener.isKeyPressed(KeyEvent.VK_W) && inputListener.isKeyPressed(KeyEvent.VK_C)
+            () -> inputListener.isKeyPressed(KeyEvent.VK_S) && inputListener.isKeyPressed(KeyEvent.VK_C)
         );
         return eventManager;
     }
