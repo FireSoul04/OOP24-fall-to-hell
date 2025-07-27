@@ -7,6 +7,8 @@ import java.util.Set;
 
 import it.unibo.falltohell.model.api.listener.AggroListener;
 import it.unibo.falltohell.model.api.listener.EnemyRespawnListener;
+import it.unibo.falltohell.model.api.listener.EnterSafeZoneListener;
+import it.unibo.falltohell.model.api.listener.ExitSafeZoneListener;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 
@@ -36,8 +38,8 @@ public class SafeZoneManager {
 
     private final Set<BaseEntrance> entrances = new HashSet<>();
     private final Set<Enemy> enemies = new HashSet<>();
-    private boolean isEnteringSafeZone = true;
     private final List<EnemyRespawnListener> enemyCallbacks = new ArrayList<>();
+    private boolean hasFirstEntered;
 
     /**
      * <p>
@@ -52,15 +54,15 @@ public class SafeZoneManager {
      * </ul>
      * </p>
      */
-    private final AggroListener listener = () -> {
-        if (this.isEnteringSafeZone) {
-            this.handleSafeZoneEnter();
-        } else {
-            this.handleSafeZoneExit();
-            this.resetEnemy();
-        }
-        this.toggleSafeZoneState();
+    private final EnterSafeZoneListener listener = () -> {
+        this.handleSafeZoneEnter();
+        this.hasFirstEntered = true;
+    };
 
+    private final ExitSafeZoneListener exitListener = () -> {
+        if(this.hasFirstEntered){
+            this.handleSafeZoneExit();
+        }
     };
 
     /**
@@ -72,9 +74,8 @@ public class SafeZoneManager {
      * @return the shared {@link AggroListener} that toggles all enemy engagement
      *         states
      */
-    public AggroListener addEntrance(final BaseEntrance entrance) {
+    public void addEntrance(final BaseEntrance entrance) {
         this.entrances.add(entrance);
-        return this.listener;
     }
 
     /**
@@ -141,17 +142,5 @@ public class SafeZoneManager {
      */
     private void handleSafeZoneExit() {
         this.enemies.forEach(enemy -> enemy.getLevel().addGameObject(enemy));
-    }
-
-    /**
-     * <p>
-     * Toggles the current safe zone state.
-     * </p>
-     * <p>
-     * If the current state is "entering", it will become "exiting", and vice versa.
-     * </p>
-     */
-    private void toggleSafeZoneState() {
-        this.isEnteringSafeZone = !this.isEnteringSafeZone;
     }
 }
