@@ -164,13 +164,9 @@ public class Tengu extends BaseEnemy {
                             new Vector2(this.stats.getInitialPos().x() + this.stats.getDistance() * this.direction, y));
                     this.direction *= -1;
                 }
-                this.facingRight = this.direction > 0;
+                this.setFacingRight(this.direction > 0);
             } else {
-                if (chara.x() - super.getPosition().x() > 0) {
-                    this.facingRight = true;
-                } else {
-                    this.facingRight = false;
-                }
+                this.setFacingRight(chara.x() - super.getPosition().x() > 0);
                 if ((chara.x() <= this.stats.getDistance() + this.stats.getInitialPos().x())
                         && (chara.x() >= this.stats.getInitialPos().x() - this.stats.getDistance())) {
                     if (chara.distance(super.getPosition()) > super.getPosition()

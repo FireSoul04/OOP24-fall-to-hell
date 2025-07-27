@@ -47,7 +47,7 @@ public class Archer extends BaseCharacter {
      */
     public Archer(final Level level, final Vector2 position) {
         super(level, position, STATISTICS, "archer.png");
-        this.bow = new Bow(this, 5,Optional.empty(), COOLDOWN, "bow.png", PROJECTILE_SPEED);
+        this.bow = new Bow(this, 5, COOLDOWN, "bow.png", PROJECTILE_SPEED);
 
     }
 

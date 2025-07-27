@@ -64,4 +64,14 @@ public interface Character extends Entity {
      * @return buff manager of the character
      */
     BuffManager getBuffManager();
+
+    /**
+     * Enable the current character as the player.
+     */
+    void enable();
+
+    /**
+     * Disable the current character.
+     */
+    void disable();
 }

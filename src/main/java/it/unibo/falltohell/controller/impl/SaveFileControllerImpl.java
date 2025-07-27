@@ -37,14 +37,8 @@ public class SaveFileControllerImpl implements SaveFileController {
      */
     @Override
     public void save(final GameData data) {
-        final File saveDir = new File(DIR_PATH);
-        if (!saveDir.exists() || !saveDir.isDirectory()) {
-            final boolean savedDir = saveDir.mkdir();
-            try {
-                final boolean newSaveFile = new File(DIR_PATH + FILE_NAME).createNewFile();
-            } catch (final IOException e) {
-                this.logger.severe("The save file was not created correctly:" + e);
-            }
+        if (this.checkExistenceOfFile()) {
+            this.createNewSaveFile();
         }
         try (
                 BufferedWriter saveOutput = new BufferedWriter(new FileWriter(DIR_PATH + FILE_NAME)
@@ -68,12 +62,47 @@ public class SaveFileControllerImpl implements SaveFileController {
      */
     @Override
     public GameData load(final Map<CharacterID, Character> characters) {
-        final List<String> fileLines = new FileControllerImpl().read(DIR_PATH + FILE_NAME);
-        final long points = Long.parseLong(fileLines.get(0));
-        final CharacterID currentCharacterID = Enum.valueOf(CharacterID.class, fileLines.get(1));
-        final Vector2 position = new Vector2(
-                Double.parseDouble(fileLines.get(2)), Double.parseDouble(fileLines.get(3)));
-        return new GameDataImpl(points, currentCharacterID, characters, position);
+        if(this.checkExistenceOfFile()) {
+            final List<String> fileLines = new FileControllerImpl().read(DIR_PATH + FILE_NAME);
+            final long points = Long.parseLong(fileLines.get(0));
+            final CharacterID currentCharacterID = Enum.valueOf(CharacterID.class, fileLines.get(1));
+            final Vector2 position = new Vector2(
+                    Double.parseDouble(fileLines.get(2)), Double.parseDouble(fileLines.get(3)));
+            return new GameDataImpl(points, currentCharacterID, characters, position);
+        }
+        return new GameDataImpl(characters);
+
+    }
+
+    /**
+     * Method to check the existence of the save file and its directory.
+     *
+     * @return if the save file already existed
+     */
+    private boolean checkExistenceOfFile() {
+        final File saveDir = new File(DIR_PATH);
+        boolean existent = true;
+        if (!saveDir.exists() || !saveDir.isDirectory()) {
+            final boolean savedDir = saveDir.mkdir();
+            existent = false;
+        } else {
+            final File saveFile = new File(DIR_PATH + FILE_NAME);
+            if (!saveFile.exists()) {
+                existent = false;
+            }
+        }
+        return existent;
+    }
+
+    /**
+     * Method to create a new save file.
+     */
+    private void createNewSaveFile() {
+        try {
+            final boolean newSaveFile = new File(DIR_PATH + FILE_NAME).createNewFile();
+        } catch (final IOException e) {
+            this.logger.severe("The save file was not created correctly:" + e);
+        }
     }
 
 }

@@ -11,22 +11,43 @@ import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Priority;
+import it.unibo.falltohell.util.Vector2;
 
 import java.util.Optional;
 
 public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
 
     private final Character owner;
+    private final Vector2 offset;
     private final long cooldownTime;
     private boolean attacking;
 
+    /**
+     * Creates an abstract weapon.
+     * @param owner of the weapon
+     * @param collider of the weapon if it has one
+     * @param cooldownTime time to elapse between every attack
+     * @param fileName of the weapon's drawable
+     * @param offset where to set the position based on the owner's position
+     */
     public BaseWeapon(final Character owner, final Optional<Collider> collider,
-                      final long cooldownTime, final String fileName) {
+                      final long cooldownTime, final String fileName, final Vector2 offset) {
         super(owner.getLevel(), owner.getPosition(), collider.orElse(new BoxCollider(new Dimensions(0, 0))));
         this.owner = owner;
+        this.offset = offset;
         this.cooldownTime = cooldownTime;
         this.attacking = false;
         this.initDrawable(Priority.MEDIUM, fileName);
+    }
+
+    @Override
+    public void update() {
+        this.getDrawable().ifPresent(t -> {
+            t.mirror(!this.getOwner().isFacingRight());
+            t.setVisible(this.attacking);
+        });
+        final Vector2 offset = new Vector2(this.offset.x() * (this.owner.isFacingRight() ? 1.0 : -1.0), 0);
+        this.setPosition(this.owner.getPosition().add(offset));
     }
 
     /**

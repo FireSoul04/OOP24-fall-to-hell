@@ -21,7 +21,7 @@ public class SpriteRenderable extends BaseRenderable {
     }
 
     @Override
-    void render(final Graphics graphics) {
+    public void render(final Graphics graphics) {
         if (this.isVisible()) {
             final AffineTransform transform = new AffineTransform();
             final Graphics2D graphics2D = (Graphics2D) graphics;

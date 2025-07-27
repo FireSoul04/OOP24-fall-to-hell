@@ -24,7 +24,7 @@ public class BaseEntrance extends GameObjectImpl {
      * @param position is the position of the entrance in the level
      */
     public BaseEntrance(final Level lv, final Vector2 position) {
-        super(lv, position, false, new BoxCollider(Vector2.up().multiply(OFFSET), DIMENSIONS));
+        super(lv, position, new BoxCollider(Vector2.up().multiply(OFFSET), DIMENSIONS));
         this.listener = new EnemyFactoryImpl().askManager(lv).addEntrance(this);
     }
 
