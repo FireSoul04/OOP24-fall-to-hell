@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.impl.buff;
 
-import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.api.statistic.Statistics;
 
 /**
  * Class that represents a buff associated with the attack statistic.
@@ -14,15 +14,15 @@ public class AttackBuff extends BaseBuff {
     /**
      * Initialization of the AttackBuff class.
      *
-     * @param characterStatistics is the set of statistics associated with the
-     *                            character
+     * @param statistics is the set of statistics associated with an
+     *                            entity
      * @param multiplier          is the value used to compute the buff amount that
      *                            should be
-     *                            between 0 and 1
+     *                            between -1 and 1
      */
-    public AttackBuff(final CharacterStatistics characterStatistics, final double multiplier) {
-        super(characterStatistics, multiplier);
-        this.buffAmount = super.getCharacterStatistics().getInitialAttack() * multiplier;
+    public AttackBuff(final Statistics statistics, final double multiplier) {
+        super(statistics, multiplier);
+        this.buffAmount = statistics.getInitialAttack() * multiplier;
     }
 
     /**
@@ -30,7 +30,7 @@ public class AttackBuff extends BaseBuff {
      */
     @Override
     public void apply() {
-        super.getCharacterStatistics().addAttack(buffAmount);
+        this.getCharacterStatistics().addAttack(buffAmount);
     }
 
     /**
@@ -38,6 +38,6 @@ public class AttackBuff extends BaseBuff {
      */
     @Override
     public void remove() {
-        super.getCharacterStatistics().subAttack(buffAmount);
+        this.getCharacterStatistics().subAttack(buffAmount);
     }
 }
