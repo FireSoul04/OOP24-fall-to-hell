@@ -41,7 +41,7 @@ public class Imp extends BaseEnemy {
 
     private static final double CHAR_DISTANCE = 20;
     private static final double REGEN_STAT = 0.1;
-    private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
+    private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 10;
     private static final double DAMAGE = 10;
     private static final Vector2 VELOCITY = new Vector2(1, 1);

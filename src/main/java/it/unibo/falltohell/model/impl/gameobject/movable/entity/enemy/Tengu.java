@@ -36,7 +36,7 @@ public class Tengu extends BaseEnemy {
     private static final double CHAR_DISTANCE = 20;
     private static final int ATTACK_TIME = 4000;
     private static final double REGEN_STAT = 0.1;
-    private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
+    private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final Dimensions DIMENSIONS_ARROW = new Dimensions(10, 10);
     private static final double FULL_LIFE = 10;
     private static final double DAMAGE = 10; // Physical damage

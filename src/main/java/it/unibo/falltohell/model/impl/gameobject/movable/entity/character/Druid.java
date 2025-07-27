@@ -151,11 +151,11 @@ public class Druid extends BaseCharacter {
      */
     private void handleAttackInput() {
         super.attack();
-        if (this.input.checkCondition("SpecialAbility") && this.tryPayCost(CREATION_COST)) {
+        if (this.input.checkCondition("SpecialAbility") && super.subManaIfEnough(CREATION_COST)) {
             this.sAactive = true;
             this.factory.createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
-        if (this.sAactive && this.spAtkCalled() && this.manager.isFree() && this.tryPayCost(ATTACK_COST)) {
+        if (this.sAactive && this.spAtkCalled() && this.manager.isFree() && super.subManaIfEnough(ATTACK_COST)) {
             Vector2 direction = Vector2.zero();
 
             if (this.input.checkCondition("SaAttackRight")) {
@@ -170,28 +170,6 @@ public class Druid extends BaseCharacter {
 
             this.manager.attack(direction);
         }
-    }
-
-    /**
-     * <p>
-     * Attempts to pay the mana cost using regular and temporary mana.
-     * </p>
-     *
-     * @param cost the cost to pay
-     * @return true if the cost was successfully paid, false otherwise
-     */
-    private boolean tryPayCost(final double cost) {
-        if (this.stats.getMana() + this.stats.getTemporaryMana() - cost >= 0) {
-            if (this.stats.getTemporaryMana() > 0) {
-                final var remaining = cost - this.stats.getTemporaryMana();
-                this.stats.setTemporaryMana(0);
-                this.stats.subMana(remaining);
-            } else {
-                this.stats.subMana(cost);
-            }
-            return true;
-        }
-        return false;
     }
 
     /**
