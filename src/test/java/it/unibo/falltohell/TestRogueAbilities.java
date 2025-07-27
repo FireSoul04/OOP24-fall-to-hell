@@ -7,7 +7,6 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.factory.StatisticsFactory;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.GameDataImpl;
-import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Knife;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
@@ -25,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TestRogueAbilities {
 
-    private static final int STEPS = 500;
+    private static final int MAX_UPDATES = 500;
 
     private Character rogue;
     private Level level;
@@ -55,7 +54,7 @@ class TestRogueAbilities {
             .filter(t -> t instanceof Knife)
             .map(GameObject::getPosition)
             .toList();
-        while (steps < STEPS) {
+        while (steps < MAX_UPDATES) {
             this.level.update(1.0);
             steps++;
         }
@@ -81,6 +80,9 @@ class TestRogueAbilities {
         );
     }
 
+    /**
+     * Test if thrown knives are dealing damage.
+     */
     @Test
     void TestKnifeDamageOnEnemy() {
         final Vector2 enemyPosition = new Vector2(100.0, 0.0);
@@ -91,7 +93,7 @@ class TestRogueAbilities {
         );
         final Enemy dummy = new DummyEnemyTest(this.level, Vector2.zero(), enemyStats);
         final double initialLife = dummy.getStats().getLife();
-        while (steps < STEPS) {
+        while (steps < MAX_UPDATES) {
             this.level.update(1.0);
             steps++;
         }
