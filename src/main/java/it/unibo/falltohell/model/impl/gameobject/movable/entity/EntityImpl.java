@@ -130,7 +130,7 @@ public class EntityImpl extends MovableImpl implements Entity {
         this.applyGravity(deltaTime);
         this.setPosition(this.getPosition().add(this.velocity));
         this.velocity = Vector2.zero();
-        this.getDrawable().ifPresent(drawable -> drawable.mirror(!this.isFacingRight));
+        this.getDrawable().ifPresent(drawable -> drawable.mirror(!this.facingRight));
     }
 
     /**
