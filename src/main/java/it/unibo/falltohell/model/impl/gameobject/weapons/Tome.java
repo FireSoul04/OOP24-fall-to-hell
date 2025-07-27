@@ -31,7 +31,7 @@ public class Tome extends BaseRangedWeapon{
      * {@inheritDoc}
      */
     @Override
-    protected Projectile createProjectile(Level level, Vector2 position) {
+    protected Projectile createProjectile() {
         final Vector2 direction = this.caster.isFacingRight() ? Vector2.right() : Vector2.left();
         return new Fireball(direction, this.caster);
     }
