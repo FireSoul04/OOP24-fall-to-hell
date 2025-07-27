@@ -74,6 +74,9 @@ public class EntityImpl extends MovableImpl implements Entity {
         return this.stats.getLife() <= 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isFacingRight() {
         return this.isFacingRight;
@@ -82,7 +85,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     /**
      * @param facingRight tells if an object is facing right
      */
-    protected void setFacingRight(boolean facingRight) {
+    protected void setFacingRight(final boolean facingRight) {
         this.isFacingRight = facingRight;
     }
 
