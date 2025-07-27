@@ -122,7 +122,7 @@ public class EntityImpl extends MovableImpl implements Entity {
      * Apply the gravity and all forces of the entity in this frame.
      */
     @Override
-    public void update(double deltaTime) {
+    public void update(final double deltaTime) {
         this.applyGravity(deltaTime);
         this.setPosition(this.getPosition().add(this.velocity));
         this.velocity = Vector2.zero();
