@@ -36,17 +36,8 @@ class TestRogueAbilities {
      */
     @BeforeEach
     void initialization() {
-        final GameEventManagerImpl<String> eventManager = new GameEventManagerImpl<>();
-        eventManager.addCondition("ActiveAbility", () -> steps < 1);
-        eventManager.addCondition("NormalAttack", () -> false);
-        eventManager.addCondition("MoveLeft", () -> false);
-        eventManager.addCondition("MoveRight", () -> false);
-        eventManager.addCondition("MoveUp", () -> false);
-        eventManager.addCondition("MoveDown", () -> false);
-        eventManager.addCondition("Interact", () -> false);
-        eventManager.addCondition("Jump", () -> false);
         this.level = new LevelTest();
-        this.level.setGameEventManager(eventManager);
+        this.level.getGameEventManager().addCondition("ActiveAbility", () -> steps < 1);
         this.rogue = new Rogue(this.level, Vector2.zero());
         this.level.linkGameData(new GameDataImpl(Map.of(this.rogue.getCharacterID(), this.rogue)));
     }
