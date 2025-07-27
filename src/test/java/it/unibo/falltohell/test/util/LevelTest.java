@@ -37,7 +37,8 @@ public class LevelTest implements Level {
 
     /**
      * Creates a new level with default managers.
-     * The game objects list and event manager are empty by default.
+     * The game objects list is empty by default.
+     * The game event manager has every character dependant event false.
      */
     public LevelTest() {
         this.gameObjects = new ArrayList<>();
@@ -47,6 +48,15 @@ public class LevelTest implements Level {
         this.gameData = Optional.empty();
         this.characters = new EnumMap<>(CharacterID.class);
         this.jumpCollisionManager = new StaticCollisionManager();
+
+        this.eventManager.addCondition("ActiveAbility", () -> false);
+        this.eventManager.addCondition("NormalAttack", () -> false);
+        this.eventManager.addCondition("MoveLeft", () -> false);
+        this.eventManager.addCondition("MoveRight", () -> false);
+        this.eventManager.addCondition("MoveUp", () -> false);
+        this.eventManager.addCondition("MoveDown", () -> false);
+        this.eventManager.addCondition("Interact", () -> false);
+        this.eventManager.addCondition("Jump", () -> false);
     }
 
     /**
