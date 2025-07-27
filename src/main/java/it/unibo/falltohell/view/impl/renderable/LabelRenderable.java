@@ -14,6 +14,9 @@ import java.awt.Color;
  * @author Casadei Lorenzo
  */
 public class LabelRenderable extends BaseRenderable {
+
+    private static final int Y_OFFSET = 10;
+
     private String text;
     
     /**
@@ -57,7 +60,7 @@ public class LabelRenderable extends BaseRenderable {
     public void render(Graphics g) {
         if(isVisible()) {
             g.setColor(Color.WHITE);
-            g.drawString(text, (int) getPosition().x(), (int) getPosition().y());
+            g.drawString(text, (int) getPosition().x(), (int) getPosition().y() + Y_OFFSET);
         }
     }
 }
