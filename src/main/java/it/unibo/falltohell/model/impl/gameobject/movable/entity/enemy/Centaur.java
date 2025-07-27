@@ -116,7 +116,7 @@ public class Centaur extends BaseEnemy {
         final Vector2 target = current.add(step);
 
         this.setPosition(target);
-        setFacingRight(direction > 0);
+        super.setFacingRight(direction > 0);
     }
 
     /**
@@ -130,14 +130,14 @@ public class Centaur extends BaseEnemy {
 
         Vector2 tryMove = current.add(moveStep);
 
-        if (manager.isBlocked(tryMove, stats.getDimensions().width(), stats.getDimensions().height())) {
+        if (manager.isBlocked(tryMove, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
 
             final Vector2 up = current.add(new Vector2(0, -speed.y()));
             final Vector2 down = current.add(new Vector2(0, speed.y()));
 
-            if (!manager.isBlocked(up, stats.getDimensions().width(), stats.getDimensions().height())) {
+            if (!manager.isBlocked(up, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
                 tryMove = up;
-            } else if (!manager.isBlocked(down, stats.getDimensions().width(), stats.getDimensions().height())) {
+            } else if (!manager.isBlocked(down, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
                 tryMove = down;
             } else {
                 return;
@@ -145,6 +145,6 @@ public class Centaur extends BaseEnemy {
         }
 
         this.setPosition(tryMove);
-        setFacingRight(moveStep.x() > 0);
+        super.setFacingRight(moveStep.x() > 0);
     }
 }
