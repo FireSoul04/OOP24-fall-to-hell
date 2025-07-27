@@ -3,13 +3,13 @@ package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.ability.passive.StatisticPassiveAbilityImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.weapons.BaseRangedWeapon;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import java.util.List;
-import java.util.Optional;
 import java.util.ArrayList;
 import it.unibo.falltohell.model.impl.gameobject.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableArrow;
@@ -34,6 +34,7 @@ public class Archer extends BaseCharacter {
     private static final double MANA = 0;
     private static final long COOLDOWN = 500;
     private static final Vector2 PROJECTILE_SPEED = new Vector2(3.5,3.5);
+    private final StatisticPassiveAbilityImpl bonusDamage;
     private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
             .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,20), MANA, ATTACK_SPEED);
 
@@ -48,6 +49,12 @@ public class Archer extends BaseCharacter {
     public Archer(final Level level, final Vector2 position) {
         super(level, position, STATISTICS, "archer.png");
         this.bow = new Bow(this, 5, COOLDOWN, "bow.png", PROJECTILE_SPEED);
+        bonusDamage = new StatisticPassiveAbilityImpl(this, ch -> {
+            final int arrowsInFlight = ((Archer) ch).getShotedArrows().size();
+            final double baseDamage = ch.getStats().getInitialAttack();
+            final double bonusPerArrow = 0.2; 
+            ch.getStats().setAttack(baseDamage + baseDamage * arrowsInFlight * bonusPerArrow);
+        });
 
     }
 
@@ -61,10 +68,10 @@ public class Archer extends BaseCharacter {
     public void shootArrow(final Vector2 direction, final double speed, final Collider collider) {
         bow.attack();
         Projectile arrow = bow.getShotProjectile().get();
-        
         if (arrow != null) {
             shotedArrows.add(arrow);
         }
+        bonusDamage.carryOut();
     }
 
     /**
@@ -101,6 +108,7 @@ public class Archer extends BaseCharacter {
     public void returnArrow(final ReturnableArrow arrow) {
         this.bow.reload(1);
         this.shotedArrows.remove(arrow);
+        this.bonusDamage.carryOut();
     }
 
 }

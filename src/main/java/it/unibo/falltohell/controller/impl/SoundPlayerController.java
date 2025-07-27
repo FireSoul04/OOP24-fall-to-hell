@@ -1,31 +1,34 @@
 package it.unibo.falltohell.controller.impl;
 
+import it.unibo.falltohell.util.SoundPlayer;
 import it.unibo.falltohell.view.impl.SoundPlayerView;
 
 public class SoundPlayerController {
     private final SoundPlayerView view;
+    private final SoundPlayer player;
 
-    public SoundPlayerController(final SoundPlayerView view) {
+    public SoundPlayerController(final SoundPlayerView view, final SoundPlayer player) {
         this.view = view;
+        this.player = player;
     }
 
     public void play() {
-        this.view.play();
+        this.player.play();
     }
 
     public void onPauseGame() {
-        this.view.pause();
+        this.player.pause();
     }
 
     public void onResumeGame() {
-        this.view.resume();
+        this.player.resume();
     }
 
     public void onStopGame() {
-        this.view.stop();
+        this.player.stop();
     }
 
     public void reset() {
-        this.view.reset();
+        this.player.reset();
     }
 }

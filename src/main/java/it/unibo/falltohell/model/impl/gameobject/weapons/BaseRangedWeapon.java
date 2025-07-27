@@ -1,10 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobject.weapons;
 
-import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
-import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.util.Vector2;
-import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 
 import java.util.Optional;
@@ -20,7 +17,7 @@ import java.util.Optional;
  * 
  * @author Lorenzo Casadei
  */
-public abstract class BaseRangedWeapon extends BaseWeapon implements Weapon {
+public abstract class BaseRangedWeapon extends BaseWeapon  {
 
     private final int maxAmmo;
     private int ammo;
