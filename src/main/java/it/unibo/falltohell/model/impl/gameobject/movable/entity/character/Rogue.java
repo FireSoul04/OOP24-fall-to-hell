@@ -107,12 +107,16 @@ public class Rogue extends BaseCharacter {
      * Active passive ability on take damage.
      */
     @Override
-    public void setDamagedLife(double damage) {
+    public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
     }
 
+    /**
+     * {@inheritDoc}
+     * Activate passive ability when rogue get hit by enemy or enemy projectile.
+     */
     @Override
-    public void onCollision(GameObject other, Vector2 direction) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         super.onCollision(other, direction);
         if (other instanceof Enemy || other instanceof BaseEnemyProjectile) {
             this.evadeAbility.carryOut();
