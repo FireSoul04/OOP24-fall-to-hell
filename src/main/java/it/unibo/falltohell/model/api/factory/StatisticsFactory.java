@@ -71,7 +71,7 @@ public interface StatisticsFactory {
          * @return a new instance of {@link BaseEnemyStatistics}
          */
         BaseEnemyStatistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
-                                                     Vector2 position, it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character character, long points, ParamBuilderOptional optionalParams);
+                                                     Vector2 position, Character character, long points, ParamBuilderOptional optionalParams);
 
         /**
          * Creates a {@link LongRangeEnemyStatistics} instance for enemies with long

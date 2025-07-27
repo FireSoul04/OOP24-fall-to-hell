@@ -47,7 +47,7 @@ public class GameControllerImpl implements GameController {
 
     private final GameWindow view;
     private final Game model;
-    private GameState state;
+    private final GameState state;
 
     /**
      * Creates the controller with a new model and view, setting the state to start.
