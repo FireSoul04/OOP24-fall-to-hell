@@ -11,7 +11,7 @@ public interface GameCamera {
      * set the size of the level.
      * @param position a vector with width and height of the level.
      */
-    void setLevelPosition(Vector2 size);
+    void setLevelSize(Vector2 size);
     /**
      * Updates the camera position based on the player position and the time elapsed
      * since the last update.

@@ -58,7 +58,7 @@ public class GameControllerImpl implements GameController {
         final GameEventManagerImpl<String> eventManager = this.addEvents(inputListener);
         // Testing a camera with level width and height based on the virtual screen width and height
         final GameCamera camera = new GameCameraImpl(Vector2.zero(), WIDTH, HEIGHT, 1.0);
-        camera.setLevelPosition(new Vector2(WIDTH * 4, HEIGHT * 4));
+        camera.setLevelSize(new Vector2(WIDTH * 4, HEIGHT * 4));
         this.model = new GameBuilderImpl()
             .attachGameEventManager(eventManager)
             .attachDrawableRenderableHandlerToLevel(drh)
