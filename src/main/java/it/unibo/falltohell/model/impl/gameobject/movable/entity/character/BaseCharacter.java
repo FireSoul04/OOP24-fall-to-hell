@@ -29,7 +29,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
 
     private final GameEventManagerImpl<String> input;
     private final CharacterStatistics stats;
-    private final BuffManager buffManager;
     private int currentJumpFrames;
     private double jumpingSpeed;
     private boolean jumping;
@@ -52,7 +51,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.jumping = false;
         this.stats = stats;
         this.input = level.getGameEventManager();
-        this.buffManager = new BuffManagerImpl(level.getTimerManager());
         this.equippedWeapon = Optional.empty();
         this.interactingObject = Optional.empty();
         this.initDrawable(Priority.LOW, fileName);
@@ -203,14 +201,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
             this.stats.setTemporaryLife(0);
             super.setDamagedLife(-remainingTemporaryLife);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BuffManager getBuffManager() {
-        return this.buffManager;
     }
 
     /**

@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.api.gameobject.movable.entity;
 
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
+import it.unibo.falltohell.model.api.manager.BuffManager;
 import it.unibo.falltohell.model.api.statistic.Statistics;
 
 /**
@@ -42,4 +43,9 @@ public interface Entity extends Movable {
      * @return if the entity is facing right
      */
     boolean isFacingRight();
+
+    /**
+     * @return buff manager of the entity
+     */
+    BuffManager getBuffManager();
 }

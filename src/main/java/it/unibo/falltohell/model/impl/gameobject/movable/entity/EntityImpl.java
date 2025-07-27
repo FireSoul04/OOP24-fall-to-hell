@@ -3,9 +3,11 @@ package it.unibo.falltohell.model.impl.gameobject.movable.entity;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.Entity;
+import it.unibo.falltohell.model.api.manager.BuffManager;
 import it.unibo.falltohell.model.api.statistic.Statistics;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
+import it.unibo.falltohell.model.impl.manager.BuffManagerImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Vector2;
 
@@ -28,6 +30,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     private Vector2 gravity;
     private Vector2 velocity;
     private boolean onGround;
+    private final BuffManager buffManager;
 
     /**
      * Constructs an {@code EntityImpl} with the given parameters.
@@ -44,6 +47,7 @@ public class EntityImpl extends MovableImpl implements Entity {
         this.gravity = Vector2.zero();
         this.velocity = Vector2.zero();
         this.onGround = false;
+        this.buffManager = new BuffManagerImpl(level.getTimerManager());
     }
 
     /**
@@ -197,5 +201,13 @@ public class EntityImpl extends MovableImpl implements Entity {
         if (moveTo > eps) {
             this.setPosition(this.getPosition().add(new Vector2(moveTo * Math.signum(distance), 0)));
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BuffManager getBuffManager() {
+        return this.buffManager;
     }
 }
