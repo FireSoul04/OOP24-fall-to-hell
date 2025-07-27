@@ -3,6 +3,8 @@ package it.unibo.falltohell.model.impl.gameobject.entrance;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.listener.EnterSafeZoneListener;
+import it.unibo.falltohell.model.api.listener.ExitSafeZoneListener;
 import it.unibo.falltohell.model.api.statistic.Statistics;
 import it.unibo.falltohell.util.Vector2;
 
@@ -31,9 +33,9 @@ public class SpringsEntrance extends BaseEntrance {
             final Statistics statistics = this.getLevel().getGameData().getCurrentCharacter().getStats();
             if (direction.equals(Vector2.left())) {
                 statistics.setLife(statistics.getFullLife());
-                this.getListener().call();
+                this.getListenerEnter().ifPresent(EnterSafeZoneListener::call);
             } else if (direction.equals(Vector2.right())) {
-                this.getListener().call();
+                this.getListenerExit().ifPresent(ExitSafeZoneListener::call);
             }
         }
     }

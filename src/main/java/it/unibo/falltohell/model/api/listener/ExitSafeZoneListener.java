@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.api.listener;
 
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
-
 /**
  * Functional interface representing a listener that gets triggered when an
  * aggro-related event occurs (e.g., an enemy is activated by an entrance).
@@ -17,10 +15,10 @@ import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
  * @see SafeZoneManager
  */
 @FunctionalInterface
-public interface AggroListener {
+public interface ExitSafeZoneListener {
 
     /**
-     * Called when the player enters or exit a safe zone.
+     * Called when the player exit a safe zone.
      */
     void call();
 }
