@@ -37,7 +37,7 @@ public class GameDataImpl implements GameData {
      * Initialization of GameData when starting a new game.
      */
     public GameDataImpl(final Map<CharacterID, Character> characters) {
-        this(0, CharacterID.ROGUE, characters, Vector2.one().multiply(GameObject.TILE_SIZE));
+        this(0, CharacterID.ROGUE, characters, Vector2.one().multiply(GameObject.TILE_SIZE * 3));
     }
 
     /**
