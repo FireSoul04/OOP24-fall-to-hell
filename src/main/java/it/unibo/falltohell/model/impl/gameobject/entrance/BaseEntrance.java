@@ -14,7 +14,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class BaseEntrance extends GameObjectImpl {
 
-    private static final Dimensions DIMENSIONS = new Dimensions(20, 40);
+    private static final Dimensions DIMENSIONS = new Dimensions(40, 40);
     private static final double OFFSET = 20;
     private final AggroListener listener;
 
