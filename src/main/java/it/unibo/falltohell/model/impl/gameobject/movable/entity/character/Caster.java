@@ -88,9 +88,8 @@ public class Caster extends BaseCharacter {
      */
     @Override
     public void attack() {
-        if (STATISTICS.getMana() + STATISTICS.getTemporaryMana() >= AMOUNT_MANA_NORMAL_ATTACK) {
+        if (this.subManaIfEnough(AMOUNT_MANA_NORMAL_ATTACK)) {
             this.changeEquippedWeapon(this.tome);
-            STATISTICS.subMana(AMOUNT_MANA_NORMAL_ATTACK);
         } else {
             this.changeEquippedWeapon(this.staff);
         }
