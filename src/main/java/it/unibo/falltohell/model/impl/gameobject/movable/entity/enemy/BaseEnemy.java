@@ -170,7 +170,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             this.manager.removeTimersFor(this, super.getLevel());
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
-            super.getLevel().removeGameObject(this);
+            super.removeEntity();
         } else {
             this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
         }

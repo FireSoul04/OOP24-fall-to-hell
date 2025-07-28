@@ -36,9 +36,9 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Centaur extends BaseEnemy {
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
-    private static final double FULL_LIFE = 20;
-    private static final double DAMAGE = 20;
-    private static final Vector2 VELOCITY = new Vector2(0.5, 0.5);
+    private static final double FULL_LIFE = 60;
+    private static final double DAMAGE = 7;
+    private static final Vector2 VELOCITY = new Vector2(1, 1);
     private static final Map<BuffNames, Double> BUFF = Map.of(
             BuffNames.ATTACK, 10.0,
             BuffNames.ATTACK_SPEED, 20.0,

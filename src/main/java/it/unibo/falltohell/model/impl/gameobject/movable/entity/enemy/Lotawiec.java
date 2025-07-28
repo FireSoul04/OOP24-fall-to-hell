@@ -39,12 +39,12 @@ import it.unibo.falltohell.util.Vector2;
 public class Lotawiec extends BaseEnemy {
 
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
-    private static final double FULL_LIFE = 20;
-    private static final double DAMAGE = 20;
+    private static final double FULL_LIFE = 50;
+    private static final double DAMAGE = 4;
     private static final Vector2 VELOCITY = new Vector2(0.5, 0.5);
-    private static final Dimensions DIMENSIONS_ARROW = new Dimensions(10, 10);
-    private static final double DAMAGE_A = 10;
-    private static final Vector2 VELOCITY_ARROW = new Vector2(1, 5);
+    private static final Dimensions DIMENSIONS_ARROW = new Dimensions(20, 20);
+    private static final double DAMAGE_A = 9;
+    private static final Vector2 VELOCITY_ARROW = new Vector2(0.5, 2);
     private static final int ATTACK_TIME = 4000;
     private static final Map<BuffNames, Double> BUFF = Map.of(
             BuffNames.ATTACK, 10.0,
