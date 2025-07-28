@@ -163,7 +163,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     @Override
     public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
-        this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
         this.removeEntity();
     }
 
@@ -180,6 +179,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.getLevel().removeGameObject(this);
+        } else {
+            this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
         }
     }
 
@@ -214,7 +215,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *
      * @param deltaTime time elapsed since the last update, in seconds
      */
-    protected void move(double deltaTime){
+    protected void move(double deltaTime) {
         final Vector2 speed = this.stats.getSpeed().multiply(deltaTime);
         final Vector2 currentPos = super.getPosition();
         final Vector2 charaPos = this.stats.getCharacter().getPosition();
@@ -232,7 +233,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * when reaching a boundary or a collision.
      *
      * @param currentPos the current position of the enemy
-     * @param speed     the movement amount for this frame
+     * @param speed      the movement amount for this frame
      */
     protected abstract void patrol(final Vector2 currentPos, final Vector2 speed);
 
@@ -245,7 +246,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *
      * @param charaPos   the position of the player character
      * @param currentPos the current position of the enemy
-     * @param speed     the movement amount for this frame
+     * @param speed      the movement amount for this frame
      */
     protected abstract void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed);
 
