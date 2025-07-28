@@ -55,6 +55,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.equippedWeapon = Optional.empty();
         this.interactingObject = Optional.empty();
         this.initDrawable(Priority.LOW, fileName);
+        this.enabled = true;
     }
 
     /**
@@ -256,8 +257,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void enable() {
+        this.enabled = true;
         this.getDrawable().ifPresent(t -> t.setVisible(true));
         this.getEquippedWeapon().flatMap(GameObject::getDrawable).ifPresent(t -> t.setVisible(true));
+        this.onEnable();
     }
 
     /**
@@ -265,9 +268,11 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void disable() {
+        this.enabled = false;
         this.getDrawable().ifPresent(t -> t.setVisible(false));
         this.getEquippedWeapon().flatMap(GameObject::getDrawable).ifPresent(t -> t.setVisible(false));
         this.getBuffManager().removeBuffs();
+        onDisable();
     }
 
     /**

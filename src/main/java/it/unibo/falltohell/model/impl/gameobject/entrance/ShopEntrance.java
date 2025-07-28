@@ -38,10 +38,10 @@ public class ShopEntrance extends BaseEntrance {
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
         if (other instanceof Character) {
             if (direction.equals(Vector2.right())) {
-                this.merchant.ifPresent(Merchant::restock);
+                this.merchant.orElseThrow().restock();
                 this.getListenerEnter().ifPresent(EnterSafeZoneListener::call);
             } else if (direction.equals(Vector2.left())) {
-                this.merchant.ifPresent(Merchant::destock);
+                this.merchant.orElseThrow().destock();
                 this.getListenerExit().ifPresent(ExitSafeZoneListener::call);
             }
         }

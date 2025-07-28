@@ -20,6 +20,8 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.drawable.Label;
+import it.unibo.falltohell.model.impl.drawable.Sprite;
+import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
@@ -27,6 +29,7 @@ import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -150,8 +153,12 @@ public class LevelImpl implements Level {
             d.getCurrentCharacter().update(deltaTime);
             this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime);
             this.pointsLabel.setText("Points: " + d.getPoints());
-            this.statsLabel.setText("Life: " + stats.getLife() + "+" + stats.getTemporaryLife());
-            this.manaLabel.setText("Mana: " + stats.getMana() + "+" + stats.getTemporaryMana());
+            this.statsLabel.setText("Life: " + (int) (stats.getLife() * 10)
+                + (stats.getTemporaryLife() > 0 ? "+" + (int) (stats.getTemporaryLife() * 10) : "")
+                + "/" + (int) (stats.getFullLife() * 10));
+            this.manaLabel.setText("Mana: " + (int) (stats.getMana() * 10)
+                + (stats.getTemporaryMana() > 0 ? "+" + (int) (stats.getTemporaryMana() * 10) : "")
+                + "/" + (int) (stats.getInitialMana() * 10));
         });
         final Stream<GameObject> gameObjectStream = this.gameObjects.stream().filter(t -> !(t instanceof Character));
         for (final GameObject gameObject : gameObjectStream.toList()) {
@@ -215,6 +222,18 @@ public class LevelImpl implements Level {
         drh.linkLabel(pointsLabel);
         drh.linkLabel(statsLabel);
         drh.linkLabel(manaLabel);
+        drh.linkSprite(
+            new Sprite(new GameObjectImpl(this, Vector2.zero()) {
+                @Override
+                public void update() {
+                    this.setPosition(camera.getCameraPosition()
+                        .add(new Vector2(camera.getCameraWidth(), camera.getCameraHeight()).multiply(2))
+                        .divide(2)
+                    );
+                }
+            }, Priority.BACKGROUND),
+            "background.png"
+        );
     }
 
     /**

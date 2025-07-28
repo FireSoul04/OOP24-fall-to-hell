@@ -17,6 +17,8 @@ import java.util.Optional;
 
 public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
 
+    private static final long MINIMUM_ATTACK_TIME = 100;
+
     private final Character owner;
     private final Vector2 offset;
     private final long cooldownTime;
@@ -63,8 +65,8 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
             final TimerManager tm = this.getLevel().getTimerManager();
             if (!tm.searchTimer(name)) {
                 final CharacterStatistics stats = (CharacterStatistics) this.owner.getStats();
-                final double reduceTimeMultiplier = stats.getInitialAttackSpeed() / stats.getAttackSpeed();
-                final long attackCooldownTime = (long) (this.cooldownTime * reduceTimeMultiplier);
+                final double reduceTimeMultiplier = 1 / stats.getAttackSpeed();
+                final long attackCooldownTime = Math.max(MINIMUM_ATTACK_TIME, (long) (this.cooldownTime * reduceTimeMultiplier));
                 final CustomTimer attackCooldown = new CustomTimerImpl(attackCooldownTime, () -> this.attacking = false);
                 tm.addTimer(name, attackCooldown);
             } else {
