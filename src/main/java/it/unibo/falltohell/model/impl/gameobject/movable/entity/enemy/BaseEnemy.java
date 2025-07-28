@@ -167,6 +167,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             if (this.getCharacter() instanceof Druid) {
                 ((Druid) this.getCharacter()).addKill();
             }
+            ((CharacterStatistics) this.getCharacter().getStats())
+                    .addMana(((CharacterStatistics) this.getCharacter().getStats()).getInitialMana() * 0.1);
             this.manager.removeTimersFor(this, super.getLevel());
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
@@ -251,7 +253,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         return this.getPosition().distance(this.getCharacter().getPosition()) <= this.stats.getSenseDistance();
     }
 
-    protected Character getCharacter(){
+    protected Character getCharacter() {
         return super.getLevel().getGameData().getCurrentCharacter();
     }
 
