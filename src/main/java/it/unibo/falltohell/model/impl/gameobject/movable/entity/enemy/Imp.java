@@ -195,8 +195,8 @@ public class Imp extends BaseEnemy {
      */
     private boolean isBlocked(final Vector2 target) {
         return this.collided.isPresent()
-                && ((direction > 0 && target.x() >= this.collided.get().x() && target.x() < this.collided.get().x()) ||
-                        (direction < 0 && target.x() <= this.collided.get().x()
+                && ((direction > 0 && target.x() >= this.collided.get().x() && target.x() < this.collided.get().x())
+                        || (direction < 0 && target.x() <= this.collided.get().x()
                                 && target.x() > this.collided.get().x()));
     }
 

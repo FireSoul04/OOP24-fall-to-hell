@@ -153,12 +153,12 @@ public class Lotawiec extends BaseEnemy {
         Vector2 tryMove = current.add(moveStep);
         final var manager = super.getLevel().getJumpCollisionManager();
         if (target.distance(current) <= stoppingDistance) {
-            Vector2 aboveTarget = new Vector2(target.x(), target.y() - verticalOffset);
+            final Vector2 aboveTarget = new Vector2(target.x(), target.y() - verticalOffset);
             if (!manager.isBlocked(aboveTarget, this.stats.getDimensions().width(),
                     this.stats.getDimensions().height())) {
 
-                double desiredY = aboveTarget.y();
-                double currentY = current.y();
+                final double desiredY = aboveTarget.y();
+                final double currentY = current.y();
                 double nextY = currentY;
 
                 if (currentY > desiredY) {

@@ -57,7 +57,6 @@ public class LevelImpl implements Level {
     private DrawableRenderableHandler drh;
     private Optional<GameData> gameData;
     private Vector2 levelSize;
-    
     private final Label pointsLabel;
     private final Label statsLabel;
     private final Label manaLabel;

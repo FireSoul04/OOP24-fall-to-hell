@@ -35,6 +35,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Druid extends BaseCharacter {
 
+    private static final CharacterStatistics STATS = new StatisticFactoryImpl().createCharacterStatistic(30, 10,
+            new Vector2(2.5, 2), new Dimensions(20, 25), 80, 4);
     private static final int END_KILL = 5;
     private static final long KILL_RESET = 10_000;
     private static final double CREATION_COST = 30;
@@ -45,7 +47,7 @@ public class Druid extends BaseCharacter {
     private final StatisticPassiveAbility sPa;
     private final GameEventManagerImpl<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
-    protected int kills;
+    private int kills;
     private int passiveCycles = 1;
     private boolean sAactive;
 
@@ -58,8 +60,7 @@ public class Druid extends BaseCharacter {
      * @param position the initial spawn position
      */
     public Druid(final Level level, final Vector2 position) {
-        super(level, position, new StatisticFactoryImpl().createCharacterStatistic(30, 10, new Vector2(2.5, 2),
-                new Dimensions(20, 25), 80, 4), "druid.png");
+        super(level, position, STATS, "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
         this.equipWeapon(new WarScythe(this, ATTACK_COOLDOWN));
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
@@ -199,9 +200,9 @@ public class Druid extends BaseCharacter {
      */
     private boolean spAtkCalled() {
         return this.input.checkCondition("SpecialAttack")
-            && (this.input.checkCondition("MoveRight")
-                || this.input.checkCondition("MoveLeft")
-                || this.input.checkCondition("MoveUp")
-                || this.input.checkCondition("MoveDown"));
+                && (this.input.checkCondition("MoveRight")
+                        || this.input.checkCondition("MoveLeft")
+                        || this.input.checkCondition("MoveUp")
+                        || this.input.checkCondition("MoveDown"));
     }
 }
