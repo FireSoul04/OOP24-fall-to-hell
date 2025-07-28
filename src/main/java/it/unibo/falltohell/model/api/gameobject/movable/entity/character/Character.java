@@ -70,6 +70,21 @@ public interface Character extends Entity {
     void disable();
 
     /**
+     * @return if this character is selected
+     */
+    boolean isEnabled();
+
+    /**
+     * Use this method to handle what to do when this character is selected.
+     */
+    void onEnable();
+
+    /**
+     * Use this method to handle what to do when this character is deselected.
+     */
+    void onDisable();
+
+    /**
      * Adds mana to the character.
      * @param mana to add
      */

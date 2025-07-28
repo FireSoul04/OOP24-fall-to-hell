@@ -32,6 +32,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private int currentJumpFrames;
     private double jumpingSpeed;
     private boolean jumping;
+    private boolean enabled;
     private Optional<Weapon> equippedWeapon;
     private Optional<Interactable> interactingObject;
 
@@ -267,6 +268,30 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.getDrawable().ifPresent(t -> t.setVisible(false));
         this.getEquippedWeapon().flatMap(GameObject::getDrawable).ifPresent(t -> t.setVisible(false));
         this.getBuffManager().removeBuffs();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onEnable() {
+        // Default: do nothing
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onDisable() {
+        // Default: do nothing
     }
 
     /**
