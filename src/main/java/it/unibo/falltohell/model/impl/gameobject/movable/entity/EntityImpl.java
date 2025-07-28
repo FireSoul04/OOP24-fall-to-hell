@@ -30,7 +30,6 @@ public class EntityImpl extends MovableImpl implements Entity {
     private static final long INVICIBILITY_TIME = 1000;
 
     private Statistics stats;
-    private boolean facingRight;
     private Vector2 gravity;
     private Vector2 velocity;
     private boolean onGround;
@@ -54,7 +53,6 @@ public class EntityImpl extends MovableImpl implements Entity {
         this.velocity = Vector2.zero();
         this.onGround = false;
         this.buffManager = new BuffManagerImpl(level.getTimerManager());
-        this.facingRight = true;
     }
 
     /**
@@ -90,20 +88,7 @@ public class EntityImpl extends MovableImpl implements Entity {
         return this.stats.getLife() <= 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isFacingRight() {
-        return this.facingRight;
-    }
-
-    /**
-     * @param facingRight tells if an object is facing right
-     */
-    protected void setFacingRight(final boolean facingRight) {
-        this.facingRight = facingRight;
-    }
+    
 
     /**
      * Removes this entity from the level if it is considered dead.
@@ -150,7 +135,7 @@ public class EntityImpl extends MovableImpl implements Entity {
         this.applyGravity(deltaTime);
         this.setPosition(this.getPosition().add(this.velocity));
         this.velocity = Vector2.zero();
-        this.getDrawable().ifPresent(drawable -> drawable.mirror(!this.facingRight));
+        this.getDrawable().ifPresent(drawable -> drawable.mirror(!this.isFacingRight()));
     }
 
     /**

@@ -39,15 +39,6 @@ public interface Entity extends Movable {
      */
     boolean isDead();
 
-    /**
-     * @return if the entity is facing right
-     */
-    boolean isFacingRight();
-
-    /**
-     * @return buff manager of the entity
-     */
-    BuffManager getBuffManager();
 
     /**
      * Checks if the entity is in invincible frame.
@@ -57,4 +48,10 @@ public interface Entity extends Movable {
      *         otherwise
      */
     boolean isInvincible();
+
+    /**
+     * 
+     * @return the buffManager of this entity.
+     */
+    BuffManager getBuffManager();
 }

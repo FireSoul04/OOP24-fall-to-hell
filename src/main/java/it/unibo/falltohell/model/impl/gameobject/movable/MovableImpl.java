@@ -20,6 +20,7 @@ import it.unibo.falltohell.util.Vector2;
 public class MovableImpl extends GameObjectImpl implements Movable {
 
     private Vector2 speed;
+    private boolean facingRight;
 
     /**
      * Constructs a movable game object.
@@ -55,5 +56,19 @@ public class MovableImpl extends GameObjectImpl implements Movable {
     public void setSpeed(final Vector2 speed) {
         this.speed = speed;
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFacingRight() {
+        return this.facingRight;
+    }
 
+    /**
+     * @param facingRight tells if an object is facing right
+     */
+    protected void setFacingRight(final boolean facingRight) {
+        this.facingRight = facingRight;
+    }
+    
 }

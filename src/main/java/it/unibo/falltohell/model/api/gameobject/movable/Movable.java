@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.api.gameobject.movable;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.manager.BuffManager;
 import it.unibo.falltohell.util.Vector2;
 /**
  * Represents a movable game object that can change its position based on speed.
@@ -34,5 +35,11 @@ public interface Movable extends GameObject {
      * @param speed the new speed
      */
     void setSpeed(Vector2 speed);
+
+    /**
+     * @return if the entity is facing right
+     */
+    boolean isFacingRight();
+
 
 }
