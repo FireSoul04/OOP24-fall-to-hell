@@ -56,7 +56,7 @@ public class Rogue extends BaseCharacter {
             .createPassiveAbility(this, character -> {
                 if (this.canUsePassive) {
                     final TimerManager tm = this.getLevel().getTimerManager();
-                    final String passiveCooldownTimerName = "cooldown";
+                    final String passiveCooldownTimerName = "rogue-passive-cooldown";
                     final Buff speedBuff = new SpeedBuff(STATS, 0.5);
                     final String name = "buff" + this.hashCode();
                     this.getBuffManager().addBuff(speedBuff, PASSIVE_DURATION, name);
