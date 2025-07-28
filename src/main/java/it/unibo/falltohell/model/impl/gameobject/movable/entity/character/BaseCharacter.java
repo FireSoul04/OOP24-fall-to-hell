@@ -9,9 +9,7 @@ import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.api.gameobject.interactable.Interactable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.api.manager.BuffManager;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
-import it.unibo.falltohell.model.impl.manager.BuffManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.Optional;
