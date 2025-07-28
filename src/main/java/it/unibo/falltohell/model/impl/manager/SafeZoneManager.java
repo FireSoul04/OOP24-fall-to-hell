@@ -1,8 +1,10 @@
 package it.unibo.falltohell.model.impl.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import it.unibo.falltohell.model.api.listener.EnemyRespawnListener;
@@ -40,6 +42,7 @@ public class SafeZoneManager {
     private final Set<BaseEntrance> entrances = new HashSet<>();
     private final Set<Enemy> enemies = new HashSet<>();
     private final List<EnemyRespawnListener> enemyCallbacks = new ArrayList<>();
+    private final Map<Class<? extends Enemy>, String> fileNames = new HashMap<>();
     private boolean hasFirstEntered;
 
     /**
@@ -89,9 +92,11 @@ public class SafeZoneManager {
      * Adds an {@link Enemy} to be affected by the listener.
      *
      * @param enemy the enemy to be added
+     * @param filename the name of the file representing the enemy's sprite
      */
-    public void addEnemy(final Enemy enemy) {
+    public void addEnemy(final Enemy enemy, final String filename) {
         this.enemies.add(enemy);
+        this.fileNames.putIfAbsent(enemy.getClass(), filename);
     }
 
     /**
@@ -129,7 +134,7 @@ public class SafeZoneManager {
      * Triggers the respawn logic by calling {@link EnemyRespawnListener#respawn()}.
      * </p>
      */
-    public void resetEnemy() {
+    private void resetEnemy() {
         this.enemyCallbacks.forEach(EnemyRespawnListener::respawn);
     }
 
@@ -140,6 +145,7 @@ public class SafeZoneManager {
      */
     private void handleSafeZoneEnter() {
         this.enemies.forEach(enemy -> enemy.getLevel().removeGameObject(enemy));
+        this.resetEnemy();
     }
 
     /**
@@ -148,6 +154,18 @@ public class SafeZoneManager {
      * </p>
      */
     private void handleSafeZoneExit() {
-        this.enemies.forEach(enemy -> enemy.getLevel().addGameObject(enemy));
+        for (Enemy enemy : enemies) {
+            enemy.getLevel().addGameObject(enemy);
+
+            String spriteFile = fileNames.get(enemy.getClass());
+            if (spriteFile == null) {
+                throw new IllegalStateException(
+                        "No sprite file registered for enemy class: " + enemy.getClass().getSimpleName());
+            }
+
+            enemy.getLevel()
+                    .getDrawableRenderableHandler()
+                    .linkSprite(enemy.getDrawable().orElseThrow(), spriteFile);
+        }
     }
 }
