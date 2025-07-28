@@ -3,7 +3,7 @@ package it.unibo.falltohell.model.api.factory;
 import it.unibo.falltohell.model.api.builder.ActiveAbilityBuilder;
 import it.unibo.falltohell.model.api.ability.active.GhostAbilityCreate;
 import it.unibo.falltohell.model.api.ability.active.GhostActiveAbility;
-import it.unibo.falltohell.model.api.ability.passive.MethodPassiveAbility;
+import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.ability.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -17,7 +17,7 @@ import it.unibo.falltohell.model.api.level.Level;
  * @author Sara Visani
  * @see ActiveAbilityBuilder
  * @see StatisticPassiveAbility
- * @see MethodPassiveAbility
+ * @see SpecialActiveAbility
  * @see GhostActiveAbility
  */
 public interface AbilityFactory {
@@ -75,12 +75,22 @@ public interface AbilityFactory {
     StatisticPassiveAbility createPassiveAbility(Character character, PassiveAbilityDo lambda);
 
     /**
-     * Creates a method-based passive ability associated with the given character.
+     * Creates a special active ability associated with the given character.
      * <p>
      *
      * @param character the {@link Character} for which to create the method passive
      *                  ability
-     * @return a new {@link MethodPassiveAbility} instance
+     * @return a new {@link SpecialActiveAbility} instance
      */
-    MethodPassiveAbility createMethodPassiveAbility(Character character);
+    SpecialActiveAbility createSpecialActiveAbility(Character character);
+
+    /**
+     * Creates a special ability for ONLY the caster.
+     * <p>
+     *
+     * @param character the {@link Character} for which to create the method passive
+     *                  ability
+     * @return a new {@link SpecialActiveAbility} instance
+     */
+    SpecialActiveAbility createHealAbility(Character character);
 }

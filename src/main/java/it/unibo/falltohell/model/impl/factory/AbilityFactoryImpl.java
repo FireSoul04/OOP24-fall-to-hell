@@ -4,14 +4,21 @@ import it.unibo.falltohell.model.api.factory.AbilityFactory;
 import it.unibo.falltohell.model.api.builder.ActiveAbilityBuilder;
 import it.unibo.falltohell.model.api.ability.active.GhostAbilityCreate;
 import it.unibo.falltohell.model.api.ability.active.GhostActiveAbility;
-import it.unibo.falltohell.model.api.ability.passive.MethodPassiveAbility;
+import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.ability.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 
-import it.unibo.falltohell.model.impl.ability.MethodPassiveAbilityRegistry;
+import it.unibo.falltohell.model.impl.ability.SpecialAbilityAbilityRegistry;
 import it.unibo.falltohell.model.impl.builder.ActiveAbilityImplBuilder;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Archer;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
+import it.unibo.falltohell.model.impl.ability.active.BlastAbility;
 import it.unibo.falltohell.model.impl.ability.active.GhostActiveAbilityImpl;
+import it.unibo.falltohell.model.impl.ability.active.HealAbility;
+import it.unibo.falltohell.model.impl.ability.active.ReturnArrowAbility;
+import it.unibo.falltohell.model.impl.ability.active.ThrowKnifeAbility;
 import it.unibo.falltohell.model.impl.ability.passive.StatisticPassiveAbilityImpl;
 
 /**
@@ -19,22 +26,26 @@ import it.unibo.falltohell.model.impl.ability.passive.StatisticPassiveAbilityImp
  * <p>
  * This factory creates active and passive abilities and manages
  * a registry mapping {@link Character} subclasses to their
- * respective {@link MethodPassiveAbility} creators.
+ * respective {@link SpecialActiveAbility} creators.
  * </p>
  *
  * @author Sara Visani
  */
 public class AbilityFactoryImpl implements AbilityFactory {
 
-    private final MethodPassiveAbilityRegistry registry = new MethodPassiveAbilityRegistry();
+    private final SpecialAbilityAbilityRegistry registry = new SpecialAbilityAbilityRegistry();
 
     /**
      * Registers supported {@link Character} subclasses with their
-     * corresponding {@link MethodPassiveAbility} creators.
+     * corresponding {@link SpecialActiveAbility} creators.
      */
     public AbilityFactoryImpl() {
-        /*registry.register(TestCharacter.class,
-                character -> new MethodPassiveAbilityTest1(character));*/
+        registry.register(Archer.class,
+                character -> new ReturnArrowAbility((Archer)character));
+        registry.register(Rogue.class,
+                character -> new ThrowKnifeAbility((Rogue)character));
+        registry.register(Caster.class,
+                character -> new BlastAbility((Caster)character));
     }
 
     /**
@@ -65,7 +76,18 @@ public class AbilityFactoryImpl implements AbilityFactory {
      * {@inheritDoc}
      */
     @Override
-    public MethodPassiveAbility createMethodPassiveAbility(final Character character) {
+    public SpecialActiveAbility createSpecialActiveAbility(final Character character) {
         return registry.createAbility(character);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SpecialActiveAbility createHealAbility(final Character character) {
+        if(character instanceof Caster caster){
+            return new HealAbility(caster);
+        }
+        throw new IllegalArgumentException("You are not a Caster");
     }
 }
