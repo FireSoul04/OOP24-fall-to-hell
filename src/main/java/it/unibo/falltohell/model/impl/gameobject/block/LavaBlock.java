@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class LavaBlock extends BaseCollidableBlock {
 
-    private static final long TIME = 500;
+    private static final long TIME = 100;
     private static final double DAMAGE = 0.2;
 
     /**
