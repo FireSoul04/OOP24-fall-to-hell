@@ -257,9 +257,7 @@ public class FamiliarBat extends MovableImpl {
                 super.setPosition(new Vector2(nextX, nextY));
             }
         } else if (this.enemy.isEmpty()) {
-            final Vector2 velocity = new Vector2(
-                    VELOCITY.x() * attackDirection.x(),
-                    VELOCITY.y() * attackDirection.y()).multiply(deltaTime);
+            final Vector2 velocity = VELOCITY.multiply(this.attackDirection).multiply(deltaTime);
 
             var attackPos = currentPos;
             if (Math.abs(currentPos.y() - targetPos.y()) <= Math.abs(OFFSET_B_TO_C)) {
@@ -271,9 +269,7 @@ public class FamiliarBat extends MovableImpl {
             final Vector2 toEnemy = this.enemy.get().getPosition().subtract(currentPos).normalize();
             attackDirection = toEnemy;
 
-            final Vector2 velocity = new Vector2(
-                    VELOCITY.x() * attackDirection.x(),
-                    VELOCITY.y() * attackDirection.y()).multiply(deltaTime);
+            final Vector2 velocity = VELOCITY.multiply(this.attackDirection).multiply(deltaTime);
             final var attackPos = currentPos.add(velocity);
 
             if (currentPos.distance(attackPos) > currentPos.distance(this.enemy.get().getPosition())) {

@@ -4,6 +4,8 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.buff.Buff;
 import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.buff.LifeBuff;
+import it.unibo.falltohell.model.impl.buff.ManaBuff;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -14,6 +16,7 @@ import it.unibo.falltohell.util.Vector2;
 public class Potion extends BaseItem {
 
     private static final long POTION_DURATION = 12000;
+    private static final long LIFE_MANA_POTION_DURATION = 60000;
     private final Buff buff;
 
     /**
@@ -34,6 +37,10 @@ public class Potion extends BaseItem {
     @Override
     protected void onInteract(final Character character) {
         final String name = "buff" + this.hashCode();
-        character.getBuffManager().addBuff(this.buff, POTION_DURATION, name);
+        if (buff instanceof LifeBuff || buff instanceof ManaBuff) {
+            character.getBuffManager().addBuff(this.buff, LIFE_MANA_POTION_DURATION, name);
+        } else {
+            character.getBuffManager().addBuff(this.buff, POTION_DURATION, name);
+        }
     }
 }

@@ -36,6 +36,9 @@ class TestSprings {
     private Interactable characterChanger;
     private GameObject entrance;
 
+    /**
+     * Initialization of the variables used in each test.
+     */
     @BeforeEach
     void initialization() {
         final Level level = new LevelTest();
@@ -50,31 +53,51 @@ class TestSprings {
         this.entrance = new SpringsEntrance(level, Vector2.zero());
     }
 
+    /**
+     * Tests if the interaction with the save point works correctly:
+     * game data is saved and loaded as expected.
+     */
     @Test
     void TestIfSavesAndLoadCorrectly() {
         this.savePoint.interact(this.data.getCurrentCharacter());
         final GameData testData = this.saveController.load(this.characters);
-        assertEquals(testData.getPoints(), this.data.getPoints());
-        assertEquals(testData.getCurrentCharacter().getCharacterID(), this.data.getCurrentCharacter().getCharacterID());
-        assertEquals(testData.getLastSavedPosition().x(), this.data.getCurrentCharacter().getPosition().x());
-        assertEquals(testData.getLastSavedPosition().y(), this.data.getCurrentCharacter().getPosition().y());
+        assertEquals(testData.getPoints(), this.data.getPoints(),
+                "Points saved and loaded must be the same of the game data before save");
+        assertEquals(testData.getCurrentCharacter().getCharacterID(), this.data.getCurrentCharacter().getCharacterID(),
+                "The ID of the current character must be the same of the game data before save");
+        assertEquals(testData.getLastSavedPosition().x(), this.data.getCurrentCharacter().getPosition().x(),
+                "The x-axis position of the character must be the same of the game data before save");
+        assertEquals(testData.getLastSavedPosition().y(), this.data.getCurrentCharacter().getPosition().y(),
+                "The y-axis position of the character must be the same of the game data before save");
         this.saveController.removeTestFile();
     }
 
+    /**
+     * Tests if the character changer works correctly:
+     * checks if interacting with the character changer changes the character to the next one
+     * and, if the character is the last one, the next is the first.
+     */
     @Test
     void TestCharacterChanger() {
         this.characterChanger.interact(this.data.getCurrentCharacter());
-        assertEquals(CharacterID.DRUID, this.data.getCurrentCharacter().getCharacterID());
+        assertEquals(CharacterID.DRUID, this.data.getCurrentCharacter().getCharacterID(),
+                "The next character must be the Druid");
         this.characterChanger.interact(this.data.getCurrentCharacter());
-        assertEquals(CharacterID.ROGUE, this.data.getCurrentCharacter().getCharacterID());
+        assertEquals(CharacterID.ROGUE, this.data.getCurrentCharacter().getCharacterID(),
+                "The next character must be the first one");
     }
 
+    /**
+     * Tests if the spring entrance works correctly:
+     * checks if life is refilled when the character enters.
+     */
     @Test
     void TestEntrance() {
         final Character character = this.data.getCurrentCharacter();
         character.setDamagedLife(character.getStats().getFullLife() / 2);
-        this.entrance.onCollisionExit(character, Vector2.right());
-        assertEquals(character.getStats().getFullLife(), character.getStats().getLife());
+        this.entrance.onCollisionExit(character, Vector2.left());
+        assertEquals(character.getStats().getFullLife(), character.getStats().getLife(),
+                "Life must be at max after entering the springs");
     }
 
 }

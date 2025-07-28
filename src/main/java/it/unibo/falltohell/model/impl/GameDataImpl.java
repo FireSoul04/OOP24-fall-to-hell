@@ -17,7 +17,7 @@ public class GameDataImpl implements GameData {
 
     private long points;
     private Character currentCharacter;
-    private Vector2 lastSavedPosition;
+    private final Vector2 lastSavedPosition;
 
     /**
      * Initialization of GameData when reading an already existent save file.
@@ -45,7 +45,7 @@ public class GameDataImpl implements GameData {
      */
     @Override
     public void addPoints(final long amount) {
-        this.checkAmount(amount);
+        this.checkPositiveAmount(amount);
         this.points = this.points + amount;
     }
 
@@ -54,10 +54,8 @@ public class GameDataImpl implements GameData {
      */
     @Override
     public void removePoints(final long amount) {
-        this.checkAmount(amount);
-        if (this.points >= amount) {
-            this.points = this.points - amount;
-        }
+        this.checkSufficientAmount(amount);
+        this.points = this.points - amount;
     }
 
     /**
@@ -97,9 +95,21 @@ public class GameDataImpl implements GameData {
      *
      * @param amount of points
      */
-    private void checkAmount(final long amount) {
+    private void checkPositiveAmount(final long amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("The amount should be positive");
+        }
+    }
+
+    /**
+     * Method to check if the amount of points is sufficient.
+     *
+     * @param amount of points
+     */
+    private void checkSufficientAmount(final long amount) {
+        this.checkPositiveAmount(amount);
+        if (amount > this.points) {
+            throw new IllegalArgumentException("The amount should be lesser or equal to the points");
         }
     }
 }

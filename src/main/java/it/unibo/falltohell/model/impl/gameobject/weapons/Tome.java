@@ -42,10 +42,10 @@ public class Tome extends BaseRangedWeapon{
      */
     @Override
     protected void onAttack() {
+        super.onAttack();
         if (!this.canShoot()) {
             this.reload();
         }
         this.caster.subMana(this.caster.getAmountManaNormalAttack());
-        super.onAttack();
     }
 }

@@ -25,17 +25,18 @@ public class Caster extends BaseCharacter {
     private static final double LIFE = 50;
     private static final double ATTACK = 20;
     private static final double ATTACK_SPEED = 8;
-    private static final Vector2 SPEED = new Vector2(2, 2);
+    private static final Vector2 SPEED = new Vector2(2, 1.6);
     private static final double MANA = 25;
     private static final double AMOUNT_MANA_NORMAL_ATTACK = 1;
     private static final double AMOUNT_MANA_RECHARGED = 2;
     private static final long COOLDOWN_MANA_RECHARGE = 5000;
     private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
-            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,20), MANA, ATTACK_SPEED);
+            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED);
 
     private final Weapon staff;
     private final Weapon tome;
 
+    private final StatisticPassiveAbility manaRecharge;
     private final SpecialActiveAbility healing;
     private final SpecialActiveAbility blast;
 
@@ -52,21 +53,22 @@ public class Caster extends BaseCharacter {
         this.equipWeapon(tome);
         final TimerManager timerManager = this.getLevel().getTimerManager();
         final String timerName = "mana_recharge";
-        final StatisticPassiveAbility manaRecharge = new AbilityFactoryImpl().createPassiveAbility(this,
+        this.manaRecharge = new AbilityFactoryImpl().createPassiveAbility(this,
             character -> {
                 if (!timerManager.searchTimer(timerName)) {
-                    timerManager.addTimer(
-                            timerName, new CustomTimerImpl(COOLDOWN_MANA_RECHARGE,
-                                    () -> {
-                                        final CharacterStatistics statistics = (CharacterStatistics) character.getStats();
-                                        statistics.addMana(AMOUNT_MANA_RECHARGED);
-                                        timerManager.restartTimer(timerName);
-                                    }));
+                        timerManager.addTimer(
+                                timerName, new CustomTimerImpl(COOLDOWN_MANA_RECHARGE,
+                                        () -> {
+                                            if (this.isEnabled()) {
+                                                this.addMana(AMOUNT_MANA_RECHARGED);
+                                                timerManager.restartTimer(timerName);
+                                            }
+                                        }));
                 } else {
                     timerManager.restartTimer(timerName);
                 }
             });
-        manaRecharge.carryOut();
+        this.manaRecharge.carryOut();
         this.blast = new BlastAbility(this);
         this.healing = new HealAbility(this);
 
@@ -128,5 +130,14 @@ public class Caster extends BaseCharacter {
      */
     public double getAmountManaNormalAttack() {
         return AMOUNT_MANA_NORMAL_ATTACK;
+    }
+
+    /**
+     * {@inheritDoc}
+     * It restarts the passive ability when the caster is selected.
+     */
+    @Override
+    public void onEnable() {
+        this.manaRecharge.carryOut();
     }
 }
