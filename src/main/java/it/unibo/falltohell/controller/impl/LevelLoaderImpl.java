@@ -79,10 +79,10 @@ public class LevelLoaderImpl implements LevelLoader {
         final Character character = level.getGameData().getCurrentCharacter();
         final Collider collider = new BoxCollider();
         switch (identifier) {
-            case 'o' -> this.enemyFactory.createImp(this.level, position, character);
-            case 'k' -> this.enemyFactory.createCentaur(this.level, position, character);
-            case 't' -> this.enemyFactory.createTengu(level, position, character);
-            case 'x' -> this.enemyFactory.createLotawiec(level, position, character);
+            case 'o' -> this.enemyFactory.createImp(this.level, position);
+            case 'k' -> this.enemyFactory.createCentaur(this.level, position);
+            case 't' -> this.enemyFactory.createTengu(level, position);
+            case 'x' -> this.enemyFactory.createLotawiec(level, position);
             case '#' -> this.collidableBlockFactory.createCollidableBaseBlock(level, position);
             case 'l' -> this.collidableBlockFactory.createLavaBlock(level, position);
             case 'v' -> this.collidableBlockFactory.createVinesBlock(level, position);
