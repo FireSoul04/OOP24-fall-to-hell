@@ -39,6 +39,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Imp extends BaseEnemy {
 
+    private static final int POINTS = 15;
     private static final double CHAR_DISTANCE = 15 * TILE_SIZE;
     private static final double REGEN_STAT = 0.1;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
@@ -71,7 +72,7 @@ public class Imp extends BaseEnemy {
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, 10, new StatisticFactoryImpl()
+                        initialCord, POINTS, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DISTANCE),
                 manager, ingage, "imp.png");

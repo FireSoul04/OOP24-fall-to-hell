@@ -35,6 +35,7 @@ import it.unibo.falltohell.util.Vector2;
  * @author Sara Visani
  */
 public class Centaur extends BaseEnemy {
+    private static final int POINTS = 30;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 60;
     private static final double DAMAGE = 7;
@@ -68,7 +69,7 @@ public class Centaur extends BaseEnemy {
     public Centaur(final Level level, final Vector2 initialCord,
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,
+                initialCord, POINTS, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,
                 ingage, "centaur.png");
 
         this.stats = (BaseEnemyStatistics) super.getStats();

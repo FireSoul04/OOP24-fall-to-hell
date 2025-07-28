@@ -37,6 +37,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Lotawiec extends BaseEnemy {
 
+    private static final int POINTS = 25;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 50;
     private static final double DAMAGE = 4;
@@ -75,7 +76,7 @@ public class Lotawiec extends BaseEnemy {
             final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF),
+                        initialCord, POINTS, new StatisticFactoryImpl().createOptional().withBuff(BUFF),
                         DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME),
                 manager, ingage, "lotawiec.png");
 
