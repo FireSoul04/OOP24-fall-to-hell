@@ -8,6 +8,7 @@ import it.unibo.falltohell.model.api.statistic.Statistics;
 import it.unibo.falltohell.model.impl.factory.CollidableBlockFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
+import it.unibo.falltohell.test.util.LavaBlockTest;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.Assertions;
@@ -42,23 +43,20 @@ class TestBlocks {
      */
     @Test
     void TestLavaBlock() {
-        final BaseCollidableBlock lavaBlock1 = this.blockFactory.createLavaBlock(
-                this.entity.getLevel(), this.entity.getPosition());
-        final BaseCollidableBlock lavaBlock2 = this.blockFactory.createLavaBlock(
-                this.entity.getLevel(), this.entity.getPosition());
+        final LavaBlockTest lavaBlock1 = new LavaBlockTest(this.entity.getLevel());
+        final LavaBlockTest lavaBlock2 = new LavaBlockTest(this.entity.getLevel());
         lavaBlock1.onCollision(this.entity, Vector2.up());
-        final Statistics statistics = this.entity.getStats();
-        final double currentLife1 = statistics.getLife();
         lavaBlock2.onCollision(this.entity, Vector2.up());
-        final double currentLife2 = statistics.getLife();
         try {
-            Thread.sleep(700);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        assertTrue(currentLife1 < statistics.getFullLife(), "When there is a collision" +
-                "with a lava block ");
-        assertEquals(currentLife1, currentLife2,
+        final Statistics statistics = this.entity.getStats();
+        final double currentLife1 = statistics.getLife();
+        assertTrue(currentLife1 < statistics.getFullLife(), "When there is a collision " +
+                "with a lava block life should be subtracted");
+        assertEquals(statistics.getFullLife() - lavaBlock1.getDamage(), currentLife1,
                 "If there are two concomitant collisions only one must reduce life");
         lavaBlock1.onCollisionExit(this.entity, Vector2.up());
         lavaBlock2.onCollisionExit(this.entity, Vector2.up());
