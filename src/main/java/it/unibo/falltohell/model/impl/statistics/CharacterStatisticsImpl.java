@@ -23,12 +23,12 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
     /**
      * Create new statistics with the parameters specified.
      *
-     * @param life
-     * @param attack
-     * @param speed
-     * @param dimensions
-     * @param mana
-     * @param attackSpeed
+     * @param life maximum life of the character
+     * @param attack of the character
+     * @param speed of the character
+     * @param dimensions of the character's collider
+     * @param mana maximum mana of the character
+     * @param attackSpeed of the character
      */
     public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimensions, final double mana, final double attackSpeed) {
