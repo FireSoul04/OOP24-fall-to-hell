@@ -8,7 +8,7 @@ import it.unibo.falltohell.model.api.statistic.Statistics;
  * Interface representing a movable game entity, such as an enemy and character.
  * It extends {@link Movable} to inherit movement capabilities.
  * Provides access to {@link Statistics} and life management.
- * 
+ *
  * @author Sara Visani
  */
 
@@ -17,7 +17,7 @@ public interface Entity extends Movable {
     /**
      * Gets the statistics of this entity.
      * <p>
-     * 
+     *
      * @return the {@link Statistics} associated with this entity
      */
     Statistics getStats();
@@ -26,7 +26,7 @@ public interface Entity extends Movable {
      * Notifies the entity that it has taken damage.
      * This method is called by other entities when an attack hits.
      * <p>
-     * 
+     *
      * @param damage the amount of damage dealt to this entity
      */
     void setDamagedLife(double damage);
@@ -34,7 +34,7 @@ public interface Entity extends Movable {
     /**
      * Checks if the entity is dead.
      * <p>
-     * 
+     *
      * @return {@code true} if the entity is dead; {@code false} otherwise
      */
     boolean isDead();
@@ -48,4 +48,13 @@ public interface Entity extends Movable {
      * @return buff manager of the entity
      */
     BuffManager getBuffManager();
+
+    /**
+     * Checks if the entity is in invincible frame.
+     * <p>
+     *
+     * @return @return {@code true} if the entity is invincible; {@code false}
+     *         otherwise
+     */
+    boolean isInvincible();
 }

@@ -106,21 +106,51 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
 
     /**
      * Returns the "NoAggro" timer name associated with the given enemy.
+     * If none is found, it creates the timer and retrieves it again.
      *
      * @param enemy the enemy instance to query
      * @return the unique timer name for the no-aggro timer
-     * @throws IllegalStateException if no timer is found for the enemy
+     * @throws IllegalStateException if the timer could not be found or created
      */
     private String getNoAggroTimerName(final Enemy enemy) {
-        final List<String> timers = enemyTimers.get(enemy);
-        if (timers != null) {
-            for (final String timerName : timers) {
-                if (timerName.startsWith("NoAggro_")) {
-                    return timerName;
-                }
+        List<String> timers = enemyTimers.get(enemy);
+
+        String timerName = findNoAggroTimer(timers);
+        if (timerName != null) {
+            return timerName;
+        }
+
+        // Attempt to create the timer
+        if (enemy.getStats() instanceof BaseEnemyStatistics stats) {
+            createNoAggroTimer(enemy.getLevel(), enemy, stats.getNoAggro());
+        } else {
+            throw new IllegalStateException("Enemy stats are not of type BaseEnemyStatistics");
+        }
+
+        timers = enemyTimers.get(enemy);
+        timerName = findNoAggroTimer(timers);
+        if (timerName != null) {
+            return timerName;
+        }
+
+        throw new IllegalStateException("NoAggro timer could not be found or created for enemy: " + enemy);
+    }
+
+    /**
+     * Searches a list of timer names for one starting with "NoAggro_".
+     *
+     * @param timers the list of timer names
+     * @return the matching timer name, or null if not found
+     */
+    private String findNoAggroTimer(List<String> timers) {
+        if (timers == null)
+            return null;
+        for (String timer : timers) {
+            if (timer.startsWith("NoAggro_")) {
+                return timer;
             }
         }
-        throw new IllegalStateException("No NoAggro timer found for enemy: " + enemy);
+        return null;
     }
 
     /**
@@ -157,8 +187,8 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
         level.getTimerManager().restartTimer(name);
     }
 
-    /**TODO eliminate */
-    public List<String> getNameTimers(Enemy e){
-         return this.enemyTimers.getOrDefault(e, Collections.emptyList());
+    /** TODO eliminate */
+    public List<String> getNameTimers(Enemy e) {
+        return this.enemyTimers.getOrDefault(e, Collections.emptyList());
     }
 }

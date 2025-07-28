@@ -45,6 +45,7 @@ public class FamiliarBat extends MovableImpl {
     private static final Dimensions DIMENSIONS = new Dimensions(5, 5);
     private static final BoxCollider COLLIDER = new BoxCollider(Vector2.zero(), DIMENSIONS);
     private final String name = "Bat-" + UUID.randomUUID();
+    private final CustomTimerImpl timer = new CustomTimerImpl(1000, () -> this.canAttack = true);
     private final Random random = new Random();
     private Optional<Enemy> enemy = Optional.empty();
     private int numberAttack;
@@ -75,8 +76,7 @@ public class FamiliarBat extends MovableImpl {
         super(character.getLevel(), character.getPosition(), VELOCITY, COLLIDER);
         this.character = character;
         this.attackFinishListener = listener;
-        character.getLevel().getTimerManager().addTimer(this.name,
-                new CustomTimerImpl(1000, () -> this.canAttack = true));
+        character.getLevel().getTimerManager().addTimer(this.name, this.timer);
         this.initDrawable(Priority.LOW, "familiar.png");
     }
 
@@ -170,17 +170,22 @@ public class FamiliarBat extends MovableImpl {
                 isAttacking = false;
                 attackFinishListener.onAttackFinished(this);
             }
-            if (other instanceof Enemy) {
-                this.enemy = Optional.of((Enemy) other);
+            if (other instanceof Enemy enemy) {
+                this.enemy = Optional.of(enemy);
                 if (this.numberAttack == 0) {
                     this.enemy = Optional.empty();
                     this.isAttacking = false;
                     attackFinishListener.onAttackFinished(this);
-                } else if (this.canAttack) {
+                } else if (this.canAttack && !enemy.isInvincible()) {
                     this.numberAttack--;
                     this.canAttack = false;
-                    this.attackEffect((Enemy) other);
-                    this.character.getLevel().getTimerManager().restartTimer(this.name);
+                    this.attackEffect(enemy);
+                    if (this.character.getLevel().getTimerManager().searchTimer(this.name)) {
+                        this.character.getLevel().getTimerManager().restartTimer(this.name);
+                    } else {
+                        this.character.getLevel().getTimerManager().addTimer(this.name, this.timer);
+                    }
+
                 }
             }
         }

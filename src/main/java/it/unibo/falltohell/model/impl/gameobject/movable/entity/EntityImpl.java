@@ -27,7 +27,7 @@ import it.unibo.falltohell.util.Vector2;
 public class EntityImpl extends MovableImpl implements Entity {
 
     private static final Vector2 GRAVITY_STEP = new Vector2(0.0, 0.06);
-    private static final long INVICIBILITY_TIME = 900;
+    private static final long INVICIBILITY_TIME = 1000;
 
     private Statistics stats;
     private boolean facingRight;
@@ -36,7 +36,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     private boolean onGround;
     private final BuffManager buffManager;
     private final String name = "Invicibility -" + UUID.randomUUID();
-    private boolean invincible = true;
+    private boolean invincible;
 
     /**
      * Constructs an {@code EntityImpl} with the given parameters.
@@ -70,14 +70,14 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     @Override
     public void setDamagedLife(final double damage) {
-        if(this.invincible){
+        if (!this.invincible) {
             this.stats.subLife(damage);
-            this.invincible = false;
+            this.invincible = true;
             final var tm = super.getLevel().getTimerManager();
-            if(tm.searchTimer(this.name)){
+            if (tm.searchTimer(this.name)) {
                 tm.restartTimer(this.name);
-            }else{
-                tm.addTimer(this.name, new CustomTimerImpl(INVICIBILITY_TIME, () -> this.invincible = true));
+            } else {
+                tm.addTimer(this.name, new CustomTimerImpl(INVICIBILITY_TIME, () -> this.invincible = false));
             }
         }
     }
@@ -111,7 +111,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     protected void removeEntity() {
         if (this.isDead()) {
             final var tm = super.getLevel().getTimerManager();
-            if(tm.searchTimer(this.name)){
+            if (tm.searchTimer(this.name)) {
                 tm.removeTimer(this.name);
             }
             super.getLevel().removeGameObject(this);
@@ -120,6 +120,7 @@ public class EntityImpl extends MovableImpl implements Entity {
 
     /**
      * Add a force to the entity.
+     *
      * @param force to apply
      */
     protected void addForce(final Vector2 force) {
@@ -154,6 +155,7 @@ public class EntityImpl extends MovableImpl implements Entity {
 
     /**
      * Apply gravity to the entity every frame.
+     *
      * @param deltaTime difference between two frames
      */
     private void applyGravity(final double deltaTime) {
@@ -166,7 +168,8 @@ public class EntityImpl extends MovableImpl implements Entity {
     /**
      * {@inheritDoc}
      * Notify if the entity is on ground.
-     * If the entity is inside a BaseBlock because of gravity, this method will move it up to the floor level.
+     * If the entity is inside a BaseBlock because of gravity, this method will move
+     * it up to the floor level.
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
@@ -194,6 +197,7 @@ public class EntityImpl extends MovableImpl implements Entity {
 
     /**
      * Push up the entity until it reaches the floor's height.
+     *
      * @param other block colliding with
      */
     private void pushUpToFloor(final GameObject other) {
@@ -212,6 +216,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     /**
      * Push the entity left or right based on the direction facing to prevent going
      * through blocks.
+     *
      * @param other block colliding with
      */
     private void pushFarFromBlock(final GameObject other) {
@@ -232,5 +237,13 @@ public class EntityImpl extends MovableImpl implements Entity {
     @Override
     public BuffManager getBuffManager() {
         return this.buffManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isInvincible() {
+        return this.invincible;
     }
 }
