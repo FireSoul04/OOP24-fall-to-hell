@@ -40,9 +40,6 @@ public class ArcherTest {
     @Test
     void testShootArrowConsumesAmmoAndAddsToList() {
         int initialAmmo = archer.getBow().getAmmo();
-
-        archer.shootArrow(Vector2.right(), 1.0,
-        new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
         archer.attack();
 
         assertEquals(initialAmmo - 1, archer.getBow().getAmmo());
@@ -66,11 +63,6 @@ public class ArcherTest {
     @Test
     void testArrowReturnRestoresAmmoAndRemovesArrow() {
         int initialAmmo = archer.getBow().getAmmo();
-
-        archer.shootArrow(Vector2.up(), 5.0,
-            new BoxCollider(Vector2.zero(), new Dimensions(1.0, 1.0)));
-
-        ReturnableArrow arrow = (ReturnableArrow) archer.getShotedArrows().get(0);
 
         archer.setPosition(new Vector2(0.0, 1.0));
         archer.attack();

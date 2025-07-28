@@ -26,7 +26,7 @@ public class TestGameCamera {
     @BeforeEach
     public void setUp() {
         camera = new GameCameraImpl(initialPosition,cameraWidth, cameraHeight, followSpeed);
-        camera.setLevelPosition(new Vector2(cameraWidth, cameraHeight));
+        camera.setLevelSize(new Vector2(cameraWidth, cameraHeight));
     }
     @Test
     void testCameraFollowsPlayer() {
