@@ -40,7 +40,6 @@ public class RestrictedLongRangeBuilderImpl extends LongRangeStatBuilderImpl<Res
         final var dimension = super.getDimensions();
         final var position = super.getInitialPos();
         final var noAggro = super.getNoAggro();
-        final var character = super.getCharacter();
         final var regen = super.getRegen();
         final var senseDistance = super.getSenseDistance();
         final var points = super.getPoints();
@@ -50,7 +49,7 @@ public class RestrictedLongRangeBuilderImpl extends LongRangeStatBuilderImpl<Res
         final var projectileDimensions = super.getProjectileDimensions();
         final var timeAttack = super.getTimeAttack();
 
-        return new RestrictedLongRangeEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character,
+        return new RestrictedLongRangeEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro,
                 regen, senseDistance, points, projectileAttack, projectileVelocity, projectileDimensions, distance,
                 timeAttack, buff);
     }

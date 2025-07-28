@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.factory;
 
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.factory.StatisticsFactory;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
@@ -126,7 +125,6 @@ public class StatisticFactoryImpl implements StatisticsFactory {
         @Override
         public BaseEnemyStatistics createBaseEnemyStatistic(final double life, final double attack, final Vector2 speed,
                         final Dimensions dimension, final Vector2 position,
-                        final Character character,
                         final long points, final ParamBuilderOptional optionalParams) {
                 final GroundEnemyStatBuilderImpl<?> builder = new GroundEnemyStatBuilderImpl<>()
                                 .withLife(life)
@@ -134,7 +132,6 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                                 .withSpeed(speed)
                                 .withDimensions(dimension)
                                 .withPosition(position)
-                                .withCharacter(character)
                                 .withPoints(points);
 
                 if (optionalParams != null) {
@@ -156,7 +153,6 @@ public class StatisticFactoryImpl implements StatisticsFactory {
         public LongRangeEnemyStatistics createLongRangeEnemyStatistic(final double life, final double attack,
                         final Vector2 speed,
                         final Dimensions dimension, final Vector2 position,
-                        final Character character,
                         final long points, final ParamBuilderOptional optionalParams, final double projectileAttack,
                         final Vector2 projectileVelocity, final Dimensions projectileDimensions, final int timeAttack) {
                 final LongRangeStatBuilderImpl<?> builder = new LongRangeStatBuilderImpl<>()
@@ -165,7 +161,6 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                                 .withSpeed(speed)
                                 .withDimensions(dimension)
                                 .withPosition(position)
-                                .withCharacter(character)
                                 .withPoints(points)
                                 .withProjectileAttack(projectileAttack)
                                 .withProjectileVelocity(projectileVelocity)
@@ -191,7 +186,6 @@ public class StatisticFactoryImpl implements StatisticsFactory {
         public RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(final double life,
                         final double attack, final Vector2 speed,
                         final Dimensions dimension, final Vector2 position,
-                        final Character character,
                         final long points, final ParamBuilderOptional optionalParams, final double distance) {
                 final RestrictedGrEnStatImpl builder = new RestrictedGrEnStatImpl()
                                 .withLife(life)
@@ -199,7 +193,6 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                                 .withSpeed(speed)
                                 .withDimensions(dimension)
                                 .withPosition(position)
-                                .withCharacter(character)
                                 .withPoints(points);
 
                 if (optionalParams != null) {
@@ -221,7 +214,6 @@ public class StatisticFactoryImpl implements StatisticsFactory {
         public RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(final double life,
                         final double attack, final Vector2 speed,
                         final Dimensions dimension, final Vector2 position,
-                        final Character character,
                         final long points, final ParamBuilderOptional optionalParams, final double projectileAttack,
                         final Vector2 projectileVelocity, final Dimensions projectileDimensions, final double distance,
                         final int timeAttack) {
@@ -231,7 +223,6 @@ public class StatisticFactoryImpl implements StatisticsFactory {
                                 .withSpeed(speed)
                                 .withDimensions(dimension)
                                 .withPosition(position)
-                                .withCharacter(character)
                                 .withPoints(points)
                                 .withProjectileAttack(projectileAttack)
                                 .withProjectileVelocity(projectileVelocity)

@@ -39,7 +39,6 @@ class TestMeleeWeapon {
 
     private Level level;
     private Weapon sword;
-    private Character character;
     private Enemy dummy;
 
     /**
@@ -49,19 +48,19 @@ class TestMeleeWeapon {
     @BeforeEach
     void initialization() {
         this.level = new LevelTest();
-        this.character = new BaseCharacter(this.level, POSITION, STATS, "test.png") {
+        final Character character = new BaseCharacter(this.level, POSITION, STATS, "test.png") {
             @Override
             public CharacterID getCharacterID() {
                 return null;
             }
         };
-        this.sword = new BaseMeleeWeapon(this.character, new BoxCollider(), DAMAGE_MULTIPLIER, COOLDOWN, "test.png") {
+        this.sword = new BaseMeleeWeapon(character, new BoxCollider(), DAMAGE_MULTIPLIER, COOLDOWN, "test.png") {
         };
-        this.character.equipWeapon(this.sword);
+        character.equipWeapon(this.sword);
         final StatisticsFactory sf = new StatisticFactoryImpl();
         final BaseEnemyStatistics dummyStats = sf.createBaseEnemyStatistic(
             10, 0, Vector2.zero(), new Dimensions(20, 20),
-            Vector2.zero(), this.character, 0, sf.createOptional()
+            Vector2.zero(), 0, sf.createOptional()
         );
         this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), dummyStats);
     }
@@ -87,7 +86,8 @@ class TestMeleeWeapon {
         this.level.update(1.0);
         this.sword.attack();
         this.level.update(1.0);
-        Assertions.assertEquals(initialLife - ATTACK * DAMAGE_MULTIPLIER, this.dummy.getStats().getLife(), "The enemy should be hit just once");
+        Assertions.assertEquals(initialLife - ATTACK * DAMAGE_MULTIPLIER, this.dummy.getStats().getLife(),
+            "The enemy should get hit just once");
         this.sword.attack();
         this.level.update(1.0);
         try {
@@ -98,6 +98,7 @@ class TestMeleeWeapon {
         this.dummy.getStats().setLife(initialLife);
         this.sword.attack();
         this.level.update(1.0);
-        Assertions.assertEquals(initialLife - ATTACK * DAMAGE_MULTIPLIER * 2, this.dummy.getStats().getLife(), "The enemy should be hit twice");
+        Assertions.assertEquals(initialLife - ATTACK * DAMAGE_MULTIPLIER * 2, this.dummy.getStats().getLife(),
+            "The enemy should get hit twice");
     }
 }

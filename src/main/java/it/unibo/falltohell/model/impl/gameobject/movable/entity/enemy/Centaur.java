@@ -61,15 +61,14 @@ public class Centaur extends BaseEnemy {
      *
      * @param level       the game {@link Level} where the enemy exists
      * @param initialCord the initial {@link Vector2} position of the enemy
-     * @param character   the target {@link Character} this enemy reacts to
      * @param manager     the {@link EnemyTimerManager} that handles familiar logic
      *                    in this context
      * @param ingage     the {@link SafeZoneManager} used to handle if the player enter a safe zone
      */
-    public Centaur(final Level level, final Vector2 initialCord, final Character character,
+    public Centaur(final Level level, final Vector2 initialCord,
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,
+                initialCord, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,
                 ingage, "centaur.png");
 
         this.stats = (BaseEnemyStatistics) super.getStats();
@@ -101,7 +100,7 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     protected void attack() {
-        this.stats.getCharacter().setDamagedLife(this.stats.getAttack());
+        super.getCharacter().setDamagedLife(this.stats.getAttack());
     }
 
     /**

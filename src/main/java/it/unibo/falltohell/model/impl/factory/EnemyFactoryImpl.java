@@ -14,7 +14,6 @@ import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Lotawiec;
 import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Tengu;
 import it.unibo.falltohell.util.Vector2;
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 
 /**
  * Concrete implementation of the {@link EnemyFactory} interface.
@@ -37,7 +36,6 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
  * @see Lotawiec
  * @see Tengu
  * @see Level
- * @see Character
  *
  * @author Sara Visani
  */
@@ -47,40 +45,40 @@ public class EnemyFactoryImpl implements EnemyFactory {
      * {@inheritDoc}
      */
     @Override
-    public Enemy createCentaur(final Level level, final Vector2 initialCords, final Character character) {
+    public Enemy createCentaur(final Level level, final Vector2 initialCords) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
         final SafeZoneManager safeZoneManager = ManagerHolder.getSafeZoneManagerFor(level);
-        return new Centaur(level, initialCords, character, manager, safeZoneManager);
+        return new Centaur(level, initialCords, manager, safeZoneManager);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Enemy createTengu(final Level level, final Vector2 initialCords, final Character character) {
+    public Enemy createTengu(final Level level, final Vector2 initialCords) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
         final SafeZoneManager safeZoneManager = ManagerHolder.getSafeZoneManagerFor(level);
-        return new Tengu(level, initialCords, character, manager, safeZoneManager);
+        return new Tengu(level, initialCords, manager, safeZoneManager);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Enemy createImp(final Level level, final Vector2 initialCords, final Character character) {
+    public Enemy createImp(final Level level, final Vector2 initialCords) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
         final SafeZoneManager safeZoneManager = ManagerHolder.getSafeZoneManagerFor(level);
-        return new Imp(level, initialCords, character, manager, safeZoneManager);
+        return new Imp(level, initialCords, manager, safeZoneManager);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Enemy createLotawiec(final Level level, final Vector2 initialCords, final Character character) {
+    public Enemy createLotawiec(final Level level, final Vector2 initialCords) {
         final EnemyTimerManager manager = ManagerHolder.getManagerTimerFor(level);
         final SafeZoneManager safeZoneManager = ManagerHolder.getSafeZoneManagerFor(level);
-        return new Lotawiec(level, initialCords, character, manager, safeZoneManager);
+        return new Lotawiec(level, initialCords, manager, safeZoneManager);
     }
 
     /**

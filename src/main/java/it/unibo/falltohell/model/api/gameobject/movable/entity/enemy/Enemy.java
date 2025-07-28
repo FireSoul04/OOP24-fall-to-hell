@@ -17,12 +17,4 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.Entity;
  */
 
 public interface Enemy extends Entity {
-    /**
-     * Sets the {@link Character} (typically the player) that the enemy should
-     * follow or interact with.
-     * <p>
-     *
-     * @param character the character instance to target
-     */
-    void setCharacter(Character character);
 }

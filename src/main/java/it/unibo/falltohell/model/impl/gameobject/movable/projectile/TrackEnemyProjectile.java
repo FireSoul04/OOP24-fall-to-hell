@@ -31,13 +31,12 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class TrackEnemyProjectile extends BaseEnemyProjectile {
 
-    private static final int DISTANCE_BUFF = 20;
-    private static final int DISTANCE_DEBUFF = 10;
+    private static final int DISTANCE_BUFF = (int) (20 * TILE_SIZE);
+    private static final int DISTANCE_DEBUFF = (int)(10 *TILE_SIZE);
     private static final long DISTANCE_TIME = 1000;
-    private static final double DISTANCE_MIN = 30;
-    private static final double MAX_ACCEL = 800.0;
-    private static final double MAX_SPEED = 600.0;
-    private final Character character;
+    private static final double DISTANCE_MIN = TILE_SIZE;
+    private static final double MAX_ACCEL = 6;
+    private static final double MAX_SPEED = 10;
     private double distance;
     private final String name = "SubDistance" + UUID.randomUUID();
 
@@ -51,33 +50,30 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * @param speed     the initial velocity
      * @param collider  the collider used for hit detection
      * @param damage    the damage this projectile deals on impact
-     * @param character the target character to track
      * @param distance  the initial tracking range before switching to default
      *                  behavior
      *
      * @see Level
      * @see Vector2
      * @see Collider
-     * @see Character
      */
     public TrackEnemyProjectile(final Level level, final Vector2 position, final Vector2 speed,
-                                final Collider collider, final double damage, final Character character,
+                                final Collider collider, final double damage,
                                 final double distance) {
         super(level, position, speed, collider, damage, "track_enemy_projectile.png");
-        this.character = character;
-        this.distance = distance + DISTANCE_BUFF;
+        this.distance = (distance + DISTANCE_BUFF) * TILE_SIZE;
 
         super.getLevel().getTimerManager().addTimer(this.name, new CustomTimerImpl(DISTANCE_TIME, () -> {
-            if (!super.getLevel().getTimerManager().searchTimer(name)) {
+            if (!super.getLevel().getTimerManager().searchTimer(this.name)) {
                 return;
             }
 
             if (this.distance - DISTANCE_DEBUFF < DISTANCE_MIN) {
                 this.distance = DISTANCE_MIN;
-                super.getLevel().getTimerManager().removeTimer(name);
+                super.getLevel().getTimerManager().removeTimer(this.name);
             } else {
                 this.distance -= DISTANCE_DEBUFF;
-                super.getLevel().getTimerManager().restartTimer(name);
+                super.getLevel().getTimerManager().restartTimer(this.name);
             }
         }));
     }
@@ -87,7 +83,7 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      */
     @Override
     protected void onUpdate(final double deltaTime) {
-        final var characterPos = this.character.getPosition();
+        final var characterPos = super.getLevel().getGameData().getCurrentCharacter().getPosition();
         if (characterPos.distance(super.getPosition()) <= this.distance) {
             final Vector2 currentPos = super.getPosition();
             final Vector2 toTarget = characterPos.subtract(currentPos).normalize();

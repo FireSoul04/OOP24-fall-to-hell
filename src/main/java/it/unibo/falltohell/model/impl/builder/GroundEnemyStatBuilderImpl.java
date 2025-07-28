@@ -3,7 +3,6 @@ package it.unibo.falltohell.model.impl.builder;
 import java.util.Map;
 import java.util.Optional;
 
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.builder.GroundEnemyStatBuilder;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
@@ -29,7 +28,6 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
     private Optional<Double> regen = Optional.empty();
     private Optional<Double> senseDistance = Optional.empty();
     private Optional<Map<BuffNames, Double>> buff = Optional.empty();
-    private Character character;
     private long points;
 
     /**
@@ -72,15 +70,6 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
      * {@inheritDoc}
      */
     @Override
-    public T withCharacter(final Character character) {
-        this.character = character;
-        return self();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public T withPoints(final long points) {
         this.points = points;
         return self();
@@ -106,7 +95,7 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
         final var speed = super.getSpeed();
         final var dimension = super.getDimensions();
 
-        return new BaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
+        return new BaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, regen,
                 senseDistance, points, buff);
     }
 
@@ -133,14 +122,6 @@ public class GroundEnemyStatBuilderImpl<T extends GroundEnemyStatBuilderImpl<T>>
     @Override
     public Optional<Integer> getNoAggro() {
         return this.noAggro;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Character getCharacter() {
-        return this.character;
     }
 
     /**

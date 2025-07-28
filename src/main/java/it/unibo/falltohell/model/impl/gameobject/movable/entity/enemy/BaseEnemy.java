@@ -147,14 +147,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public void setCharacter(final Character character) {
-        this.stats.setCharacter(character);
-    }
-
-    /**
-     * {@inheritDoc}
      * <p>
      * Also restarts the no-aggro timer upon being damaged.
      * And calls the death checker.
@@ -163,7 +155,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     @Override
     public void setDamagedLife(final double damage) {
         super.setDamagedLife(damage);
-        this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
         this.removeEntity();
     }
 
@@ -173,13 +164,15 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     @Override
     protected void removeEntity() {
         if (super.isDead()) {
-            if (this.stats.getCharacter() instanceof Druid) {
-                ((Druid) this.stats.getCharacter()).addKill();
+            if (this.getCharacter() instanceof Druid) {
+                ((Druid) this.getCharacter()).addKill();
             }
             this.manager.removeTimersFor(this, super.getLevel());
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.getLevel().removeGameObject(this);
+        } else {
+            this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
         }
     }
 
@@ -214,10 +207,10 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *
      * @param deltaTime time elapsed since the last update, in seconds
      */
-    protected void move(double deltaTime){
+    protected void move(double deltaTime) {
         final Vector2 speed = this.stats.getSpeed().multiply(deltaTime);
         final Vector2 currentPos = super.getPosition();
-        final Vector2 charaPos = this.stats.getCharacter().getPosition();
+        final Vector2 charaPos = this.getCharacter().getPosition();
 
         if (this.canSeePlayer()) {
             this.chase(charaPos, currentPos, speed);
@@ -232,7 +225,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * when reaching a boundary or a collision.
      *
      * @param currentPos the current position of the enemy
-     * @param speed     the movement amount for this frame
+     * @param speed      the movement amount for this frame
      */
     protected abstract void patrol(final Vector2 currentPos, final Vector2 speed);
 
@@ -245,7 +238,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *
      * @param charaPos   the position of the player character
      * @param currentPos the current position of the enemy
-     * @param speed     the movement amount for this frame
+     * @param speed      the movement amount for this frame
      */
     protected abstract void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed);
 
@@ -255,7 +248,11 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @return true if player is within sensing distance, false otherwise
      */
     protected boolean canSeePlayer() {
-        return this.getPosition().distance(this.stats.getCharacter().getPosition()) <= this.stats.getSenseDistance();
+        return this.getPosition().distance(this.getCharacter().getPosition()) <= this.stats.getSenseDistance();
+    }
+
+    protected Character getCharacter(){
+        return super.getLevel().getGameData().getCurrentCharacter();
     }
 
     /**
@@ -352,7 +349,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         if (typeBuff.isPresent()) {
             new BuffBuilderImpl()
                     .withLevel(super.getLevel()).withPosition(super.getPosition()).withBuff(typeBuff.get(),
-                            (CharacterStatistics) this.stats.getCharacter().getStats(), this.stats.getMultiplier())
+                            (CharacterStatistics) this.getCharacter().getStats(), this.stats.getMultiplier())
                     .build();
         }
     }

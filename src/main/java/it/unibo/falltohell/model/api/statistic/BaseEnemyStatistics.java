@@ -4,7 +4,6 @@ import java.util.Map;
 
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -15,7 +14,6 @@ import it.unibo.falltohell.util.Vector2;
  * such as initial position, health, and aggro control.
  *
  * @see Statistics
- * @see Character
  * @see TimerManager
  * @see Vector2
  *
@@ -38,22 +36,6 @@ public interface BaseEnemyStatistics extends Statistics {
      * @return the no-aggro time duration
      */
     int getNoAggro();
-
-    /**
-     * Gets the current {@link Character} that this enemy is targeting.
-     * <p>
-     *
-     * @return the followed character
-     */
-    Character getCharacter();
-
-    /**
-     * Sets the {@link Character} that this enemy should follow.
-     * <p>
-     *
-     * @param character the character to follow
-     */
-    void setCharacter(Character character);
 
     /**
      * Returns the regeneration rate of the enemy (if applicable).

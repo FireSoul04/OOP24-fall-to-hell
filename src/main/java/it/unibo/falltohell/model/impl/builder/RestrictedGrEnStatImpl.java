@@ -37,13 +37,12 @@ public class RestrictedGrEnStatImpl extends GroundEnemyStatBuilderImpl<Restricte
         final var dimension = super.getDimensions();
         final var position = super.getInitialPos();
         final var noAggro = super.getNoAggro();
-        final var character = super.getCharacter();
         final var regen = super.getRegen();
         final var senseDistance = super.getSenseDistance();
         final var points = super.getPoints();
         final var buff = super.getBuffMap();
 
-        return new RestrictedBaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character,
+        return new RestrictedBaseEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro,
                 regen, senseDistance, points, distance, buff);
     }
 
