@@ -16,7 +16,7 @@ import java.util.Optional;
  * Class that represents a base entrance.
  * @author Martina Malagoli
  */
-public class BaseEntrance extends GameObjectImpl implements Entrance {
+public abstract class BaseEntrance extends GameObjectImpl implements Entrance {
 
     private static final Dimensions DIMENSIONS = new Dimensions(40, 40);
     private static final double OFFSET = 10;
