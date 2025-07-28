@@ -44,9 +44,15 @@ public class ReturnableArrow extends ProjectileImpl {
      * owner.
      */
     public void startReturn() {
+        if(isFacingRight()){
+            this.setFacingRight(false);
+        }else{
+            this.setFacingRight(true);
+        }
         this.returning = true;
         this.setSolid(false);
         this.setHit(false);
+        
     }
 
     /**

@@ -23,17 +23,19 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
     /**
      * Create new statistics with the parameters specified.
      *
-     * @param life
-     * @param attack
-     * @param speed
-     * @param dimensions
-     * @param mana
-     * @param attackSpeed
+     * @param life maximum life of the character
+     * @param attack of the character
+     * @param speed of the character
+     * @param dimensions of the character's collider
+     * @param mana maximum mana of the character
+     * @param attackSpeed of the character
      */
     public CharacterStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimensions, final double mana, final double attackSpeed) {
 
         super(life, attack, speed, dimensions);
+        this.checkPositiveAmountOrThrow(mana);
+        this.checkPositiveAmountOrThrow(attackSpeed);
         this.temporaryLife = 0;
         this.temporaryMana = 0;
         this.initialMana = mana;
@@ -62,7 +64,16 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      * {@inheritDoc}
      */
     @Override
+    public void resetTemporaryLife() {
+        this.temporaryLife = 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void addTemporaryLife(final double temporaryLife) {
+        this.checkPositiveAmountOrThrow(temporaryLife);
         this.temporaryLife = this.temporaryLife + temporaryLife;
     }
 
@@ -71,7 +82,8 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void subTemporaryLife(final double temporaryLife) {
-        this.addTemporaryLife(-temporaryLife);
+        this.checkPositiveAmountOrThrow(temporaryLife);
+        this.temporaryLife = this.temporaryLife - temporaryLife;
     }
 
     /**
@@ -95,7 +107,16 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void setMana(final double mana) {
-        this.mana = mana;
+        this.checkPositiveAmountOrThrow(mana);
+        this.mana = Math.min(mana, this.initialMana);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetTemporaryMana() {
+        this.temporaryMana = 0;
     }
 
     /**
@@ -103,7 +124,8 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void addMana(final double mana) {
-        this.mana += mana;
+        this.checkPositiveAmountOrThrow(mana);
+        this.setMana(this.mana + mana);
     }
 
     /**
@@ -111,7 +133,8 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void subMana(final double mana) {
-        this.addMana(-mana);
+        this.checkPositiveAmountOrThrow(mana);
+        this.mana = Math.max(this.mana - mana, 0);
     }
 
     /**
@@ -127,6 +150,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void setTemporaryMana(final double temporaryMana) {
+        this.checkPositiveAmountOrThrow(temporaryMana);
         this.temporaryMana = temporaryMana;
     }
 
@@ -135,6 +159,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void addTemporaryMana(final double temporaryMana) {
+        this.checkPositiveAmountOrThrow(temporaryMana);
         this.temporaryMana = this.temporaryMana + temporaryMana;
     }
 
@@ -143,7 +168,8 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void subTemporaryMana(final double temporaryMana) {
-        this.addTemporaryMana(-temporaryMana);
+        this.checkPositiveAmountOrThrow(temporaryMana);
+        this.temporaryMana = this.temporaryMana - temporaryMana;
     }
 
     /**
@@ -167,6 +193,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void setAttackSpeed(final double attackSpeed) {
+        this.checkPositiveAmountOrThrow(attackSpeed);
         this.attackSpeed = attackSpeed;
     }
 
@@ -175,7 +202,8 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void addAttackSpeed(final double attackSpeed) {
-        this.attackSpeed += attackSpeed;
+        this.checkPositiveAmountOrThrow(attackSpeed);
+        this.attackSpeed = this.attackSpeed + attackSpeed;
     }
 
     /**
@@ -183,6 +211,7 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
      */
     @Override
     public void subAttackSpeed(final double attackSpeed) {
-        this.addAttackSpeed(-attackSpeed);
+        this.checkPositiveAmountOrThrow(attackSpeed);
+        this.attackSpeed = this.attackSpeed - attackSpeed;
     }
 }

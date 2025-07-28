@@ -41,6 +41,6 @@ public class Bow extends BaseRangedWeapon {
     public Projectile createProjectile() {
         final Vector2 direction = this.getOwner().isFacingRight() ? Vector2.right() : Vector2.left();
         final Vector2 dirSpeed= projectileSpeed.multiply(direction.x());
-        return new ReturnableArrow(this.getOwner().getLevel(), this.getOwner().getPosition(), dirSpeed, new BoxCollider(new Dimensions(2.0, 2.0)), (Archer)this.getOwner());
+        return new ReturnableArrow(this.getOwner().getLevel(), this.getOwner().getPosition(), dirSpeed, new BoxCollider(new Dimensions(3.0, 3.0)), (Archer)this.getOwner());
     }
 }

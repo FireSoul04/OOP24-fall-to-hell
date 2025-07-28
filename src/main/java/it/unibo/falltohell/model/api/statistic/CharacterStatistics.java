@@ -35,6 +35,11 @@ public interface CharacterStatistics extends Statistics {
     void setTemporaryLife(double temporaryLife);
 
     /**
+     * Set the entity's temporary life to 0.
+     */
+    void resetTemporaryLife();
+
+    /**
      * Adds a specified amount to the entity's current temporary life.
      * <p>
      *
@@ -73,6 +78,11 @@ public interface CharacterStatistics extends Statistics {
      * @param mana the new mana value
      */
     void setMana(double mana);
+
+    /**
+     * Set the entity's temporary mana to 0.
+     */
+    void resetTemporaryMana();
 
     /**
      * Adds a specified amount to the entity's current Mana.
