@@ -85,7 +85,6 @@ class TestPhysics {
     void updateTest() {
         while (updates < MAX_UPDATES) {
             this.level.update(1.0);
-            System.out.println(this.entity.getPosition());
             updates++;
         }
     }
