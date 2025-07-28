@@ -12,6 +12,7 @@ import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
 import it.unibo.falltohell.model.impl.manager.BuffManagerImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
+import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -28,6 +29,7 @@ public class EntityImpl extends MovableImpl implements Entity {
 
     private static final Vector2 GRAVITY_STEP = new Vector2(0.0, 0.06);
     private static final long INVICIBILITY_TIME = 1000;
+    private static final double EPSILON = 1e-3;
 
     private Statistics stats;
     private Vector2 gravity;
@@ -87,8 +89,6 @@ public class EntityImpl extends MovableImpl implements Entity {
     public boolean isDead() {
         return this.stats.getLife() <= 0;
     }
-
-    
 
     /**
      * Removes this entity from the level if it is considered dead.
@@ -162,8 +162,10 @@ public class EntityImpl extends MovableImpl implements Entity {
             if (direction.equals(Vector2.down())) {
                 this.onGround = true;
                 this.gravity = Vector2.zero();
-                this.pushUpToFloor(other);
-            } else if (!direction.equals(Vector2.up())) {
+                this.pushUpToFloorLevel(other);
+            } else if (direction.equals(Vector2.up())) {
+                this.pushDownFromBlock(other);
+            } else {
                 this.pushFarFromBlock(other);
             }
         }
@@ -185,16 +187,31 @@ public class EntityImpl extends MovableImpl implements Entity {
      *
      * @param other block colliding with
      */
-    private void pushUpToFloor(final GameObject other) {
+    private void pushUpToFloorLevel(final GameObject other) {
         final double distance = this.getPosition().subtract(other.getPosition()).y();
         final double thisHeight = this.getCollider().orElseThrow().size().height();
-        final double otherHeight = other.getCollider().orElseThrow().size().height();
-        final double idealDistance = (thisHeight + otherHeight) / 2;
+        final double idealDistance = this.getIdealDistances(other).y();
         // Range of values for the y that the entity needs to be to reach floor level
         final double eps = 1 + (distance / thisHeight);
         final double moveTo = Math.abs(distance) - idealDistance;
-        if (Math.abs(moveTo) > eps) {
+        if (eps < EPSILON) {
+            this.setPosition(this.getPosition().subtract(new Vector2(0, moveTo)));
+        } else if (Math.abs(moveTo) > eps) {
             this.setPosition(this.getPosition().subtract(new Vector2(0, eps)));
+        }
+    }
+
+    /**
+     * Push the entity down when it reached a ceiling.
+     *
+     * @param other block colliding with
+     */
+    private void pushDownFromBlock(final GameObject other) {
+        final double distance = this.getPosition().subtract(other.getPosition()).y();
+        final double idealDistance = this.getIdealDistances(other).y();
+        final double moveTo = Math.abs(distance) - idealDistance;
+        if (moveTo > EPSILON) {
+            this.setPosition(this.getPosition().add(new Vector2(0, moveTo)));
         }
     }
 
@@ -206,14 +223,25 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     private void pushFarFromBlock(final GameObject other) {
         final double distance = this.getPosition().subtract(other.getPosition()).x();
-        final double thisWidth = this.getCollider().orElseThrow().size().width();
-        final double otherWidth = other.getCollider().orElseThrow().size().width();
-        final double idealDistance = (thisWidth + otherWidth) / 2;
-        final double eps = 1 + (distance / thisWidth);
+        final double idealDistance = this.getIdealDistances(other).x();
         final double moveTo = Math.abs(Math.abs(distance) - idealDistance);
-        if (moveTo > eps) {
+        if (moveTo > EPSILON) {
             this.setPosition(this.getPosition().add(new Vector2(moveTo * Math.signum(distance), 0)));
         }
+    }
+
+    /**
+     * Compute the ideal distance based on the other block's size.
+     * 
+     * @param other block to compute distance
+     * @return the ideal distance to reach
+     */
+    private Vector2 getIdealDistances(final GameObject other) {
+        final Dimensions thisSize = this.getCollider().orElseThrow().size();
+        final Dimensions otherSize = other.getCollider().orElseThrow().size();
+        return new Vector2(thisSize.width(), thisSize.height())
+            .add(new Vector2(otherSize.width(), otherSize.height()))
+            .divide(2);
     }
 
     /**
