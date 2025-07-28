@@ -154,7 +154,6 @@ public class LevelTest implements Level {
 
     /**
      * {@inheritDoc}
-     * Not used
      */
     @Override
     public DrawableRenderableHandler getDrawableRenderableHandler() {
@@ -163,12 +162,27 @@ public class LevelTest implements Level {
 
     /**
      * {@inheritDoc}
-     * Not used
      */
     @Override
-    public void loadCharacters(final Map<Character.CharacterID, Character> characters) {
+    public void loadCharacters(final Map<CharacterID, Character> characters) {
         this.characters.clear();
         this.characters.putAll(characters);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<CharacterID, Character> getCharacters() {
+        return this.characters;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public StaticCollisionManager getJumpCollisionManager() {
+        return this.jumpCollisionManager;
     }
 
     /**
@@ -176,16 +190,16 @@ public class LevelTest implements Level {
      * Not used
      */
     @Override
-    public Map<Character.CharacterID, Character> getCharacters() {
-        return this.characters;
+    public void setLevelSize(final Vector2 size){
+        throw new UnsupportedOperationException("No use for tests");
     }
 
-    public void setLevelSize(Vector2 size){
-
-    }
-
+    /**
+     * {@inheritDoc}
+     * Not used
+     */
     @Override
-    public StaticCollisionManager getJumpCollisionManager() {
-        return this.jumpCollisionManager;
+    public Vector2 getLevelSize() {
+        throw new UnsupportedOperationException("No use for tests");
     }
 }
