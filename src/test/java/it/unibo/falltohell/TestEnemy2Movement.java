@@ -30,10 +30,10 @@ public class TestEnemy2Movement {
         chara1 = new Druid(lv, new Vector2(-50, 0));
         chara1_2 = new Druid(lv, new Vector2(-45, 0));
         chara2 = new Druid(lv, new Vector2(5, 0));
-        en1 = fact.createTengu(lv, Vector2.zero(), chara1);
-        en2 = fact.createTengu(lv, new Vector2(-30, 0), chara1);
-        en3 = fact.createTengu(lv, new Vector2(-40, 0), chara1);
-        en4 = fact.createTengu(lv, new Vector2(10, 0), chara1);
+        en1 = fact.createTengu(lv, Vector2.zero());
+        en2 = fact.createTengu(lv, new Vector2(-30, 0));
+        en3 = fact.createTengu(lv, new Vector2(-40, 0));
+        en4 = fact.createTengu(lv, new Vector2(10, 0));
     }
 
     /*Testing Movement with Monster 2 to far away from Player*/
@@ -72,7 +72,7 @@ public class TestEnemy2Movement {
 
     @Test
     void justMonster2NotZeroNeg(){
-        en3.setCharacter(chara2);
+        //en3.setCharacter(chara2);
         en3.update(0);
         assertEquals(en3.getPosition(),new Vector2(-40, 0));
         en3.update(10);
@@ -125,7 +125,7 @@ public class TestEnemy2Movement {
 
     @Test
     void Monster2CloseCharacterReachable(){
-        en3.setCharacter(chara1_2);
+        //en3.setCharacter(chara1_2);
         en3.update(0);
         assertEquals(en3.getPosition(),new Vector2(-40, 0));
         en3.update(1);
@@ -172,7 +172,7 @@ public class TestEnemy2Movement {
 
     @Test
     void hitsMonster2EqualsCharacterPositive(){
-        en1.setCharacter(chara2);
+        //en1.setCharacter(chara2);
         en1.update(2);
         assertEquals(en1.getPosition(),new Vector2(2,0));
         en1.onCollision(chara1, Vector2.zero());
