@@ -29,6 +29,11 @@ public class GameControllerImpl implements GameController {
      * How many frames per seconds the game will run.
      */
     private static final double MAX_FRAMES = 60.0;
+
+    /**
+     * Frequency of every frame in milliseconds.
+     */
+    private static final double PERIOD = 1000 / MAX_FRAMES;
     private static final int WIDTH = 320;
     private static final int HEIGHT = WIDTH * 9 / 16;
 
@@ -112,26 +117,33 @@ public class GameControllerImpl implements GameController {
      */
     @Override
     public void run() {
-        final double ns = 1.0E9 / MAX_FRAMES;
-        final double sleepTime = 100 / MAX_FRAMES;
-        double deltaTime = 0.0;
         int frames = 0;
-        long lastTime = System.nanoTime();
+        long lastTime = System.currentTimeMillis();
+        long frameRateStartTime = lastTime;
+        double deltaTime;
         while (!this.isOver()) {
+            final long now = System.currentTimeMillis();
+            deltaTime = (now - lastTime) / PERIOD;
+            this.update(deltaTime);
+            this.render();
+            this.waitForNextFrame(deltaTime);
+            lastTime = now;
+            frames++;
+            if (System.currentTimeMillis() - frameRateStartTime >= 1000) {
+                this.view.setGameTitle("FTH: " + frames + " fps");
+                frames = 0;
+                frameRateStartTime = System.currentTimeMillis();
+            }
+        }
+    }
+
+    private void waitForNextFrame(final double deltaTime) {
+        if (deltaTime < PERIOD) {
             try {
-                Thread.sleep(frames - (long) (frames - sleepTime));
+                Thread.sleep((long) (PERIOD - deltaTime));
             } catch (final InterruptedException e) {
                 this.logger.severe("Sleep interrupted: " + e);
             }
-            final long now = System.nanoTime();
-            deltaTime = deltaTime + ((now - lastTime) / ns);
-            lastTime = now;
-            while (deltaTime >= 1.0) {
-                this.update(deltaTime);
-                deltaTime--;
-            }
-            this.render();
-            frames++;
         }
     }
 
