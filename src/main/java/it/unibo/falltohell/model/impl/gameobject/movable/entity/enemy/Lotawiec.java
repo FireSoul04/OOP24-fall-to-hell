@@ -123,7 +123,7 @@ public class Lotawiec extends BaseEnemy {
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + TILE_SIZE)),
                     this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
-                    super.getCharacter(), this.stats.getSenseDistance());
+                    this.stats.getSenseDistance());
         }
     }
 
