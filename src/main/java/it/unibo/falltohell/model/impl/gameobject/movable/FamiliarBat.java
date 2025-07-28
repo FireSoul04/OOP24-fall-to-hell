@@ -37,11 +37,11 @@ public class FamiliarBat extends MovableImpl {
     private static final int P_30 = 30;
     private static final int P_40 = 70;
     private static final int CASE_5 = 5;
-    private static final double REGEN_RATE = 0.1;
+    private static final double REGEN_RATE = 0.30;
     private static final int OFFSET_B_TO_C = -(int) GameObject.TILE_SIZE;
     private static final double DAMAGE = 15;
-    private static final double DISTANCE = 20 * GameObject.TILE_SIZE;
-    private static final Vector2 VELOCITY = new Vector2(2, 1);
+    private static final double DISTANCE = 15 * GameObject.TILE_SIZE;
+    private static final Vector2 VELOCITY = new Vector2(2, 3);
     private static final Dimensions DIMENSIONS = new Dimensions(5, 5);
     private static final BoxCollider COLLIDER = new BoxCollider(Vector2.zero(), DIMENSIONS);
     private final String name = "Bat-" + UUID.randomUUID();
@@ -257,7 +257,7 @@ public class FamiliarBat extends MovableImpl {
                     VELOCITY.y() * attackDirection.y()).multiply(deltaTime);
 
             var attackPos = currentPos;
-            if (Math.abs(currentPos.y() - targetPos.y()) <= OFFSET_B_TO_C) {
+            if (Math.abs(currentPos.y() - targetPos.y()) <= Math.abs(OFFSET_B_TO_C)) {
                 attackPos = new Vector2(currentPos.x(), targetPos.y());
             }
 

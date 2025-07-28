@@ -26,7 +26,7 @@ import it.unibo.falltohell.util.Vector2;
  * @see Character
  */
 public class ManagerFamiliars {
-    private static final int LIFE_DURATION = 5000;
+    private static final int LIFE_DURATION = 15000;
     private List<FamiliarBat> list = new ArrayList<>();
     private final Set<FamiliarBat> pendingRemoval = new HashSet<>();
     private NoFamiliarsCallback callback;
