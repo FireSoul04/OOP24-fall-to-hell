@@ -3,7 +3,6 @@ package it.unibo.falltohell.model.impl.statistics;
 import java.util.Map;
 import java.util.Optional;
 
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
 import it.unibo.falltohell.util.Dimensions;
@@ -37,7 +36,6 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
      * @param noAggro              optional override for an integer representing the
      *                             aggro state (no aggro). If
      *                             {@link Optional#empty()}, default is used.
-     * @param character            the {@link Character} this statistics belong to
      * @param regen                optional override for the health regeneration
      *                             rate. If {@link Optional#empty()}, default is
      *                             used.
@@ -57,10 +55,10 @@ public class LongRangedEnemyStatisticsImpl extends BaseEnemyStatisticsImpl imple
      */
     public LongRangedEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
+            final Optional<Double> regen, final Optional<Double> senseDistance,
             final long points, final double projectileAttack, final Vector2 projectileVelocity,
             final Dimensions projectileDimensions, final int timeAttack, final Optional<Map<BuffNames, Double>> buff) {
-        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points, buff);
+        super(life, attack, speed, dimension, position, noAggro, regen, senseDistance, points, buff);
         this.projectileAttack = projectileAttack;
         this.projectileVelocity = projectileVelocity;
         this.projectileDimensions = projectileDimensions;

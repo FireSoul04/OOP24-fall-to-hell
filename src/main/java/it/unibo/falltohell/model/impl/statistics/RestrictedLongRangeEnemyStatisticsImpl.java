@@ -6,7 +6,6 @@ import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.
 import java.util.Map;
 import java.util.Optional;
 
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -37,7 +36,6 @@ public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStati
      * @param noAggro              optional override for an integer representing the
      *                             aggro state (no aggro). If
      *                             {@link Optional#empty()}, default is used.
-     * @param character            the associated {@link Character} entity
      * @param regen                optional override for the health regeneration
      *                             rate. If {@link Optional#empty()}, default is
      *                             used.
@@ -58,11 +56,11 @@ public class RestrictedLongRangeEnemyStatisticsImpl extends LongRangedEnemyStati
      */
     public RestrictedLongRangeEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
+            final Optional<Double> regen, final Optional<Double> senseDistance,
             final long points, final double projectileAttack, final Vector2 projectileVelocity,
             final Dimensions projectileDimensions, final double distance, final int timeAttack,
             final Optional<Map<BuffNames, Double>> buff) {
-        super(life, attack, speed, dimension, position, noAggro, character, regen, senseDistance, points,
+        super(life, attack, speed, dimension, position, noAggro, regen, senseDistance, points,
                 projectileAttack, projectileVelocity, projectileDimensions, timeAttack, buff);
         this.distance = distance;
     }

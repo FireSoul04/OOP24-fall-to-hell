@@ -3,7 +3,6 @@ package it.unibo.falltohell.model.api.builder;
 import java.util.Map;
 import java.util.Optional;
 
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
 import it.unibo.falltohell.util.Vector2;
@@ -56,15 +55,6 @@ public interface GroundEnemyStatBuilder {
     GroundEnemyStatBuilder withSenseDistance(Double senseDistance);
 
     /**
-     * Sets the {@link Character} reference associated with this enemy.
-     * <p>
-     *
-     * @param character the enemy's {@link Character} instance
-     * @return this builder instance for method chaining
-     */
-    GroundEnemyStatBuilder withCharacter(Character character);
-
-    /**
      * Sets the number of points awarded for defeating this enemy.
      * <p>
      *
@@ -106,14 +96,6 @@ public interface GroundEnemyStatBuilder {
      * @return the no-aggro time duration
      */
     Optional<Integer> getNoAggro();
-
-    /**
-     * Gets the current {@link Character} that this enemy is targeting.
-     * <p>
-     *
-     * @return the followed character
-     */
-    Character getCharacter();
 
     /**
      * Returns the regeneration rate of the enemy (if applicable).

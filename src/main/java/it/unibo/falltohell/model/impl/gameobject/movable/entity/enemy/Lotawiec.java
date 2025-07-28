@@ -64,7 +64,6 @@ public class Lotawiec extends BaseEnemy {
      *
      * @param level       the level this enemy belongs to
      * @param initialCord the initial position of the enemy
-     * @param character   the target character this enemy tracks and attacks
      * @param manager     the timer manager handling enemy-specific timers
      * @param ingage      the {@link SafeZoneManager} used to handle if the player
      *                    enter a safe zone
@@ -72,13 +71,12 @@ public class Lotawiec extends BaseEnemy {
      * @see LongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
-    public Lotawiec(final Level level, final Vector2 initialCord, final Character character,
-            final EnemyTimerManager manager, final SafeZoneManager ingage) {
+    public Lotawiec(final Level level, final Vector2 initialCord, final EnemyTimerManager manager,
+            final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, character, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF),
-                        DAMAGE_A,
-                        VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME),
+                        initialCord, 10, new StatisticFactoryImpl().createOptional().withBuff(BUFF),
+                        DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, ATTACK_TIME),
                 manager, ingage, "lotawiec.png");
 
         stats = (LongRangeEnemyStatistics) super.getStats();
@@ -110,7 +108,7 @@ public class Lotawiec extends BaseEnemy {
                 this.direction *= -1;
             }
         } else if (other instanceof Character) {
-            this.stats.getCharacter().setDamagedLife(DAMAGE);
+            super.getCharacter().setDamagedLife(DAMAGE);
         }
         this.setFacingRight(this.direction > 0);
     }
@@ -120,12 +118,12 @@ public class Lotawiec extends BaseEnemy {
      */
     @Override
     protected void attack() {
-        if (this.stats.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
+        if (super.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new TrackEnemyProjectile(super.getLevel(),
-                    super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
+                    super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + TILE_SIZE)),
                     this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
-                    this.stats.getCharacter(), this.stats.getSenseDistance());
+                    super.getCharacter(), this.stats.getSenseDistance());
         }
     }
 
@@ -159,7 +157,8 @@ public class Lotawiec extends BaseEnemy {
 
             if (!manager.isBlocked(up, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
                 tryMove = up;
-            } else if (!manager.isBlocked(down, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
+            } else if (!manager.isBlocked(down, this.stats.getDimensions().width(),
+                    this.stats.getDimensions().height())) {
                 tryMove = down;
             } else {
                 return;

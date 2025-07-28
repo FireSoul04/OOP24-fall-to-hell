@@ -61,17 +61,16 @@ public class Imp extends BaseEnemy {
      *
      * @param level       the game level the Imp belongs to
      * @param initialCord the initial spawn position of the Imp
-     * @param character   the target {@link Character} to track and attack
      * @param manager     the {@link EnemyTimerManager} responsible for managing
      *                    enemy timers
      * @param ingage      the {@link SafeZoneManager} used to handle if the player
      *                    enter a safe zone
      */
-    public Imp(final Level level, final Vector2 initialCord, final Character character,
+    public Imp(final Level level, final Vector2 initialCord,
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createGroundRestrictedEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, character, 10, new StatisticFactoryImpl()
+                        initialCord, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DISTANCE),
                 manager, ingage, "imp.png");
@@ -100,7 +99,7 @@ public class Imp extends BaseEnemy {
      */
     @Override
     protected void attack() {
-        this.stats.getCharacter().setDamagedLife(this.stats.getAttack());
+        super.setDamagedLife(this.stats.getAttack());
     }
 
     /**

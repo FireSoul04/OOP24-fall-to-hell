@@ -71,13 +71,12 @@ public class LongRangeStatBuilderImpl<T extends LongRangeStatBuilderImpl<T>> ext
         final var dimension = super.getDimensions();
         final var position = super.getInitialPos();
         final var noAggro = super.getNoAggro();
-        final var character = super.getCharacter();
         final var regen = super.getRegen();
         final var senseDistance = super.getSenseDistance();
         final var points = super.getPoints();
         final var buff = super.getBuffMap();
 
-        return new LongRangedEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, character, regen,
+        return new LongRangedEnemyStatisticsImpl(life, attack, speed, dimension, position, noAggro, regen,
                 senseDistance, points, projectileAttack, projectileVelocity, projectileDimensions, timeAttack, buff);
     }
 

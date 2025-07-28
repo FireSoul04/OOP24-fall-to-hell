@@ -44,7 +44,6 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     private final long points;
     private final Map<BuffNames, Double> buff;
     private double multiplier = STANDARD_MULTIPLIER;
-    private Character character;
 
     /**
      * Constructs new enemy statistics with the specified parameters.
@@ -58,7 +57,6 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      * @param noAggro       optional override for an integer representing the aggro
      *                      state (no aggro). If {@link Optional#empty()}, default
      *                      is used.
-     * @param character     the associated {@link Character} instance
      * @param regen         optional override for the health regeneration rate. If
      *                      {@link Optional#empty()}, default is used.
      * @param senseDistance optional override for sensing distance. If
@@ -69,12 +67,11 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      */
     public BaseEnemyStatisticsImpl(final double life, final double attack, final Vector2 speed,
             final Dimensions dimension, final Vector2 position, final Optional<Integer> noAggro,
-            final Character character, final Optional<Double> regen, final Optional<Double> senseDistance,
+            final Optional<Double> regen, final Optional<Double> senseDistance,
             final long points, final Optional<Map<BuffNames, Double>> buff) {
         super(life, attack, speed, dimension);
         this.initialPosition = position;
         this.noAggro = noAggro.filter(a -> a >= 0).orElse(STANDARD_NO_AGGRO);
-        this.character = character;
         this.regen = regen.filter(r -> r >= MIN_R && r <= MAX_R).orElse(STANDARD_REGEN);
         this.senseDistance = senseDistance.filter(d -> d > 0).orElse(STANDARD_SENSE);
         this.points = points;
@@ -96,23 +93,6 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     @Override
     public int getNoAggro() {
         return this.noAggro;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Character getCharacter() {
-        return this.character;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCharacter(final Character character) {
-        this.character = character;
-
     }
 
     /**

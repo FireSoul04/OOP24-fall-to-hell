@@ -2,7 +2,6 @@ package it.unibo.falltohell.model.api.factory;
 
 import java.util.Optional;
 
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
@@ -65,13 +64,12 @@ public interface StatisticsFactory {
          * @param speed          the speed represented as a {@link Vector2}
          * @param dimension      the size of the enemy as {@link Dimensions}
          * @param position       the starting position as {@link Vector2}
-         * @param character      the character owning or related to this statistic
          * @param points         the score points awarded for defeating this enemy
          * @param optionalParams optional parameters such as regeneration and buffs
          * @return a new instance of {@link BaseEnemyStatistics}
          */
         BaseEnemyStatistics createBaseEnemyStatistic(double life, double attack, Vector2 speed, Dimensions dimension,
-                        Vector2 position, Character character, long points, ParamBuilderOptional optionalParams);
+                        Vector2 position, long points, ParamBuilderOptional optionalParams);
 
         /**
          * Creates a {@link LongRangeEnemyStatistics} instance for enemies with long
@@ -83,7 +81,6 @@ public interface StatisticsFactory {
          * @param speed                the speed represented as a {@link Vector2}
          * @param dimension            the size of the enemy as {@link Dimensions}
          * @param position             the starting position as {@link Vector2}
-         * @param character            the character owning or related to this statistic
          * @param points               the score points awarded for defeating this enemy
          * @param optionalParams       optional parameters such as regeneration and
          *                             buffs
@@ -94,7 +91,7 @@ public interface StatisticsFactory {
          * @return a new instance of {@link LongRangeEnemyStatistics}
          */
         LongRangeEnemyStatistics createLongRangeEnemyStatistic(double life, double attack, Vector2 speed,
-                        Dimensions dimension, Vector2 position, Character character, long points,
+                        Dimensions dimension, Vector2 position, long points,
                         ParamBuilderOptional optionalParams, double projectileAttack, Vector2 projectileVelocity,
                         Dimensions projectileDimensions, int timeAttack);
 
@@ -110,12 +107,11 @@ public interface StatisticsFactory {
          * @param position       the starting position as {@link Vector2}
          * @param points         the score points awarded for defeating this enemy
          * @param optionalParams optional parameters such as regeneration and buffs
-         * @param character      the character owning or related to this statistic
          * @param distance       the restricted movement distance
          * @return a new instance of {@link RestrictedBaseEnemyStatistics}
          */
         RestrictedBaseEnemyStatistics createGroundRestrictedEnemyStatistic(double life, double attack, Vector2 speed,
-                        Dimensions dimension, Vector2 position, Character character, long points,
+                        Dimensions dimension, Vector2 position, long points,
                         ParamBuilderOptional optionalParams, double distance);
 
         /**
@@ -128,7 +124,6 @@ public interface StatisticsFactory {
          * @param speed                the speed represented as a {@link Vector2}
          * @param dimension            the size of the enemy as {@link Dimensions}
          * @param position             the starting position as {@link Vector2}
-         * @param character            the character owning or related to this statistic
          * @param points               the score points awarded for defeating this enemy
          * @param optionalParams       optional parameters such as regeneration and
          *                             buffs
@@ -140,7 +135,7 @@ public interface StatisticsFactory {
          * @return a new instance of {@link RestrictedLongRangeEnemyStatistics}
          */
         RestrictedLongRangeEnemyStatistics createLongRangeRestrictedStatistic(double life, double attack, Vector2 speed,
-                        Dimensions dimension, Vector2 position, Character character, long points,
+                        Dimensions dimension, Vector2 position, long points,
                         ParamBuilderOptional optionalParams, double projectileAttack, Vector2 projectileVelocity,
                         Dimensions projectileDimensions, double distance, int timeAttack);
 

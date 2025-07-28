@@ -60,7 +60,6 @@ public class Tengu extends BaseEnemy {
      *
      * @param level       the {@link Level} this enemy belongs to
      * @param initialCord the initial spawn position of this enemy
-     * @param character   the {@link Character} this enemy targets
      * @param manager     the {@link EnemyTimerManager} used to handle enemy timers
      * @param ingage      the {@link SafeZoneManager} used to handle if the player
      *                    enter a safe zone
@@ -68,11 +67,11 @@ public class Tengu extends BaseEnemy {
      * @see RestrictedLongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
-    public Tengu(final Level level, final Vector2 initialCord, final Character character,
+    public Tengu(final Level level, final Vector2 initialCord,
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, character, 10, new StatisticFactoryImpl()
+                        initialCord, 10, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME),
                 manager, ingage, "tengu.png");
@@ -106,7 +105,7 @@ public class Tengu extends BaseEnemy {
                 this.collided = Optional.of(super.getPosition());
             }
         } else if (other instanceof Character) {
-            this.stats.getCharacter().setDamagedLife(DAMAGE);
+            super.getCharacter().setDamagedLife(DAMAGE);
         }
     }
 
@@ -115,7 +114,7 @@ public class Tengu extends BaseEnemy {
      */
     @Override
     protected void attack() {
-        if (this.stats.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
+        if (super.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new BaseEnemyProjectile(super.getLevel(),
                     super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
                     this.stats.getProjectileSpeed(),
