@@ -1,9 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.weapons;
 
-import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
-import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
-import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;

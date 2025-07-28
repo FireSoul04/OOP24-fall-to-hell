@@ -45,7 +45,7 @@ public class Druid extends BaseCharacter {
     private final StatisticPassiveAbility sPa;
     private final GameEventManagerImpl<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
-    private int kills;
+    protected int kills;
     private int passiveCycles = 1;
     private boolean sAactive;
 
@@ -203,5 +203,9 @@ public class Druid extends BaseCharacter {
                 || this.input.checkCondition("MoveLeft")
                 || this.input.checkCondition("MoveUp")
                 || this.input.checkCondition("MoveDown"));
+    }
+
+    public int getkill(){
+        return this.kills;
     }
 }

@@ -7,6 +7,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
+import it.unibo.falltohell.model.impl.manager.EnemyTimeManagerImpl;
 import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
@@ -40,10 +41,10 @@ public class Lotawiec extends BaseEnemy {
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 20;
-    private static final Vector2 VELOCITY = new Vector2(2, 2);
+    private static final Vector2 VELOCITY = new Vector2(0.5, 0.5);
     private static final Dimensions DIMENSIONS_ARROW = new Dimensions(10, 10);
     private static final double DAMAGE_A = 10;
-    private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
+    private static final Vector2 VELOCITY_ARROW = new Vector2(1, 5);
     private static final int ATTACK_TIME = 4000;
     private static final Map<BuffNames, Double> BUFF = Map.of(
             BuffNames.ATTACK, 10.0,
@@ -167,5 +168,10 @@ public class Lotawiec extends BaseEnemy {
 
         this.setPosition(tryMove);
         super.setFacingRight(moveStep.x() > 0);
+    }
+
+    /**TODO eliminate */
+    public EnemyTimeManagerImpl getTimerManager(){
+        return (EnemyTimeManagerImpl)super.getEnemyTimerManager();
     }
 }

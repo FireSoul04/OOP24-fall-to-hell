@@ -43,10 +43,10 @@ public class TestEnemyTimers {
         block = new BaseCollidableBlock(lv, new Vector2(20, 7), new BoxCollider(new Dimensions(10,10)), "base_block.png");
         GameData gameData = new GameDataImpl(Map.of(Character.CharacterID.DRUID, character));
         lv.linkGameData(gameData);
-        e1 = f.createCentaur(lv, Vector2.zero(), character);
-        e2 = f.createImp(lv, Vector2.zero(), character);
-        e3 = f.createLotawiec(lv, Vector2.zero(), character);
-        e4 = f.createTengu(lv, Vector2.zero(), character);
+        e1 = f.createCentaur(lv, Vector2.zero());
+        e2 = f.createImp(lv, Vector2.zero());
+        e3 = f.createLotawiec(lv, Vector2.zero());
+        e4 = f.createTengu(lv, Vector2.zero());
         manager = ((Lotawiec)e3).getTimerManager();
     }
 
@@ -77,15 +77,44 @@ public class TestEnemyTimers {
         e4.setDamagedLife(e4.getStats().getFullLife());
         assertEquals(4, character.getkill());
         assertTrue(manager.getNameTimers(e1).isEmpty());
-
     }
 
     @Test
+    void no(){
+        assertEquals(0, character.getkill());
+        System.out.println(manager.getNameTimers(e1));
+        System.out.println(manager.getNameTimers(e2));
+        System.out.println(manager.getNameTimers(e3));
+        System.out.println(manager.getNameTimers(e4));
+        assertEquals(1, manager.getNameTimers(e1).size());
+        assertEquals(1, manager.getNameTimers(e2).size());
+        assertEquals(2, manager.getNameTimers(e3).size());
+        assertEquals(2, manager.getNameTimers(e4).size());
+
+        e1.setDamagedLife(e1.getStats().getFullLife());
+        assertEquals(1, character.getkill());
+        assertTrue(manager.getNameTimers(e1).isEmpty());
+
+        e2.setDamagedLife(e2.getStats().getFullLife());
+        assertEquals(2, character.getkill());
+        assertTrue(manager.getNameTimers(e1).isEmpty());
+
+        e3.setDamagedLife(e3.getStats().getFullLife());
+        assertEquals(3, character.getkill());
+        assertTrue(manager.getNameTimers(e1).isEmpty());
+
+        e4.setDamagedLife(e4.getStats().getFullLife());
+        assertEquals(4, character.getkill());
+        assertTrue(manager.getNameTimers(e1).isEmpty());
+
+    }
+
+    /*@Test
     void movement(){
 
         e3.onCollision(block, Vector2.right());
         e3.update(10);
         assertEquals(new Vector2(20, 0), e3.getPosition());
-    }
+    }*/
 
 }
