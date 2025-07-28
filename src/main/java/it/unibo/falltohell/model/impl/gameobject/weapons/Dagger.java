@@ -7,7 +7,7 @@ import it.unibo.falltohell.util.Vector2;
 
 public class Dagger extends BaseMeleeWeapon {
 
-    private static final long COOLDOWN_TIME = 400;
+    private static final long COOLDOWN_TIME = 800;
     private static final double DAMAGE_MULTIPLIER = 0.8;
     private static final Dimensions SIZE = new Dimensions(20, 12);
     private static final Vector2 OFFSET = new Vector2(10, 0);
