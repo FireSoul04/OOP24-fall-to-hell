@@ -4,8 +4,6 @@ import it.unibo.falltohell.model.api.statistic.Statistics;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.Objects;
-
 /**
  * Class containing implementation for statistics.
  *
@@ -24,13 +22,18 @@ public class StatisticsImpl implements Statistics {
 
     /**
      * Create new statistics with the parameters specified.
+     * If dimension has any negative component it will use 0 instead.
      *
-     * @param life
-     * @param attack
-     * @param speed
-     * @param dimension
+     * @param life maximum life to the entity and should be positive
+     * @param attack of the entity and should be positive
+     * @param speed of the entity and can't have a negative component
+     * @param dimension of the entity's collider
      */
     protected StatisticsImpl(final double life, final double attack, final Vector2 speed, final Dimensions dimension) {
+        this.checkPositiveAmountOrThrow(life);
+        this.checkPositiveAmountOrThrow(attack);
+        this.checkNonNegativeAmountOrThrow(speed.x());
+        this.checkNonNegativeAmountOrThrow(speed.y());
         this.fullLife = life;
         this.life = life;
         this.initialAttack = attack;
@@ -183,6 +186,18 @@ public class StatisticsImpl implements Statistics {
     protected void checkPositiveAmountOrThrow(final double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount should be positive");
+        }
+    }
+
+    /**
+     * Check if amount is non-negative or else throw an IllegalStateException.
+     *
+     * @param amount to check
+     * @throws IllegalStateException if amount is negative
+     */
+    protected void checkNonNegativeAmountOrThrow(final double amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount should be non-negative");
         }
     }
 }

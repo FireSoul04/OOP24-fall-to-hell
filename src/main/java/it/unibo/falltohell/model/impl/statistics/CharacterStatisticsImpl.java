@@ -34,6 +34,8 @@ public class CharacterStatisticsImpl extends StatisticsImpl implements Character
             final Dimensions dimensions, final double mana, final double attackSpeed) {
 
         super(life, attack, speed, dimensions);
+        this.checkPositiveAmountOrThrow(mana);
+        this.checkPositiveAmountOrThrow(attackSpeed);
         this.temporaryLife = 0;
         this.temporaryMana = 0;
         this.initialMana = mana;
