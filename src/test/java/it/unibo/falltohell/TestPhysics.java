@@ -23,11 +23,11 @@ class TestPhysics {
     private static final Vector2 RIGHT_TARGET_POSITION = Vector2.right().multiply(MAX_UPDATES);
     private static final Vector2 LEFT_TARGET_POSITION = Vector2.left().multiply(MAX_UPDATES);
     private static final Vector2 ENTITY_POSITION = Vector2.zero();
-    private static final double LIFE = 0;
-    private static final double MANA = 0;
+    private static final double LIFE = 1;
+    private static final double MANA = 1;
     private static final Vector2 SPEED = Vector2.zero();
-    private static final double ATTACK = 0;
-    private static final double ATTACK_SPEED = 0;
+    private static final double ATTACK = 1;
+    private static final double ATTACK_SPEED = 1;
     private static final Dimensions SIZE = new Dimensions(20, 20);
     private static final Statistics STATS = new StatisticFactoryImpl().createCharacterStatistic(
         LIFE, ATTACK, SPEED, SIZE, MANA, ATTACK_SPEED

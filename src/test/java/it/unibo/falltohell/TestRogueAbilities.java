@@ -30,7 +30,7 @@ class TestRogueAbilities {
     private static final Vector2 ROGUE_POSITION = Vector2.zero();
     private static final Vector2 DUMMY_POSITION = Vector2.zero();
     private static final double DUMMY_LIFE = 20;
-    private static final double DUMMY_ATTACK = 0;
+    private static final double DUMMY_ATTACK = 1;
     private static final Vector2 DUMMY_SPEED = Vector2.zero();
     private static final int DUMMY_POINTS = 1;
     private static final Dimensions DUMMY_SIZE = new Dimensions(20, 20);

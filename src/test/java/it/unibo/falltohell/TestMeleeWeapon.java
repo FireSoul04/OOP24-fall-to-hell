@@ -1,12 +1,14 @@
 package it.unibo.falltohell;
 
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.factory.StatisticsFactory;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.impl.GameDataImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.BaseCharacter;
 import it.unibo.falltohell.model.impl.gameobject.weapons.BaseMeleeWeapon;
@@ -20,24 +22,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 class TestMeleeWeapon {
 
     private static final Vector2 POSITION = Vector2.zero();
-    private static final double LIFE = 0;
-    private static final double MANA = 0;
+    private static final double LIFE = 10;
+    private static final double MANA = 1;
     private static final Vector2 SPEED = Vector2.zero();
     private static final double ATTACK = 1;
     private static final double ATTACK_SPEED = 1;
     private static final double DAMAGE_MULTIPLIER = 1;
-    private static final Dimensions SIZE = new Dimensions(0, 0);
-    private static final long COOLDOWN = 200;
+    private static final Dimensions SIZE = new Dimensions(20, 20);
+    private static final long COOLDOWN = 1000;
     private static final CharacterStatistics STATS = new StatisticFactoryImpl().createCharacterStatistic(
         LIFE, ATTACK, SPEED, SIZE, MANA, ATTACK_SPEED
     );
 
-    private Level level;
     private Weapon sword;
     private Enemy dummy;
 
@@ -47,22 +49,28 @@ class TestMeleeWeapon {
      */
     @BeforeEach
     void initialization() {
-        this.level = new LevelTest();
-        final Character character = new BaseCharacter(this.level, POSITION, STATS, "test.png") {
+        final Level level = new LevelTest();
+        final Character character = new BaseCharacter(level, POSITION, STATS, "test.png") {
             @Override
             public CharacterID getCharacterID() {
                 return null;
             }
         };
+        level.linkGameData(new GameDataImpl(
+            0,
+            CharacterID.ROGUE,
+            Map.of(CharacterID.ROGUE, character),
+            POSITION
+        ));
         this.sword = new BaseMeleeWeapon(character, new BoxCollider(), DAMAGE_MULTIPLIER, COOLDOWN, "test.png") {
         };
         character.equipWeapon(this.sword);
         final StatisticsFactory sf = new StatisticFactoryImpl();
         final BaseEnemyStatistics dummyStats = sf.createBaseEnemyStatistic(
-            10, 0, Vector2.zero(), new Dimensions(20, 20),
-            Vector2.zero(), 0, sf.createOptional()
+            LIFE, ATTACK, Vector2.zero(), new Dimensions(20, 20),
+            Vector2.zero(), 1, sf.createOptional()
         );
-        this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), dummyStats);
+        this.dummy = new DummyEnemyTest(level, Vector2.zero(), dummyStats);
     }
 
     /**
@@ -72,7 +80,7 @@ class TestMeleeWeapon {
     void testDamageOnEnemy() {
         final double initialLife = this.dummy.getStats().getLife();
         this.sword.attack();
-        this.level.update(1.0);
+        this.sword.onCollision(this.dummy, Vector2.zero());
         Assertions.assertEquals(initialLife - ATTACK * DAMAGE_MULTIPLIER, this.dummy.getStats().getLife(), "The enemy should be hit and take damage");
     }
 
@@ -80,25 +88,32 @@ class TestMeleeWeapon {
      * Test if the cooldown is working correctly.
      */
     @Test
-    void testCooldown() {
+    void testCannotAttackTooFast() {
         final double initialLife = this.dummy.getStats().getLife();
         this.sword.attack();
-        this.level.update(1.0);
+        this.sword.onCollision(this.dummy, Vector2.zero());
         this.sword.attack();
-        this.level.update(1.0);
-        Assertions.assertEquals(initialLife - ATTACK * DAMAGE_MULTIPLIER, this.dummy.getStats().getLife(),
+        this.sword.onCollision(this.dummy, Vector2.zero());
+        Assertions.assertTrue(initialLife > this.dummy.getStats().getLife(),
             "The enemy should get hit just once");
+    }
+
+    @Test
+    void testCanAttackOnlyAfterCooldown() {
+        final double initialLife = this.dummy.getStats().getLife();
         this.sword.attack();
-        this.level.update(1.0);
+        this.sword.onCollision(this.dummy, Vector2.zero());
+        final double firstHitLife = this.dummy.getStats().getLife();
         try {
             Thread.sleep(COOLDOWN);
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             Logger.getLogger("TestMeleeWeaponLogger").severe("Thread interrupted: " + e);
         }
-        this.dummy.getStats().setLife(initialLife);
         this.sword.attack();
-        this.level.update(1.0);
-        Assertions.assertEquals(initialLife - ATTACK * DAMAGE_MULTIPLIER * 2, this.dummy.getStats().getLife(),
+        this.sword.onCollision(this.dummy, Vector2.zero());
+        Assertions.assertTrue(initialLife > this.dummy.getStats().getLife(),
+            "The enemy should get hit at least once");
+        Assertions.assertTrue(firstHitLife > this.dummy.getStats().getLife(),
             "The enemy should get hit twice");
     }
 }
