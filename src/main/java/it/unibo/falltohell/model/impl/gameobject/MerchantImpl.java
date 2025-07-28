@@ -33,8 +33,8 @@ import java.util.Collections;
 public class MerchantImpl extends GameObjectImpl implements Merchant {
 
     private static final String PATH = "src/main/resources/merchant/potions.txt";
-    private static final Dimensions POTION_DIMENSION = new Dimensions(10, 10);
-    private static final double DISTANCE_FROM_ITEMS = 3;
+    private static final Dimensions POTION_DIMENSION = new Dimensions(10.0, 10.0);
+    private static final double DISTANCE_FROM_ITEMS = 3.0;
     private static final int NUMBER_ITEMS_AVAILABLE = 3;
     private static final double BUFF_VALUE = 0.3;
     private final List<Item> merch;
@@ -62,14 +62,16 @@ public class MerchantImpl extends GameObjectImpl implements Merchant {
      */
     @Override
     public void restock() {
-        this.potionCounter = 0;
-        final List<String> shuffledMerch = new ArrayList<>(this.allMerchFromFile);
-        Collections.shuffle(shuffledMerch);
-        this.merch.addAll(shuffledMerch
-                .stream()
-                .limit(NUMBER_ITEMS_AVAILABLE)
-                .map(this::parseItem)
-                .toList());
+        if (this.merch.isEmpty()) {
+            this.potionCounter = 0;
+            final List<String> shuffledMerch = new ArrayList<>(this.allMerchFromFile);
+            Collections.shuffle(shuffledMerch);
+            this.merch.addAll(shuffledMerch
+                    .stream()
+                    .limit(NUMBER_ITEMS_AVAILABLE)
+                    .map(this::parseItem)
+                    .toList());
+        }
     }
 
     /**
