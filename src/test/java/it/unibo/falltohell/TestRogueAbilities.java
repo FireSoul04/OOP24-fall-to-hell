@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Assertions;
 
 class TestRogueAbilities {
 
@@ -63,17 +63,17 @@ class TestRogueAbilities {
             .filter(t -> t instanceof Knife)
             .map(GameObject::getPosition)
             .toList();
-        assertTrue(
+        Assertions.assertTrue(
             knives.get(0).x() > startingKnivesPositions.get(0).x() &&
                 knives.get(0).y() == startingKnivesPositions.get(0).y(),
             "First knife should move only in the x axes"
         );
-        assertTrue(
+        Assertions.assertTrue(
             knives.get(1).x() > startingKnivesPositions.get(1).x() &&
                 knives.get(1).y() > startingKnivesPositions.get(1).y(),
             "Second knife should move down and right"
         );
-        assertTrue(
+        Assertions.assertTrue(
             knives.get(2).x() > startingKnivesPositions.get(2).x() &&
                 knives.get(2).y() < startingKnivesPositions.get(2).y(),
             "Third knife should move up and right"
@@ -97,6 +97,6 @@ class TestRogueAbilities {
             this.level.update(1.0);
             steps++;
         }
-        assertTrue(dummy.getStats().getLife() < initialLife, "The enemy should be hit and take damage");
+        Assertions.assertTrue(dummy.getStats().getLife() < initialLife, "The enemy should be hit and take damage");
     }
 }
