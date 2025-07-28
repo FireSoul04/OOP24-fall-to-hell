@@ -25,7 +25,7 @@ import it.unibo.falltohell.util.Vector2;
 public class WarScythe extends BaseMeleeWeapon {
 
     private static final Vector2 OFFSET = new Vector2(16, 5);
-    private static final double MULTIPLIER = 2.5;
+    private static final double MULTIPLIER = 1.5;
 
     /**
      * <p>
