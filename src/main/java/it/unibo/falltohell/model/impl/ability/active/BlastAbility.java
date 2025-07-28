@@ -17,7 +17,7 @@ import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 public class BlastAbility implements SpecialActiveAbility {
 
     private static final double COST_MANA_BLAST = 20;
-    private static final long DURATION = 3000;
+    private static final long DURATION = 1500;
 
     private final Caster caster;
 
@@ -38,12 +38,18 @@ public class BlastAbility implements SpecialActiveAbility {
         final TimerManager timerManager = level.getTimerManager();
         final String timerName = "blast_timer";
         if (this.caster.hasEnoughMana(COST_MANA_BLAST)) {
+            final GameObject blast = new Blast(this.caster);
+            final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
+            statistics.subMana(COST_MANA_BLAST);
             if (!timerManager.searchTimer(timerName)) {
-                final GameObject blast = new Blast(this.caster);
-                final CharacterStatistics statistics = (CharacterStatistics) this.caster.getStats();
-                statistics.subMana(COST_MANA_BLAST);
-                timerManager.addTimer(timerName, new CustomTimerImpl(DURATION, () -> level.removeGameObject(blast)));
+                timerManager.addTimer(timerName, new CustomTimerImpl(DURATION, () -> {
+                    level.removeGameObject(blast);
+                    timerManager.removeTimer(timerName);
+                }));
+            } else {
+                timerManager.restartTimer(timerName);
             }
+
         }
     }
 }
