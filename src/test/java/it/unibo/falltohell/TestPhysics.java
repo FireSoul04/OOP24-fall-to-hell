@@ -35,7 +35,6 @@ class TestPhysics {
     private static final double EPS = 1e-1;
 
     private Entity entity;
-    private GameObject target;
     private Level level;
     private int updates;
     private boolean collision;
@@ -58,13 +57,13 @@ class TestPhysics {
                 }
             }
         };
-        this.target = new GameObjectImpl(this.level, RIGHT_TARGET_POSITION, new BoxCollider()) {
+        new GameObjectImpl(this.level, RIGHT_TARGET_POSITION, new BoxCollider()) {
             @Override
             public void onCollision(final GameObject other, final Vector2 direction) {
                 collision = true;
             }
         };
-        this.target = new GameObjectImpl(this.level, LEFT_TARGET_POSITION, new BoxCollider()) {
+        new GameObjectImpl(this.level, LEFT_TARGET_POSITION, new BoxCollider()) {
             @Override
             public void onCollision(final GameObject other, final Vector2 direction) {
                 collision = true;
@@ -83,9 +82,9 @@ class TestPhysics {
      * Method that updates the level MAX_UPDATES times.
      */
     void updateTest() {
-        while (updates < MAX_UPDATES) {
+        while (this.updates < MAX_UPDATES) {
             this.level.update(1.0);
-            updates++;
+            this.updates++;
         }
     }
 
@@ -114,12 +113,12 @@ class TestPhysics {
      * while going right and same with a left target.
      */
     @Test
-    void testNotGoingThroughWalls() {
+    void testGoingToTargetsWithObstacles() {
         this.level.getGameEventManager().addCondition("MoveRight", () -> true);
         final Vector2 rightObstaclePosition = Vector2.right().multiply(MAX_UPDATES).divide(2);
         new BaseCollidableBlock(this.level, rightObstaclePosition, new BoxCollider(), "test.png");
         this.updateTest();
-        Assertions.assertFalse(collision, "The entity should not reach the target on the right");
+        Assertions.assertFalse(this.collision, "The entity should not reach the target on the right");
         this.level.getGameEventManager().addCondition("MoveRight", () -> false);
         this.level.getGameEventManager().addCondition("MoveLeft", () -> true);
         this.entity.setPosition(ENTITY_POSITION);
@@ -127,22 +126,22 @@ class TestPhysics {
         new BaseCollidableBlock(this.level, leftObstaclePosition, new BoxCollider(), "test.png");
         this.updates = 0;
         this.updateTest();
-        Assertions.assertFalse(collision, "The entity should not reach the target on the left");
+        Assertions.assertFalse(this.collision, "The entity should not reach the target on the left");
     }
 
     /**
      * Test if the entity can reach the right target while going right and same with the left target.
      */
     @Test
-    void testGoingRightWithoutWalls() {
+    void testGoingToTargetsWithoutObstacles() {
         this.level.getGameEventManager().addCondition("MoveRight", () -> true);
         this.updateTest();
-        Assertions.assertTrue(collision, "The entity should reach the target on the right");
+        Assertions.assertTrue(this.collision, "The entity should reach the target on the right");
         this.level.getGameEventManager().addCondition("MoveRight", () -> false);
         this.level.getGameEventManager().addCondition("MoveLeft", () -> true);
         this.entity.setPosition(ENTITY_POSITION);
         this.updates = 0;
         this.updateTest();
-        Assertions.assertTrue(collision, "The entity should reach the target on the left");
+        Assertions.assertTrue(this.collision, "The entity should reach the target on the left");
     }
 }
