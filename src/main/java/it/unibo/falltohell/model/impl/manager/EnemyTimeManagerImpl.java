@@ -1,7 +1,6 @@
 package it.unibo.falltohell.model.impl.manager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -185,10 +184,5 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
         }
         level.getTimerManager().stopTimer(name);
         level.getTimerManager().restartTimer(name);
-    }
-
-    /** TODO eliminate */
-    public List<String> getNameTimers(Enemy e) {
-        return this.enemyTimers.getOrDefault(e, Collections.emptyList());
     }
 }
