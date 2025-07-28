@@ -1,14 +1,13 @@
-package it.unibo.falltohell.model.impl.drop;
+package it.unibo.falltohell.model.impl.gameobject.movable.drop;
 
 import java.util.UUID;
 
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.gameobject.movable.drop.Drop;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.buff.Buff;
-import it.unibo.falltohell.model.api.drop.Drop;
-
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;

@@ -1,4 +1,4 @@
-package it.unibo.falltohell.model.api.drop;
+package it.unibo.falltohell.model.api.gameobject.movable.drop;
 
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.buff.Buff;

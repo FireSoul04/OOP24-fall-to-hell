@@ -3,8 +3,8 @@ package it.unibo.falltohell.model.api.builder;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.buff.Buff;
+import it.unibo.falltohell.model.impl.gameobject.movable.drop.DropImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
-import it.unibo.falltohell.model.impl.drop.DropImpl;
 import it.unibo.falltohell.model.impl.builder.BuffBuilderImpl;
 import it.unibo.falltohell.util.Vector2;
 
