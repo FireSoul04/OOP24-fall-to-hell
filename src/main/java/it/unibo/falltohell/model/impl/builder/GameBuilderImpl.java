@@ -144,6 +144,7 @@ public class GameBuilderImpl implements GameBuilder {
         }
         final LevelLoader ll = new LevelLoaderImpl("level.txt", this.level.get());
         ll.loadLevel();
+        this.camera.ifPresent(t -> t.setLevelSize(this.level.get().getLevelSize()));
         return new GameImpl(this.level.get(), this.gameData.orElse(new GameDataImpl(this.characters)), this.characters);
     }
 }
