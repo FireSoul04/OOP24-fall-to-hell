@@ -25,11 +25,11 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Rogue extends BaseCharacter {
 
-    private static final double LIFE = 10;
-    private static final double ATTACK = 10;
+    private static final double LIFE = 60;
+    private static final double ATTACK = 25;
     private static final double MANA = 10;
-    private static final double ATTACK_SPEED = 10;
-    private static final Vector2 SPEED = new Vector2(2.0, 1.5);
+    private static final double ATTACK_SPEED = 2;
+    private static final Vector2 SPEED = new Vector2(3.0, 1.5);
     private static final CharacterStatistics STATS = new StatisticFactoryImpl()
         .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20, 25), MANA, ATTACK_SPEED);
 
