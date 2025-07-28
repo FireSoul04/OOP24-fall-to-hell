@@ -90,7 +90,7 @@ class TestRogueAbilities {
         final StatisticsFactory sf = new StatisticFactoryImpl();
         final BaseEnemyStatistics enemyStats = sf.createBaseEnemyStatistic(
             10, 0, Vector2.zero(), new Dimensions(5, 5),
-            enemyPosition, this.rogue, 1, sf.createOptional()
+            enemyPosition, 1, sf.createOptional()
         );
         final Enemy dummy = new DummyEnemyTest(this.level, Vector2.zero(), enemyStats);
         final double initialLife = dummy.getStats().getLife();
