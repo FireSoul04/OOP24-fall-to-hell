@@ -81,7 +81,7 @@ public class DropImpl extends MovableImpl implements Drop {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof Character character) {
-            final String name = "buff" + this.hashCode();
+            final String name = "drop_buff" + this.hashCode();
             character.getBuffManager().addBuff(this.buff, BUFF_DURATION, name);
             if(super.getLevel().getTimerManager().searchTimer(this.name)){
                 super.getLevel().getTimerManager().removeTimer(this.name);
