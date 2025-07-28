@@ -7,9 +7,12 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.factory.StatisticsFactory;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.GameDataImpl;
+import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
+import it.unibo.falltohell.model.impl.gameobject.movable.projectile.BaseEnemyProjectile;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Knife;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
+import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.test.util.DummyEnemyTest;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Dimensions;
@@ -24,11 +27,18 @@ import org.junit.jupiter.api.Assertions;
 
 class TestRogueAbilities {
 
-    private static final int MAX_UPDATES = 500;
+    private static final Vector2 ROGUE_POSITION = Vector2.zero();
+    private static final Vector2 DUMMY_POSITION = Vector2.zero();
+    private static final double DUMMY_LIFE = 20;
+    private static final double DUMMY_ATTACK = 0;
+    private static final Vector2 DUMMY_SPEED = Vector2.zero();
+    private static final int DUMMY_POINTS = 1;
+    private static final Dimensions DUMMY_SIZE = new Dimensions(20, 20);
 
     private Character rogue;
+    private Enemy dummy;
     private Level level;
-    private int steps;
+    private boolean canShoot;
 
     /**
      * Initiate all variables for the test.
@@ -36,10 +46,23 @@ class TestRogueAbilities {
     @BeforeEach
     void initialization() {
         this.level = new LevelTest();
-        this.level.getGameEventManager().addCondition("ActiveAbility", () -> steps < 1);
-        this.rogue = new Rogue(this.level, Vector2.zero());
+        this.level.getGameEventManager().addCondition("ActiveAbility", () -> this.canShoot);
+        this.rogue = new Rogue(this.level, ROGUE_POSITION);
+        // Floor for rogue
+        new BaseCollidableBlock(
+            this.level,
+            ROGUE_POSITION.add(Vector2.down().multiply(GameObject.TILE_SIZE)),
+            new BoxCollider(),
+            "test.png"
+        );
         this.level.linkGameData(new GameDataImpl(Map.of(this.rogue.getCharacterID(), this.rogue)));
-        this.steps = 0;
+        this.canShoot = true;
+        final StatisticsFactory sf = new StatisticFactoryImpl();
+        final BaseEnemyStatistics stats = sf.createBaseEnemyStatistic(
+            DUMMY_LIFE, DUMMY_ATTACK, DUMMY_SPEED, DUMMY_SIZE,
+            DUMMY_POSITION, DUMMY_POINTS, sf.createOptional()
+        );
+        this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), stats);
     }
 
     /**
@@ -47,18 +70,16 @@ class TestRogueAbilities {
      */
     @Test
     void testKnifeThrowDirections() {
-        // Do a single update to save the knives starting positions
+        // Removes the dummy to avoid destroying the knives
+        this.level.removeGameObject(this.dummy);
         this.level.update(1.0);
-        steps++;
+        this.canShoot = false;
         final List<Vector2> startingKnivesPositions = this.level.getGameObjects()
             .stream()
             .filter(t -> t instanceof Knife)
             .map(GameObject::getPosition)
             .toList();
-        while (steps < MAX_UPDATES) {
-            this.level.update(1.0);
-            steps++;
-        }
+        this.level.update(1.0);
         final List<Vector2> knives = this.level.getGameObjects()
             .stream()
             .filter(t -> t instanceof Knife)
@@ -86,18 +107,93 @@ class TestRogueAbilities {
      */
     @Test
     void testKnifeDamageOnEnemy() {
-        final Vector2 enemyPosition = new Vector2(100.0, 0.0);
-        final StatisticsFactory sf = new StatisticFactoryImpl();
-        final BaseEnemyStatistics enemyStats = sf.createBaseEnemyStatistic(
-            10, 0, Vector2.zero(), new Dimensions(5, 5),
-            enemyPosition, 1, sf.createOptional()
+        final double initialLife = this.dummy.getStats().getLife();
+        this.level.update(1.0);
+        Assertions.assertTrue(this.dummy.getStats().getLife() < initialLife, "The enemy should be hit and take damage");
+    }
+
+    /**
+     * Test to check if the rogue activates the evade ability when it takes damage from an enemy.
+     */
+    @Test
+    void testEvadePassiveAbilityWithEnemy() {
+        this.level.update(1.0);
+        Assertions.assertTrue(
+            this.rogue.getStats().getInitialSpeed().magnitude() < this.rogue.getStats().getSpeed().magnitude(),
+            "The rogue should have his speed buffed"
         );
-        final Enemy dummy = new DummyEnemyTest(this.level, Vector2.zero(), enemyStats);
-        final double initialLife = dummy.getStats().getLife();
-        while (steps < MAX_UPDATES) {
+    }
+
+    /**
+     * Test to check if the rogue activates the evade ability when it takes damage from an enemy projectile.
+     */
+    @Test
+    void testEvadePassiveAbilityWithEnemyProjectile() {
+        this.level.removeGameObject(this.dummy);
+        new BaseEnemyProjectile(this.level, ROGUE_POSITION, Vector2.zero(), new BoxCollider(), 1, "test.png");
+        this.level.update(1.0);
+        Assertions.assertTrue(
+            this.rogue.getStats().getInitialSpeed().magnitude() < this.rogue.getStats().getSpeed().magnitude(),
+            "The rogue should have his speed buffed"
+        );
+    }
+
+    /**
+     * Test to check if the rogue doesn't active passive ability when not hit.
+     */
+    @Test
+    void testEvadePassiveAbilityWithoutBeingHit() {
+        this.level.removeGameObject(this.dummy);
+        this.level.update(1.0);
+        Assertions.assertFalse(
+            this.rogue.getStats().getInitialSpeed().magnitude() < this.rogue.getStats().getSpeed().magnitude(),
+            "The rogue should have not his speed buffed"
+        );
+    }
+
+    /**
+     * Update the rogue until he reaches the max jump height.
+     */
+    private void jumpUntilMaxHeightIsReached() {
+        double lastFrameY;
+        do {
+            lastFrameY = this.rogue.getPosition().y();
             this.level.update(1.0);
-            steps++;
-        }
-        Assertions.assertTrue(dummy.getStats().getLife() < initialLife, "The enemy should be hit and take damage");
+            System.out.println(this.rogue.getPosition());
+        } while (this.rogue.getPosition().y() < lastFrameY);
+    }
+
+    /**
+     * Test if the rogue's double jump works correctly.
+     */
+    @Test
+    void testDoubleJump() {
+        final double startY = this.rogue.getPosition().y();
+        this.level.getGameEventManager().addCondition("Jump", () -> true);
+        this.level.update(1.0);
+        this.jumpUntilMaxHeightIsReached();
+        Assertions.assertTrue(
+            this.rogue.getPosition().y() < startY,
+            "The rogue should go up when jumping"
+        );
+
+        final double releasedJumpY = this.rogue.getPosition().y();
+        // Stop jumping
+        this.level.getGameEventManager().addCondition("Jump", () -> false);
+        this.level.update(1.0);
+        Assertions.assertTrue(
+            this.rogue.getPosition().y() > releasedJumpY,
+            "The rogue should go down when jump reaches max height"
+        );
+
+        // Start the double jump and updates at least two times to reset the jump
+        this.level.getGameEventManager().addCondition("Jump", () -> true);
+        this.level.update(1.0);
+        this.level.update(1.0);
+        this.jumpUntilMaxHeightIsReached();
+        Assertions.assertTrue(
+            this.rogue.getPosition().y() < releasedJumpY,
+            "The rogue should go up when double jumping"
+        );
     }
 }
