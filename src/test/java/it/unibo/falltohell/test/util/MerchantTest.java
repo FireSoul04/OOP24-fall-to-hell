@@ -29,7 +29,7 @@ import java.util.List;
 public class MerchantTest extends GameObjectImpl implements Merchant {
 
     private static final Dimensions POTION_DIMENSION = new Dimensions(10, 10);
-    private static final double DISTANCE_FROM_ITEMS = 3;
+    private static final double DISTANCE_FROM_ITEMS = 3.0;
     private static final double BUFF_VALUE = 0.3;
     private final List<Item> merch;
     private int potionCounter;
@@ -51,9 +51,18 @@ public class MerchantTest extends GameObjectImpl implements Merchant {
      */
     @Override
     public void restock() {
-        this.merch.add(parseItem("life,100"));
-        this.merch.add(parseItem("life,100"));
-        this.merch.add(parseItem("life,100"));
+        this.merch.add(this.createPotion());
+        this.merch.add(this.createPotion());
+        this.merch.add(this.createPotion());
+    }
+
+    /**
+     * @return  new potion item
+     */
+    private Potion createPotion() {
+        final CharacterStatistics statistics = (CharacterStatistics) this.getLevel().getGameData().getCurrentCharacter().getStats();
+        final Buff buff = new LifeBuff(statistics, BUFF_VALUE);
+        return new Potion(this.getLevel(), this.computePosition(), new BoxCollider(POTION_DIMENSION), 100, buff, "test.png");
     }
 
     /**
@@ -92,44 +101,17 @@ public class MerchantTest extends GameObjectImpl implements Merchant {
     }
 
     /**
-     * Method to create a new item depending on the type.
-     * @param itemFileRow is the row with an item's information in the file
-     * @return the new item
-     */
-    private Item parseItem(final String itemFileRow) {
-        final String[] elements = itemFileRow.split(",");
-        final String type = elements[0];
-        final String cost = elements[1];
-        final Collider potionCollider = new BoxCollider(Vector2.zero(), POTION_DIMENSION);
-        final Buff buff;
-        final CharacterStatistics currentCharacterStats = (CharacterStatistics) this.getLevel()
-                .getGameData()
-                .getCurrentCharacter()
-                .getStats();
-        if (type.equalsIgnoreCase("life")) {
-            buff = new LifeBuff(currentCharacterStats, BUFF_VALUE);
-        } else if (type.equalsIgnoreCase("attack")) {
-            buff = new AttackBuff(currentCharacterStats, BUFF_VALUE);
-        } else if (type.equalsIgnoreCase("attsp")) {
-            buff = new AttackSpeedBuff(currentCharacterStats, BUFF_VALUE);
-        } else if (type.equalsIgnoreCase("speed")) {
-            buff = new SpeedBuff(currentCharacterStats, BUFF_VALUE);
-        } else if (type.equalsIgnoreCase("mana")) {
-            buff = new ManaBuff(currentCharacterStats, BUFF_VALUE);
-        } else {
-            throw new IllegalArgumentException("The row passed is not correct: there is no item with this name");
-        }
-        return new Potion(this.getLevel(),
-                this.computePosition(),
-                potionCollider,
-                Long.parseLong(cost), buff, "LifePotion.png");
-    }
-
-    /**
      * @return the merch in the merchant's shop
      */
     public List<Item> getMerch() {
         return Collections.unmodifiableList(this.merch);
+    }
+
+    /**
+     * @return the distance from each item
+     */
+    public double getDistanceFromItems() {
+        return DISTANCE_FROM_ITEMS;
     }
 
 
