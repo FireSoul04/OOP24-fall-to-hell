@@ -95,10 +95,6 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     protected void removeEntity() {
         if (this.isDead()) {
-            final var tm = super.getLevel().getTimerManager();
-            if (tm.searchTimer(this.name)) {
-                tm.removeTimer(this.name);
-            }
             super.getLevel().removeGameObject(this);
         }
     }
@@ -232,7 +228,7 @@ public class EntityImpl extends MovableImpl implements Entity {
 
     /**
      * Compute the ideal distance based on the other block's size.
-     * 
+     *
      * @param other block to compute distance
      * @return the ideal distance to reach
      */

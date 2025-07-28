@@ -36,6 +36,6 @@ public class WarScythe extends BaseMeleeWeapon {
      * @param cooldownTime the time in nanoseconds between hits
      */
     public WarScythe(final Character owner, final long cooldownTime) {
-        super(owner, new BoxCollider(Vector2.zero(), new Dimensions(10, 10)), MULTIPLIER, cooldownTime, "warscythe.png", OFFSET);
+        super(owner, new BoxCollider(Vector2.zero(), new Dimensions(15, 30)), MULTIPLIER, cooldownTime, "warscythe.png", OFFSET);
     }
 }
