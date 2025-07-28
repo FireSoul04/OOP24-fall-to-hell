@@ -42,8 +42,8 @@ public class Imp extends BaseEnemy {
     private static final double CHAR_DISTANCE = 15 * TILE_SIZE;
     private static final double REGEN_STAT = 0.1;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
-    private static final double FULL_LIFE = 10;
-    private static final double DAMAGE = 10;
+    private static final double FULL_LIFE = 30;
+    private static final double DAMAGE = 3;
     private static final Vector2 VELOCITY = new Vector2(1, 1);
     private static final double DISTANCE = 10 * TILE_SIZE;
 
@@ -99,7 +99,7 @@ public class Imp extends BaseEnemy {
      */
     @Override
     protected void attack() {
-        super.setDamagedLife(this.stats.getAttack());
+        super.getCharacter().setDamagedLife(this.stats.getAttack());
     }
 
     /**

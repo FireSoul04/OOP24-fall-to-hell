@@ -37,12 +37,12 @@ public class Tengu extends BaseEnemy {
     private static final int ATTACK_TIME = 4000;
     private static final double REGEN_STAT = 0.1;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
-    private static final Dimensions DIMENSIONS_ARROW = new Dimensions(10, 10);
-    private static final double FULL_LIFE = 10;
-    private static final double DAMAGE = 10; // Physical damage
-    private static final double DAMAGE_A = 10; // Damage of projectile
+    private static final Dimensions DIMENSIONS_ARROW = new Dimensions(15, 15);
+    private static final double FULL_LIFE = 20;
+    private static final double DAMAGE = 1; // Physical damage
+    private static final double DAMAGE_A = 3; // Damage of projectile
     private static final Vector2 VELOCITY = new Vector2(1, 1);
-    private static final Vector2 VELOCITY_ARROW = new Vector2(1, 10);
+    private static final Vector2 VELOCITY_ARROW = new Vector2(1, 2);
     private static final double DISTANCE = 10 * TILE_SIZE;
 
     private final RestrictedLongRangeEnemyStatistics stats;

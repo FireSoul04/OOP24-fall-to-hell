@@ -27,9 +27,9 @@ public class TestEnemy1Movement {
         fact = new EnemyFactoryImpl();
         chara1 = new Druid(lv, new Vector2(-100, 0));
         chara2 = new Druid(lv, new Vector2(100, 0));
-        en1 = fact.createCentaur(lv, Vector2.zero(), chara1);
-        en2 = fact.createCentaur(lv, new Vector2(-30, 0), chara1);
-        en3 = fact.createCentaur(lv, new Vector2(-40, 0), chara1);
+        en1 = fact.createCentaur(lv, Vector2.zero());
+        en2 = fact.createCentaur(lv, new Vector2(-30, 0));
+        en3 = fact.createCentaur(lv, new Vector2(-40, 0));
     }
 
     /*Testing Movement with Monster 1 to far away from Player*/
@@ -82,7 +82,7 @@ public class TestEnemy1Movement {
 
     @Test
     void hitsMonster1(){
-        en1.setCharacter(chara2);
+        //en1.setCharacter(chara2);
         en1.onCollision(chara1, Vector2.zero());
         en1.update(10);
         assertEquals(en1.getPosition(),new Vector2(-20,0));
@@ -113,7 +113,7 @@ public class TestEnemy1Movement {
 
     @Test
     void hitsMonster1EqualsCharacterPositive(){
-        en1.setCharacter(chara2);
+        //en1.setCharacter(chara2);
         en1.update(15);
         assertEquals(en1.getPosition(),new Vector2(30,0));
         en1.onCollision(chara1, Vector2.zero());

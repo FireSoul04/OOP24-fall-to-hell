@@ -1,5 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity;
 
+import java.util.UUID;
+
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.Entity;
@@ -9,6 +11,7 @@ import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
 import it.unibo.falltohell.model.impl.manager.BuffManagerImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
+import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -24,6 +27,7 @@ import it.unibo.falltohell.util.Vector2;
 public class EntityImpl extends MovableImpl implements Entity {
 
     private static final Vector2 GRAVITY_STEP = new Vector2(0.0, 0.06);
+    private static final long INVICIBILITY_TIME = 900;
 
     private Statistics stats;
     private boolean facingRight;
@@ -31,6 +35,8 @@ public class EntityImpl extends MovableImpl implements Entity {
     private Vector2 velocity;
     private boolean onGround;
     private final BuffManager buffManager;
+    private final String name = "Invicibility -" + UUID.randomUUID();
+    private boolean invincible = true;
 
     /**
      * Constructs an {@code EntityImpl} with the given parameters.
@@ -64,7 +70,16 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     @Override
     public void setDamagedLife(final double damage) {
-        this.stats.subLife(damage);
+        if(this.invincible){
+            this.stats.subLife(damage);
+            this.invincible = false;
+            final var tm = super.getLevel().getTimerManager();
+            if(tm.searchTimer(this.name)){
+                tm.restartTimer(this.name);
+            }else{
+                tm.addTimer(this.name, new CustomTimerImpl(INVICIBILITY_TIME, () -> this.invincible = true));
+            }
+        }
     }
 
     /**
@@ -95,6 +110,10 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     protected void removeEntity() {
         if (this.isDead()) {
+            final var tm = super.getLevel().getTimerManager();
+            if(tm.searchTimer(this.name)){
+                tm.removeTimer(this.name);
+            }
             super.getLevel().removeGameObject(this);
         }
     }
