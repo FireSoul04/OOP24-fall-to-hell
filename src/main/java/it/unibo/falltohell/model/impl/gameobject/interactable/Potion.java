@@ -36,7 +36,7 @@ public class Potion extends BaseItem {
 
     @Override
     protected void onInteract(final Character character) {
-        final String name = "buff" + this.hashCode();
+        final String name = "potion_buff" + this.hashCode();
         if (buff instanceof LifeBuff || buff instanceof ManaBuff) {
             character.getBuffManager().addBuff(this.buff, LIFE_MANA_POTION_DURATION, name);
         } else {

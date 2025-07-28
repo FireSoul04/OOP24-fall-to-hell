@@ -64,7 +64,8 @@ public class Centaur extends BaseEnemy {
      * @param initialCord the initial {@link Vector2} position of the enemy
      * @param manager     the {@link EnemyTimerManager} that handles familiar logic
      *                    in this context
-     * @param ingage     the {@link SafeZoneManager} used to handle if the player enter a safe zone
+     * @param ingage      the {@link SafeZoneManager} used to handle if the player
+     *                    enter a safe zone
      */
     public Centaur(final Level level, final Vector2 initialCord,
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
@@ -101,6 +102,7 @@ public class Centaur extends BaseEnemy {
      */
     @Override
     protected void attack() {
+        super.attack();
         super.getCharacter().setDamagedLife(this.stats.getAttack());
     }
 
@@ -135,7 +137,8 @@ public class Centaur extends BaseEnemy {
 
             if (!manager.isBlocked(up, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
                 tryMove = up;
-            } else if (!manager.isBlocked(down, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
+            } else if (!manager.isBlocked(down, this.stats.getDimensions().width(),
+                    this.stats.getDimensions().height())) {
                 tryMove = down;
             } else {
                 return;

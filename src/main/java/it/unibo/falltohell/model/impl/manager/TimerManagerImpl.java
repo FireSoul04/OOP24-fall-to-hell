@@ -121,6 +121,18 @@ public class TimerManagerImpl implements TimerManager {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void restartIfPresent(final String name, final CustomTimer timer) {
+        if (!this.timers.containsKey(name)) {
+            this.addTimer(name, timer);
+        } else {
+            this.restartTimer(name);
+        }
+    }
+
+    /**
      * Method to check if a timer does exist with the given name, otherwise it
      * throws an exception.
      * @param name of the timer

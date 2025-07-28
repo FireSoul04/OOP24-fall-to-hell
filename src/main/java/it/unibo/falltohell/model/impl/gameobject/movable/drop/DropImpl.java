@@ -23,7 +23,8 @@ import it.unibo.falltohell.util.Vector2;
  * collected.
  *
  * <p>
- * This drop moves horizontally until it hits a {@link BaseCollidableBlock} from above,
+ * This drop moves horizontally until it hits a {@link BaseCollidableBlock} from
+ * above,
  * in which case it stops moving horizontally.
  * </p>
  *
@@ -53,7 +54,7 @@ public class DropImpl extends MovableImpl implements Drop {
      * @param position the starting {@link Vector2} position of the drop
      * @param buff     the {@link Buff} to be applied when collected by a
      *                 {@link Character}
-     *@param fileName is the name of the image file associated to the drop
+     * @param fileName is the name of the image file associated to the drop
      */
     public DropImpl(final Level lv, final Vector2 position, final Buff buff, final String fileName) {
         super(lv, position, VELOCITY,
@@ -73,7 +74,8 @@ public class DropImpl extends MovableImpl implements Drop {
      * <li>If the object is a {@link Character}, the {@link Buff} is applied,
      * the drop is removed from the level, and its associated timer is
      * cancelled.</li>
-     * <li>If the object is a {@link BaseCollidableBlock} and the collision is from below (i.e.
+     * <li>If the object is a {@link BaseCollidableBlock} and the collision is from
+     * below (i.e.
      * the drop lands on it),
      * the vertical movement is stopped.</li>
      * </ul>
@@ -81,9 +83,9 @@ public class DropImpl extends MovableImpl implements Drop {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof Character character) {
-            final String name = "buff" + this.hashCode();
+            final String name = "drop_buff" + this.hashCode();
             character.getBuffManager().addBuff(this.buff, BUFF_DURATION, name);
-            if(super.getLevel().getTimerManager().searchTimer(this.name)){
+            if (super.getLevel().getTimerManager().searchTimer(this.name)) {
                 super.getLevel().getTimerManager().removeTimer(this.name);
             }
             super.getLevel().removeGameObject(this);

@@ -38,6 +38,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public abstract class BaseEnemy extends EntityImpl implements Enemy {
 
+    private static final double CHARACTER_REGEN = 0.1;
+
     /**
      * <p>
      * Represents types of timers used in game logic for characters and enemies.
@@ -168,7 +170,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
                 ((Druid) this.getCharacter()).addKill();
             }
             ((CharacterStatistics) this.getCharacter().getStats())
-                    .addMana(((CharacterStatistics) this.getCharacter().getStats()).getInitialMana() * 0.1);
+                    .addMana(((CharacterStatistics) this.getCharacter().getStats()).getInitialMana() * CHARACTER_REGEN);
             this.manager.removeTimersFor(this, super.getLevel());
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
@@ -192,7 +194,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     /**
      * Executes the attack behavior specific to the enemy.
      */
-    protected abstract void attack();
+    protected void attack(){
+        this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
+    };
 
     /**
      * {@inheritDoc}
@@ -209,7 +213,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *
      * @param deltaTime time elapsed since the last update, in seconds
      */
-    protected void move(double deltaTime) {
+    protected void move(final double deltaTime) {
         final Vector2 speed = this.stats.getSpeed().multiply(deltaTime);
         final Vector2 currentPos = super.getPosition();
         final Vector2 charaPos = this.getCharacter().getPosition();
@@ -229,7 +233,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param currentPos the current position of the enemy
      * @param speed      the movement amount for this frame
      */
-    protected abstract void patrol(final Vector2 currentPos, final Vector2 speed);
+    protected abstract void patrol(Vector2 currentPos, Vector2 speed);
 
     /**
      * Executes chase behavior when the player is within the enemy's detection
@@ -242,7 +246,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param currentPos the current position of the enemy
      * @param speed      the movement amount for this frame
      */
-    protected abstract void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed);
+    protected abstract void chase(Vector2 charaPos, Vector2 currentPos, Vector2 speed);
 
     /**
      * Checks if the enemy can detect the player within its sensing distance.
@@ -253,6 +257,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         return this.getPosition().distance(this.getCharacter().getPosition()) <= this.stats.getSenseDistance();
     }
 
+    /**
+     * @return the current character in the level
+     */
     protected Character getCharacter() {
         return super.getLevel().getGameData().getCurrentCharacter();
     }
