@@ -41,7 +41,7 @@ public class Tengu extends BaseEnemy {
     private static final double FULL_LIFE = 20;
     private static final double DAMAGE = 1; // Physical damage
     private static final double DAMAGE_A = 3; // Damage of projectile
-    private static final Vector2 VELOCITY = new Vector2(1, 1);
+    private static final Vector2 VELOCITY = new Vector2(0.1, 0.1);
     private static final Vector2 VELOCITY_ARROW = new Vector2(1, 2);
     private static final double DISTANCE = 10 * TILE_SIZE;
 
@@ -102,7 +102,7 @@ public class Tengu extends BaseEnemy {
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
             if (direction.x() != 0) {
-                this.collided = Optional.of(super.getPosition());
+                this.collided = Optional.of(other.getPosition());
             }
         } else if (other instanceof Character) {
             super.getCharacter().setDamagedLife(DAMAGE);
@@ -168,14 +168,18 @@ public class Tengu extends BaseEnemy {
                 final Vector2 target = currentPos.add(new Vector2(step, 0));
                 if (isBlocked(target)) {
                     this.setPositionToCollision();
+
                 } else {
                     super.setPosition(target);
+
                 }
             } else {
                 if (!isBlocked(charaPos)) {
-                    super.setPosition(charaPos);
+                    super.setPosition(new Vector2(charaPos.x(), super.getPosition().y()));
+
                 } else {
                     this.setPositionToCollision();
+
                 }
             }
         } else {

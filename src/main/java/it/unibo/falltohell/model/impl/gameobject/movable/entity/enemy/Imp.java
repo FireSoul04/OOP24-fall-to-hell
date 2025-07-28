@@ -44,12 +44,13 @@ public class Imp extends BaseEnemy {
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 30;
     private static final double DAMAGE = 3;
-    private static final Vector2 VELOCITY = new Vector2(1, 1);
-    private static final double DISTANCE = 10 * TILE_SIZE;
+    private static final Vector2 VELOCITY = new Vector2(0.1, 0.1);
+    private static final double DISTANCE = 7 * TILE_SIZE;
 
     private final RestrictedBaseEnemyStatistics stats;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
+    private boolean check;
 
     /**
      * Constructs a new Imp enemy with default stats, initial position, and target
@@ -86,8 +87,11 @@ public class Imp extends BaseEnemy {
     public void onCollision(final GameObject other, final Vector2 direction) {
         super.onCollision(other, direction);
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
-            if (direction == Vector2.left() || direction == Vector2.right()) {
-                this.collided = Optional.of(super.getPosition());
+            if (direction.equals(Vector2.left()) || direction.equals(Vector2.right())) {
+                this.collided = Optional.of(other.getPosition());
+                if (this.isGlitched()) {
+                    this.direction *= -1;
+                }
             }
         } else if (other instanceof Character) {
             this.attack();
@@ -106,22 +110,13 @@ public class Imp extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    public void update(final double deltaTime) {
-        super.move(deltaTime);
-        super.getDrawable().ifPresent(d -> d.mirror(!super.isFacingRight()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected void patrol(final Vector2 currentPos, final Vector2 speed) {
         final double speedX = speed.x();
         final double y = currentPos.y();
         final Vector2 target = currentPos.add(new Vector2(speedX * this.direction, 0));
-        final double distanceFromInitial = this.stats.getInitialPos().distance(target);
 
-        if (distanceFromInitial <= this.stats.getDistance()) {
+        if (target.distance(this.stats.getInitialPos()) < DISTANCE) {
+            this.check = false;
             if (isBlocked(target)) {
                 this.setPositionToCollision();
                 this.direction *= -1;
@@ -129,9 +124,14 @@ public class Imp extends BaseEnemy {
                 super.setPosition(target);
             }
         } else {
-            final double newX = this.stats.getInitialPos().x() + this.stats.getDistance() * this.direction;
-            super.setPosition(new Vector2(newX, y));
-            this.direction *= -1;
+            if (!this.isGlitched()) {
+                final double newX = this.stats.getInitialPos().x() + DISTANCE * this.direction;
+                super.setPosition(new Vector2(newX, y));
+                this.direction *= -1;
+                this.check = true;
+            } else {
+                super.setPosition(target);
+            }
         }
 
         super.setFacingRight(this.direction > 0);
@@ -147,11 +147,10 @@ public class Imp extends BaseEnemy {
         super.setFacingRight(charaPos.x() - currentPos.x() > 0);
 
         final double deltaToChara = charaPos.x() - currentPos.x();
-        final boolean withinAggroRange = charaPos.x() <= this.stats.getInitialPos().x() + this.stats.getDistance()
-                && charaPos.x() >= this.stats.getInitialPos().x() - this.stats.getDistance();
-
+        final boolean withinAggroRange = charaPos.x() <= this.stats.getInitialPos().x() + DISTANCE
+                && charaPos.x() >= this.stats.getInitialPos().x() - DISTANCE;
         if (withinAggroRange) {
-            if (Math.abs(deltaToChara) > speedX) {
+            if (charaPos.distance(currentPos) > speedX) {
                 final double step = Math.signum(deltaToChara) * speedX;
                 final Vector2 target = currentPos.add(new Vector2(step, 0));
                 if (isBlocked(target)) {
@@ -161,7 +160,7 @@ public class Imp extends BaseEnemy {
                 }
             } else {
                 if (!isBlocked(charaPos)) {
-                    super.setPosition(charaPos);
+                    super.setPosition(new Vector2(charaPos.x(), super.getPosition().y()));
                 } else {
                     this.setPositionToCollision();
                 }
@@ -169,14 +168,14 @@ public class Imp extends BaseEnemy {
         } else {
             // Player out of aggro range: move toward edge of patrol range
             final double dir = Math.signum(deltaToChara);
-            final double limitX = this.stats.getInitialPos().x() + this.stats.getDistance() * dir;
+            final double limitX = this.stats.getInitialPos().x() + DISTANCE * dir;
             final Vector2 target = currentPos.add(new Vector2(speedX * dir, 0));
             final Vector2 patrolLimit = new Vector2(limitX, y);
 
             if (isBlocked(target)) {
                 this.setPositionToCollision();
             } else {
-                if (this.stats.getInitialPos().distance(target) <= this.stats.getDistance()) {
+                if (this.stats.getInitialPos().distance(target) <= DISTANCE) {
                     super.setPosition(target);
                 } else {
                     super.setPosition(patrolLimit);
@@ -195,9 +194,9 @@ public class Imp extends BaseEnemy {
      */
     private boolean isBlocked(final Vector2 target) {
         return this.collided.isPresent()
-                && ((this.direction > 0
-                        && target.x() > this.collided.get().x())
-                        || (this.direction < 0 && target.x() < this.collided.get().x()));
+                && ((direction > 0 && target.x() >= this.collided.get().x() && target.x() < this.collided.get().x()) ||
+                        (direction < 0 && target.x() <= this.collided.get().x()
+                                && target.x() > this.collided.get().x()));
     }
 
     /**
@@ -205,5 +204,15 @@ public class Imp extends BaseEnemy {
      */
     private void setPositionToCollision() {
         this.collided.ifPresent(super::setPosition);
+    }
+
+    /**
+     * @return return if the Enemy has fallen out of patrol
+     */
+    private boolean isGlitched() {
+        if (this.check) {
+            return true;
+        }
+        return false;
     }
 }
