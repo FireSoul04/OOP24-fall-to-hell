@@ -1,13 +1,8 @@
 package it.unibo.falltohell.model.impl.gameobject.weapons;
 
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
-
-import java.util.Optional;
-
-import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
-import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Archer;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableArrow;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
@@ -22,7 +17,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 public class Bow extends BaseRangedWeapon {
 
 
-    private Vector2 projectileSpeed;
+    private final Vector2 projectileSpeed;
 
     /**
      * Constructs a new Bow with the specified ammo and cooldown.
@@ -30,7 +25,7 @@ public class Bow extends BaseRangedWeapon {
      * @param ammo     the initial amount of ammo
      * @param cooldown the cooldown time between shots
      */
-    public Bow(final Character owner, final int ammo, final long cooldown, final String fileName , Vector2 projectileSpeed) {
+    public Bow(final Character owner, final int ammo, final long cooldown, final String fileName , final Vector2 projectileSpeed) {
         super(owner, ammo, cooldown, fileName);
         this.projectileSpeed = projectileSpeed;
     }
@@ -45,7 +40,7 @@ public class Bow extends BaseRangedWeapon {
     @Override
     public Projectile createProjectile() {
         final Vector2 direction = this.getOwner().isFacingRight() ? Vector2.right() : Vector2.left();
-        projectileSpeed = projectileSpeed.multiply(direction.x());
-        return new ReturnableArrow(this.getOwner().getLevel(), this.getOwner().getPosition(), projectileSpeed, new BoxCollider(new Dimensions(2.0, 2.0)), (Archer)this.getOwner());
+        final Vector2 dirSpeed= projectileSpeed.multiply(direction.x());
+        return new ReturnableArrow(this.getOwner().getLevel(), this.getOwner().getPosition(), dirSpeed, new BoxCollider(new Dimensions(2.0, 2.0)), (Archer)this.getOwner());
     }
 }

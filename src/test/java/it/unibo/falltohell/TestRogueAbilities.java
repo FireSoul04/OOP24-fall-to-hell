@@ -28,7 +28,7 @@ class TestRogueAbilities {
 
     private Character rogue;
     private Level level;
-    private int steps = 0;
+    private int steps;
 
     /**
      * Initiate all variables for the test.
@@ -39,13 +39,14 @@ class TestRogueAbilities {
         this.level.getGameEventManager().addCondition("ActiveAbility", () -> steps < 1);
         this.rogue = new Rogue(this.level, Vector2.zero());
         this.level.linkGameData(new GameDataImpl(Map.of(this.rogue.getCharacterID(), this.rogue)));
+        this.steps = 0;
     }
 
     /**
      * Test to check if the knives are not colliding with each other and spread in the correct directions.
      */
     @Test
-    void TestKnifeThrowDirections() {
+    void testKnifeThrowDirections() {
         // Do a single update to save the knives starting positions
         this.level.update(1.0);
         steps++;
@@ -65,7 +66,7 @@ class TestRogueAbilities {
             .toList();
         Assertions.assertTrue(
             knives.get(0).x() > startingKnivesPositions.get(0).x() &&
-                knives.get(0).y() == startingKnivesPositions.get(0).y(),
+                Double.compare(knives.get(0).y(), startingKnivesPositions.get(0).y()) == 0,
             "First knife should move only in the x axes"
         );
         Assertions.assertTrue(
@@ -84,12 +85,12 @@ class TestRogueAbilities {
      * Test if thrown knives are dealing damage.
      */
     @Test
-    void TestKnifeDamageOnEnemy() {
+    void testKnifeDamageOnEnemy() {
         final Vector2 enemyPosition = new Vector2(100.0, 0.0);
         final StatisticsFactory sf = new StatisticFactoryImpl();
         final BaseEnemyStatistics enemyStats = sf.createBaseEnemyStatistic(
             10, 0, Vector2.zero(), new Dimensions(5, 5),
-            enemyPosition, this.rogue, 1, sf.createOptional()
+            enemyPosition, 1, sf.createOptional()
         );
         final Enemy dummy = new DummyEnemyTest(this.level, Vector2.zero(), enemyStats);
         final double initialLife = dummy.getStats().getLife();

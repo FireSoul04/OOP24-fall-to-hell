@@ -18,6 +18,7 @@ import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
+import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.drawable.Label;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
@@ -245,6 +246,14 @@ public class LevelImpl implements Level {
     @Override
     public StaticCollisionManager getJumpCollisionManager() {
         return this.jumpCollisionManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Vector2 getLevelSize() {
+        return this.levelSize;
     }
 
     /**

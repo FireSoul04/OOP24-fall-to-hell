@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.impl;
 
-import java.awt.Dimension;
-
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.util.Vector2;
 
@@ -27,8 +25,6 @@ public class GameCameraImpl implements GameCamera {
      * @param cameraWidth     the width of the visible area
      * @param cameraHeight    the height of the visible area
      * @param followSpeed     the speed at which the camera follows the player
-     * @param levelWidth      the width of the level
-     * @param levelHeight     the height of the level
      */
     public GameCameraImpl(final Vector2 initialPosition, final double cameraWidth, final double cameraHeight,
             final double followSpeed) {
