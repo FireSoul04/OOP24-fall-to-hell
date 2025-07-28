@@ -59,7 +59,7 @@ public class Druid extends BaseCharacter {
      */
     public Druid(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(30, 10, new Vector2(1.8, 1.8),
-                new Dimensions(20, 20), 50, 10), "druid.png");
+                new Dimensions(20, 20), 5000, 10), "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
         this.equipWeapon(new WarScythe(this, ATTACK_COOLDOWN));
         this.sPa = this.factory.createPassiveAbility(this, (character) -> {
@@ -203,9 +203,5 @@ public class Druid extends BaseCharacter {
                 || this.input.checkCondition("MoveLeft")
                 || this.input.checkCondition("MoveUp")
                 || this.input.checkCondition("MoveDown"));
-    }
-
-    public int getkill(){
-        return this.kills;
     }
 }

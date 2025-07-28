@@ -106,6 +106,15 @@ public class Imp extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
+    public void update(final double deltaTime) {
+        super.move(deltaTime);
+        super.getDrawable().ifPresent(d -> d.mirror(!super.isFacingRight()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void patrol(final Vector2 currentPos, final Vector2 speed) {
         final double speedX = speed.x();
         final double y = currentPos.y();

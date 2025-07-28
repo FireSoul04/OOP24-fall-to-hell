@@ -99,6 +99,15 @@ public class Centaur extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
+    public void update(final double deltaTime) {
+        super.move(deltaTime);
+        super.getDrawable().ifPresent(d -> d.mirror(!super.isFacingRight()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void attack() {
         super.getCharacter().setDamagedLife(this.stats.getAttack());
     }
