@@ -9,10 +9,9 @@ import it.unibo.falltohell.model.impl.buff.ManaBuff;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test to check if temporary life and mana buffs are used before their fixed counterparts.
@@ -63,8 +62,8 @@ class TestTemporaryStatistics {
      */
     void genericTakeDamageTest(final double damage, final double lifeExpected, final double temporaryLifeExpected) {
         this.character.setDamagedLife(damage);
-        assertEquals(lifeExpected, this.stats.getLife());
-        assertEquals(temporaryLifeExpected, this.stats.getTemporaryLife());
+        Assertions.assertEquals(lifeExpected, this.stats.getLife());
+        Assertions.assertEquals(temporaryLifeExpected, this.stats.getTemporaryLife());
     }
 
     /**
@@ -108,8 +107,8 @@ class TestTemporaryStatistics {
      */
     void genericUseManaTest(final double mana, final double manaExpected, final double temporaryManaExpected) {
         this.character.subManaIfEnough(mana);
-        assertEquals(manaExpected, this.stats.getMana());
-        assertEquals(temporaryManaExpected, this.stats.getTemporaryMana());
+        Assertions.assertEquals(manaExpected, this.stats.getMana());
+        Assertions.assertEquals(temporaryManaExpected, this.stats.getTemporaryMana());
     }
 
     /**
