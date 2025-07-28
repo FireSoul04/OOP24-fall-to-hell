@@ -83,9 +83,9 @@ class TestPhysics {
      * Method that updates the level MAX_UPDATES times.
      */
     void updateTest() {
-        while (updates < MAX_UPDATES) {
+        while (this.updates < MAX_UPDATES) {
             this.level.update(1.0);
-            updates++;
+            this.updates++;
         }
     }
 
@@ -119,7 +119,7 @@ class TestPhysics {
         final Vector2 rightObstaclePosition = Vector2.right().multiply(MAX_UPDATES).divide(2);
         new BaseCollidableBlock(this.level, rightObstaclePosition, new BoxCollider(), "test.png");
         this.updateTest();
-        Assertions.assertFalse(collision, "The entity should not reach the target on the right");
+        Assertions.assertFalse(this.collision, "The entity should not reach the target on the right");
         this.level.getGameEventManager().addCondition("MoveRight", () -> false);
         this.level.getGameEventManager().addCondition("MoveLeft", () -> true);
         this.entity.setPosition(ENTITY_POSITION);
@@ -127,7 +127,7 @@ class TestPhysics {
         new BaseCollidableBlock(this.level, leftObstaclePosition, new BoxCollider(), "test.png");
         this.updates = 0;
         this.updateTest();
-        Assertions.assertFalse(collision, "The entity should not reach the target on the left");
+        Assertions.assertFalse(this.collision, "The entity should not reach the target on the left");
     }
 
     /**
@@ -137,12 +137,12 @@ class TestPhysics {
     void testGoingRightWithoutWalls() {
         this.level.getGameEventManager().addCondition("MoveRight", () -> true);
         this.updateTest();
-        Assertions.assertTrue(collision, "The entity should reach the target on the right");
+        Assertions.assertTrue(this.collision, "The entity should reach the target on the right");
         this.level.getGameEventManager().addCondition("MoveRight", () -> false);
         this.level.getGameEventManager().addCondition("MoveLeft", () -> true);
         this.entity.setPosition(ENTITY_POSITION);
         this.updates = 0;
         this.updateTest();
-        Assertions.assertTrue(collision, "The entity should reach the target on the left");
+        Assertions.assertTrue(this.collision, "The entity should reach the target on the left");
     }
 }
