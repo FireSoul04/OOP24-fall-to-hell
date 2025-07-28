@@ -82,7 +82,7 @@ public class Centaur extends BaseEnemy {
     public void onCollision(final GameObject other, final Vector2 direction) {
         super.onCollision(other, direction);
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
-            if (direction == Vector2.right() || direction == Vector2.left()) {
+            if (direction.equals(Vector2.right()) || direction.equals(Vector2.left())) {
                 if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
                     this.collided = Optional.ofNullable(direction);
                 } else {
@@ -93,15 +93,6 @@ public class Centaur extends BaseEnemy {
             attack();
         }
         this.setFacingRight(this.direction > 0);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final double deltaTime) {
-        super.move(deltaTime);
-        super.getDrawable().ifPresent(d -> d.mirror(!super.isFacingRight()));
     }
 
     /**
