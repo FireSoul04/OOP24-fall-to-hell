@@ -146,10 +146,30 @@ public class Lotawiec extends BaseEnemy {
     @Override
     protected void chase(final Vector2 target, final Vector2 current, final Vector2 speed) {
         final Vector2 diff = target.subtract(current).normalize();
+        final double stoppingDistance = 4 * TILE_SIZE;
+        final double verticalOffset = 2 * TILE_SIZE;
         final Vector2 moveStep = diff.multiply(speed);
-        final var manager = super.getLevel().getJumpCollisionManager();
-
         Vector2 tryMove = current.add(moveStep);
+        final var manager = super.getLevel().getJumpCollisionManager();
+        if (target.distance(current) <= stoppingDistance) {
+            Vector2 aboveTarget = new Vector2(target.x(), target.y() - verticalOffset);
+            if (!manager.isBlocked(aboveTarget, this.stats.getDimensions().width(),
+                    this.stats.getDimensions().height())) {
+
+                double desiredY = aboveTarget.y();
+                double currentY = current.y();
+                double nextY = currentY;
+
+                if (currentY > desiredY) {
+                    nextY = Math.max(desiredY, currentY - speed.y());
+                } else if (currentY < desiredY) {
+                    nextY = Math.min(desiredY, currentY + speed.y());
+                }
+
+                this.setPosition(new Vector2(current.x(), nextY));
+            }
+            return;
+        }
 
         if (manager.isBlocked(tryMove, this.stats.getDimensions().width(), this.stats.getDimensions().height())) {
             final Vector2 up = current.add(new Vector2(0, -speed.y()));
