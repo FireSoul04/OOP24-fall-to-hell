@@ -88,7 +88,7 @@ public class Lotawiec extends BaseEnemy {
             this.attack();
             super.getLevel().getTimerManager().restartTimer(name);
         }));
-        ingage.addEnemy(this);
+        ingage.addEnemy(this, "lotawiec.png");
     }
 
     /**

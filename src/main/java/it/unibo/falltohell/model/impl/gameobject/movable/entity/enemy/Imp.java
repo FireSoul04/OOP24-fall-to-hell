@@ -77,7 +77,7 @@ public class Imp extends BaseEnemy {
                 manager, ingage, "imp.png");
 
         this.stats = (RestrictedBaseEnemyStatistics) super.getStats();
-        ingage.addEnemy(this);
+        ingage.addEnemy(this, "imp.png");
     }
 
     /**
