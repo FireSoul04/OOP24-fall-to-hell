@@ -62,4 +62,12 @@ public interface TimerManager {
      */
     boolean searchTimer(String name);
 
+    /**
+     * Method to add a timer if it is not already existent or to restart it
+     * if present.
+     * @param name of the timer to be added or restarted
+     * @param timer to be added or restarted
+     */
+    void restartIfPresent(String name, CustomTimer timer);
+
 }
