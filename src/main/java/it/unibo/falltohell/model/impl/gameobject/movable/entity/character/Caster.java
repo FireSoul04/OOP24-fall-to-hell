@@ -23,8 +23,8 @@ import it.unibo.falltohell.util.Vector2;
 public class Caster extends BaseCharacter {
 
     private static final double LIFE = 50;
-    private static final double ATTACK = 20;
-    private static final double ATTACK_SPEED = 8;
+    private static final double ATTACK = 30;
+    private static final double ATTACK_SPEED = 2;
     private static final Vector2 SPEED = new Vector2(2, 1.6);
     private static final double MANA = 25;
     private static final double AMOUNT_MANA_NORMAL_ATTACK = 1;

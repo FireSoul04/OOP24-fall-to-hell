@@ -15,7 +15,7 @@ import it.unibo.falltohell.util.Vector2;
 public class Blast extends GameObjectImpl {
 
     private static final Dimensions DIMENSIONS = new Dimensions(TILE_SIZE * 3, TILE_SIZE * 3);
-    private static final double AMOUNT_DAMAGE = 40;
+    private static final double AMOUNT_DAMAGE = 50;
 
     private final Caster caster;
 
