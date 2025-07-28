@@ -43,9 +43,13 @@ public abstract class BaseItem extends GameObjectImpl implements Item {
     @Override
     public void interact(final Character character) {
         if (!this.sold) {
-            this.sold = true;
-            this.purchase(this.price);
-            this.onInteract(character);
+            try {
+                this.purchase(this.price);
+                this.sold = true;
+                this.onInteract(character);
+            } catch (IllegalArgumentException e) {
+                //TODO-> use label to see the message
+            }
         }
     }
 
@@ -71,11 +75,7 @@ public abstract class BaseItem extends GameObjectImpl implements Item {
      * @param price is the price of the item
      */
     private void purchase(final long price) {
-        try {
-            this.getLevel().getGameData().removePoints(price);
-        } catch (final IllegalArgumentException e) {
-            //TODO--> deve lanciare un messaggio di errore
-        }
+        this.getLevel().getGameData().removePoints(price);
     }
 
     /**
