@@ -1,5 +1,7 @@
 package it.unibo.falltohell.view.api;
 
+import javax.swing.JPanel;
+
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -42,4 +44,17 @@ public interface GameWindow {
      * @return percentage of current width and height
      */
     Vector2 getScale();
+    /**
+     * Attach to the mainFrame the menu panel.
+     * @param menuPanel the menuPanel to be attached.
+     */
+    void showMenu(final JPanel menuPanel);
+    /**
+     * Attach to the mainFrame the gamePanel.
+     */
+    void showGame();
+    /**
+     * put the focus on the mainFrame.
+     */
+    void requestFocusOnWindow();
 }

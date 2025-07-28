@@ -1,5 +1,7 @@
 package it.unibo.falltohell.controller.api;
 
+import it.unibo.falltohell.view.impl.GameWindowImpl;
+
 /**
  * Interface for an MVC controller dedicated to a game.
  *
@@ -35,4 +37,8 @@ public interface GameController {
      * Tell the controller to update the game window (view).
      */
     void render();
+    /**
+     * @return the game window.
+     */
+    GameWindowImpl getView();
 }

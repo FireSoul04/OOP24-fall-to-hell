@@ -45,7 +45,7 @@ public class GameControllerImpl implements GameController {
         // PAUSE
     }
 
-    private final GameWindow view;
+    private final GameWindowImpl view;
     private final Game model;
     private final GameState state;
 
@@ -165,5 +165,13 @@ public class GameControllerImpl implements GameController {
     @Override
     public void render() {
         this.view.render();
+    }
+    
+    /**
+	 * {@inheritDoc}
+	 */
+	@Override
+    public GameWindowImpl getView(){
+        return this.view;
     }
 }
