@@ -189,15 +189,15 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * When temporary life is consumed, the character takes the damage not absorbed by the temporary life.
      */
     @Override
-    public void setDamagedLife(final double damage) {
+    public void subLife(final double damage) {
         final double remainingTemporaryLife = this.stats.getTemporaryLife() - damage;
         if (remainingTemporaryLife == 0) {
             this.stats.resetTemporaryLife();
         } else if (remainingTemporaryLife > 0) {
             this.stats.subTemporaryLife(damage);
         } else {
-            this.stats.setTemporaryLife(0);
-            super.setDamagedLife(-remainingTemporaryLife);
+            this.stats.resetTemporaryLife();
+            super.subLife(-remainingTemporaryLife);
         }
     }
 
