@@ -4,6 +4,8 @@ import it.unibo.falltohell.model.api.statistic.Statistics;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
+import java.util.Objects;
+
 /**
  * Class containing implementation for statistics.
  *
@@ -35,7 +37,7 @@ public class StatisticsImpl implements Statistics {
         this.attack = attack;
         this.initialSpeed = speed;
         this.speed = speed;
-        this.dimensions = dimension;
+        this.dimensions = new Dimensions(Math.max(dimension.width(), 0), Math.max(dimension.height(), 0));
     }
 
     /**
@@ -59,7 +61,8 @@ public class StatisticsImpl implements Statistics {
      */
     @Override
     public void setLife(final double life) {
-        this.life = life;
+        this.checkPositiveAmountOrThrow(life);
+        this.life = Math.min(life, this.fullLife);
     }
 
     /**
@@ -67,7 +70,8 @@ public class StatisticsImpl implements Statistics {
      */
     @Override
     public void addLife(final double life) {
-        this.life = this.life + life;
+        this.checkPositiveAmountOrThrow(life);
+        this.setLife(this.life + life);
     }
 
     /**
@@ -75,7 +79,8 @@ public class StatisticsImpl implements Statistics {
      */
     @Override
     public void subLife(final double life) {
-        this.addLife(-life);
+        this.checkPositiveAmountOrThrow(life);
+        this.life = Math.max(this.life - life, 0);
     }
 
     /**
@@ -99,6 +104,7 @@ public class StatisticsImpl implements Statistics {
      */
     @Override
     public void setAttack(final double attack) {
+        this.checkPositiveAmountOrThrow(attack);
         this.attack = attack;
     }
 
@@ -107,7 +113,8 @@ public class StatisticsImpl implements Statistics {
      */
     @Override
     public void addAttack(final double attack) {
-        this.attack += attack;
+        this.checkPositiveAmountOrThrow(attack);
+        this.setAttack(this.attack + attack);
     }
 
     /**
@@ -115,7 +122,8 @@ public class StatisticsImpl implements Statistics {
      */
     @Override
     public void subAttack(final double attack) {
-        this.addAttack(-attack);
+        this.checkPositiveAmountOrThrow(attack);
+        this.setAttack(this.attack - attack);
     }
 
     /**
@@ -164,5 +172,17 @@ public class StatisticsImpl implements Statistics {
     @Override
     public Dimensions getDimensions() {
         return this.dimensions;
+    }
+
+    /**
+     * Check if amount is positive or else throw an IllegalStateException.
+     *
+     * @param amount to check
+     * @throws IllegalStateException if amount is not positive
+     */
+    protected void checkPositiveAmountOrThrow(final double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount should be positive");
+        }
     }
 }
