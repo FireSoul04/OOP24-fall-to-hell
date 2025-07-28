@@ -101,6 +101,11 @@ public interface Level {
     StaticCollisionManager getJumpCollisionManager();
 
     /**
+     * @return the size of the level
+     */
+    Vector2 getLevelSize();
+
+    /**
      * set the size of the level.
      * @param size the size of the level.
      */

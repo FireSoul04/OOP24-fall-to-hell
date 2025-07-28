@@ -18,6 +18,7 @@ import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
+import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.drawable.Label;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
@@ -27,6 +28,7 @@ import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
 import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.view.impl.SwingGameRenderer;
 
 /**
  * Implementation of the {@link Level} interface.
@@ -160,6 +162,9 @@ public class LevelImpl implements Level {
         }
         this.collisionsManager.checkCollisions(this.gameObjects);
         this.drh.updateAll(camera);
+
+        SwingGameRenderer.g.clear();
+        SwingGameRenderer.g.addAll(this.gameObjects);
     }
 
     /**
@@ -245,6 +250,14 @@ public class LevelImpl implements Level {
     @Override
     public StaticCollisionManager getJumpCollisionManager() {
         return this.jumpCollisionManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Vector2 getLevelSize() {
+        return this.levelSize;
     }
 
     /**
