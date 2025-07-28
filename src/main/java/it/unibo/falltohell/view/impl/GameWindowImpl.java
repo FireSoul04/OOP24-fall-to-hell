@@ -6,6 +6,7 @@ import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.GameWindow;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import java.awt.Toolkit;
 import java.awt.Dimension;
@@ -29,6 +30,7 @@ public class GameWindowImpl implements GameWindow {
 	private final SwingGameRenderer renderer;
 	private final int width;
 	private final int height;
+	private JFrame mainFrame;
 
 	private Vector2 scale;
 
@@ -50,7 +52,7 @@ public class GameWindowImpl implements GameWindow {
 	}
 
 	private void initializeWindow(final int width, final int height, final KeyListener keyListener) {
-		final JFrame mainFrame = new JFrame("FTH");
+		mainFrame = new JFrame("FTH");
 		final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.scale = new Vector2(screenSize.getWidth() / width, screenSize.getHeight() / height)
 			.multiply(INITIAL_SCREEN_RATIO);
@@ -62,7 +64,6 @@ public class GameWindowImpl implements GameWindow {
 		mainFrame.setLocation(startPosition);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(width, height);
-		mainFrame.getContentPane().add(this.renderer);
 		mainFrame.getContentPane()
 			.setPreferredSize(new Dimension((int) (width * this.scale.x()), (int) (height * this.scale.y())));
 		mainFrame.setVisible(true);
@@ -123,5 +124,34 @@ public class GameWindowImpl implements GameWindow {
 	@Override
 	public Vector2 getScale() {
 		return this.scale;
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void showMenu(final JPanel menuPanel) {
+		this.mainFrame.getContentPane().removeAll();
+		this.mainFrame.getContentPane().add(menuPanel);
+		this.mainFrame.revalidate();
+		this.mainFrame.repaint();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void showGame() {
+		this.mainFrame.getContentPane().removeAll();
+		this.mainFrame.getContentPane().add(this.renderer);
+		this.mainFrame.revalidate();
+		this.mainFrame.repaint();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void requestFocusOnWindow() {
+    	this.mainFrame.requestFocus();
 	}
 }
