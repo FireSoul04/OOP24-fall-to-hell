@@ -28,7 +28,6 @@ import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
 import it.unibo.falltohell.util.Vector2;
-import it.unibo.falltohell.view.impl.SwingGameRenderer;
 
 /**
  * Implementation of the {@link Level} interface.
@@ -162,9 +161,6 @@ public class LevelImpl implements Level {
         }
         this.collisionsManager.checkCollisions(this.gameObjects);
         this.drh.updateAll(camera);
-
-        SwingGameRenderer.g.clear();
-        SwingGameRenderer.g.addAll(this.gameObjects);
     }
 
     /**
