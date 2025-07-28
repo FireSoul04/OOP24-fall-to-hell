@@ -194,7 +194,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     public void setDamagedLife(final double damage) {
         final double remainingTemporaryLife = this.stats.getTemporaryLife() - damage;
         if (remainingTemporaryLife == 0) {
-            this.stats.setTemporaryLife(0);
+            this.stats.resetTemporaryLife();
         } else if (remainingTemporaryLife > 0) {
             this.stats.subTemporaryLife(damage);
         } else {
@@ -220,14 +220,14 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * {@inheritDoc}
      */
     @Override
-    public void subMana(double mana) {
+    public void subMana(final double mana) {
         final double remainingTemporaryMana = this.stats.getTemporaryMana() - mana;
         if (remainingTemporaryMana == 0) {
-            this.stats.setTemporaryMana(0);
+            this.stats.resetTemporaryMana();
         } else if (remainingTemporaryMana > 0) {
             this.stats.subTemporaryMana(mana);
         } else {
-            this.stats.setTemporaryMana(0);
+            this.stats.resetTemporaryMana();
             this.stats.subMana(-remainingTemporaryMana);
         }
     }
@@ -272,7 +272,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.getDrawable().ifPresent(t -> t.setVisible(false));
         this.getEquippedWeapon().flatMap(GameObject::getDrawable).ifPresent(t -> t.setVisible(false));
         this.getBuffManager().removeBuffs();
-        onDisable();
+        this.onDisable();
     }
 
     /**
