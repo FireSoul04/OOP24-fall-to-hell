@@ -29,7 +29,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
     private static final double MAX_R = 0.9;
     private static final double STANDARD_SENSE = 10 * 20;
     private static final double STANDARD_REGEN = 0.1;
-    private static final int STANDARD_NO_AGGRO = 1000;
+    private static final int STANDARD_NO_AGGRO = 8500;
     private static final Map<BuffNames, Double> BUFF = Map.of(
             BuffNames.LIFE, 12.0,
             BuffNames.MANA, 15.0,
