@@ -33,6 +33,7 @@ import it.unibo.falltohell.util.Vector2;
  * @see EnemyTimerManager
  */
 public class Tengu extends BaseEnemy {
+    private static final int POINTS = 10;
     private static final double CHAR_DISTANCE = 15 * TILE_SIZE;
     private static final int ATTACK_TIME = 4000;
     private static final double REGEN_STAT = 0.1;
@@ -71,7 +72,7 @@ public class Tengu extends BaseEnemy {
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
-                        initialCord, 10, new StatisticFactoryImpl()
+                        initialCord, POINTS, new StatisticFactoryImpl()
                                 .createOptional().withRegen(REGEN_STAT).withSenseDistance(CHAR_DISTANCE),
                         DAMAGE_A, VELOCITY_ARROW, DIMENSIONS_ARROW, DISTANCE, ATTACK_TIME),
                 manager, ingage, "tengu.png");
