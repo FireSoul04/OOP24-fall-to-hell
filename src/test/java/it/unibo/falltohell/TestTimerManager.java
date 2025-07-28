@@ -24,12 +24,19 @@ class TestTimerManager {
     private TimerManager timerManager;
     private Logger logger;
 
+    /**
+     * Initialization of the variables used in the tests.
+     */
     @BeforeEach
     void initialization() {
         this.timerManager = new TimerManagerImpl();
         this.logger = Logger.getLogger("TimerManagerLogger");
     }
 
+    /**
+     * Tests if a timer is added correctly and if it is thrown an exception when
+     * someone tries to add a timer with the same name of one already existent.
+     */
     @Test
     void testAddTimer() {
         this.timerManager.addTimer(TIMER_NAME, new CustomTimerImpl(DURATION, () -> {}));
@@ -42,6 +49,10 @@ class TestTimerManager {
         }
     }
 
+    /**
+     * Tests if a timer is removed correctly and if it is thrown an exception when
+     * someone tries to remove a non-existent timer.
+     */
     @Test
     void testRemoveTimer() {
         this.timerManager.addTimer(TIMER_NAME, new CustomTimerImpl(DURATION, () -> {}));
@@ -55,6 +66,9 @@ class TestTimerManager {
         }
     }
 
+    /**
+     * Tests if a timer is paused and resumed correctly.
+     */
     @Test
     void testPauseAndResumeTimer() {
         final CustomTimer timer = new CustomTimerImpl(DURATION, () -> {});
@@ -78,6 +92,9 @@ class TestTimerManager {
         }
     }
 
+    /**
+     * Tests if a timer is stopped and restarted correctly.
+     */
     @Test
     void testRestartAndStopTimer() {
         final CustomTimer timer = new CustomTimerImpl(DURATION, () -> {});

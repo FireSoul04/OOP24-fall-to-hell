@@ -3,8 +3,8 @@ package it.unibo.falltohell.model.impl.manager;
 import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class to handle multiple timers.
@@ -18,7 +18,7 @@ public class TimerManagerImpl implements TimerManager {
      * Initialization of the TimeManager.
      */
     public TimerManagerImpl() {
-        this.timers = new HashMap<>();
+        this.timers = new ConcurrentHashMap<>();
     }
 
     /**

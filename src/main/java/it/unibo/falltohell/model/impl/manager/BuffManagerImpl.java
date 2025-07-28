@@ -30,10 +30,13 @@ public class BuffManagerImpl implements BuffManager {
      * {@inheritDoc}
      */
     @Override
-    public void addBuff(final Buff buff, final long duration, String name) {
+    public void addBuff(final Buff buff, final long duration, final String name) {
         if (!this.searchBuff(name)) {
             this.addToManager(buff, name);
-            this.timerManager.addTimer(name, new CustomTimerImpl(duration, buff::remove));
+            this.timerManager.addTimer(name, new CustomTimerImpl(duration, () -> {
+                buff.remove();
+                this.buffs.remove(name);
+            }));
         }
     }
 
@@ -41,14 +44,14 @@ public class BuffManagerImpl implements BuffManager {
      * {@inheritDoc}
      */
     @Override
-    public void addInfiniteBuff(final Buff buff, String name) {;
+    public void addInfiniteBuff(final Buff buff, final String name) {
         if (!this.searchBuff(name)) {
             this.addToManager(buff, name);
         }
     }
 
     @Override
-    public void removeInfiniteBuff(String name) {
+    public void removeInfiniteBuff(final String name) {
         this.buffs.get(name).remove();
         this.buffs.remove(name);
     }
@@ -71,7 +74,7 @@ public class BuffManagerImpl implements BuffManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean searchBuff(String name) {
+    public boolean searchBuff(final String name) {
         return this.buffs.containsKey(name);
     }
 

@@ -11,10 +11,10 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Staff extends BaseMeleeWeapon {
 
-    private static final double DAMAGE_MULTIPLIER = 0.3;
-    private static final Dimensions DIMENSIONS = new Dimensions(20.0, 16.0);
+    private static final double DAMAGE_MULTIPLIER = 0.7;
+    private static final Dimensions DIMENSIONS = new Dimensions(24.0, 20.0);
     private static final Vector2 OFFSET = new Vector2(8.0,8.0);
-    private static final long COOLDOWN = 600;
+    private static final long COOLDOWN = 1000;
 
     /**
      * Creates a staff.

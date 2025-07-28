@@ -1,8 +1,5 @@
 package it.unibo.falltohell;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +18,9 @@ class TestCustomTimer {
     private boolean test;
     private Logger logger;
 
+    /**
+     * Initialization of the variables used in the tests.
+     */
     @BeforeEach
     void initialization() {
         this.timer = new CustomTimerImpl(1000, () -> this.test = true);
@@ -28,12 +28,18 @@ class TestCustomTimer {
         this.logger = Logger.getLogger("TestLogger");
     }
 
+    /**
+     * Tests if a timer is started correctly.
+     */
     @Test
     void testTimerStart() {
         this.timer.start();
-        assertTrue(this.timer.isStarted(), "The timer has not been started as it should have");
+        Assertions.assertTrue(this.timer.isStarted(), "The timer has not been started as it should have");
     }
 
+    /**
+     * Tests if it is thrown an exception if the timer is not started correctly.
+     */
     @Test
     void testExceptionTimerStart() {
         this.timer.start();
@@ -45,13 +51,19 @@ class TestCustomTimer {
         }
     }
 
+    /**
+     * Tests if a timer is stopped correctly.
+     */
     @Test
     void testTimerStop() {
         this.timer.start();
         this.timer.stop();
-        assertFalse(this.timer.isStarted(), "The timer has not been stopped as it should have");
+        Assertions.assertFalse(this.timer.isStarted(), "The timer has not been stopped as it should have");
     }
 
+    /**
+     * Tests if it is thrown an exception if the timer is not stopped correctly.
+     */
     @Test
     void testExceptionTimerStop() {
         try {
@@ -62,13 +74,20 @@ class TestCustomTimer {
         }
     }
 
+    /**
+     * Tests if the timer is paused correctly.
+     */
     @Test
     void testTimerPause() {
         this.timer.start();
         this.timer.pause();
-        assertTrue(this.timer.isPaused(), "The timer has not been paused as it should have");
+        Assertions.assertTrue(this.timer.isPaused(), "The timer has not been paused as it should have");
     }
 
+    /**
+     * Tests if it is thrown an exception if someone tries
+     * to pause a timer that wasn't stated yet.
+     */
     @Test
     void testExceptionTimerPauseIfNotStarted() {
         try {
@@ -79,6 +98,10 @@ class TestCustomTimer {
         }
     }
 
+    /**
+     * Tests if it is thrown an exception if someone tries
+     * to pause a timer that is already paused.
+     */
     @Test
     void testExceptionTimerPauseIfAlreadyPaused() {
         this.timer.start();
@@ -91,14 +114,21 @@ class TestCustomTimer {
         }
     }
 
+    /**
+     * Tests if a timer is resumed correctly.
+     */
     @Test
     void testTimerResume() {
         this.timer.start();
         this.timer.pause();
         this.timer.resume();
-        assertFalse(this.timer.isPaused(), "The timer has not been resumed as it should have");
+        Assertions.assertFalse(this.timer.isPaused(), "The timer has not been resumed as it should have");
     }
 
+    /**
+     * Tests if it is thrown an exception if someone tries
+     * to resume a timer that wasn't stated yet.
+     */
     @Test
     void testExceptionTimerResumeIfNotStarted() {
         try {
@@ -109,6 +139,10 @@ class TestCustomTimer {
         }
     }
 
+    /**
+     * Tests if it is thrown an exception if someone tries
+     * to resume a timer that was already resumed.
+     */
     @Test
     void testExceptionTimerResumeIfAlreadyResumed() {
         this.timer.start();
@@ -122,6 +156,9 @@ class TestCustomTimer {
         }
     }
 
+    /**
+     * Tests if an event is executed correctly at the end of a timer.
+     */
     @Test
     void testCorrectExecutionOfEvent() {
         this.timer.start();
@@ -130,6 +167,6 @@ class TestCustomTimer {
         } catch (final InterruptedException e) {
             this.logger.info("The IllegalStateException has been thrown correctly");
         }
-        assertTrue(this.test, "The event is not executed as expected");
+        Assertions.assertTrue(this.test, "The event is not executed as expected");
     }
 }

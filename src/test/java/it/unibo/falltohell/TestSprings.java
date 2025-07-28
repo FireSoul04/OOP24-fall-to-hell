@@ -16,13 +16,12 @@ import it.unibo.falltohell.test.util.SaveFileControllerTest;
 import it.unibo.falltohell.test.util.SavePointTest;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.test.util.LevelTest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Class to test if the save point and the character changer work as expected.
@@ -58,16 +57,16 @@ class TestSprings {
      * game data is saved and loaded as expected.
      */
     @Test
-    void TestIfSavesAndLoadCorrectly() {
+    void testIfSavesAndLoadCorrectly() {
         this.savePoint.interact(this.data.getCurrentCharacter());
         final GameData testData = this.saveController.load(this.characters);
-        assertEquals(testData.getPoints(), this.data.getPoints(),
+        Assertions.assertEquals(testData.getPoints(), this.data.getPoints(),
                 "Points saved and loaded must be the same of the game data before save");
-        assertEquals(testData.getCurrentCharacter().getCharacterID(), this.data.getCurrentCharacter().getCharacterID(),
+        Assertions.assertEquals(testData.getCurrentCharacter().getCharacterID(), this.data.getCurrentCharacter().getCharacterID(),
                 "The ID of the current character must be the same of the game data before save");
-        assertEquals(testData.getLastSavedPosition().x(), this.data.getCurrentCharacter().getPosition().x(),
+        Assertions.assertEquals(testData.getLastSavedPosition().x(), this.data.getCurrentCharacter().getPosition().x(),
                 "The x-axis position of the character must be the same of the game data before save");
-        assertEquals(testData.getLastSavedPosition().y(), this.data.getCurrentCharacter().getPosition().y(),
+        Assertions.assertEquals(testData.getLastSavedPosition().y(), this.data.getCurrentCharacter().getPosition().y(),
                 "The y-axis position of the character must be the same of the game data before save");
         this.saveController.removeTestFile();
     }
@@ -78,12 +77,12 @@ class TestSprings {
      * and, if the character is the last one, the next is the first.
      */
     @Test
-    void TestCharacterChanger() {
+    void testCharacterChanger() {
         this.characterChanger.interact(this.data.getCurrentCharacter());
-        assertEquals(CharacterID.DRUID, this.data.getCurrentCharacter().getCharacterID(),
+        Assertions.assertEquals(CharacterID.DRUID, this.data.getCurrentCharacter().getCharacterID(),
                 "The next character must be the Druid");
         this.characterChanger.interact(this.data.getCurrentCharacter());
-        assertEquals(CharacterID.ROGUE, this.data.getCurrentCharacter().getCharacterID(),
+        Assertions.assertEquals(CharacterID.ROGUE, this.data.getCurrentCharacter().getCharacterID(),
                 "The next character must be the first one");
     }
 
@@ -92,11 +91,11 @@ class TestSprings {
      * checks if life is refilled when the character enters.
      */
     @Test
-    void TestEntrance() {
+    void testEntrance() {
         final Character character = this.data.getCurrentCharacter();
         character.setDamagedLife(character.getStats().getFullLife() / 2);
         this.entrance.onCollisionExit(character, Vector2.left());
-        assertEquals(character.getStats().getFullLife(), character.getStats().getLife(),
+        Assertions.assertEquals(character.getStats().getFullLife(), character.getStats().getLife(),
                 "Life must be at max after entering the springs");
     }
 
