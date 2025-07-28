@@ -154,10 +154,10 @@ public class SafeZoneManager {
      * </p>
      */
     private void handleSafeZoneExit() {
-        for (Enemy enemy : enemies) {
+        for (final Enemy enemy : enemies) {
             enemy.getLevel().addGameObject(enemy);
 
-            String spriteFile = fileNames.get(enemy.getClass());
+            final String spriteFile = fileNames.get(enemy.getClass());
             if (spriteFile == null) {
                 throw new IllegalStateException(
                         "No sprite file registered for enemy class: " + enemy.getClass().getSimpleName());

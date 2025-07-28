@@ -141,10 +141,11 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      * @param timers the list of timer names
      * @return the matching timer name, or null if not found
      */
-    private String findNoAggroTimer(List<String> timers) {
-        if (timers == null)
+    private String findNoAggroTimer(final List<String> timers) {
+        if (timers == null){
             return null;
-        for (String timer : timers) {
+        }
+        for (final String timer : timers) {
             if (timer.startsWith("NoAggro_")) {
                 return timer;
             }
