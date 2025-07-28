@@ -71,7 +71,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     @Override
     public void setDamagedLife(final double damage) {
         if (!this.invincible) {
-            this.stats.subLife(damage);
+            this.subLife(damage);
             this.invincible = true;
             final var tm = super.getLevel().getTimerManager();
             if (tm.searchTimer(this.name)) {
@@ -80,6 +80,14 @@ public class EntityImpl extends MovableImpl implements Entity {
                 tm.addTimer(this.name, new CustomTimerImpl(INVICIBILITY_TIME, () -> this.invincible = false));
             }
         }
+    }
+
+    /**
+     * Subtracts life to the entity.
+     * @param damage to take
+     */
+    protected void subLife(final double damage) {
+        this.stats.subLife(damage);
     }
 
     /**
@@ -95,6 +103,7 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     protected void removeEntity() {
         if (this.isDead()) {
+            System.out.println("DEAD");
             super.getLevel().removeGameObject(this);
         }
     }
