@@ -63,12 +63,11 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
             this.onAttack();
             final String name = "weapon-cooldown" + this.hashCode();
             final TimerManager tm = this.getLevel().getTimerManager();
+            final CharacterStatistics stats = (CharacterStatistics) this.owner.getStats();
+            final double reduceTimeMultiplier = 1 / stats.getAttackSpeed();
+            final long attackCooldownTime = Math.max(MINIMUM_ATTACK_TIME, (long) (this.cooldownTime * reduceTimeMultiplier));
             if (!tm.searchTimer(name)) {
-                final CharacterStatistics stats = (CharacterStatistics) this.owner.getStats();
-                final double reduceTimeMultiplier = 1 / stats.getAttackSpeed();
-                final long attackCooldownTime = Math.max(MINIMUM_ATTACK_TIME, (long) (this.cooldownTime * reduceTimeMultiplier));
-                final CustomTimer attackCooldown = new CustomTimerImpl(attackCooldownTime, () -> this.attacking = false);
-                tm.addTimer(name, attackCooldown);
+                tm.addTimer(name, new CustomTimerImpl(attackCooldownTime, () -> this.attacking = false));
             } else {
                 tm.restartTimer(name);
             }
