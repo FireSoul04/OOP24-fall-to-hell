@@ -20,8 +20,10 @@ import org.junit.jupiter.api.Test;
  */
 class TestTemporaryStatistics {
 
-    private static final double LIFE = 20.0;
-    private static final double MANA = 10.0;
+    private static final double LIFE = 20;
+    private static final double MANA = 10;
+    private static final double ATTACK = 1;
+    private static final double ATTACK_SPEED = 1;
     private static final double TEMPORARY_LIFE_MULTIPLIER = 0.5;
     private static final double TEMPORARY_MANA_MULTIPLIER = 0.5;
     private static final double TEMPORARY_LIFE = LIFE * TEMPORARY_LIFE_MULTIPLIER;
@@ -38,11 +40,11 @@ class TestTemporaryStatistics {
     void initialize() {
         this.stats = new CharacterStatisticsImpl(
             LIFE,
-            0,
+            ATTACK,
             Vector2.zero(),
             new Dimensions(0, 0),
             MANA,
-            0
+            ATTACK_SPEED
         );
         this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats,"test.png") {
             @Override

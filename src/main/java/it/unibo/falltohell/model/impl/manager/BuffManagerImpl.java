@@ -33,7 +33,7 @@ public class BuffManagerImpl implements BuffManager {
     public void addBuff(final Buff buff, final long duration, final String name) {
         if (!this.searchBuff(name)) {
             this.addToManager(buff, name);
-            this.timerManager.addTimer(name, new CustomTimerImpl(duration, () -> {
+            this.timerManager.restartIfPresent(name, new CustomTimerImpl(duration, () -> {
                 buff.remove();
                 this.buffs.remove(name);
             }));

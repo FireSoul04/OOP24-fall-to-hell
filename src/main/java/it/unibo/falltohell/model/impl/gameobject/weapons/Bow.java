@@ -17,6 +17,8 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 public class Bow extends BaseRangedWeapon {
 
 
+    private static final Vector2 OFFSET = new Vector2(4.0,0.0);
+
     private final Vector2 projectileSpeed;
 
     /**
@@ -26,7 +28,7 @@ public class Bow extends BaseRangedWeapon {
      * @param cooldown the cooldown time between shots
      */
     public Bow(final Character owner, final int ammo, final long cooldown, final String fileName , final Vector2 projectileSpeed) {
-        super(owner, ammo, cooldown, fileName);
+        super(owner, ammo, cooldown, fileName, OFFSET);
         this.projectileSpeed = projectileSpeed;
     }
 
