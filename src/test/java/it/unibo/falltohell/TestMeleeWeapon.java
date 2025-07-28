@@ -60,7 +60,7 @@ class TestMeleeWeapon {
         final StatisticsFactory sf = new StatisticFactoryImpl();
         final BaseEnemyStatistics dummyStats = sf.createBaseEnemyStatistic(
             10, 0, Vector2.zero(), new Dimensions(20, 20),
-            Vector2.zero(), character, 0, sf.createOptional()
+            Vector2.zero(), 0, sf.createOptional()
         );
         this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), dummyStats);
     }
