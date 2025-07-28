@@ -57,7 +57,7 @@ public class LevelImpl implements Level {
     
     private final Label pointsLabel;
     private final Label statsLabel;
-    private final Label attackLabel;
+    private final Label manaLabel;
 
     /**
      * Constructs a new LevelImpl with a given list of game objects.
@@ -86,8 +86,8 @@ public class LevelImpl implements Level {
         }
 
         this.pointsLabel = new Label("Points: 0", Vector2.zero(), true);
-        this.statsLabel = new Label("HP: 0", Vector2.down().multiply(10), true);
-        this.attackLabel = new Label("Attack: 0", Vector2.down().multiply(20), true);
+        this.statsLabel = new Label("HP: 0+0", Vector2.down().multiply(10), true);
+        this.manaLabel = new Label("Mana: 0+0", Vector2.down().multiply(20), true);
     }
 
     /**
@@ -146,11 +146,12 @@ public class LevelImpl implements Level {
     @Override
     public void update(final double deltaTime) {
         this.gameData.ifPresent(d -> {
+            final CharacterStatistics stats = (CharacterStatistics) d.getCurrentCharacter().getStats();
             d.getCurrentCharacter().update(deltaTime);
             this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime);
             this.pointsLabel.setText("Points: " + d.getPoints());
-            this.statsLabel.setText("HP: " + d.getCurrentCharacter().getStats().getLife());
-            this.attackLabel.setText("Attack: " + d.getCurrentCharacter().getStats().getAttack());
+            this.statsLabel.setText("Life: " + stats.getLife() + "+" + stats.getTemporaryLife());
+            this.manaLabel.setText("Mana: " + stats.getMana() + "+" + stats.getTemporaryMana());
         });
         final Stream<GameObject> gameObjectStream = this.gameObjects.stream().filter(t -> !(t instanceof Character));
         for (final GameObject gameObject : gameObjectStream.toList()) {
@@ -213,7 +214,7 @@ public class LevelImpl implements Level {
         this.drh = drh;
         drh.linkLabel(pointsLabel);
         drh.linkLabel(statsLabel);
-        drh.linkLabel(attackLabel);
+        drh.linkLabel(manaLabel);
     }
 
     /**
