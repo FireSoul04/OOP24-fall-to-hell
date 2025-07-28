@@ -142,7 +142,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
         this.safeZoneManager = safeZoneManager;
         this.safeZoneManager.addEnemyCall(this::resetEnemy);
-        this.initDrawable(Priority.MEDIUM, fileName);
+        this.initDrawable(Priority.VERY_LOW, fileName);
     }
 
     /**
