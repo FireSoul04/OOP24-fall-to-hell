@@ -41,11 +41,11 @@ public class AbilityFactoryImpl implements AbilityFactory {
      */
     public AbilityFactoryImpl() {
         registry.register(Archer.class,
-                character -> new ReturnArrowAbility((Archer)character));
+                character -> new ReturnArrowAbility((Archer) character));
         registry.register(Rogue.class,
-                character -> new ThrowKnifeAbility((Rogue)character));
+                character -> new ThrowKnifeAbility((Rogue) character));
         registry.register(Caster.class,
-                character -> new BlastAbility((Caster)character));
+                character -> new BlastAbility((Caster) character));
     }
 
     /**
@@ -85,7 +85,7 @@ public class AbilityFactoryImpl implements AbilityFactory {
      */
     @Override
     public SpecialActiveAbility createHealAbility(final Character character) {
-        if(character instanceof Caster caster){
+        if (character instanceof Caster caster) {
             return new HealAbility(caster);
         }
         throw new IllegalArgumentException("You are not a Caster");

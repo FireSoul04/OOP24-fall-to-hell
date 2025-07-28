@@ -104,6 +104,7 @@ public class Imp extends BaseEnemy {
      */
     @Override
     protected void attack() {
+        super.attack();
         super.getCharacter().setDamagedLife(this.stats.getAttack());
     }
 
@@ -195,8 +196,8 @@ public class Imp extends BaseEnemy {
      */
     private boolean isBlocked(final Vector2 target) {
         return this.collided.isPresent()
-                && ((direction > 0 && target.x() >= this.collided.get().x() && target.x() < this.collided.get().x()) ||
-                        (direction < 0 && target.x() <= this.collided.get().x()
+                && ((direction > 0 && target.x() >= this.collided.get().x() && target.x() < this.collided.get().x())
+                        || (direction < 0 && target.x() <= this.collided.get().x()
                                 && target.x() > this.collided.get().x()));
     }
 

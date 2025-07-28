@@ -107,6 +107,7 @@ public class Tengu extends BaseEnemy {
             }
         } else if (other instanceof Character) {
             super.getCharacter().setDamagedLife(DAMAGE);
+            super.getEnemyTimerManager().restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
         }
     }
 

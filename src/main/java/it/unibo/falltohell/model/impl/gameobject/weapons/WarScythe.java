@@ -24,6 +24,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class WarScythe extends BaseMeleeWeapon {
 
+    private static final Dimensions SIZE = new Dimensions(15, 30);
     private static final Vector2 OFFSET = new Vector2(16, 5);
     private static final double MULTIPLIER = 1.5;
 
@@ -36,6 +37,6 @@ public class WarScythe extends BaseMeleeWeapon {
      * @param cooldownTime the time in nanoseconds between hits
      */
     public WarScythe(final Character owner, final long cooldownTime) {
-        super(owner, new BoxCollider(Vector2.zero(), new Dimensions(15, 30)), MULTIPLIER, cooldownTime, "warscythe.png", OFFSET);
+        super(owner, new BoxCollider(Vector2.zero(), SIZE), MULTIPLIER, cooldownTime, "warscythe.png", OFFSET);
     }
 }
