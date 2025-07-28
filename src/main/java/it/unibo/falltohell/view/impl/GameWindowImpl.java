@@ -125,6 +125,15 @@ public class GameWindowImpl implements GameWindow {
 	public Vector2 getScale() {
 		return this.scale;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setGameTitle(final String title) {
+		this.mainFrame.setTitle(title);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */

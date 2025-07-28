@@ -44,11 +44,18 @@ public interface GameWindow {
      * @return percentage of current width and height
      */
     Vector2 getScale();
+
+    /**
+     * Change the title of the window.
+     * @param title to change
+     */
+    void setGameTitle(String title);
+
     /**
      * Attach to the mainFrame the menu panel.
      * @param menuPanel the menuPanel to be attached.
      */
-    void showMenu(final JPanel menuPanel);
+    void showMenu(JPanel menuPanel);
     /**
      * Attach to the mainFrame the gamePanel.
      */
