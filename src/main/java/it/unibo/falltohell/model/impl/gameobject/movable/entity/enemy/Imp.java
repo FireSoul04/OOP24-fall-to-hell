@@ -104,6 +104,7 @@ public class Imp extends BaseEnemy {
      */
     @Override
     protected void attack() {
+        super.attack();
         super.getCharacter().setDamagedLife(this.stats.getAttack());
     }
 
