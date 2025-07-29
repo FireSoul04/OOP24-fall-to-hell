@@ -1,6 +1,7 @@
 package it.unibo.falltohell;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
@@ -34,6 +35,11 @@ class TestRogueAbilities {
     private static final Vector2 DUMMY_SPEED = Vector2.zero();
     private static final int DUMMY_POINTS = 1;
     private static final Dimensions DUMMY_SIZE = new Dimensions(20, 20);
+    private static final StatisticsFactory SF = new StatisticFactoryImpl();
+    private static final BaseEnemyStatistics stats = SF.createBaseEnemyStatistic(
+        DUMMY_LIFE, DUMMY_ATTACK, DUMMY_SPEED, DUMMY_SIZE,
+        DUMMY_POSITION, DUMMY_POINTS, SF.createOptional()
+    );
 
     private Character rogue;
     private Enemy dummy;
@@ -57,12 +63,6 @@ class TestRogueAbilities {
         );
         this.level.linkGameData(new GameDataImpl(Map.of(this.rogue.getCharacterID(), this.rogue)));
         this.canShoot = true;
-        final StatisticsFactory sf = new StatisticFactoryImpl();
-        final BaseEnemyStatistics stats = sf.createBaseEnemyStatistic(
-            DUMMY_LIFE, DUMMY_ATTACK, DUMMY_SPEED, DUMMY_SIZE,
-            DUMMY_POSITION, DUMMY_POINTS, sf.createOptional()
-        );
-        this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), stats);
     }
 
     /**
@@ -70,8 +70,6 @@ class TestRogueAbilities {
      */
     @Test
     void testKnifeThrowDirections() {
-        // Removes the dummy to avoid destroying the knives
-        this.level.removeGameObject(this.dummy);
         this.level.update(1.0);
         this.canShoot = false;
         final List<Vector2> startingKnivesPositions = this.level.getGameObjects()
@@ -107,6 +105,7 @@ class TestRogueAbilities {
      */
     @Test
     void testKnifeDamageOnEnemy() {
+        this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), stats);
         final double initialLife = this.dummy.getStats().getLife();
         this.level.update(1.0);
         Assertions.assertTrue(this.dummy.getStats().getLife() < initialLife, "The enemy should be hit and take damage");
@@ -117,7 +116,8 @@ class TestRogueAbilities {
      */
     @Test
     void testEvadePassiveAbilityWithEnemy() {
-        this.level.update(1.0);
+        this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), stats);
+        this.rogue.onCollision(this.dummy, Vector2.zero());
         Assertions.assertTrue(
             this.rogue.getStats().getInitialSpeed().magnitude() < this.rogue.getStats().getSpeed().magnitude(),
             "The rogue should have his speed buffed"
@@ -129,9 +129,9 @@ class TestRogueAbilities {
      */
     @Test
     void testEvadePassiveAbilityWithEnemyProjectile() {
-        this.level.removeGameObject(this.dummy);
-        new BaseEnemyProjectile(this.level, ROGUE_POSITION, Vector2.zero(), new BoxCollider(), 1, "test.png");
-        this.level.update(1.0);
+        final Projectile projectile =
+            new BaseEnemyProjectile(this.level, ROGUE_POSITION, Vector2.zero(), new BoxCollider(), 1, "test.png");
+        this.rogue.onCollision(projectile, Vector2.zero());
         Assertions.assertTrue(
             this.rogue.getStats().getInitialSpeed().magnitude() < this.rogue.getStats().getSpeed().magnitude(),
             "The rogue should have his speed buffed"
@@ -143,10 +143,10 @@ class TestRogueAbilities {
      */
     @Test
     void testEvadePassiveAbilityWithoutBeingHit() {
-        this.level.removeGameObject(this.dummy);
         this.level.update(1.0);
-        Assertions.assertFalse(
-            this.rogue.getStats().getInitialSpeed().magnitude() < this.rogue.getStats().getSpeed().magnitude(),
+        Assertions.assertEquals(
+            this.rogue.getStats().getInitialSpeed(),
+            this.rogue.getStats().getSpeed(),
             "The rogue should have not his speed buffed"
         );
     }
@@ -159,7 +159,6 @@ class TestRogueAbilities {
         do {
             lastFrameY = this.rogue.getPosition().y();
             this.level.update(1.0);
-            System.out.println(this.rogue.getPosition());
         } while (this.rogue.getPosition().y() < lastFrameY);
     }
 
