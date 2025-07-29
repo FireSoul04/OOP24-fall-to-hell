@@ -185,7 +185,6 @@ public class FamiliarBat extends MovableImpl {
                     } else {
                         this.character.getLevel().getTimerManager().addTimer(this.name, this.timer);
                     }
-
                 }
             }
         }
@@ -213,12 +212,7 @@ public class FamiliarBat extends MovableImpl {
         stats.setMana(Math.min(stats.getMana() + manaIncrease, stats.getInitialMana()));
         stats.setLife(Math.min(stats.getLife() + lifeIncrease, stats.getFullLife()));
 
-        if (enemy.isDead()) {
-            this.enemy = Optional.empty();
-            this.isAttacking = false;
-            this.numberAttack = 0;
-            this.attackFinishListener.onAttackFinished(this);
-        }
+        this.checkIfEnemyisDead();
     }
 
     /**
@@ -259,11 +253,22 @@ public class FamiliarBat extends MovableImpl {
         } else if (this.enemy.isEmpty()) {
             final Vector2 velocity = VELOCITY.multiply(this.attackDirection).multiply(deltaTime);
 
-            var attackPos = currentPos;
-            if (Math.abs(currentPos.y() - targetPos.y()) <= Math.abs(OFFSET_B_TO_C)) {
-                attackPos = new Vector2(currentPos.x(), targetPos.y());
-            }
+            Vector2 attackPos = currentPos;
 
+            boolean sameRow = attackDirection.y() == 0 &&
+                    Math.abs(currentPos.y() - targetPos.y()) <= Math.abs(OFFSET_B_TO_C);
+
+            boolean sameColumn = attackDirection.y() == 1 &&
+                    Math.abs(currentPos.x() - targetPos.x()) <= Math.abs(OFFSET_B_TO_C);
+
+            if (sameRow) {
+                attackPos = new Vector2(currentPos.x(), targetPos.y());
+            } else if (sameColumn) {
+                int facing = character.isFacingRight() ? 1 : -1;
+                attackPos = new Vector2(
+                        currentPos.x() + facing * Math.abs(OFFSET_B_TO_C),
+                        currentPos.y());
+            }
             super.setPosition(attackPos.add(velocity));
         } else {
             final Vector2 toEnemy = this.enemy.get().getPosition().subtract(currentPos).normalize();
@@ -277,6 +282,7 @@ public class FamiliarBat extends MovableImpl {
             } else {
                 super.setPosition(attackPos);
             }
+            this.checkIfEnemyisDead();
         }
     }
 
@@ -304,5 +310,18 @@ public class FamiliarBat extends MovableImpl {
      */
     public Druid getCharacter() {
         return (Druid) this.character;
+    }
+
+    /**
+     * Checks if the targeted enemy is dead.
+     * If he is it will resent to idle mode.
+     */
+    private void checkIfEnemyisDead(){
+        enemy.filter(Enemy::isDead).ifPresent(deadEnemy -> {
+            enemy = Optional.empty();
+            isAttacking = false;
+            numberAttack = 0;
+            attackFinishListener.onAttackFinished(this);
+        });
     }
 }
