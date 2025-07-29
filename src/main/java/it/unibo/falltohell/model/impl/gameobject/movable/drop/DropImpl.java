@@ -44,6 +44,7 @@ public class DropImpl extends MovableImpl implements Drop {
     private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
     private final String name;
     private final Buff buff;
+    private boolean collected;
 
     /**
      * Constructs a new drop object that carries a {@link Buff}, is placed at the
@@ -65,6 +66,7 @@ public class DropImpl extends MovableImpl implements Drop {
         super.getLevel().getTimerManager().addTimer(this.name,
                 new CustomTimerImpl(EXPIRE_TIME, () -> super.getLevel().removeGameObject(this)));
         this.initDrawable(Priority.VERY_LOW, fileName);
+        this.collected = false;
     }
 
     /**
@@ -82,15 +84,18 @@ public class DropImpl extends MovableImpl implements Drop {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (other instanceof Character character) {
-            final String name = "drop_buff" + this.hashCode();
-            character.getBuffManager().addBuff(this.buff, BUFF_DURATION, name);
-            if (super.getLevel().getTimerManager().searchTimer(this.name)) {
-                super.getLevel().getTimerManager().removeTimer(this.name);
+        if (!this.collected) {
+            if (other instanceof Character character) {
+                this.collected = true;
+                final String name = "drop_buff" + this.hashCode();
+                character.getBuffManager().addBuff(this.buff, BUFF_DURATION, name);
+                if (super.getLevel().getTimerManager().searchTimer(this.name)) {
+                    super.getLevel().getTimerManager().removeTimer(this.name);
+                }
+                super.getLevel().removeGameObject(this);
+            } else if (other instanceof BaseCollidableBlock && direction.equals(Vector2.down())) {
+                super.setSpeed(Vector2.zero());
             }
-            super.getLevel().removeGameObject(this);
-        } else if (other instanceof BaseCollidableBlock && direction.equals(Vector2.down())) {
-            super.setSpeed(Vector2.zero());
         }
     }
 
