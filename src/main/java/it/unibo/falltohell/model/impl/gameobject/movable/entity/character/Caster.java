@@ -1,11 +1,10 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
+import it.unibo.falltohell.model.api.factory.AbilityFactory;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
-import it.unibo.falltohell.model.api.factory.AbilityFactory;
 import it.unibo.falltohell.model.api.manager.TimerManager;
-import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
@@ -29,8 +28,6 @@ public class Caster extends BaseCharacter {
     private static final double AMOUNT_MANA_NORMAL_ATTACK = 1;
     private static final double AMOUNT_MANA_RECHARGED = 2;
     private static final long COOLDOWN_MANA_RECHARGE = 5000;
-    private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
-            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED);
 
     private final Weapon staff;
     private final Weapon tome;
@@ -46,14 +43,16 @@ public class Caster extends BaseCharacter {
      * @param position of the caster in the level
      */
     public Caster(final Level level, final Vector2 position) {
-        super(level, position, STATISTICS, "caster.png");
+        super(level, position, new StatisticFactoryImpl()
+                        .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED),
+                "caster.png");
         this.staff = new Staff(this);
         this.tome = new Tome(this);
         this.equipWeapon(tome);
         final TimerManager timerManager = this.getLevel().getTimerManager();
         final String timerName = "mana_recharge";
-        final AbilityFactory factory = new AbilityFactoryImpl();
-        this.manaRecharge = factory.createPassiveAbility(this,
+        final AbilityFactory abilityFactory = new AbilityFactoryImpl();
+        this.manaRecharge = abilityFactory.createPassiveAbility(this,
             character -> {
                 if (!timerManager.searchTimer(timerName)) {
                         timerManager.addTimer(
@@ -69,8 +68,8 @@ public class Caster extends BaseCharacter {
                 }
             });
         this.manaRecharge.carryOut();
-        this.blast = factory.createSpecialActiveAbility(this);
-        this.healing = factory.createHealAbility(this);
+        this.blast = abilityFactory.createSpecialActiveAbility(this);
+        this.healing = abilityFactory.createHealAbility(this);
 
     }
 
