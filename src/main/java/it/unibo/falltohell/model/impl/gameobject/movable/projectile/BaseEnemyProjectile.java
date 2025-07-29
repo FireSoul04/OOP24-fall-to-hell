@@ -34,7 +34,8 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      * @param speed    the initial speed
      * @param collider the collider used for collision detection
      * @param damage   the amount of damage inflicted on hit
-     * @param fileName is the name of the image file associated to the enemy projectile
+     * @param fileName is the name of the image file associated to the enemy
+     *                 projectile
      *
      * @see Level
      * @see Vector2
@@ -73,7 +74,7 @@ public class BaseEnemyProjectile extends ProjectileImpl {
             super.setHit(true);
             character.setDamagedLife(damage);
             super.getLevel().removeGameObject(this);
-        }else if(other instanceof BaseCollidableBlock || other instanceof BaseEntrance){
+        } else if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
             super.setHit(true);
             super.getLevel().removeGameObject(this);
         }

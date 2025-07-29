@@ -194,9 +194,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     /**
      * Executes the attack behavior specific to the enemy.
      */
-    protected void attack(){
+    protected void attack() {
         this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
-    };
+    }
 
     /**
      * {@inheritDoc}

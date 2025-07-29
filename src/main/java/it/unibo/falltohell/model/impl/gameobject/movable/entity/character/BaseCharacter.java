@@ -180,7 +180,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * {@inheritDoc}
      */
     @Override
-    public void equipWeapon(final Weapon weapon) {
+    public final void equipWeapon(final Weapon weapon) {
         this.equippedWeapon = Optional.of(weapon);
     }
 

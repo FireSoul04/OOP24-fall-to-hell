@@ -35,8 +35,12 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Druid extends BaseCharacter {
 
-    private static final CharacterStatistics STATS = new StatisticFactoryImpl().createCharacterStatistic(30, 10,
-            new Vector2(2.5, 2), new Dimensions(20, 25), 80, 4);
+    private static final int ATTACK_SPEED = 4;
+    private static final int MANA = 80;
+    private static final Dimensions DIMENSIONS = new Dimensions(20, 25);
+    private static final Vector2 SPEED = new Vector2(2.5, 2);
+    private static final int ATTACK = 10;
+    private static final int LIFE = 30;
     private static final int END_KILL = 5;
     private static final long KILL_RESET = 10_000;
     private static final double CREATION_COST = 30;
@@ -59,7 +63,8 @@ public class Druid extends BaseCharacter {
      * @param position the initial spawn position
      */
     public Druid(final Level level, final Vector2 position) {
-        super(level, position, STATS, "druid.png");
+        super(level, position, new StatisticFactoryImpl().createCharacterStatistic(LIFE, ATTACK,
+            SPEED, DIMENSIONS, MANA, ATTACK_SPEED), "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
         this.equipWeapon(new WarScythe(this, ATTACK_COOLDOWN));
         this.sPa = new AbilityFactoryImpl().createPassiveAbility(this, (character) -> {
@@ -123,7 +128,7 @@ public class Druid extends BaseCharacter {
         this.sPa.carryOut();
 
         final String resetTimerName = "Druid_ResetKills";
-        this.restartOrAddTimer(resetTimerName, new CustomTimerImpl(KILL_RESET, () -> this.setZeroKill()));
+        this.restartOrAddTimer(resetTimerName, new CustomTimerImpl(KILL_RESET, this::setZeroKill));
     }
 
     /**

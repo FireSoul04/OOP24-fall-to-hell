@@ -166,7 +166,7 @@ public record Vector2(double x, double y) {
      * @param other the other vector to multiply with
      * @return a new {@code Vector2} representing the component-wise product
      */
-    public Vector2 multiply(Vector2 other) {
+    public Vector2 multiply(final Vector2 other) {
         return new Vector2(this.x * other.x(), this.y * other.y());
     }
 }

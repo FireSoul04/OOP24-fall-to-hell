@@ -44,7 +44,7 @@ public class Lotawiec extends BaseEnemy {
     private static final Vector2 VELOCITY = new Vector2(0.5, 0.5);
     private static final Dimensions DIMENSIONS_ARROW = new Dimensions(20, 20);
     private static final double DAMAGE_A = 9;
-    private static final Vector2 VELOCITY_ARROW = new Vector2(0.00000000000000001, 0.00000000000001);
+    private static final Vector2 VELOCITY_ARROW = new Vector2(1e-17, 1e-14);
     private static final int ATTACK_TIME = 4000;
     private static final Map<BuffNames, Double> BUFF = Map.of(
             BuffNames.ATTACK, 10.0,
@@ -53,7 +53,7 @@ public class Lotawiec extends BaseEnemy {
             BuffNames.MANA, 40.0,
             BuffNames.SPEED, 50.0);
 
-    private LongRangeEnemyStatistics stats;
+    private final LongRangeEnemyStatistics stats;
     private int direction = 1;
 
     /**
