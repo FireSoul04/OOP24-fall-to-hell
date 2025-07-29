@@ -12,7 +12,6 @@ import it.unibo.falltohell.test.util.LavaBlockTest;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.test.util.TimerManagerTest;
 import it.unibo.falltohell.util.Vector2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,7 +38,6 @@ class TestBlocks {
         this.blockFactory = new CollidableBlockFactoryImpl();
         this.timerManager = (TimerManagerTest) level.getTimerManager();
     }
-    
 
     /**
      * Test to see if a lava block as expected:
