@@ -105,8 +105,8 @@ public class GameControllerImpl implements GameController {
         eventManager.addCondition("ActiveAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_SHIFT));
         eventManager.addCondition("SpecialAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_Q));
         eventManager.addCondition("SpecialAttack", () -> inputListener.isKeyPressed(KeyEvent.VK_C));
-        eventManager.addCondition("PauseGame", () -> inputListener.isKeyPressed(KeyEvent.VK_P));
-        eventManager.addCondition("ResumeGame", () -> inputListener.isKeyPressed(KeyEvent.VK_O));
+        eventManager.addCondition("PauseGame", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_P));
+        eventManager.addCondition("ResumeGame", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_O));
 
         eventManager.addAction("PauseGame", () -> {
             if (this.isRunning()) {
