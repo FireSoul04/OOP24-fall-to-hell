@@ -20,7 +20,7 @@ public final class Start {
      */
     public static void main(final String[] args) {
         final GameController fallToHell = new GameControllerImpl();
-        AudioManager.getInstance().loop("Music");
+        
         final MainMenuPanel menu = new MainMenuPanel(
             e -> {
                 fallToHell.getView().showGame();
