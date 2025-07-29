@@ -47,6 +47,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class LevelImpl implements Level {
 
+    private static final double LABEL_OFFSET_Y = 10;
+
     private final List<GameObject> gameObjects;
     private final GameCamera camera;
     private final CollisionsManager collisionsManager;
@@ -88,8 +90,8 @@ public class LevelImpl implements Level {
         }
 
         this.pointsLabel = new Label("Points: 0", Vector2.zero(), true);
-        this.statsLabel = new Label("HP: 0+0", Vector2.down().multiply(10), true);
-        this.manaLabel = new Label("Mana: 0+0", Vector2.down().multiply(20), true);
+        this.statsLabel = new Label("HP: 0+0", Vector2.down().multiply(LABEL_OFFSET_Y), true);
+        this.manaLabel = new Label("Mana: 0+0", Vector2.down().multiply(LABEL_OFFSET_Y * 2), true);
     }
 
     /**
@@ -270,8 +272,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void setLevelSize(Vector2 size){
+    public void setLevelSize(final Vector2 size) {
         this.levelSize = size;
-
     }
 }
