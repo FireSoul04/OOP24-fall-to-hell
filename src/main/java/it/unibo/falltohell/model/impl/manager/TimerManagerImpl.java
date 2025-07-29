@@ -47,6 +47,14 @@ public class TimerManagerImpl implements TimerManager {
      * {@inheritDoc}
      */
     @Override
+    public void removeAllTimers() {
+        this.timers.keySet().forEach(this::removeTimer);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void pauseTimer(final String name) {
         this.checkExists(name);
         if (!this.timers.get(name).isPaused()) {

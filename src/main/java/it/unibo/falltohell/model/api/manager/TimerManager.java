@@ -22,6 +22,11 @@ public interface TimerManager {
     void removeTimer(String name);
 
     /**
+     * Method to remove all timers.
+     */
+    void removeAllTimers();
+
+    /**
      * Method to pause a specific timer.
      * @param name of the timer to be paused
      */
@@ -44,19 +49,19 @@ public interface TimerManager {
     void resumeAllTimers();
 
     /**
-     * Method to restart a timer
+     * Method to restart a timer.
      * @param name of the timer to be restarted
      */
     void restartTimer(String name);
 
     /**
-     * Method to stop a timer
+     * Method to stop a timer.
      * @param name of the timer to be stopped
      */
     void stopTimer(String name);
 
     /**
-     * Method that tells if there is already a timer with the given name
+     * Method that tells if there is already a timer with the given name.
      * @param name of the timer to be searched
      * @return true if there is a timer with that name, false otherwise
      */
