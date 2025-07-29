@@ -9,14 +9,12 @@ import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.GameDataImpl;
 import it.unibo.falltohell.model.impl.gameobject.entrance.ShopEntrance;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
-import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.test.util.MerchantTest;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
@@ -37,12 +35,10 @@ class TestMerchant {
     @BeforeEach
     void initialization() {
         final Level level = new LevelTest();
-        final Map<CharacterID, Character> characters = new HashMap<>();
-        characters.put(CharacterID.ROGUE, new Rogue(level, Vector2.zero()));
-        characters.put(CharacterID.DRUID, new Druid(level, Vector2.zero()));
+        this.character = new Rogue(level, Vector2.zero());
+        final Map<CharacterID, Character> characters = Map.of(CharacterID.ROGUE, this.character);
         level.linkGameData(new GameDataImpl(1000, CharacterID.ROGUE, characters, Vector2.zero()));
         this.merchant = new MerchantTest(level, Vector2.zero(), new BoxCollider());
-        this.character = new Rogue(level, Vector2.zero());
     }
 
     /**
@@ -58,7 +54,7 @@ class TestMerchant {
         this.merchant.update();
         Assertions.assertEquals(initialNumberOfItems - 1, this.merchant.getMerch().size(),
                 "The number of items should be the on");
-        final CharacterStatistics statistics = (CharacterStatistics)this.character.getStats();
+        final CharacterStatistics statistics = (CharacterStatistics) this.character.getStats();
         Assertions.assertNotEquals(0, statistics.getTemporaryLife());
         Assertions.assertNotEquals(initialPoints, this.merchant.getLevel().getGameData().getPoints());
     }
