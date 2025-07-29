@@ -213,16 +213,16 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public boolean checkCondition(String name) {
-        return false;
+    public boolean checkCondition(final String name) {
+        return this.eventManager.checkCondition(name);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addCondition(String name, GameEventCondition event) {
-
+    public void addCondition(final String name, final GameEventCondition event) {
+        this.eventManager.addCondition(name, event);
     }
 
     /**
