@@ -37,7 +37,7 @@ public interface DrawableRenderableHandler {
      * @param camera the camera used to determine the visible elements.
      */
     void updateAll(GameCamera camera);
-    
+
     /**
      * @return a list with all the renderable objects
      */
