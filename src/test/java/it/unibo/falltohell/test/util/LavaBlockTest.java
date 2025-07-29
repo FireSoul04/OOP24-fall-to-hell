@@ -1,13 +1,8 @@
 package it.unibo.falltohell.test.util;
 
-import it.unibo.falltohell.model.api.gameobject.GameObject;
-import it.unibo.falltohell.model.api.gameobject.movable.entity.Entity;
 import it.unibo.falltohell.model.api.level.Level;
-import it.unibo.falltohell.model.api.manager.TimerManager;
-import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.block.LavaBlock;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
-import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.util.Vector2;
 
 /**
