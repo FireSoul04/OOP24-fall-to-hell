@@ -39,8 +39,8 @@ public class MainMenuPanel extends JPanel {
         startButton.addActionListener(startListener);
         exitButton.addActionListener(exitListener);
 
-        titleLabel.setForeground(Color.RED);
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 48));
+        titleLabel.setForeground(Color.BLACK);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 48));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         final GridBagConstraints gbc = new GridBagConstraints();
