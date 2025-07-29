@@ -8,6 +8,9 @@ import it.unibo.falltohell.model.impl.manager.EnemyTimeManagerImpl;
 import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.util.Vector2;
 
+/**
+ * Creates an enemy that is used for tests.
+ */
 public class DummyEnemyTest extends BaseEnemy {
 
     /**
@@ -15,13 +18,13 @@ public class DummyEnemyTest extends BaseEnemy {
      * @param level where it belongs
      * @param stats of the enemy
      */
-    public DummyEnemyTest(final Level level, final Vector2 position, final BaseEnemyStatistics stats) {
+    public DummyEnemyTest(final Level level, final BaseEnemyStatistics stats) {
         super(level, stats, new EnemyTimeManagerImpl(), new SafeZoneManager(), "test.png");
-        this.setPosition(position);
     }
 
     /**
      * Does nothing.
+     * @param deltaTime unused
      */
     @Override
     public void update(final double deltaTime) {
@@ -29,7 +32,9 @@ public class DummyEnemyTest extends BaseEnemy {
     }
 
     /**
-     * {@inheritDoc}
+     * Does nothing by default.
+     * @param other unused
+     * @param direction unused
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
@@ -46,6 +51,7 @@ public class DummyEnemyTest extends BaseEnemy {
 
     /**
      * Does not move.
+     * @param deltaTime unused
      */
     @Override
     protected void move(final double deltaTime) {
@@ -54,6 +60,8 @@ public class DummyEnemyTest extends BaseEnemy {
 
     /**
      * Does nothing.
+     * @param currentPos unused
+     * @param speed unused
      */
     @Override
     protected void patrol(final Vector2 currentPos, final Vector2 speed) {
@@ -62,9 +70,12 @@ public class DummyEnemyTest extends BaseEnemy {
 
     /**
      * Does nothing.
+     * @param charaPos unused
+     * @param currentPos unused
+     * @param speed unused
      */
     @Override
     protected void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed) {
-       
+
     }
 }
