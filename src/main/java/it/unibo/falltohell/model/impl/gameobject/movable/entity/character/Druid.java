@@ -43,7 +43,6 @@ public class Druid extends BaseCharacter {
     private static final double ATTACK_COST = 10;
     private static final long ATTACK_COOLDOWN = 500;
     private final CharacterStatistics stats;
-    private final AbilityFactoryImpl factory = new AbilityFactoryImpl();
     private final StatisticPassiveAbility sPa;
     private final GameEventManagerImpl<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
@@ -63,7 +62,7 @@ public class Druid extends BaseCharacter {
         super(level, position, STATS, "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
         this.equipWeapon(new WarScythe(this, ATTACK_COOLDOWN));
-        this.sPa = this.factory.createPassiveAbility(this, (character) -> {
+        this.sPa = new AbilityFactoryImpl().createPassiveAbility(this, (character) -> {
             final double[][] lifeManaGains = {
                     {}, // 0 kill
                     { 0.05, 0.0 }, // 1 kill
@@ -153,7 +152,7 @@ public class Druid extends BaseCharacter {
     private void handleAttackInput() {
         if (this.input.checkCondition("SpecialAbility") && super.subManaIfEnough(CREATION_COST)) {
             this.sAactive = true;
-            this.factory.createGhostActiveAbility(this.manager::createFamiliar, this).action();
+            new AbilityFactoryImpl().createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
 
         if (this.sAactive && this.spAtkCalled() && this.manager.isFree() && super.subManaIfEnough(ATTACK_COST)) {

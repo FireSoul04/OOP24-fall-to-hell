@@ -3,11 +3,10 @@ package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
+import it.unibo.falltohell.model.api.factory.AbilityFactory;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
-import it.unibo.falltohell.model.impl.ability.active.BlastAbility;
-import it.unibo.falltohell.model.impl.ability.active.HealAbility;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
@@ -53,7 +52,8 @@ public class Caster extends BaseCharacter {
         this.equipWeapon(tome);
         final TimerManager timerManager = this.getLevel().getTimerManager();
         final String timerName = "mana_recharge";
-        this.manaRecharge = new AbilityFactoryImpl().createPassiveAbility(this,
+        final AbilityFactory factory = new AbilityFactoryImpl();
+        this.manaRecharge = factory.createPassiveAbility(this,
             character -> {
                 if (!timerManager.searchTimer(timerName)) {
                         timerManager.addTimer(
@@ -69,8 +69,8 @@ public class Caster extends BaseCharacter {
                 }
             });
         this.manaRecharge.carryOut();
-        this.blast = new BlastAbility(this);
-        this.healing = new HealAbility(this);
+        this.blast = factory.createSpecialActiveAbility(this);
+        this.healing = factory.createHealAbility(this);
 
     }
 
@@ -100,7 +100,7 @@ public class Caster extends BaseCharacter {
 
     /**
      * Method to check if the weapon to use is correct,
-     * otherwise the weapon will be changed. 
+     * otherwise the weapon will be changed.
      * @param weapon to be used
      */
     private void changeEquippedWeapon(final Weapon weapon) {
