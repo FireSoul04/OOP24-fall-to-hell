@@ -90,7 +90,7 @@ class TestBuffManager {
                 Math.round(statistics.getSpeed().magnitude()),
                 "Speed should be reset to the one it was before the buff");
         this.buffs.keySet().forEach(i -> Assertions.assertFalse(this.buffManager.searchBuff(i),
-                "There should be no buff with this name" + i));
+                "There should be no buff with this name: " + i));
     }
 
     /**
@@ -102,10 +102,10 @@ class TestBuffManager {
     void testInfiniteBuffs() {
         this.buffs.forEach((key, value) -> this.buffManager.addInfiniteBuff(value, key));
         this.buffs.keySet().forEach(i -> Assertions.assertTrue(this.buffManager.searchBuff(i),
-                "There should be a buff with this name:" + i));
+                "There should be a buff with this name: " + i));
         this.buffs.forEach((key, value) -> this.buffManager.removeInfiniteBuff(key));
         this.buffs.keySet().forEach(i -> Assertions.assertFalse(this.buffManager.searchBuff(i),
-                "There should be no buff with this name" + i));
+                "There should be no buff with this name: " + i));
     }
 
     /**
