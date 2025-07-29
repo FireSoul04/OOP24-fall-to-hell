@@ -36,7 +36,7 @@ public class SaveFileControllerImpl implements SaveFileController {
      * {@inheritDoc}
      */
     @Override
-    public void save(final GameData data) {
+    public boolean save(final GameData data) {
         if (this.checkExistenceOfFile()) {
             this.createNewSaveFile();
         }
@@ -52,8 +52,10 @@ public class SaveFileControllerImpl implements SaveFileController {
             saveOutput.write(String.valueOf(character.getPosition().x()));
             saveOutput.newLine();
             saveOutput.write(String.valueOf(character.getPosition().y()));
+            return true;
         } catch (final IOException e) {
             this.logger.severe("Something went wrong while saving:" + e);
+            return false;
         }
     }
 

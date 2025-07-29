@@ -14,8 +14,9 @@ public interface SaveFileController {
     /**
      * Method to save the current state of the game in the save file.
      * @param data the object representing the current state of the game to be saved
+     * @return if the saving happened correctly
      */
-    void save(GameData data);
+    boolean save(GameData data);
 
     /**
      * @param characters a map of character IDs to  objects used to restore character-related state

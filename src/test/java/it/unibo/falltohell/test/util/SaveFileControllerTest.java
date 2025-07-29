@@ -36,7 +36,7 @@ public class SaveFileControllerTest implements SaveFileController {
      * {@inheritDoc}
      */
     @Override
-    public void save(final GameData data) {
+    public boolean save(final GameData data) {
         if (this.checkExistenceOfFile()) {
             this.createNewSaveFile();
         }
@@ -52,8 +52,10 @@ public class SaveFileControllerTest implements SaveFileController {
             saveOutput.write(String.valueOf(character.getPosition().x()));
             saveOutput.newLine();
             saveOutput.write(String.valueOf(character.getPosition().y()));
+            return true;
         } catch (final IOException e) {
             this.logger.severe("Something went wrong while saving:" + e);
+            return false;
         }
     }
 
@@ -77,7 +79,7 @@ public class SaveFileControllerTest implements SaveFileController {
     public void removeTestFile() {
         final File saveFile = new File(DIR_PATH + FILE_NAME);
         if (saveFile.exists()) {
-           final boolean deleted = saveFile.delete();
+           saveFile.delete();
         }
     }
 
@@ -90,7 +92,7 @@ public class SaveFileControllerTest implements SaveFileController {
         final File saveDir = new File(DIR_PATH);
         boolean existent = true;
         if (!saveDir.exists() || !saveDir.isDirectory()) {
-            final boolean savedDir = saveDir.mkdir();
+            saveDir.mkdir();
             existent = false;
         } else {
             final File saveFile = new File(DIR_PATH + FILE_NAME);
@@ -106,7 +108,7 @@ public class SaveFileControllerTest implements SaveFileController {
      */
     private void createNewSaveFile() {
         try {
-            final boolean newSaveFile = new File(DIR_PATH + FILE_NAME).createNewFile();
+            new File(DIR_PATH + FILE_NAME).createNewFile();
         } catch (final IOException e) {
             this.logger.severe("The save file was not created correctly:" + e);
         }
