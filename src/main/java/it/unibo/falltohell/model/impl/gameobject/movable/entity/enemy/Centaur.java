@@ -3,6 +3,7 @@ package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
 
 import java.util.Map;
 import java.util.Optional;
@@ -12,7 +13,6 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 

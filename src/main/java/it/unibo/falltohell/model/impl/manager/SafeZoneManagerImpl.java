@@ -10,34 +10,45 @@ import java.util.Set;
 import it.unibo.falltohell.model.api.listener.EnemyRespawnListener;
 import it.unibo.falltohell.model.api.listener.EnterSafeZoneListener;
 import it.unibo.falltohell.model.api.listener.ExitSafeZoneListener;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 
 /**
  * <p>
- * Manages the logic related to safe zones in the game. This class coordinates
+ * Implementation of the {@link SafeZoneManager} interface.
+ * </p>
+ *
+ * <p>
+ * This class manages the logic related to safe zones in the game. It
+ * coordinates
  * engagement behavior for {@link Enemy} instances in response to triggers
  * from {@link BaseEntrance} objects.
  * </p>
  *
  * <p>
- * It provides a shared {@link EnterSafeZoneListener} and
- * {@link ExitSafeZoneListener}
- * that can be assigned to entrances.
- * When triggered, this listener toggles the state of all registered enemies:
+ * Functionality includes:
  * <ul>
- * <li>Enemies are removed when entering a safe zone</li>
- * <li>Enemies are re-added and respawned when exiting</li>
+ * <li>Registering entrances and assigning shared {@link EnterSafeZoneListener}
+ * and
+ * {@link ExitSafeZoneListener} instances</li>
+ * <li>Removing enemies from the game when the player enters a safe zone</li>
+ * <li>Re-adding and respawning enemies when the player exits the safe zone</li>
  * </ul>
  * </p>
  *
+ * <p>
+ * The manager also maintains a mapping between enemy classes and their sprite
+ * file names, used to correctly re-link sprites after respawn.
+ * </p>
+ *
  * @author Sara Visani
+ * @see SafeZoneManager
  * @see Enemy
  * @see BaseEntrance
- * @see AggroListener
  * @see EnemyRespawnListener
  */
-public class SafeZoneManager {
+public class SafeZoneManagerImpl implements SafeZoneManager {
 
     private final Set<BaseEntrance> entrances = new HashSet<>();
     private final Set<Enemy> enemies = new HashSet<>();
@@ -76,11 +87,9 @@ public class SafeZoneManager {
     };
 
     /**
-     * Registers a new {@link BaseEntrance}
-     * to be assigned to the entrance.
-     *
-     * @param entrance the entrance to be added
+     * {@inheritDoc}
      */
+    @Override
     public void addEntrance(final BaseEntrance entrance) {
         this.entrances.add(entrance);
         entrance.setListenerEnter(entranceListener);
@@ -89,42 +98,34 @@ public class SafeZoneManager {
     }
 
     /**
-     * Adds an {@link Enemy} to be affected by the listener.
-     *
-     * @param enemy the enemy to be added
-     * @param filename the name of the file representing the enemy's sprite
+     * {@inheritDoc}
      */
+    @Override
     public void addEnemy(final Enemy enemy, final String filename) {
         this.enemies.add(enemy);
         this.fileNames.putIfAbsent(enemy.getClass(), filename);
     }
 
     /**
-     * Removes a {@link BaseEntrance} from the manager.
-     *
-     * @param entrance the entrance to remove
+     * {@inheritDoc}
      */
+    @Override
     public void removeEntrance(final BaseEntrance entrance) {
         this.entrances.remove(entrance);
     }
 
     /**
-     * Removes an {@link Enemy} from the manager.
-     *
-     * @param enemy the enemy to remove
+     * {@inheritDoc}
      */
+    @Override
     public void removeEnemy(final Enemy enemy) {
         this.enemies.remove(enemy);
     }
 
     /**
-     * <p>
-     * Add a callback to be invoked when enemies are reactivated upon exiting
-     * a safe zone.
-     * </p>
-     *
-     * @param call the {@link EnemyRespawnListener} to assign
+     * {@inheritDoc}
      */
+    @Override
     public void addEnemyCall(final EnemyRespawnListener call) {
         this.enemyCallbacks.add(call);
     }

@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.gameobject.movable.FamiliarBat;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
@@ -33,7 +34,7 @@ import it.unibo.falltohell.util.Vector2;
  * @see Character
  * @see Enemy
  */
-public class FamiliarBat extends MovableImpl {
+public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
     private static final int P_30 = 30;
     private static final int P_40 = 70;
     private static final int CASE_5 = 5;
@@ -72,7 +73,7 @@ public class FamiliarBat extends MovableImpl {
      * @param character the character that this FamiliarBat follows and assists
      * @param listener  the callback to invoke when the familiar finishes an attack
      */
-    public FamiliarBat(final Character character, final AttackFinishListener listener) {
+    public FamiliarBatImpl(final Character character, final AttackFinishListener listener) {
         super(character.getLevel(), character.getPosition(), VELOCITY, COLLIDER);
         this.character = character;
         this.attackFinishListener = listener;
@@ -95,6 +96,7 @@ public class FamiliarBat extends MovableImpl {
      *
      * @param direction the normalized direction vector for the attack
      */
+    @Override
     public void attack(final Vector2 direction) {
         this.isAttacking = true;
         this.attackDirection = direction;
@@ -120,6 +122,7 @@ public class FamiliarBat extends MovableImpl {
      *
      * @return {@code true} if idle; {@code false} if attacking
      */
+    @Override
     public boolean isIdle() {
         return !this.isAttacking;
     }
@@ -130,6 +133,7 @@ public class FamiliarBat extends MovableImpl {
      *
      * @return {@code true} if within attack range; {@code false} otherwise
      */
+    @Override
     public boolean isInAttackRange() {
         final Vector2 currentPos = super.getPosition();
         final Vector2 targetPos = this.character.getPosition();
@@ -290,6 +294,7 @@ public class FamiliarBat extends MovableImpl {
      * Clears the attack finish listener reference.
      * Should be called when the FamiliarBat is removed.
      */
+    @Override
     public void clearListener() {
         this.attackFinishListener = null;
     }
@@ -299,6 +304,7 @@ public class FamiliarBat extends MovableImpl {
      *
      * @return the unique name of the bat
      */
+    @Override
     public String getName() {
         return this.name;
     }
@@ -308,6 +314,7 @@ public class FamiliarBat extends MovableImpl {
      *
      * @return the owning druid character
      */
+    @Override
     public Druid getCharacter() {
         return (Druid) this.character;
     }

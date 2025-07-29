@@ -21,13 +21,15 @@ import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.api.manager.StaticCollisionManager;
+
 import it.unibo.falltohell.model.impl.drawable.Label;
 import it.unibo.falltohell.model.impl.drawable.Sprite;
 import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
-import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
+import it.unibo.falltohell.model.impl.manager.StaticCollisionManagerImpl;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
@@ -46,6 +48,8 @@ import it.unibo.falltohell.util.Vector2;
  * @author Davide Mancini
  */
 public class LevelImpl implements Level {
+
+    private static final double LABEL_OFFSET_Y = 10;
 
     private final List<GameObject> gameObjects;
     private final GameCamera camera;
@@ -79,7 +83,7 @@ public class LevelImpl implements Level {
         this.characters = new EnumMap<>(CharacterID.class);
         this.drh = new DrawableRenderableHandlerImpl();
         this.gameData = Optional.empty();
-        this.jumpCollisionManager = new StaticCollisionManager();
+        this.jumpCollisionManager = new StaticCollisionManagerImpl();
 
         for (final GameObject go : this.gameObjects) {
             if (go instanceof BaseCollidableBlock || go instanceof BaseEntrance) {
@@ -88,8 +92,8 @@ public class LevelImpl implements Level {
         }
 
         this.pointsLabel = new Label("Points: 0", Vector2.zero(), true);
-        this.statsLabel = new Label("HP: 0+0", Vector2.down().multiply(10), true);
-        this.manaLabel = new Label("Mana: 0+0", Vector2.down().multiply(20), true);
+        this.statsLabel = new Label("HP: 0+0", Vector2.down().multiply(LABEL_OFFSET_Y), true);
+        this.manaLabel = new Label("Mana: 0+0", Vector2.down().multiply(LABEL_OFFSET_Y * 2), true);
     }
 
     /**
@@ -270,8 +274,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void setLevelSize(Vector2 size){
+    public void setLevelSize(final Vector2 size) {
         this.levelSize = size;
-
     }
 }

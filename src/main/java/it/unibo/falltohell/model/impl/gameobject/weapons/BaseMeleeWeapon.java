@@ -62,7 +62,6 @@ public abstract class BaseMeleeWeapon extends BaseWeapon {
         if (this.isAttacking()) {
             final CharacterStatistics stats = (CharacterStatistics) this.getOwner().getStats();
             if (other instanceof Enemy e) {
-                System.out.println("Im weapon and calling");
                 e.setDamagedLife(this.damageMultiplier * stats.getAttack());
             }
         }

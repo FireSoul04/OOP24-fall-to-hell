@@ -17,8 +17,13 @@ import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 
-import java.util.*;
 import java.util.stream.Stream;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Collections;
 
 /**
  * Class for new level dedicated to tests.
@@ -30,9 +35,9 @@ public class LevelTest implements Level {
     private final CollisionsManager collisionsManager;
     private final TimerManagerTest timerManager;
     private final Map<CharacterID, Character> characters;
+    private final StaticCollisionManager jumpCollisionManager;
     private GameEventManagerImpl<String> eventManager;
     private Optional<GameData> gameData;
-    private StaticCollisionManager jumpCollisionManager;
 
     /**
      * Creates a new level with default managers.
@@ -189,7 +194,7 @@ public class LevelTest implements Level {
      * Not used
      */
     @Override
-    public void setLevelSize(final Vector2 size){
+    public void setLevelSize(final Vector2 size) {
         throw new UnsupportedOperationException("No use for tests");
     }
 

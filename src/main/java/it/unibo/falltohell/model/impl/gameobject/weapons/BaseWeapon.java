@@ -58,6 +58,10 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
         this.initDrawable(Priority.MEDIUM, fileName);
     }
 
+    /**
+     * {@inheritDoc}
+     * Updates the position and the facing direction based on the owner's.
+     */
     @Override
     public void update() {
         this.getDrawable().ifPresent(t -> {

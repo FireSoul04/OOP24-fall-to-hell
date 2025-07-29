@@ -33,6 +33,8 @@ class TestPhysics {
         LIFE, ATTACK, SPEED, SIZE, MANA, ATTACK_SPEED
     );
     private static final double EPS = 1e-1;
+    private static final String MOVE_RIGHT_EVENT = "MoveRight";
+    private static final String MOVE_LEFT_EVENT = "MoveLeft";
 
     private Entity entity;
     private Level level;
@@ -49,10 +51,10 @@ class TestPhysics {
             @Override
             public void update(final double deltaTime) {
                 super.update(deltaTime);
-                if (level.getGameEventManager().checkCondition("MoveRight")) {
+                if (level.getGameEventManager().checkCondition(MOVE_RIGHT_EVENT)) {
                     this.setPosition(this.getPosition().add(Vector2.right()));
                 }
-                if (level.getGameEventManager().checkCondition("MoveLeft")) {
+                if (level.getGameEventManager().checkCondition(MOVE_LEFT_EVENT)) {
                     this.setPosition(this.getPosition().add(Vector2.left()));
                 }
             }
@@ -81,7 +83,7 @@ class TestPhysics {
     /**
      * Method that updates the level MAX_UPDATES times.
      */
-    void updateTest() {
+    private void updateTest() {
         while (this.updates < MAX_UPDATES) {
             this.level.update(1.0);
             this.updates++;
@@ -114,13 +116,13 @@ class TestPhysics {
      */
     @Test
     void testGoingToTargetsWithObstacles() {
-        this.level.getGameEventManager().addCondition("MoveRight", () -> true);
+        this.level.getGameEventManager().addCondition(MOVE_RIGHT_EVENT, () -> true);
         final Vector2 rightObstaclePosition = Vector2.right().multiply(MAX_UPDATES).divide(2);
         new BaseCollidableBlock(this.level, rightObstaclePosition, new BoxCollider(), "test.png");
         this.updateTest();
         Assertions.assertFalse(this.collision, "The entity should not reach the target on the right");
-        this.level.getGameEventManager().addCondition("MoveRight", () -> false);
-        this.level.getGameEventManager().addCondition("MoveLeft", () -> true);
+        this.level.getGameEventManager().addCondition(MOVE_RIGHT_EVENT, () -> false);
+        this.level.getGameEventManager().addCondition(MOVE_LEFT_EVENT, () -> true);
         this.entity.setPosition(ENTITY_POSITION);
         final Vector2 leftObstaclePosition = Vector2.left().multiply(MAX_UPDATES).divide(2);
         new BaseCollidableBlock(this.level, leftObstaclePosition, new BoxCollider(), "test.png");
@@ -134,11 +136,11 @@ class TestPhysics {
      */
     @Test
     void testGoingToTargetsWithoutObstacles() {
-        this.level.getGameEventManager().addCondition("MoveRight", () -> true);
+        this.level.getGameEventManager().addCondition(MOVE_RIGHT_EVENT, () -> true);
         this.updateTest();
         Assertions.assertTrue(this.collision, "The entity should reach the target on the right");
-        this.level.getGameEventManager().addCondition("MoveRight", () -> false);
-        this.level.getGameEventManager().addCondition("MoveLeft", () -> true);
+        this.level.getGameEventManager().addCondition(MOVE_RIGHT_EVENT, () -> false);
+        this.level.getGameEventManager().addCondition(MOVE_LEFT_EVENT, () -> true);
         this.entity.setPosition(ENTITY_POSITION);
         this.updates = 0;
         this.updateTest();

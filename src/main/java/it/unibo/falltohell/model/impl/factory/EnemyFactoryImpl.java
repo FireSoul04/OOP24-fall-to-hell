@@ -7,11 +7,12 @@ import it.unibo.falltohell.model.api.factory.EnemyFactory;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.manager.EnemyTimeManagerImpl;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManagerImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Centaur;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Imp;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Lotawiec;
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Tengu;
 import it.unibo.falltohell.util.Vector2;
 
@@ -122,7 +123,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
          * @return the shared {@link SafeZoneManager} instance for the level
          */
         static SafeZoneManager getSafeZoneManagerFor(final Level level) {
-            return MANAGER_SAFE_ZONE.computeIfAbsent(level, l -> new SafeZoneManager());
+            return MANAGER_SAFE_ZONE.computeIfAbsent(level, l -> new SafeZoneManagerImpl());
         }
     }
 }

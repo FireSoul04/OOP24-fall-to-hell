@@ -10,6 +10,10 @@ import it.unibo.falltohell.util.Vector2;
 
 import java.util.List;
 
+/**
+ * Class representing an active ability that throw many knives from the rogue position.
+ * @author Davide Mancini
+ */
 public class ThrowKnifeAbility implements SpecialActiveAbility {
 
     private static final double ABILITY_COST = 3;
@@ -25,6 +29,10 @@ public class ThrowKnifeAbility implements SpecialActiveAbility {
     private final TimerManager tm;
     private boolean canActivate;
 
+    /**
+     * Create the ability attached to the rogue.
+     * @param rogue that use this ability
+     */
     public ThrowKnifeAbility(final Rogue rogue) {
         this.rogue = rogue;
         this.canActivate = true;

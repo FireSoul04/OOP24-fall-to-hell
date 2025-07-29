@@ -1,9 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
 
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.EntityImpl;
-import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.builder.BuffBuilderImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 
@@ -13,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
+import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.util.Priority;
 
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -21,7 +21,8 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEn
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
-import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
+
 
 /**
  * Abstract base class for all {@link Enemy} implementations.
@@ -118,6 +119,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     private final BaseEnemyStatistics stats;
     private final EnemyTimerManager manager;
     private final SafeZoneManager safeZoneManager;
+    private boolean removed;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -157,6 +159,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     public void setDamagedLife(final double damage) {
+        if(this.removed){
+            return;
+        }
         super.setDamagedLife(damage);
         this.removeEntity();
     }
@@ -167,12 +172,13 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     @Override
     protected void removeEntity() {
         if (super.isDead()) {
+            this.removed = true;
             if (this.getCharacter() instanceof Druid) {
                 ((Druid) this.getCharacter()).addKill();
             }
             ((CharacterStatistics) this.getCharacter().getStats())
                     .addMana(((CharacterStatistics) this.getCharacter().getStats()).getInitialMana() * CHARACTER_REGEN);
-            this.manager.removeTimersFor(this, super.getLevel());
+            this.manager.removeTimersFor(this);
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.removeEntity();
@@ -313,6 +319,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     private void resetEnemy() {
         this.stats.setLife(this.stats.getFullLife());
         super.setPosition(this.stats.getInitialPos());
+        this.removed = false;
         this.manager.restartEnemyTimer(this, TimerType.NO_AGGRO);
         if(this instanceof LongRangeEnemy ){
             this.manager.restartEnemyTimer(this, TimerType.ATTACK);

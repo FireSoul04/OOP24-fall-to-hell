@@ -5,6 +5,12 @@ import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
+/**
+ * Class representing a dagger.
+ * It's a short range, fast melee weapon that doesn't do much damage.
+ *
+ * @author Davide Mancini
+ */
 public class Dagger extends BaseMeleeWeapon {
 
     private static final long COOLDOWN_TIME = 800;
