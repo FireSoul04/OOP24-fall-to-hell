@@ -106,7 +106,6 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     protected void removeEntity() {
         if (this.isDead()) {
-            System.out.println("DEAD");
             super.getLevel().removeGameObject(this);
         }
     }

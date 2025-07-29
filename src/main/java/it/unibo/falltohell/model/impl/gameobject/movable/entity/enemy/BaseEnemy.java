@@ -158,15 +158,11 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     public void setDamagedLife(final double damage) {
-        System.out.println("Im BaseEnemy setDamage entrance");
-        System.out.println(this.getClass());
-        System.out.println(System.identityHashCode(this));
+        if(this.removed){
+            return;
+        }
         super.setDamagedLife(damage);
-        System.out.println("Im BaseEnemy setDamage middle");
-        System.out.println(System.identityHashCode(this));
         this.removeEntity();
-        System.out.println("Im BaseEnemy setDamage finish");
-        System.out.println(System.identityHashCode(this));
     }
 
     /**
@@ -174,9 +170,6 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     protected void removeEntity() {
-        if(this.removed){
-            return;
-        }
         if (super.isDead()) {
             this.removed = true;
             if (this.getCharacter() instanceof Druid) {
