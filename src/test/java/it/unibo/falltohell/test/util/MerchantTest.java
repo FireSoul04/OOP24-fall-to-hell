@@ -7,7 +7,7 @@ import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.buff.Buff;
 import it.unibo.falltohell.model.api.physics.Collider;
 
-import it.unibo.falltohell.model.impl.buff.*;
+import it.unibo.falltohell.model.impl.buff.LifeBuff;
 import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobject.interactable.Potion;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
