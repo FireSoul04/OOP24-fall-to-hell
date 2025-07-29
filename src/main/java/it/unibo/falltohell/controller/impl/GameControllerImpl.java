@@ -2,9 +2,10 @@ package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.api.GameController;
-import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.model.impl.builder.GameBuilderImpl;
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.manager.GameEventManager;
+import it.unibo.falltohell.model.impl.builder.LevelBuilderImpl;
 import it.unibo.falltohell.model.impl.GameCameraImpl;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.util.Vector2;
@@ -50,7 +51,8 @@ public class GameControllerImpl implements GameController {
     }
 
     private final GameWindow view;
-    private final Game model;
+    private final Level model;
+    private final GameEventManager<String> eventManager;
     private GameState state;
 
     /**
@@ -59,11 +61,11 @@ public class GameControllerImpl implements GameController {
     public GameControllerImpl() {
         final InputListener inputListener = new InputListener();
         final DrawableRenderableHandler drh = new DrawableRenderableHandlerImpl();
-        final GameEventManagerImpl<String> eventManager = this.addEvents(inputListener);
+        this.eventManager = this.addEvents(inputListener);
         // Testing a camera with level width and height based on the virtual screen width and height
         final GameCamera camera = new GameCameraImpl(Vector2.zero(), WIDTH, HEIGHT, 1.0);
-        this.model = new GameBuilderImpl()
-            .attachGameEventManager(eventManager)
+        this.model = new LevelBuilderImpl()
+            .attachGameEventManager(this.eventManager)
             .attachDrawableRenderableHandlerToLevel(drh)
             .attachCamera(camera)
             .createLevel()
@@ -81,8 +83,8 @@ public class GameControllerImpl implements GameController {
      * @param inputListener to check for keyboard input
      * @return new event manager with events for the player based on keyboard input
      */
-    private GameEventManagerImpl<String> addEvents(final InputListener inputListener) {
-        final GameEventManagerImpl<String> eventManager = new GameEventManagerImpl<>();
+    private GameEventManager<String> addEvents(final InputListener inputListener) {
+        final GameEventManager<String> eventManager = new GameEventManagerImpl<>();
         eventManager.addCondition(
             "MoveLeft",
             () -> inputListener.isKeyPressed(KeyEvent.VK_A) || inputListener.isKeyPressed(KeyEvent.VK_LEFT)
@@ -109,11 +111,11 @@ public class GameControllerImpl implements GameController {
         eventManager.addCondition("ResumeGame", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_O));
 
         eventManager.addAction("PauseGame", () -> {
-            this.model.getLevel().getTimerManager().pauseAllTimers();
+            this.model.getTimerManager().pauseAllTimers();
             this.state = GameState.PAUSE;
         });
         eventManager.addAction("ResumeGame", () -> {
-            this.model.getLevel().getTimerManager().resumeAllTimers();
+            this.model.getTimerManager().resumeAllTimers();
             this.state = GameState.RUNNING;
         });
 
@@ -135,8 +137,8 @@ public class GameControllerImpl implements GameController {
         while (!this.isOver()) {
             final long now = System.currentTimeMillis();
             deltaTime = (now - lastTime) / PERIOD;
-            this.model.getLevel().getGameEventManager().update();
-            if (isRunning()) {
+            this.eventManager.update();
+            if (this.isRunning()) {
                 this.update(deltaTime);
             }
             this.render();
@@ -182,7 +184,7 @@ public class GameControllerImpl implements GameController {
      */
     @Override
     public void update(final double deltaTime) {
-        this.model.getLevel().update(deltaTime);
+        this.model.update(deltaTime);
     }
 
     /**

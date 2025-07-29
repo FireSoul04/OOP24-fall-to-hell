@@ -57,8 +57,8 @@ public class LevelImpl implements Level {
     private final TimerManager timerManager;
     private final StaticCollisionManager jumpCollisionManager;
     private final Map<CharacterID, Character> characters;
-    private GameEventManager<String> eventManager;
-    private DrawableRenderableHandler drh;
+    private final GameEventManager<String> eventManager;
+    private final DrawableRenderableHandler drh;
     private Optional<GameData> gameData;
     private Vector2 levelSize;
     private final Label pointsLabel;
