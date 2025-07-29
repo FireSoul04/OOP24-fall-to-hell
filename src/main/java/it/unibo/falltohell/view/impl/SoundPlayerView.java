@@ -35,8 +35,8 @@ public class SoundPlayerView implements AudioPlayer{
             this.audioInputStream = AudioSystem.getAudioInputStream(new File(this.filePath).getAbsoluteFile());
             this.clip = AudioSystem.getClip();
             this.clip.open(this.audioInputStream);
-            FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-10.0f);
+            // FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
+            // gainControl.setValue(-10.0f);
         } catch (Exception e) {
             System.exit(0);
         }
