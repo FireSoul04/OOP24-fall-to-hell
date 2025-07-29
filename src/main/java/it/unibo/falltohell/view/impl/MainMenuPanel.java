@@ -39,7 +39,7 @@ public class MainMenuPanel extends JPanel {
         startButton.addActionListener(startListener);
         exitButton.addActionListener(exitListener);
 
-        titleLabel.setForeground(Color.BLACK);
+        titleLabel.setForeground(Color.darkGray);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 48));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
