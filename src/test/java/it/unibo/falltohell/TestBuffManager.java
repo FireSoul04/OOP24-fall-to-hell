@@ -8,6 +8,7 @@ import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.buff.*;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.test.util.LevelTest;
+import it.unibo.falltohell.test.util.TimerManagerTest;
 import it.unibo.falltohell.util.Vector2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Class to test if buffs work as expected.
@@ -27,6 +29,7 @@ class TestBuffManager {
     private CharacterStatistics statistics;
     private BuffManager buffManager;
     private Map<String, Buff> buffs;
+    private TimerManagerTest timerManager;
 
     /**
      * Initialization of the variables used in each test.
@@ -37,6 +40,7 @@ class TestBuffManager {
         Character character = new Caster(level, Vector2.zero());
         this.statistics = (CharacterStatistics) character.getStats();
         this.buffManager = character.getBuffManager();
+        this.timerManager = (TimerManagerTest) level.getTimerManager();
         this.buffs = new HashMap<>();
         this.buffs.put("life", new LifeBuff(statistics, MULTIPLIER));
         this.buffs.put("mana", new ManaBuff(statistics, MULTIPLIER));
@@ -51,7 +55,7 @@ class TestBuffManager {
      * and if they are applied to the character as expected.
      */
     @Test
-    void TestLimitedTimeBuffs() {
+    void testLimitedTimeBuffs() {
         this.buffs.forEach((key, value) -> this.buffManager.addBuff(value, DURATION, key));
         Assertions.assertEquals(statistics.getFullLife() * MULTIPLIER,
                 statistics.getTemporaryLife(),
@@ -72,11 +76,8 @@ class TestBuffManager {
                 "Speed should be the initial speed plus itself multiplied with the multiplier");
         this.buffs.keySet().forEach(i -> Assertions.assertTrue(this.buffManager.searchBuff(i),
                 "There should be a buff with this name:" + i));
-        try {
-            Thread.sleep(55);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        this.buffs.forEach(
+                (name, buff) -> this.timerManager.waitForTimer(name, DURATION * 2));
         Assertions.assertEquals(0.0, statistics.getTemporaryLife(),
                 "Temporary life should be reset to the one it was before the buff");
         Assertions.assertEquals(0.0, statistics.getTemporaryMana(),
@@ -98,13 +99,27 @@ class TestBuffManager {
      * (their application is the same as the time-limited buffs).
      */
     @Test
-    void TestInfiniteBuffs() {
+    void testInfiniteBuffs() {
         this.buffs.forEach((key, value) -> this.buffManager.addInfiniteBuff(value, key));
         this.buffs.keySet().forEach(i -> Assertions.assertTrue(this.buffManager.searchBuff(i),
                 "There should be a buff with this name:" + i));
         this.buffs.forEach((key, value) -> this.buffManager.removeInfiniteBuff(key));
         this.buffs.keySet().forEach(i -> Assertions.assertFalse(this.buffManager.searchBuff(i),
                 "There should be no buff with this name" + i));
+    }
+
+    /**
+     * Tests if duplicated buffs are correctly handled.
+     */
+    @Test
+    void testDuplicatedBuffs() {
+        this.buffManager.addBuff(this.buffs.get("life"), DURATION * 3, "life");
+        try {
+            this.buffManager.addBuff(this.buffs.get("life"), DURATION, "life");
+            Assertions.fail("A duplicate buff should not be added");
+        } catch (IllegalArgumentException e) {
+            Logger.getLogger("buffLogger").info("The IllegalArgumentException was thrown correctly");
+        }
     }
 
 }

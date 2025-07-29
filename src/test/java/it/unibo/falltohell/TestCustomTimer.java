@@ -2,10 +2,9 @@ package it.unibo.falltohell;
 
 import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /**
@@ -160,12 +159,13 @@ class TestCustomTimer {
      * Tests if an event is executed correctly at the end of a timer.
      */
     @Test
+    @Timeout(value = 2000, unit = TimeUnit.MILLISECONDS)
     void testCorrectExecutionOfEvent() {
         this.timer.start();
         try {
-            Thread.sleep(1100);
+            this.timer.getLatch().await();
         } catch (final InterruptedException e) {
-            this.logger.info("The IllegalStateException has been thrown correctly");
+            Assertions.fail("The timer has been interrupted: " + e);
         }
         Assertions.assertTrue(this.test, "The event is not executed as expected");
     }

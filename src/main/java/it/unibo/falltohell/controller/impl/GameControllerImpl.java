@@ -49,7 +49,7 @@ public class GameControllerImpl implements GameController {
         PAUSE
     }
 
-    private final GameWindowImpl view;
+    private final GameWindow view;
     private final Game model;
     private GameState state;
 
@@ -156,7 +156,7 @@ public class GameControllerImpl implements GameController {
             try {
                 Thread.sleep((long) (PERIOD - deltaTime));
             } catch (final InterruptedException e) {
-                this.logger.severe("Sleep interrupted: " + e);
+                this.logger.warning("The wait for next frame in game loop interrupted: " + e);
             }
         }
     }
@@ -192,12 +192,12 @@ public class GameControllerImpl implements GameController {
     public void render() {
         this.view.render();
     }
-    
+
     /**
-	 * {@inheritDoc}
-	 */
-	@Override
-    public GameWindowImpl getView(){
+     * {@inheritDoc}
+     */
+    @Override
+    public GameWindow getView() {
         return this.view;
     }
 }
