@@ -37,7 +37,6 @@ public class Rogue extends BaseCharacter {
 
     private final StatisticPassiveAbility evadeAbility;
     private final SpecialActiveAbility knifeAbility;
-    private final CustomTimer passiveAbilityCooldown;
     private boolean canDoubleJump;
     private boolean canUsePassive;
 
@@ -58,7 +57,7 @@ public class Rogue extends BaseCharacter {
         this.canDoubleJump = false;
         this.canUsePassive = true;
         this.equipWeapon(new Dagger(this));
-        this.passiveAbilityCooldown = new CustomTimerImpl(PASSIVE_COOLDOWN_TIME, () -> this.canUsePassive = true);
+        final CustomTimer passiveAbilityCooldown = new CustomTimerImpl(PASSIVE_COOLDOWN_TIME, () -> this.canUsePassive = true);
         final AbilityFactory factory = new AbilityFactoryImpl();
         this.evadeAbility = factory
             .createPassiveAbility(this, character -> {
@@ -69,7 +68,7 @@ public class Rogue extends BaseCharacter {
                     final String name = "rogue-buff" + speedBuff.hashCode();
                     this.getBuffManager().addBuff(speedBuff, PASSIVE_DURATION, name);
                     this.canUsePassive = false;
-                    tm.restartIfPresent(passiveCooldownTimerName, this.passiveAbilityCooldown);
+                    tm.restartIfPresent(passiveCooldownTimerName, passiveAbilityCooldown);
                 }
             });
         this.knifeAbility = factory.createSpecialActiveAbility(this);
