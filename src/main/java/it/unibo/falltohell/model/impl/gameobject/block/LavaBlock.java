@@ -2,10 +2,8 @@ package it.unibo.falltohell.model.impl.gameobject.block;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
-import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.Entity;
 import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -15,8 +13,7 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class LavaBlock extends BaseCollidableBlock {
 
-    private static final long TIME = 100;
-    private static final double DAMAGE = 0.2;
+    private static final double DAMAGE = 0.001;
 
     /**
      * Initialization of the LavaBlock class.
@@ -39,30 +36,7 @@ public class LavaBlock extends BaseCollidableBlock {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
-            final String name = "lava_block" + entity.hashCode();
-            final TimerManager timerManager = this.getLevel().getTimerManager();
-            if (!timerManager.searchTimer(name)) {
-                timerManager.addTimer(name, new CustomTimerImpl(TIME, () -> {
-                    entity.setDamagedLife(DAMAGE);
-                    timerManager.restartTimer(name);
-                }));
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * It is used to stop the dealing of damage to an entity when it
-     * walks away from this type of block.
-     */
-    @Override
-    public void onCollisionExit(final GameObject other, final Vector2 direction) {
-        if (other instanceof Entity entity) {
-            final String name = "lava_block" + entity.hashCode();
-            final TimerManager timerManager = this.getLevel().getTimerManager();
-            if (timerManager.searchTimer(name)) {
-                timerManager.removeTimer(name);
-            }
+            entity.getStats().subLife(DAMAGE);
         }
     }
 }
