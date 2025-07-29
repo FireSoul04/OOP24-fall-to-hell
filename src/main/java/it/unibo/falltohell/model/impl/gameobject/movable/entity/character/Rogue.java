@@ -6,10 +6,9 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.manager.TimerManager;
-import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.buff.Buff;
+import it.unibo.falltohell.model.api.factory.AbilityFactory;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
-import it.unibo.falltohell.model.impl.ability.active.ThrowKnifeAbility;
 import it.unibo.falltohell.model.impl.buff.SpeedBuff;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.BaseEnemyProjectile;
 import it.unibo.falltohell.model.impl.gameobject.weapons.Dagger;
@@ -57,7 +56,8 @@ public class Rogue extends BaseCharacter {
         this.canDoubleJump = false;
         this.canUsePassive = true;
         this.equipWeapon(new Dagger(this));
-        this.evadeAbility = new AbilityFactoryImpl()
+        final AbilityFactory factory = new AbilityFactoryImpl();
+        this.evadeAbility = factory
             .createPassiveAbility(this, character -> {
                 if (this.canUsePassive) {
                     final TimerManager tm = this.getLevel().getTimerManager();
@@ -76,7 +76,7 @@ public class Rogue extends BaseCharacter {
                     }
                 }
             });
-        this.knifeAbility = new ThrowKnifeAbility(this);
+        this.knifeAbility = factory.createSpecialActiveAbility(this);
     }
 
     /**

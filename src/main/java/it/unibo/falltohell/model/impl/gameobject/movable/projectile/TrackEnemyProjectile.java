@@ -31,12 +31,12 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class TrackEnemyProjectile extends BaseEnemyProjectile {
 
-    private static final int DISTANCE_BUFF = (int) (20 * TILE_SIZE);
-    private static final int DISTANCE_DEBUFF = (int)(10 *TILE_SIZE);
-    private static final long DISTANCE_TIME = 1000;
+    private static final int DISTANCE_BUFF = (int) (3 * TILE_SIZE);
+    private static final int DISTANCE_DEBUFF = (int) (5 * TILE_SIZE);
+    private static final long DISTANCE_TIME = 500;
     private static final double DISTANCE_MIN = TILE_SIZE;
-    private static final double MAX_ACCEL = 6;
-    private static final double MAX_SPEED = 10;
+    private static final double MAX_ACCEL = 1.5;
+    private static final double MAX_SPEED = 2;
     private double distance;
     private final String name = "SubDistance" + UUID.randomUUID();
 
@@ -45,21 +45,21 @@ public class TrackEnemyProjectile extends BaseEnemyProjectile {
      * dynamically adjusts
      * its trajectory toward the target.
      *
-     * @param level     the level this projectile belongs to
-     * @param position  the initial position of the projectile
-     * @param speed     the initial velocity
-     * @param collider  the collider used for hit detection
-     * @param damage    the damage this projectile deals on impact
-     * @param distance  the initial tracking range before switching to default
-     *                  behavior
+     * @param level    the level this projectile belongs to
+     * @param position the initial position of the projectile
+     * @param speed    the initial velocity
+     * @param collider the collider used for hit detection
+     * @param damage   the damage this projectile deals on impact
+     * @param distance the initial tracking range before switching to default
+     *                 behavior
      *
      * @see Level
      * @see Vector2
      * @see Collider
      */
     public TrackEnemyProjectile(final Level level, final Vector2 position, final Vector2 speed,
-                                final Collider collider, final double damage,
-                                final double distance) {
+            final Collider collider, final double damage,
+            final double distance) {
         super(level, position, speed, collider, damage, "track_enemy_projectile.png");
         this.distance = (distance + DISTANCE_BUFF) * TILE_SIZE;
 

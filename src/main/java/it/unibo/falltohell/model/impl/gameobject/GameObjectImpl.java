@@ -138,7 +138,7 @@ public class GameObjectImpl implements GameObject {
      * {@inheritDoc}
      */
     @Override
-    public Level getLevel() {
+    public final Level getLevel() {
         return this.level;
     }
 
@@ -177,7 +177,7 @@ public class GameObjectImpl implements GameObject {
      * @see Sprite
      *
      */
-    protected void initDrawable(final Priority priority, final String fileName) {
+    protected final void initDrawable(final Priority priority, final String fileName) {
         this.initDrawable(Vector2.zero(), priority, fileName);
     }
 
@@ -196,7 +196,7 @@ public class GameObjectImpl implements GameObject {
      * @param offset the {@link Vector2} offset to apply to the sprite's position
      * @see Sprite
      */
-    protected void initDrawable(final Vector2 offset, final Priority priority, final String fileName) {
+    protected final void initDrawable(final Vector2 offset, final Priority priority, final String fileName) {
         this.drawable = Optional.of(new Sprite(this, offset, priority));
         this.drawable.ifPresent(value -> {
             if (value instanceof Sprite) {

@@ -99,7 +99,7 @@ public class Caster extends BaseCharacter {
 
     /**
      * Method to check if the weapon to use is correct,
-     * otherwise the weapon will be changed. 
+     * otherwise the weapon will be changed.
      * @param weapon to be used
      */
     private void changeEquippedWeapon(final Weapon weapon) {

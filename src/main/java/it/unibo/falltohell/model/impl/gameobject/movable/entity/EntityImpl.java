@@ -31,7 +31,7 @@ public class EntityImpl extends MovableImpl implements Entity {
     private static final long INVICIBILITY_TIME = 1000;
     private static final double EPSILON = 1e-3;
 
-    private Statistics stats;
+    private final Statistics stats;
     private Vector2 gravity;
     private Vector2 velocity;
     private boolean onGround;
@@ -61,7 +61,7 @@ public class EntityImpl extends MovableImpl implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public Statistics getStats() {
+    public final Statistics getStats() {
         return this.stats;
     }
 

@@ -56,14 +56,13 @@ public class BuffBuilderImpl implements BuffBuilder {
      */
     @Override
     public BuffBuilderImpl withBuff(final BuffNames type, final CharacterStatistics stats, final double multiplier) {
-        switch (type) {
-            case ATTACK -> this.buff = new AttackBuff(stats, multiplier);
-            case ATTACK_SPEED -> this.buff = new AttackSpeedBuff(stats, multiplier);
-            case LIFE -> this.buff = new LifeBuff(stats, multiplier);
-            case MANA -> this.buff = new ManaBuff(stats, multiplier);
-            case SPEED -> this.buff = new SpeedBuff(stats, multiplier);
-            default -> throw new IllegalArgumentException("Unsupported buff type: " + type);
-        }
+        this.buff = switch (type) {
+            case ATTACK -> new AttackBuff(stats, multiplier);
+            case ATTACK_SPEED -> new AttackSpeedBuff(stats, multiplier);
+            case LIFE -> new LifeBuff(stats, multiplier);
+            case MANA -> new ManaBuff(stats, multiplier);
+            case SPEED -> new SpeedBuff(stats, multiplier);
+        };
         return this;
     }
 

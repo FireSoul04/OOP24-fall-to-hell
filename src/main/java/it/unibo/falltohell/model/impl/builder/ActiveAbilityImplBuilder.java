@@ -44,7 +44,7 @@ public class ActiveAbilityImplBuilder implements ActiveAbilityBuilder {
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbilityImplBuilder setLevel(final Level level) {
+    public ActiveAbilityImplBuilder withLevel(final Level level) {
         this.level = level;
         return this;
     }
@@ -53,7 +53,7 @@ public class ActiveAbilityImplBuilder implements ActiveAbilityBuilder {
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbilityImplBuilder setPosition(final Vector2 position) {
+    public ActiveAbilityImplBuilder withPosition(final Vector2 position) {
         this.position = position;
         return this;
     }
@@ -62,7 +62,7 @@ public class ActiveAbilityImplBuilder implements ActiveAbilityBuilder {
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbilityImplBuilder setDamage(final double damage) {
+    public ActiveAbilityImplBuilder withDamage(final double damage) {
         this.damage = damage;
         return this;
     }
@@ -71,7 +71,7 @@ public class ActiveAbilityImplBuilder implements ActiveAbilityBuilder {
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbilityImplBuilder setCollider(final Collider collider) {
+    public ActiveAbilityImplBuilder withCollider(final Collider collider) {
         this.collider = collider;
         return this;
     }
@@ -80,7 +80,7 @@ public class ActiveAbilityImplBuilder implements ActiveAbilityBuilder {
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbilityImplBuilder setVelocity(final Vector2 velocity) {
+    public ActiveAbilityImplBuilder withVelocity(final Vector2 velocity) {
         this.velocity = velocity;
         return this;
     }
@@ -89,7 +89,7 @@ public class ActiveAbilityImplBuilder implements ActiveAbilityBuilder {
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbilityImplBuilder setAttack(final ActiveAbilityUpdate attack) {
+    public ActiveAbilityImplBuilder withAttack(final ActiveAbilityUpdate attack) {
         this.attack = attack;
         return this;
     }
@@ -98,7 +98,7 @@ public class ActiveAbilityImplBuilder implements ActiveAbilityBuilder {
      * {@inheritDoc}
      */
     @Override
-    public ActiveAbilityImplBuilder setCollision(final Optional<OptionalCollision> collided) {
+    public ActiveAbilityImplBuilder withCollision(final Optional<OptionalCollision> collided) {
         this.collided = collided;
         return this;
     }

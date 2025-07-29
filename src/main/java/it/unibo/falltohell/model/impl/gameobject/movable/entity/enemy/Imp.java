@@ -212,9 +212,6 @@ public class Imp extends BaseEnemy {
      * @return return if the Enemy has fallen out of patrol
      */
     private boolean isGlitched() {
-        if (this.check) {
-            return true;
-        }
-        return false;
+        return this.check;
     }
 }

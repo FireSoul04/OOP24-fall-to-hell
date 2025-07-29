@@ -10,10 +10,14 @@ import it.unibo.falltohell.model.api.level.Level;
 /**
  * A special projectile that can return to the archer after being fired.
  * Behavior:
- * - Initially behaves like a normal arrow: it can hit solid objects and enemies.
- * - When the return is activated via {@code startReturn()}, the arrow becomes non-solid,
- *   flies back toward the owner, and can hit enemies again during its return.
- * - Once it reaches the archer, it is removed from the level and ammo is restored.
+ * - Initially behaves like a normal arrow: it can hit solid objects and
+ * enemies.
+ * - When the return is activated via {@code startReturn()}, the arrow becomes
+ * non-solid,
+ * flies back toward the owner, and can hit enemies again during its return.
+ * - Once it reaches the archer, it is removed from the level and ammo is
+ * restored.
+ *
  * @author Lorenzo Casadei
  */
 public class ReturnableArrow extends ProjectileImpl {
@@ -32,7 +36,7 @@ public class ReturnableArrow extends ProjectileImpl {
      * @param owner    the archer who fired the arrow
      */
     public ReturnableArrow(final Level level, final Vector2 position, final Vector2 speed, final Collider collider,
-                           final Archer owner) {
+            final Archer owner) {
         super(level, position, speed, collider, "returnable_arrow.png");
         this.owner = owner;
         this.originalSpeed = speed.magnitude();
@@ -44,15 +48,15 @@ public class ReturnableArrow extends ProjectileImpl {
      * owner.
      */
     public void startReturn() {
-        if(isFacingRight()){
+        if (isFacingRight()) {
             this.setFacingRight(false);
-        }else{
+        } else {
             this.setFacingRight(true);
         }
         this.returning = true;
         this.setSolid(false);
         this.setHit(false);
-        
+
     }
 
     /**
@@ -110,10 +114,14 @@ public class ReturnableArrow extends ProjectileImpl {
     private boolean isEnemy(final GameObject obj) {
         return obj instanceof Enemy && obj != owner;
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onProjectileHit(final GameObject other){
-        if(isEnemy(other)){
-            ((Enemy)other).setDamagedLife(this.owner.getStats().getAttack());
+    public void onProjectileHit(final GameObject other) {
+        if (isEnemy(other)) {
+            ((Enemy) other).setDamagedLife(this.owner.getStats().getAttack());
         }
     }
 

@@ -1,19 +1,17 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
 import it.unibo.falltohell.model.api.level.Level;
-import it.unibo.falltohell.model.api.manager.GameEventManager;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.ability.active.ReturnArrowAbility;
-import it.unibo.falltohell.model.impl.ability.passive.StatisticPassiveAbilityImpl;
+import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.weapons.BaseRangedWeapon;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
+import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
+import it.unibo.falltohell.model.api.factory.AbilityFactory;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
-import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import it.unibo.falltohell.model.impl.gameobject.weapons.Bow;
@@ -39,10 +37,9 @@ public class Archer extends BaseCharacter {
     private static final double MANA = 0.5;
     private static final long COOLDOWN = 500;
     private static final Vector2 PROJECTILE_SPEED = new Vector2(5.0,0.0);
-    private final StatisticPassiveAbilityImpl bonusDamage;
-    private final ReturnArrowAbility returnAbility;
-    private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
-            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED);
+    private final StatisticPassiveAbility bonusDamage;
+    private final SpecialActiveAbility returnAbility;
+
 
 
     /**
@@ -53,17 +50,21 @@ public class Archer extends BaseCharacter {
      * @param bow      the ranged weapon used to shoot arrows
      */
     public Archer(final Level level, final Vector2 position) {
-        super(level, position, STATISTICS, "archer.png");
+        super(level, position, new StatisticFactoryImpl()
+            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED)
+            , "archer.png");
         this.bow = new Bow(this, 5, COOLDOWN, "bow.png", PROJECTILE_SPEED);
-        bonusDamage = new StatisticPassiveAbilityImpl(this, ch -> {
+        final AbilityFactory factory = new AbilityFactoryImpl();
+        bonusDamage = factory.createPassiveAbility
+            (this, ch -> {
             final int arrowsInFlight = ((Archer) ch).getShotedArrows().size();
             final double baseDamage = ch.getStats().getInitialAttack();
-            final double bonusPerArrow = 0.2; 
+            final double bonusPerArrow = 0.2;
             ch.getStats().setAttack(baseDamage + baseDamage * arrowsInFlight * bonusPerArrow);
         });
         this.equipWeapon(bow);
-        this.returnAbility = new ReturnArrowAbility(this);
-        
+        this.returnAbility = factory.createSpecialActiveAbility(this);
+
 
     }
 
@@ -104,7 +105,7 @@ public class Archer extends BaseCharacter {
     public CharacterID getCharacterID() {
         return CharacterID.ARCHER;
     }
-    
+
     /**
      * Returns an arrow to the archer's inventory.
      * This method is called when an arrow returns after being shot.

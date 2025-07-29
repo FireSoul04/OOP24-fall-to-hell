@@ -61,8 +61,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      * @return a unique name for the "NoAggro" timer
      */
     private String getNextNoAggroName(final Enemy enemy) {
-        final String name = "NoAggro_" + enemy.getClass().getSimpleName() + "_" + countNoAggro++;
-        return name;
+        return "NoAggro_" + enemy.getClass().getSimpleName() + "_" + countNoAggro++;
     }
 
     /**
@@ -142,7 +141,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      * @return the matching timer name, or null if not found
      */
     private String findNoAggroTimer(final List<String> timers) {
-        if (timers == null){
+        if (timers == null) {
             return null;
         }
         for (final String timer : timers) {
@@ -177,12 +176,10 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      */
     @Override
     public void restartEnemyTimer(final Level level, final Enemy enemy, final BaseEnemy.TimerType type) {
-        final String name;
-        switch (type) {
-            case ATTACK -> name = getAttackTimerName(enemy);
-            case NO_AGGRO -> name = getNoAggroTimerName(enemy);
-            default -> throw new IllegalArgumentException("Unknown timer type: " + type);
-        }
+        final String name = switch (type) {
+            case ATTACK -> getAttackTimerName(enemy);
+            case NO_AGGRO -> getNoAggroTimerName(enemy);
+        };
         level.getTimerManager().stopTimer(name);
         level.getTimerManager().restartTimer(name);
     }

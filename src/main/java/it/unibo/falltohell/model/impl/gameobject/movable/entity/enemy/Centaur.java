@@ -47,7 +47,7 @@ public class Centaur extends BaseEnemy {
             BuffNames.MANA, 40.0,
             BuffNames.SPEED, 50.0);
 
-    private BaseEnemyStatistics stats;
+    private final BaseEnemyStatistics stats;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
 
