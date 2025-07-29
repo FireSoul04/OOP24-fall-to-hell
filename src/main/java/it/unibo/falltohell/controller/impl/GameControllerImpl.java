@@ -105,16 +105,20 @@ public class GameControllerImpl implements GameController {
         eventManager.addCondition("ActiveAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_SHIFT));
         eventManager.addCondition("SpecialAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_Q));
         eventManager.addCondition("SpecialAttack", () -> inputListener.isKeyPressed(KeyEvent.VK_C));
-        eventManager.addCondition("PauseGame", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_P));
-        eventManager.addCondition("ResumeGame", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_O));
+        eventManager.addCondition("PauseGame", () -> inputListener.isKeyPressed(KeyEvent.VK_P));
+        eventManager.addCondition("ResumeGame", () -> inputListener.isKeyPressed(KeyEvent.VK_O));
 
         eventManager.addAction("PauseGame", () -> {
-            this.model.getLevel().getTimerManager().pauseAllTimers();
-            this.state = GameState.PAUSE;
+            if (this.isRunning()) {
+                this.model.getLevel().getTimerManager().pauseAllTimers();
+                this.state = GameState.PAUSE;
+            }
         });
         eventManager.addAction("ResumeGame", () -> {
-            this.model.getLevel().getTimerManager().resumeAllTimers();
-            this.state = GameState.RUNNING;
+            if (!this.isRunning()) {
+                this.model.getLevel().getTimerManager().resumeAllTimers();
+                this.state = GameState.RUNNING;
+            }
         });
 
         return eventManager;
