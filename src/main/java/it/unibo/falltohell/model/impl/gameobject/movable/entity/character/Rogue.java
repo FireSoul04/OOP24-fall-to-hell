@@ -81,13 +81,13 @@ public class Rogue extends BaseCharacter {
     public void update(final double deltaTime) {
         super.update(deltaTime);
         this.doubleJump();
-        if (this.getLevel().getGameEventManager().checkCondition("ActiveAbility")) {
+        if (this.getLevel().checkCondition("ActiveAbility")) {
             this.knifeAbility.activate();
         }
     }
 
     private void doubleJump() {
-        if (this.getLevel().getGameEventManager().checkCondition("Jump") && !this.isJumping() && this.canDoubleJump) {
+        if (this.getLevel().checkCondition("Jump") && !this.isJumping() && this.canDoubleJump) {
             this.resetJump();
             this.canDoubleJump = false;
         }

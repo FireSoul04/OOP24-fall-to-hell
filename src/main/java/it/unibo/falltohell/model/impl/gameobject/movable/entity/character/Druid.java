@@ -49,7 +49,6 @@ public class Druid extends BaseCharacter {
     private static final long ATTACK_COOLDOWN = 500;
     private final CharacterStatistics stats;
     private final StatisticPassiveAbility sPa;
-    private final GameEventManagerImpl<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliarsImpl();
     private int kills;
     private int passiveCycles = 1;
@@ -156,7 +155,7 @@ public class Druid extends BaseCharacter {
      * </ul>
      */
     private void handleAttackInput() {
-        if (this.input.checkCondition("SpecialAbility") && super.subManaIfEnough(CREATION_COST)) {
+        if (this.getLevel().checkCondition("SpecialAbility") && super.subManaIfEnough(CREATION_COST)) {
             this.sAactive = true;
             new AbilityFactoryImpl().createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
@@ -164,13 +163,13 @@ public class Druid extends BaseCharacter {
         if (this.sAactive && this.spAtkCalled() && this.manager.isFree() && super.subManaIfEnough(ATTACK_COST)) {
             Vector2 direction = Vector2.zero();
 
-            if (this.input.checkCondition("MoveRight")) {
+            if (this.getLevel().checkCondition("MoveRight")) {
                 direction = direction.add(Vector2.right());
-            } else if (this.input.checkCondition("MoveLeft")) {
+            } else if (this.getLevel().checkCondition("MoveLeft")) {
                 direction = direction.add(Vector2.left());
-            } else if (this.input.checkCondition("MoveUp")) {
+            } else if (this.getLevel().checkCondition("MoveUp")) {
                 direction = direction.add(Vector2.up());
-            } else if (this.input.checkCondition("MoveDown")) {
+            } else if (this.getLevel().checkCondition("MoveDown")) {
                 direction = direction.add(Vector2.down());
             }
 
@@ -204,10 +203,10 @@ public class Druid extends BaseCharacter {
      * @return true if a special attack direction was triggered
      */
     private boolean spAtkCalled() {
-        return this.input.checkCondition("SpecialAttack")
-                && (this.input.checkCondition("MoveRight")
-                        || this.input.checkCondition("MoveLeft")
-                        || this.input.checkCondition("MoveUp")
-                        || this.input.checkCondition("MoveDown"));
+        return this.getLevel().checkCondition("SpecialAttack")
+                && (this.getLevel().checkCondition("MoveRight")
+                        || this.getLevel().checkCondition("MoveLeft")
+                        || this.getLevel().checkCondition("MoveUp")
+                        || this.getLevel().checkCondition("MoveDown"));
     }
 }

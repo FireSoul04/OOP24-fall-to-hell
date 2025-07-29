@@ -113,9 +113,9 @@ public class Caster extends BaseCharacter {
     @Override
     public void update(double deltaTime) {
         super.update(deltaTime);
-        if (this.getLevel().getGameEventManager().checkCondition("ActiveAbility")) {
+        if (this.getLevel().checkCondition("ActiveAbility")) {
             this.blast.activate();
-        } else if (this.getLevel().getGameEventManager().checkCondition("SpecialAbility")) {
+        } else if (this.getLevel().checkCondition("SpecialAbility")) {
             this.healing.activate();
         }
     }

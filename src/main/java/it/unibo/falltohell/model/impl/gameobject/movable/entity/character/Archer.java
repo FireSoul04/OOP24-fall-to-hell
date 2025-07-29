@@ -116,7 +116,7 @@ public class Archer extends BaseCharacter {
     @Override
     public void update(double deltatime){
         super.update(deltatime);
-        if(this.getLevel().getGameEventManager().checkCondition("ActiveAbility")){
+        if(this.getLevel().checkCondition("ActiveAbility")){
             this.returnAbility.activate();
         }
     }
