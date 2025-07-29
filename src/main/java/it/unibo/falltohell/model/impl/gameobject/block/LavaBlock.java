@@ -40,7 +40,7 @@ public class LavaBlock extends BaseCollidableBlock {
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (direction.equals(Vector2.up()) && other instanceof Entity entity) {
-            final String name = "LavaBlock" + entity.hashCode();
+            final String name = "lava_block" + entity.hashCode();
             final TimerManager timerManager = this.getLevel().getTimerManager();
             if (!timerManager.searchTimer(name)) {
                 timerManager.addTimer(name, new CustomTimerImpl(TIME, () -> {
@@ -59,7 +59,7 @@ public class LavaBlock extends BaseCollidableBlock {
     @Override
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
         if (other instanceof Entity entity) {
-            final String name = "LavaBlock" + entity.hashCode();
+            final String name = "lava_block" + entity.hashCode();
             final TimerManager timerManager = this.getLevel().getTimerManager();
             if (timerManager.searchTimer(name)) {
                 timerManager.removeTimer(name);

@@ -70,16 +70,23 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     @Override
     public void setDamagedLife(final double damage) {
-        if (!this.invincible) {
-            this.subLife(damage);
-            this.invincible = true;
-            final var tm = super.getLevel().getTimerManager();
-            tm.restartIfPresent(this.name, new CustomTimerImpl(INVICIBILITY_TIME, () -> this.invincible = false));
+        if (this.invincible) {
+            return;
+        }
+        this.invincible = true;
+        this.subLife(damage);
+
+        final var tm = super.getLevel().getTimerManager();
+        if (tm.searchTimer(this.name)) {
+            tm.restartTimer(this.name);
+        } else {
+            tm.addTimer(this.name, new CustomTimerImpl(INVICIBILITY_TIME, () -> this.invincible = false));
         }
     }
 
     /**
      * Subtracts life to the entity.
+     *
      * @param damage to take
      */
     protected void subLife(final double damage) {
@@ -99,7 +106,6 @@ public class EntityImpl extends MovableImpl implements Entity {
      */
     protected void removeEntity() {
         if (this.isDead()) {
-            System.out.println("DEAD");
             super.getLevel().removeGameObject(this);
         }
     }
@@ -241,8 +247,8 @@ public class EntityImpl extends MovableImpl implements Entity {
         final Dimensions thisSize = this.getCollider().orElseThrow().size();
         final Dimensions otherSize = other.getCollider().orElseThrow().size();
         return new Vector2(thisSize.width(), thisSize.height())
-            .add(new Vector2(otherSize.width(), otherSize.height()))
-            .divide(2);
+                .add(new Vector2(otherSize.width(), otherSize.height()))
+                .divide(2);
     }
 
     /**

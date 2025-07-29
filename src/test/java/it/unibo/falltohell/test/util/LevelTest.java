@@ -12,7 +12,6 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
-import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
@@ -34,7 +33,7 @@ public class LevelTest implements Level {
 
     private final List<GameObject> gameObjects;
     private final CollisionsManager collisionsManager;
-    private final TimerManager timerManager;
+    private final TimerManagerTest timerManager;
     private final Map<CharacterID, Character> characters;
     private final StaticCollisionManager jumpCollisionManager;
     private GameEventManagerImpl<String> eventManager;
@@ -48,7 +47,7 @@ public class LevelTest implements Level {
     public LevelTest() {
         this.gameObjects = new ArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
-        this.timerManager = new TimerManagerImpl();
+        this.timerManager = new TimerManagerTest();
         this.eventManager = new GameEventManagerImpl<>();
         this.gameData = Optional.empty();
         this.characters = new EnumMap<>(CharacterID.class);

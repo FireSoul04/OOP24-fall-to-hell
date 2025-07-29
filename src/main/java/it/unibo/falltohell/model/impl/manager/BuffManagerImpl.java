@@ -37,6 +37,8 @@ public class BuffManagerImpl implements BuffManager {
                 buff.remove();
                 this.buffs.remove(name);
             }));
+        } else {
+            throw new IllegalArgumentException("There must not be a duplicated buff");
         }
     }
 
@@ -47,9 +49,14 @@ public class BuffManagerImpl implements BuffManager {
     public void addInfiniteBuff(final Buff buff, final String name) {
         if (!this.searchBuff(name)) {
             this.addToManager(buff, name);
+        } else {
+            throw new IllegalArgumentException("There must not be a duplicated buff");
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeInfiniteBuff(final String name) {
         this.buffs.get(name).remove();

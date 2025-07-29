@@ -157,12 +157,13 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
      * {@inheritDoc}
      */
     @Override
-    public void removeTimersFor(final Enemy enemy, final Level level) {
+    public void removeTimersFor(final Enemy enemy) {
+        final Level lv = enemy.getLevel();
         final List<String> timers = enemyTimers.remove(enemy);
         if (timers != null) {
             for (final String timer : timers) {
-                if(level.getTimerManager().searchTimer(timer)){
-                    level.getTimerManager().removeTimer(timer);
+                if(lv.getTimerManager().searchTimer(timer)){
+                    lv.getTimerManager().removeTimer(timer);
                 }
             }
         }

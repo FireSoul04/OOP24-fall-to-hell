@@ -5,7 +5,6 @@ import it.unibo.falltohell.model.api.factory.EnemyFactory;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.factory.CollidableBlockFactory;
 import it.unibo.falltohell.model.api.gameobject.Merchant;
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.factory.EnemyFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.interactable.SavePoint;
@@ -61,7 +60,7 @@ public class LevelLoaderImpl implements LevelLoader {
         for (int y = 0; y < this.levelFromFile.size(); y++) {
             final char[] identifiers = this.levelFromFile.get(y).toCharArray();
             for (int x = 0; x < identifiers.length; x++) {
-                 position = new Vector2(x, y).multiply(DISTANCE);
+                position = new Vector2(x, y).multiply(DISTANCE);
                 this.parseToGameObject(identifiers[x], position);
             }
         }
@@ -76,7 +75,6 @@ public class LevelLoaderImpl implements LevelLoader {
      * @param position   of the game object in the level
      */
     private void parseToGameObject(final char identifier, final Vector2 position) {
-        final Character character = level.getGameData().getCurrentCharacter();
         final Collider collider = new BoxCollider();
         switch (identifier) {
             case 'o' -> this.enemyFactory.createImp(this.level, position);
@@ -92,7 +90,7 @@ public class LevelLoaderImpl implements LevelLoader {
             case 'c' -> new CharacterChanger(level, position, collider, level.getCharacters());
             case 's' -> new SavePoint(level, position, collider);
             case 'm' -> this.merchant.setPosition(position);
-            case ' ' -> { } 
+            case ' ' -> { }
             default -> throw new IllegalStateException("Cannot recognize a character in the file:" + identifier);
         }
     }

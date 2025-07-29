@@ -10,8 +10,8 @@ import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.test.util.LavaBlockTest;
 import it.unibo.falltohell.test.util.LevelTest;
+import it.unibo.falltohell.test.util.TimerManagerTest;
 import it.unibo.falltohell.util.Vector2;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +26,7 @@ class TestBlocks {
 
     private Entity entity;
     private CollidableBlockFactory blockFactory;
+    private TimerManagerTest timerManager;
 
     /**
      * Initialization of the variables used in each test.
@@ -35,14 +36,7 @@ class TestBlocks {
         final Level level = new LevelTest();
         this.entity = new Caster(level, Vector2.zero());
         this.blockFactory = new CollidableBlockFactoryImpl();
-    }
-
-    /**
-     * Removes all present timers.
-     */
-    @AfterEach
-    void finish() {
-        this.entity.getLevel().getTimerManager().removeAllTimers();
+        this.timerManager = (TimerManagerTest) level.getTimerManager();
     }
 
     /**
@@ -56,11 +50,7 @@ class TestBlocks {
         final LavaBlockTest lavaBlock2 = new LavaBlockTest(this.entity.getLevel());
         lavaBlock1.onCollision(this.entity, Vector2.up());
         lavaBlock2.onCollision(this.entity, Vector2.up());
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        this.timerManager.waitForTimer("lava_block" + this.entity.hashCode(), 200);
         final Statistics statistics = this.entity.getStats();
         final double currentLife1 = statistics.getLife();
         assertTrue(currentLife1 < statistics.getFullLife(), "When there is a collision " +

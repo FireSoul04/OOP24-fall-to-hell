@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.api.manager;
 
-import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.listener.AttackListener;
 
 import java.util.Optional;
@@ -44,9 +43,8 @@ public interface EnemyTimerManager {
      * Removes all timers associated with the given enemy from the level's TimerManager.
      *
      * @param enemy the enemy whose timers should be removed
-     * @param level the level to access the TimerManager
      */
-    void removeTimersFor(Enemy enemy, Level level);
+    void removeTimersFor(Enemy enemy);
 
     /**
      * <p>
