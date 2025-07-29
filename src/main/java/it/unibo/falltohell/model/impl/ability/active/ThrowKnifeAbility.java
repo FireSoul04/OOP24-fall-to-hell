@@ -41,11 +41,7 @@ public class ThrowKnifeAbility implements SpecialActiveAbility {
         final CharacterStatistics stats = (CharacterStatistics) this.rogue.getStats();
         if (this.canActivate && this.rogue.subManaIfEnough(ABILITY_COST)) {
             final String timerName = "knife-ability-cooldown";
-            if (!this.tm.searchTimer(timerName)) {
-                this.tm.addTimer(timerName, this.cooldownTimer);
-            } else {
-                this.tm.restartTimer(timerName);
-            }
+            this.tm.restartIfPresent(timerName, this.cooldownTimer);
             final double direction = this.rogue.isFacingRight() ? 1.0 : -1.0;
             for (final Vector2 v : KNIFES_VELOCITIES) {
                 new Knife(rogue.getLevel(), rogue.getPosition(), new Vector2(v.x() * direction, v.y()));
