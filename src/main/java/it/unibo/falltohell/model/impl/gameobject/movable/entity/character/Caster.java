@@ -53,20 +53,16 @@ public class Caster extends BaseCharacter {
         final String timerName = "mana_recharge";
         final AbilityFactory abilityFactory = new AbilityFactoryImpl();
         this.manaRecharge = abilityFactory.createPassiveAbility(this,
-            character -> {
-                if (!timerManager.searchTimer(timerName)) {
-                        timerManager.addTimer(
-                                timerName, new CustomTimerImpl(COOLDOWN_MANA_RECHARGE,
-                                        () -> {
-                                            if (this.isEnabled()) {
-                                                this.addMana(AMOUNT_MANA_RECHARGED);
-                                                timerManager.restartTimer(timerName);
-                                            }
-                                        }));
-                } else {
-                    timerManager.restartTimer(timerName);
-                }
-            });
+            character ->
+                timerManager.restartIfPresent(timerName, new CustomTimerImpl(COOLDOWN_MANA_RECHARGE,
+                    () -> {
+                        if (this.isEnabled()) {
+                            this.addMana(AMOUNT_MANA_RECHARGED);
+                            timerManager.restartTimer(timerName);
+                        }
+                    })
+                )
+        );
         this.manaRecharge.carryOut();
         this.blast = abilityFactory.createSpecialActiveAbility(this);
         this.healing = abilityFactory.createHealAbility(this);
