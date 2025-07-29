@@ -74,11 +74,7 @@ public class EntityImpl extends MovableImpl implements Entity {
             this.subLife(damage);
             this.invincible = true;
             final var tm = super.getLevel().getTimerManager();
-            if (tm.searchTimer(this.name)) {
-                tm.restartTimer(this.name);
-            } else {
-                tm.addTimer(this.name, new CustomTimerImpl(INVICIBILITY_TIME, () -> this.invincible = false));
-            }
+            tm.restartIfPresent(this.name, new CustomTimerImpl(INVICIBILITY_TIME, () -> this.invincible = false));
         }
     }
 
