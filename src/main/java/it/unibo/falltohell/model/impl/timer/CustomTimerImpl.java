@@ -29,6 +29,7 @@ public class CustomTimerImpl implements CustomTimer {
         this.timer = new Timer();
         this.started = false;
         this.paused = false;
+        this.latch = new CountDownLatch(1);
         this.eventOnFinish = () -> {
                 if (!paused) {
                     elapsedTime++;
@@ -36,9 +37,9 @@ public class CustomTimerImpl implements CustomTimer {
                 if (elapsedTime >= duration) {
                     stop();
                     event.execute();
+                    latch.countDown();
                 }
         };
-        this.latch = new CountDownLatch(1);
     }
 
     /**
@@ -84,7 +85,6 @@ public class CustomTimerImpl implements CustomTimer {
     public void stop() {
         if (this.started) {
             this.timer.cancel();
-            this.latch.countDown();
             this.started = false;
         } else {
             throw new IllegalStateException("Cannot stop a timer that is not running");
