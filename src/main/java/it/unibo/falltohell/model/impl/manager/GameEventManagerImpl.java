@@ -8,13 +8,11 @@ import it.unibo.falltohell.model.api.manager.GameEventManager;
 
 /**
  * Manages game events and their associated conditions and actions.
- * <p>
  * Allows registration of conditions (when an event should trigger) and actions
  * (what to do when triggered)
  * using a key of type {@code K}. On each update, all conditions are checked
  * and, if true, the corresponding
  * action is executed.
- * </p>
  *
  * @param <K> the type of key used to identify events
  * @author Casadei Lorenzo

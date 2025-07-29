@@ -24,22 +24,30 @@ import java.util.Map;
 public interface Level {
 
     /**
-     * @return the list of game objects currently present in the level
+     * Returns a copy of the list of all game objects in the level.
+     *
+     * @return a new list containing all game objects
      */
     List<GameObject> getGameObjects();
 
     /**
+     * add a gameObject to the level.
      * @param gameObject to be added in the level
      */
     void addGameObject(GameObject gameObject);
 
-    /**
-     * @param gameObject to be removed in the level
+     /**
+     * Removes a game object from the level.
+     *
+     * @param gameObject the game object to remove
      */
     void removeGameObject(GameObject gameObject);
 
     /**
-     * @param deltaTime the time elapsed since the last update (in seconds)
+     * Updates all game objects in the level and checks for collisions.
+     * Only the selected character is updated.
+     *
+     * @param deltaTime the time elapsed since the last update
      */
     void update(double deltaTime);
 

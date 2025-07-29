@@ -5,9 +5,7 @@ import it.unibo.falltohell.util.Vector2;
 
 /**
  * Implementation of the {@link GameCamera} interface.
- * <p>
  * Represents the camera that follows the player within the game level.
- * </p>
  *
  * @author Casadei Lorenzo
  */
