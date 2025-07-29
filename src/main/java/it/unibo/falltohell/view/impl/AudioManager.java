@@ -18,7 +18,7 @@ public class AudioManager {
 
     private void loadSounds() {
         
-        this.soundMap.put("Music", new SoundPlayerView("beep-boop.wav", 15));
+        this.soundMap.put("Music", new SoundPlayerView("the-darkness-of-eternity.wav", 15));
         
     }
 
