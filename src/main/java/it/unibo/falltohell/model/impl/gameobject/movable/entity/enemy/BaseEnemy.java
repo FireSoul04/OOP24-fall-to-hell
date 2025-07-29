@@ -177,7 +177,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             }
             ((CharacterStatistics) this.getCharacter().getStats())
                     .addMana(((CharacterStatistics) this.getCharacter().getStats()).getInitialMana() * CHARACTER_REGEN);
-            this.manager.removeTimersFor(this, super.getLevel());
+            this.manager.removeTimersFor(this);
             super.getLevel().getGameData().addPoints(this.stats.getPoints());
             this.dropBuff();
             super.removeEntity();
