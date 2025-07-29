@@ -23,13 +23,23 @@ public class SaveFileControllerImpl implements SaveFileController {
 
     private static final String FILE_NAME = "saveFile.txt";
     private static final String DIR_PATH = System.getProperty("user.home") + File.separator + "FTH" + File.separator;
+    private final String fileName;
     private final Logger logger;
 
     /**
-     * Initialization of the SaveFileControllerImpl.
+     * Default initialization of the SaveFileControllerImpl class.
      */
     public SaveFileControllerImpl() {
+        this(FILE_NAME);
+    }
+
+    /**
+     * Initialization of the SaveFileControllerImpl class.
+     * @param fileName is the name of the file where to save
+     */
+    public SaveFileControllerImpl(final String fileName) {
         this.logger = Logger.getLogger("SaveFileControllerLogger");
+        this.fileName = fileName;
     }
 
     /**
@@ -41,7 +51,7 @@ public class SaveFileControllerImpl implements SaveFileController {
             this.createNewSaveFile();
         }
         try (
-                BufferedWriter saveOutput = new BufferedWriter(new FileWriter(DIR_PATH + FILE_NAME)
+                BufferedWriter saveOutput = new BufferedWriter(new FileWriter(DIR_PATH + this.fileName)
                 )
         ) {
             final Character character = data.getCurrentCharacter();
@@ -65,7 +75,7 @@ public class SaveFileControllerImpl implements SaveFileController {
     @Override
     public GameData load(final Map<CharacterID, Character> characters) {
         if (this.checkExistenceOfFile()) {
-            final List<String> fileLines = new FileControllerImpl().read(DIR_PATH + FILE_NAME);
+            final List<String> fileLines = new FileControllerImpl().read(DIR_PATH + fileName);
             final long points = Long.parseLong(fileLines.get(0));
             final CharacterID currentCharacterID = Enum.valueOf(CharacterID.class, fileLines.get(1));
             final Vector2 position = new Vector2(
@@ -85,10 +95,10 @@ public class SaveFileControllerImpl implements SaveFileController {
         final File saveDir = new File(DIR_PATH);
         boolean existent = true;
         if (!saveDir.exists() || !saveDir.isDirectory()) {
-            final boolean savedDir = saveDir.mkdir();
+            saveDir.mkdir();
             existent = false;
         } else {
-            final File saveFile = new File(DIR_PATH + FILE_NAME);
+            final File saveFile = new File(DIR_PATH + this.fileName);
             if (!saveFile.exists()) {
                 existent = false;
             }
@@ -101,7 +111,7 @@ public class SaveFileControllerImpl implements SaveFileController {
      */
     private void createNewSaveFile() {
         try {
-            final boolean newSaveFile = new File(DIR_PATH + FILE_NAME).createNewFile();
+            new File(DIR_PATH + this.fileName).createNewFile();
         } catch (final IOException e) {
             this.logger.severe("The save file was not created correctly:" + e);
         }
