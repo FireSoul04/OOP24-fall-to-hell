@@ -45,14 +45,13 @@ public class GameControllerImpl implements GameController {
      */
     private enum GameState {
         RUNNING,
-        START,
-        OVER //,
-        // PAUSE
+        OVER,
+        PAUSE
     }
 
     private final GameWindowImpl view;
     private final Game model;
-    private final GameState state;
+    private GameState state;
 
     /**
      * Creates the controller with a new model and view, setting the state to start.
@@ -73,7 +72,7 @@ public class GameControllerImpl implements GameController {
             .linkGameDataToLevel()
             .build();
         this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener(), drh);
-        this.state = GameState.START;
+        this.state = GameState.RUNNING;
         this.logger = Logger.getLogger("GameLogger");
     }
 
@@ -106,6 +105,18 @@ public class GameControllerImpl implements GameController {
         eventManager.addCondition("ActiveAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_SHIFT));
         eventManager.addCondition("SpecialAbility", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_Q));
         eventManager.addCondition("SpecialAttack", () -> inputListener.isKeyPressed(KeyEvent.VK_C));
+        eventManager.addCondition("PauseGame", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_P));
+        eventManager.addCondition("ResumeGame", () -> inputListener.isKeyPressedOnce(KeyEvent.VK_O));
+
+        eventManager.addAction("PauseGame", () -> {
+            this.model.getLevel().getTimerManager().pauseAllTimers();
+            this.state = GameState.PAUSE;
+        });
+        eventManager.addAction("ResumeGame", () -> {
+            this.model.getLevel().getTimerManager().resumeAllTimers();
+            this.state = GameState.RUNNING;
+        });
+
         return eventManager;
     }
 
@@ -124,7 +135,10 @@ public class GameControllerImpl implements GameController {
         while (!this.isOver()) {
             final long now = System.currentTimeMillis();
             deltaTime = (now - lastTime) / PERIOD;
-            this.update(deltaTime);
+            this.model.getLevel().getGameEventManager().update();
+            if (isRunning()) {
+                this.update(deltaTime);
+            }
             this.render();
             this.waitForNextFrame(deltaTime);
             lastTime = now;
