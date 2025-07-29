@@ -3,7 +3,7 @@ package it.unibo.falltohell.model.api.builder;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
+import it.unibo.falltohell.model.api.manager.GameEventManager;
 
 /**
  * Builder for the game (model).
@@ -29,7 +29,7 @@ public interface GameBuilder {
      * @param eventManager to handle event like key presses
      * @return this builder with an event manager
      */
-    GameBuilder attachGameEventManager(GameEventManagerImpl<String> eventManager);
+    GameBuilder attachGameEventManager(GameEventManager<String> eventManager);
 
     /**
      * Attach the DrawableRenderableHandler to the level.
