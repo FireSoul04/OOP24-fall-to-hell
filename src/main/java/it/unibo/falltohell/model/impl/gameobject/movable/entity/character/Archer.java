@@ -1,12 +1,12 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
 import it.unibo.falltohell.model.api.level.Level;
-import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.weapons.BaseRangedWeapon;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.view.impl.AudioManager;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.factory.AbilityFactory;
@@ -112,7 +112,7 @@ public class Archer extends BaseCharacter {
         this.shotedArrows.remove(arrow);
         this.bonusDamage.carryOut();
     }
-    
+
     @Override
     public void update(double deltatime){
         super.update(deltatime);

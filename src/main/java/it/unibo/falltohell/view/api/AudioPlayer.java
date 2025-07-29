@@ -1,7 +1,7 @@
 package it.unibo.falltohell.view.api;
 
 public interface AudioPlayer {
-    String PATH_TO_AUDIO = "src/main/resources/audio/";
+    String PATH_TO_AUDIO = "src/main/resources/sounds/";
     /**
      * Plays the audio once or with loop if configured.
      */
