@@ -15,34 +15,31 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
  * @author Lorenzo Casadei
  */
 public class Bow extends BaseRangedWeapon {
-
-
     private static final Vector2 OFFSET = new Vector2(4.0,0.0);
-
     private final Vector2 projectileSpeed;
 
     /**
      * Constructs a new Bow with the specified ammo and cooldown.
      *
-     * @param ammo     the initial amount of ammo
-     * @param cooldown the cooldown time between shots
+     * @param owner the character that wield this bow.
+     * @param ammo the initial amount of ammo.
+     * @param cooldown the cooldown time between shots.
+     * @param fileName the name of this bow.
+     * @param projectileSpeed the speed of the arrow used by this bow.
      */
-    public Bow(final Character owner, final int ammo, final long cooldown, final String fileName , final Vector2 projectileSpeed) {
+    public Bow(final Character owner, final int ammo, final long cooldown, final String fileName, final Vector2 projectileSpeed) {
         super(owner, ammo, cooldown, fileName, OFFSET);
         this.projectileSpeed = projectileSpeed;
     }
 
     /**
      * Creates a new {@link ReturnableArrow} when the bow is fired.
-     *
-     * @param level    the level in which the arrow will be spawned
-     * @param position the initial position of the arrow
      * @return a new {@link ReturnableArrow} instance
      */
     @Override
     public Projectile createProjectile() {
         final Vector2 direction = this.getOwner().isFacingRight() ? Vector2.right() : Vector2.left();
         final Vector2 dirSpeed = projectileSpeed.multiply(direction.x());
-        return new ReturnableArrow(this.getOwner().getLevel(), this.getOwner().getPosition(), dirSpeed, new BoxCollider(new Dimensions(3.0, 3.0)), (Archer)this.getOwner());
+        return new ReturnableArrow(this.getOwner().getLevel(), this.getOwner().getPosition(), dirSpeed, new BoxCollider(new Dimensions(3.0, 3.0)), (Archer) this.getOwner());
     }
 }

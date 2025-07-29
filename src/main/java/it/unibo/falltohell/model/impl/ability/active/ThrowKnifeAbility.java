@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.ability.active;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.timer.CustomTimer;
@@ -33,6 +34,10 @@ public class ThrowKnifeAbility implements SpecialActiveAbility {
      * Create the ability attached to the rogue.
      * @param rogue that use this ability
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The ability have to remove mana to the owner when used"
+    )
     public ThrowKnifeAbility(final Rogue rogue) {
         this.rogue = rogue;
         this.canActivate = true;

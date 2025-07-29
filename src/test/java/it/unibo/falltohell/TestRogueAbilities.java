@@ -53,7 +53,7 @@ class TestRogueAbilities {
     @BeforeEach
     void initialization() {
         this.level = new LevelTest();
-        this.level.getGameEventManager().addCondition("ActiveAbility", () -> this.canShoot);
+        this.level.addCondition("ActiveAbility", () -> this.canShoot);
         this.rogue = new Rogue(this.level, ROGUE_POSITION);
         // Floor for rogue
         new BaseCollidableBlock(
@@ -174,7 +174,7 @@ class TestRogueAbilities {
     @Test
     void testDoubleJump() {
         final double startY = this.rogue.getPosition().y();
-        this.level.getGameEventManager().addCondition("Jump", () -> true);
+        this.level.addCondition("Jump", () -> true);
         this.level.update(1.0);
         this.jumpUntilMaxHeightIsReached();
         Assertions.assertTrue(
@@ -184,7 +184,7 @@ class TestRogueAbilities {
 
         final double releasedJumpY = this.rogue.getPosition().y();
         // Stop jumping
-        this.level.getGameEventManager().addCondition("Jump", () -> false);
+        this.level.addCondition("Jump", () -> false);
         this.level.update(1.0);
         Assertions.assertTrue(
             this.rogue.getPosition().y() > releasedJumpY,
@@ -192,7 +192,7 @@ class TestRogueAbilities {
         );
 
         // Start the double jump and updates at least two times to reset the jump
-        this.level.getGameEventManager().addCondition("Jump", () -> true);
+        this.level.addCondition("Jump", () -> true);
         this.level.update(1.0);
         this.level.update(1.0);
         this.jumpUntilMaxHeightIsReached();

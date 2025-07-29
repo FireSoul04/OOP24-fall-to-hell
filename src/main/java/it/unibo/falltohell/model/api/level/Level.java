@@ -2,13 +2,12 @@ package it.unibo.falltohell.model.api.level;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.model.api.GameData;
+import it.unibo.falltohell.model.api.GameEventCondition;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.manager.StaticCollisionManager;
-
-import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 
 import it.unibo.falltohell.util.Vector2;
 
@@ -72,19 +71,18 @@ public interface Level {
     GameData getGameData();
 
     /**
-     * @param eventManager manager to all events of the level
+     * Check if game event has a condition with a certain name and return if that event is active or not.
+     * @param name of the event
+     * @return if the event is active or not
      */
-    void setGameEventManager(GameEventManagerImpl<String> eventManager);
+    boolean checkCondition(String name);
 
     /**
-     * @return manager to all events of the level
+     * Method to add a condition in the game event manager.
+     * @param name of the event
+     * @param event is when the event is active
      */
-    GameEventManagerImpl<String> getGameEventManager();
-
-    /**
-     * @param drh handler to all drawables of the level
-     */
-    void setDrawableRenderableHandler(DrawableRenderableHandler drh);
+    void addCondition(String name, GameEventCondition event);
 
     /**
      * @return handler to all drawables of the level

@@ -38,8 +38,8 @@ class TestCaster {
     @BeforeEach
     void initialization() {
         final Level level = new LevelTest();
-        level.getGameEventManager().addCondition("ActiveAbility", () -> this.useActiveAbility);
-        level.getGameEventManager().addCondition("SpecialAbility", () -> this.useSpecialAbility);
+        level.addCondition("ActiveAbility", () -> this.useActiveAbility);
+        level.addCondition("SpecialAbility", () -> this.useSpecialAbility);
         this.timerManager = (TimerManagerTest) level.getTimerManager();
         this.caster = new Caster(level, Vector2.zero());
         this.statistics = (CharacterStatistics) this.caster.getStats();

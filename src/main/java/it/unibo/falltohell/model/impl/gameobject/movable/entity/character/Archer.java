@@ -6,7 +6,6 @@ import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.weapons.BaseRangedWeapon;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
-import it.unibo.falltohell.view.impl.AudioManager;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.factory.AbilityFactory;
@@ -28,8 +27,6 @@ import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableAr
  */
 public class Archer extends BaseCharacter {
 
-    private final Bow bow;
-    private final Set<Projectile> shotedArrows = new HashSet<>();
     private static final double LIFE = 50;
     private static final double ATTACK = 10;
     private static final double ATTACK_SPEED = 1000000;
@@ -37,6 +34,8 @@ public class Archer extends BaseCharacter {
     private static final double MANA = 0.5;
     private static final long COOLDOWN = 500;
     private static final Vector2 PROJECTILE_SPEED = new Vector2(5.0,0.0);
+    private final Bow bow;
+    private final Set<Projectile> shotedArrows = new HashSet<>();
     private final StatisticPassiveAbility bonusDamage;
     private final SpecialActiveAbility returnAbility;
 
@@ -116,7 +115,7 @@ public class Archer extends BaseCharacter {
     @Override
     public void update(double deltatime){
         super.update(deltatime);
-        if(this.getLevel().getGameEventManager().checkCondition("ActiveAbility")){
+        if(this.getLevel().checkCondition("ActiveAbility")){
             this.returnAbility.activate();
         }
     }

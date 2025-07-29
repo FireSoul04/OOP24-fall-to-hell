@@ -38,7 +38,7 @@ public class SoundPlayerView implements AudioPlayer{
             FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(-10.0f);
         } catch (Exception e) {
-            System.exit(0);
+            e.printStackTrace();
         }
     }
     /**

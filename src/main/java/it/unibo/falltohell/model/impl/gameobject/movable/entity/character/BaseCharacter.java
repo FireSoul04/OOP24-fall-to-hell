@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.EntityImpl;
 import it.unibo.falltohell.util.Priority;
@@ -25,7 +26,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
     private static final int MAX_JUMP_HEIGHT = 30;
     private static final double JUMP_STEP = 0.06;
 
-    private final GameEventManagerImpl<String> input;
     private final CharacterStatistics stats;
     private int currentJumpFrames;
     private double jumpingSpeed;
@@ -42,6 +42,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * @param stats of the character
      * @param fileName is the name of the image file associated to the character
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The character must know which stats to use"
+    )
     public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats,
                          final String fileName) {
         super(level, position, stats);
@@ -49,7 +53,6 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.jumpingSpeed = this.getStats().getInitialSpeed().y();
         this.jumping = false;
         this.stats = stats;
-        this.input = level.getGameEventManager();
         this.equippedWeapon = Optional.empty();
         this.interactingObject = Optional.empty();
         this.initDrawable(Priority.LOW, fileName);
@@ -66,7 +69,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.move(deltaTime);
         this.jump(deltaTime);
         this.interact();
-        if (this.input.checkCondition("NormalAttack")) {
+        if (this.getLevel().checkCondition("NormalAttack")) {
             this.attack();
         }
     }
@@ -80,11 +83,11 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     protected void move(final double deltaTime) {
         Vector2 moveVelocity = Vector2.zero();
-        if (this.input.checkCondition("MoveLeft")) {
+        if (this.getLevel().checkCondition("MoveLeft")) {
             moveVelocity = moveVelocity.add(Vector2.left());
             this.setFacingRight(false);
         }
-        if (this.input.checkCondition("MoveRight")) {
+        if (this.getLevel().checkCondition("MoveRight")) {
             moveVelocity = moveVelocity.add(Vector2.right());
             this.setFacingRight(true);
         }
@@ -99,14 +102,14 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * @param deltaTime difference between two frames
      */
     private void jump(final double deltaTime) {
-        if (this.input.checkCondition("Jump") && this.isOnGround()) {
+        if (this.getLevel().checkCondition("Jump") && this.isOnGround()) {
             this.jumping = true;
             this.currentJumpFrames = 1;
         }
         if (this.isOnGround()) {
             this.jumpingSpeed = this.getStats().getSpeed().y();
         }
-        if (!this.input.checkCondition("Jump")) {
+        if (!this.getLevel().checkCondition("Jump")) {
             this.jumping = false;
         }
         if (this.currentJumpFrames > 0 && this.currentJumpFrames < MAX_JUMP_HEIGHT) {
@@ -155,7 +158,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      */
     @Override
     public void interact() {
-        if (this.input.checkCondition("Interact")) {
+        if (this.getLevel().checkCondition("Interact")) {
             this.interactingObject.ifPresent(i -> i.interact(this));
         }
     }

@@ -1,10 +1,13 @@
 package it.unibo.falltohell.test.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import it.unibo.falltohell.model.api.GameData;
+import it.unibo.falltohell.model.api.GameEventCondition;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.manager.GameEventManager;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -37,7 +40,7 @@ public class LevelTest implements Level {
     private final TimerManagerTest timerManager;
     private final Map<CharacterID, Character> characters;
     private final StaticCollisionManager jumpCollisionManager;
-    private GameEventManagerImpl<String> eventManager;
+    private GameEventManager<String> eventManager;
     private Optional<GameData> gameData;
 
     /**
@@ -111,6 +114,10 @@ public class LevelTest implements Level {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Any game object can add, remove and check for timers"
+    )
     @Override
     public TimerManager getTimerManager() {
         return this.timerManager;
@@ -136,25 +143,16 @@ public class LevelTest implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void setGameEventManager(final GameEventManagerImpl<String> eventManager) {
-        this.eventManager = eventManager;
+    public boolean checkCondition(final String name) {
+        return this.eventManager.checkCondition(name);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public GameEventManagerImpl<String> getGameEventManager() {
-        return this.eventManager;
-    }
-
-    /**
-     * {@inheritDoc}
-     * Not used
-     */
-    @Override
-    public void setDrawableRenderableHandler(final DrawableRenderableHandler drh) {
-        throw new UnsupportedOperationException("No use for tests");
+    public void addCondition(final String name, final GameEventCondition event) {
+        this.eventManager.addCondition(name, event);
     }
 
     /**
@@ -179,7 +177,7 @@ public class LevelTest implements Level {
      */
     @Override
     public Map<CharacterID, Character> getCharacters() {
-        return this.characters;
+        return Collections.unmodifiableMap(this.characters);
     }
 
     /**
