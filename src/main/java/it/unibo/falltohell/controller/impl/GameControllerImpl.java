@@ -9,6 +9,7 @@ import it.unibo.falltohell.model.impl.GameCameraImpl;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.GameWindow;
+import it.unibo.falltohell.view.impl.AudioManager;
 import it.unibo.falltohell.view.impl.GameWindowImpl;
 
 import java.awt.event.KeyEvent;
@@ -74,6 +75,7 @@ public class GameControllerImpl implements GameController {
         this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener(), drh);
         this.state = GameState.RUNNING;
         this.logger = Logger.getLogger("GameLogger");
+        AudioManager.getInstance().play("Music");
     }
 
     /**
