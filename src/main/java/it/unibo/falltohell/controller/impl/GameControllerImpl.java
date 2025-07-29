@@ -142,7 +142,7 @@ public class GameControllerImpl implements GameController {
             try {
                 Thread.sleep((long) (PERIOD - deltaTime));
             } catch (final InterruptedException e) {
-                this.logger.severe("Sleep interrupted: " + e);
+                this.logger.warning("The wait for next frame in game loop interrupted: " + e);
             }
         }
     }
