@@ -54,6 +54,7 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
         this.interactingObject = Optional.empty();
         this.initDrawable(Priority.LOW, fileName);
         this.enabled = true;
+        this.setFacingRight(true);
     }
 
     /**
