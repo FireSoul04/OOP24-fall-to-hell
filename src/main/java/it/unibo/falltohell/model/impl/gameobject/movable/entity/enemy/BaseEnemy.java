@@ -118,6 +118,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     private final BaseEnemyStatistics stats;
     private final EnemyTimerManager manager;
     private final SafeZoneManager safeZoneManager;
+    private boolean removed;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -157,8 +158,15 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     public void setDamagedLife(final double damage) {
+        System.out.println("Im BaseEnemy setDamage entrance");
+        System.out.println(this.getClass());
+        System.out.println(System.identityHashCode(this));
         super.setDamagedLife(damage);
+        System.out.println("Im BaseEnemy setDamage middle");
+        System.out.println(System.identityHashCode(this));
         this.removeEntity();
+        System.out.println("Im BaseEnemy setDamage finish");
+        System.out.println(System.identityHashCode(this));
     }
 
     /**
@@ -166,7 +174,11 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     protected void removeEntity() {
+        if(this.removed){
+            return;
+        }
         if (super.isDead()) {
+            this.removed = true;
             if (this.getCharacter() instanceof Druid) {
                 ((Druid) this.getCharacter()).addKill();
             }
@@ -313,6 +325,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     private void resetEnemy() {
         this.stats.setLife(this.stats.getFullLife());
         super.setPosition(this.stats.getInitialPos());
+        this.removed = false;
         this.manager.restartEnemyTimer(this, TimerType.NO_AGGRO);
         if(this instanceof LongRangeEnemy ){
             this.manager.restartEnemyTimer(this, TimerType.ATTACK);
