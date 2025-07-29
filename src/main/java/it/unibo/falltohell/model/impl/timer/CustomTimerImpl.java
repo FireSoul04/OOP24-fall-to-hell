@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.timer.CustomTimerEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * A timer that works as a cooldown but can be paused and resumed anytime.
@@ -17,6 +18,7 @@ public class CustomTimerImpl implements CustomTimer {
     private boolean started;
     private boolean paused;
     private final CustomTimerEvent eventOnFinish;
+    private final CountDownLatch latch;
 
     /**
      * Initialization of the new CustomTimer.
@@ -36,6 +38,7 @@ public class CustomTimerImpl implements CustomTimer {
                     event.execute();
                 }
         };
+        this.latch = new CountDownLatch(1);
     }
 
     /**
@@ -81,6 +84,7 @@ public class CustomTimerImpl implements CustomTimer {
     public void stop() {
         if (this.started) {
             this.timer.cancel();
+            this.latch.countDown();
             this.started = false;
         } else {
             throw new IllegalStateException("Cannot stop a timer that is not running");
@@ -109,6 +113,13 @@ public class CustomTimerImpl implements CustomTimer {
         } else {
             throw new IllegalStateException("Cannot resume a timer that is not paused");
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public CountDownLatch getLatch() {
+        return this.latch;
     }
 
 }

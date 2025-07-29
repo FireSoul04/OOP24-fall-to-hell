@@ -26,6 +26,10 @@ public class GameImpl implements Game {
 
     /**
      * Creates the game with the demo level.
+     *
+     * @param level to show when the game starts
+     * @param gameData all information about the game
+     * @param characters that can be selected
      */
     public GameImpl(final Level level, final GameData gameData, final Map<CharacterID, Character> characters) {
         this.level = level;

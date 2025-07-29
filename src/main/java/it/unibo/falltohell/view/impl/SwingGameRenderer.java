@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.Serial;
 
 /**
  * Swing implementation of the renderer for the game.
@@ -16,6 +17,9 @@ import java.awt.Graphics2D;
  * @author Davide Mancini
  */
 public class SwingGameRenderer extends JPanel implements GameRenderer {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private final GameWindow window;
     private final DrawableRenderableHandler drh;

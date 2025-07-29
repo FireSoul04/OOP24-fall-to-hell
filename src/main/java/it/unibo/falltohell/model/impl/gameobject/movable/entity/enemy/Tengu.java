@@ -5,10 +5,11 @@ import java.util.Optional;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEnemy;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.RestrictedLongRangeEnemyStatistics;
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
-import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
+
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
@@ -32,7 +33,7 @@ import it.unibo.falltohell.util.Vector2;
  * @see BaseEnemyProjectile
  * @see EnemyTimerManager
  */
-public class Tengu extends BaseEnemy {
+public class Tengu extends BaseEnemy implements LongRangeEnemy {
     private static final int POINTS = 10;
     private static final double CHAR_DISTANCE = 15 * TILE_SIZE;
     private static final int ATTACK_TIME = 1000;
@@ -79,11 +80,7 @@ public class Tengu extends BaseEnemy {
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
-        final String name = super.getEnemyTimerManager().getNextAttackName(this);
-        super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
-            this.attack();
-            super.getLevel().getTimerManager().restartTimer(name);
-        }));
+        super.getEnemyTimerManager().createAttackTimer(this, Optional.of(() -> this.attack()));
         ingage.addEnemy(this, "tengu.png");
     }
 
@@ -107,7 +104,7 @@ public class Tengu extends BaseEnemy {
             }
         } else if (other instanceof Character) {
             super.getCharacter().setDamagedLife(DAMAGE);
-            super.getEnemyTimerManager().restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
+            super.getEnemyTimerManager().restartEnemyTimer(this, TimerType.NO_AGGRO);
         }
     }
 

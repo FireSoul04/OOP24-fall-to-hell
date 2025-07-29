@@ -26,7 +26,7 @@ public class TimerManagerImpl implements TimerManager {
      */
     @Override
     public void addTimer(final String name, final CustomTimer timer) {
-        checkNotExists(name);
+        this.checkNotExists(name);
         this.timers.put(name, timer);
         timer.start();
     }
@@ -141,11 +141,20 @@ public class TimerManagerImpl implements TimerManager {
     }
 
     /**
+     * @param name of the timer
+     * @return the timer with the given name
+     */
+    protected CustomTimer getTimer(final String name) {
+        this.checkExists(name);
+        return this.timers.get(name);
+    }
+
+    /**
      * Method to check if a timer does exist with the given name, otherwise it
      * throws an exception.
      * @param name of the timer
      */
-    private void checkExists(final String name) {
+    protected void checkExists(final String name) {
         if (!this.searchTimer(name)) {
             throw new IllegalArgumentException("There is no timer with the name:" + name);
         }
@@ -156,7 +165,7 @@ public class TimerManagerImpl implements TimerManager {
      * throws an exception.
      * @param name of the timer
      */
-    private void checkNotExists(final String name) {
+    protected void checkNotExists(final String name) {
         if (this.searchTimer(name)) {
             throw new IllegalArgumentException("There is already a timer with the name:" + name);
         }

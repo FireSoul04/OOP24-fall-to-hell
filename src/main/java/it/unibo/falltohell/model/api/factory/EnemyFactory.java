@@ -2,7 +2,7 @@ package it.unibo.falltohell.model.api.factory;
 
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
 import it.unibo.falltohell.util.Vector2;
 
 /**

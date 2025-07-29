@@ -3,7 +3,6 @@ package it.unibo.falltohell.model.impl.manager;
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
-import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.physics.Collision;
 import it.unibo.falltohell.util.Dimensions;
 import org.apache.commons.lang3.tuple.Pair;

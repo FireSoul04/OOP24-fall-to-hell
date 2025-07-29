@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api.listener;
 
-import it.unibo.falltohell.model.impl.gameobject.movable.FamiliarBat;
+import it.unibo.falltohell.model.api.gameobject.movable.FamiliarBat;
 
 /**
  * Functional interface for handling the end of a familiar's attack.

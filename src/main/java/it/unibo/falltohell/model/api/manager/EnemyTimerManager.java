@@ -1,6 +1,9 @@
 package it.unibo.falltohell.model.api.manager;
 
-import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.listener.AttackListener;
+
+import java.util.Optional;
+
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy;
 
@@ -21,27 +24,27 @@ public interface EnemyTimerManager {
      * The timer is used to handle regeneration or related behaviors when the enemy is not aggressive.
      * </p>
      *
-     * @param level    the level to which the enemy belongs, used to access the TimerManager
      * @param enemy    the enemy instance for which the timer is created
-     * @param duration the duration in milliseconds of the timer
      */
-    void createNoAggroTimer(Level level, Enemy enemy, long duration);
+    void createNoAggroTimer(Enemy enemy);
 
     /**
-     * Generates and registers a unique name for an enemy's "Attack" timer.
+     * Creates and registers a "Attack" timer for the specified enemy within the given level.
+     * <p>
+     * The timer is used to handle when to shoot.
+     * </p>
      *
-     * @param enemy the enemy instance
-     * @return a unique name for the "Attack" timer
+     * @param enemy    the enemy instance for which the timer is created
+     * @param listener needed to inform the enemy
      */
-    String getNextAttackName(Enemy enemy);
+    void createAttackTimer(Enemy enemy, Optional<AttackListener> listener);
 
     /**
      * Removes all timers associated with the given enemy from the level's TimerManager.
      *
      * @param enemy the enemy whose timers should be removed
-     * @param level the level to access the TimerManager
      */
-    void removeTimersFor(Enemy enemy, Level level);
+    void removeTimersFor(Enemy enemy);
 
     /**
      * <p>
@@ -52,11 +55,10 @@ public interface EnemyTimerManager {
      * Useful for resetting cooldowns (e.g., "ATTACK") or reapplying behavioral delays (e.g., "NO_AGGRO").
      * </p>
      *
-     * @param level the {@link Level} to access the enemy's {@code TimerManager}
      * @param enemy the {@link Enemy} whose timer should be restarted
      * @param type  the {@link BaseEnemy.TimerType} indicating which timer to restart
      *
      * @see BaseEnemy.TimerType
      */
-    void restartEnemyTimer(Level level, Enemy enemy, BaseEnemy.TimerType type);
+    void restartEnemyTimer(Enemy enemy, BaseEnemy.TimerType type);
 }

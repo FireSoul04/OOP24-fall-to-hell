@@ -12,14 +12,18 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
-import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 
-import java.util.*;
 import java.util.stream.Stream;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Collections;
 
 /**
  * Class for new level dedicated to tests.
@@ -29,11 +33,11 @@ public class LevelTest implements Level {
 
     private final List<GameObject> gameObjects;
     private final CollisionsManager collisionsManager;
-    private final TimerManager timerManager;
+    private final TimerManagerTest timerManager;
     private final Map<CharacterID, Character> characters;
+    private final StaticCollisionManager jumpCollisionManager;
     private GameEventManagerImpl<String> eventManager;
     private Optional<GameData> gameData;
-    private StaticCollisionManager jumpCollisionManager;
 
     /**
      * Creates a new level with default managers.
@@ -43,7 +47,7 @@ public class LevelTest implements Level {
     public LevelTest() {
         this.gameObjects = new ArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
-        this.timerManager = new TimerManagerImpl();
+        this.timerManager = new TimerManagerTest();
         this.eventManager = new GameEventManagerImpl<>();
         this.gameData = Optional.empty();
         this.characters = new EnumMap<>(CharacterID.class);
@@ -190,7 +194,7 @@ public class LevelTest implements Level {
      * Not used
      */
     @Override
-    public void setLevelSize(final Vector2 size){
+    public void setLevelSize(final Vector2 size) {
         throw new UnsupportedOperationException("No use for tests");
     }
 

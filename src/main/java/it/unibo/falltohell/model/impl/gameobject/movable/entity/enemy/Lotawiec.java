@@ -1,14 +1,16 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
 
 import java.util.Map;
+import java.util.Optional;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEnemy;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
-import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
+
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
@@ -35,7 +37,7 @@ import it.unibo.falltohell.util.Vector2;
  * @see LongRangeEnemyStatistics
  * @see Character
  */
-public class Lotawiec extends BaseEnemy {
+public class Lotawiec extends BaseEnemy implements LongRangeEnemy {
 
     private static final int POINTS = 25;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
@@ -82,11 +84,7 @@ public class Lotawiec extends BaseEnemy {
 
         stats = (LongRangeEnemyStatistics) super.getStats();
 
-        final String name = super.getEnemyTimerManager().getNextAttackName(this);
-        super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
-            this.attack();
-            super.getLevel().getTimerManager().restartTimer(name);
-        }));
+        super.getEnemyTimerManager().createAttackTimer(this, Optional.of(() -> this.attack()));
         ingage.addEnemy(this, "lotawiec.png");
     }
 
@@ -110,7 +108,7 @@ public class Lotawiec extends BaseEnemy {
             }
         } else if (other instanceof Character) {
             super.getCharacter().setDamagedLife(DAMAGE);
-            super.getEnemyTimerManager().restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
+            super.getEnemyTimerManager().restartEnemyTimer(this, TimerType.NO_AGGRO);
         }
         this.setFacingRight(this.direction > 0);
     }

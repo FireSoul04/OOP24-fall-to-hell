@@ -1,6 +1,6 @@
 package it.unibo.falltohell.model.api.listener;
 
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
 
 /**
  * Functional interface representing a listener that gets triggered when an

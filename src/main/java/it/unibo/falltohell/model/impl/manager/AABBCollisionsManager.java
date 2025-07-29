@@ -1,19 +1,12 @@
 package it.unibo.falltohell.model.impl.manager;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
-import it.unibo.falltohell.model.api.physics.Collider;
-import it.unibo.falltohell.model.impl.drawable.Label;
-import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
-import it.unibo.falltohell.model.impl.gameobject.entrance.ShopEntrance;
-import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.model.impl.physics.Collision;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Collision manager that uses AABB (Aligned Axis Bounded Boxes) algorithm.
@@ -21,11 +14,6 @@ import java.util.Set;
  * @author Davide Mancini
  */
 public class AABBCollisionsManager extends AbstractCollisionsManager {
-
-    public static final List<Label> l = List.of(
-        new Label("", Vector2.down().multiply(30), true),
-        new Label("", Vector2.down().multiply(40), true)
-    );
 
     /**
      * {@inheritDoc}

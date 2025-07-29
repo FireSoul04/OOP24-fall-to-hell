@@ -46,7 +46,7 @@ class TestTemporaryStatistics {
             MANA,
             ATTACK_SPEED
         );
-        this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats,"test.png") {
+        this.character = new BaseCharacter(new LevelTest(), Vector2.zero(), this.stats, "test.png") {
             @Override
             public CharacterID getCharacterID() {
                 return CharacterID.ROGUE;

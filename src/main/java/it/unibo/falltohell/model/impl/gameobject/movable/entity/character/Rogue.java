@@ -8,6 +8,7 @@ import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.buff.Buff;
 import it.unibo.falltohell.model.api.factory.AbilityFactory;
+import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.buff.SpeedBuff;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.BaseEnemyProjectile;
@@ -56,6 +57,7 @@ public class Rogue extends BaseCharacter {
         this.canDoubleJump = false;
         this.canUsePassive = true;
         this.equipWeapon(new Dagger(this));
+        final CustomTimer passiveAbilityCooldown = new CustomTimerImpl(PASSIVE_COOLDOWN_TIME, () -> this.canUsePassive = true);
         final AbilityFactory factory = new AbilityFactoryImpl();
         this.evadeAbility = factory
             .createPassiveAbility(this, character -> {
@@ -66,14 +68,7 @@ public class Rogue extends BaseCharacter {
                     final String name = "rogue-buff" + speedBuff.hashCode();
                     this.getBuffManager().addBuff(speedBuff, PASSIVE_DURATION, name);
                     this.canUsePassive = false;
-                    if (!tm.searchTimer(passiveCooldownTimerName)) {
-                        tm.addTimer(
-                            passiveCooldownTimerName,
-                            new CustomTimerImpl(PASSIVE_COOLDOWN_TIME, () -> this.canUsePassive = true)
-                        );
-                    } else {
-                        tm.restartTimer(passiveCooldownTimerName);
-                    }
+                    tm.restartIfPresent(passiveCooldownTimerName, passiveAbilityCooldown);
                 }
             });
         this.knifeAbility = factory.createSpecialActiveAbility(this);
