@@ -174,6 +174,8 @@ public class GameObjectImpl implements GameObject {
      *
      * @see Sprite
      *
+     * @param priority of the image associated to the game object
+     * @param fileName of the image associated to the game object
      */
     protected final void initDrawable(final Priority priority, final String fileName) {
         this.initDrawable(Vector2.zero(), priority, fileName);
@@ -193,6 +195,8 @@ public class GameObjectImpl implements GameObject {
      *
      * @param offset the {@link Vector2} offset to apply to the sprite's position
      * @see Sprite
+     * @param priority of the image associated to the game object
+     * @param fileName of the image associated to the game object
      */
     protected final void initDrawable(final Vector2 offset, final Priority priority, final String fileName) {
         this.drawable = Optional.of(new Sprite(this, offset, priority));

@@ -19,6 +19,7 @@ public class SpriteRenderableController extends BaseRenderableController {
      * Initialization of the class SpriteRenderableController.
      * @param drawable associated with the sprite to be updated
      * @param sprite to be updated
+     * @param priority of the sprite
      */
     public SpriteRenderableController(final Drawable drawable, final Image sprite, final Priority priority) {
         super(drawable, new SpriteRenderable(drawable.isVisible(), drawable.getPosition(), sprite, priority));

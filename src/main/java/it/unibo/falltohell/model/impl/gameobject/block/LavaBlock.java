@@ -8,8 +8,6 @@ import it.unibo.falltohell.model.api.physics.Collider;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.util.Vector2;
 
-import java.util.Objects;
-
 /**
  * Class that represents a type of block that deals damage continuously
  * to the character and to enemies while they touch it from above.
@@ -26,6 +24,7 @@ public class LavaBlock extends BaseCollidableBlock {
      * @param position is the position of the block in the level
      * @param collider associated to the block
      * @param fileName is the name of the image file associated to the block
+     * @param offset of the drawable associated to the block
      */
     public LavaBlock(final Level lv, final Vector2 position,
                      final Collider collider, final String fileName, final Vector2 offset) {

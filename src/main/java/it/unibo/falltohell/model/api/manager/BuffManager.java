@@ -12,12 +12,14 @@ public interface BuffManager {
      * Method to add the buff to the buff manager and start a timer to check.
      * @param buff to be added to the current character and to be handled by the buff manager
      * @param duration of the buff
+     * @param name of the buff
      */
     void addBuff(Buff buff, long duration, String name);
 
     /**
      * Method that adds an infinite buff to the entity.
      * @param buff to be added indefinitely
+     * @param name of the buff
      */
     void addInfiniteBuff(Buff buff, String name);
 
@@ -33,6 +35,7 @@ public interface BuffManager {
     void removeBuffs();
 
     /**
+     * @param name of the buff to be searched
      * @return true if the buff is present in the active buffs of the entity
      */
     boolean searchBuff(String name);

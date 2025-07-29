@@ -23,6 +23,7 @@ public class VinesBlock extends BaseCollidableBlock {
      * @param position is the position of the block in the level
      * @param collider associated to the block
      * @param fileName is the name of the image file associated to the block
+     * @param offset of the drawable associated to the block
      */
     public VinesBlock(final Level lv, final Vector2 position,
                       final Collider collider, final String fileName, final Vector2 offset) {
@@ -40,7 +41,7 @@ public class VinesBlock extends BaseCollidableBlock {
             final BuffManager buffManager = entity.getBuffManager();
             final String name = "vines_buff" + entity.hashCode();
             if (!buffManager.searchBuff(name)) {
-                buffManager.addInfiniteBuff(new SpeedBuff(entity.getStats(), MULTIPLIER),name);
+                buffManager.addInfiniteBuff(new SpeedBuff(entity.getStats(), MULTIPLIER), name);
             }
         }
     }

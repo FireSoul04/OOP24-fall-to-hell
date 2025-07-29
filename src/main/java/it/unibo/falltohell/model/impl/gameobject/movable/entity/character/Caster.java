@@ -20,13 +20,14 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Caster extends BaseCharacter {
 
-    private static final double LIFE = 50;
-    private static final double ATTACK = 30;
-    private static final double ATTACK_SPEED = 2;
-    private static final Vector2 SPEED = new Vector2(2, 1.6);
-    private static final double MANA = 25;
-    private static final double AMOUNT_MANA_NORMAL_ATTACK = 1;
-    private static final double AMOUNT_MANA_RECHARGED = 2;
+    private static final double LIFE = 50.0;
+    private static final double ATTACK = 30.0;
+    private static final double ATTACK_SPEED = 2.0;
+    private static final Vector2 SPEED = new Vector2(2.0, 1.6);
+    private static final Dimensions DIMENSIONS = new Dimensions(20.0, 25.0);
+    private static final double MANA = 25.0;
+    private static final double AMOUNT_MANA_NORMAL_ATTACK = 1.0;
+    private static final double AMOUNT_MANA_RECHARGED = 2.0;
     private static final long COOLDOWN_MANA_RECHARGE = 5000;
 
     private final Weapon staff;
@@ -44,7 +45,7 @@ public class Caster extends BaseCharacter {
      */
     public Caster(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl()
-                        .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED),
+                        .createCharacterStatistic(LIFE, ATTACK, SPEED, DIMENSIONS, MANA, ATTACK_SPEED),
                 "caster.png");
         this.staff = new Staff(this);
         this.tome = new Tome(this);
@@ -111,7 +112,7 @@ public class Caster extends BaseCharacter {
      * This method also checks if an active attack was used.
      */
     @Override
-    public void update(double deltaTime) {
+    public void update(final double deltaTime) {
         super.update(deltaTime);
         if (this.getLevel().getGameEventManager().checkCondition("ActiveAbility")) {
             this.blast.activate();
