@@ -30,8 +30,7 @@ public class Rogue extends BaseCharacter {
     private static final double MANA = 10;
     private static final double ATTACK_SPEED = 2;
     private static final Vector2 SPEED = new Vector2(3.0, 1.5);
-    private static final CharacterStatistics STATS = new StatisticFactoryImpl()
-        .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20, 25), MANA, ATTACK_SPEED);
+    private static final Dimensions SIZE = new Dimensions(20, 25);
 
     private static final long PASSIVE_COOLDOWN_TIME = 2000;
     private static final long PASSIVE_DURATION = 500;
@@ -48,7 +47,13 @@ public class Rogue extends BaseCharacter {
      * @param position where is it in the level
      */
     public Rogue(final Level level, final Vector2 position) {
-        super(level, position, STATS, "rogue.png");
+        super(
+            level,
+            position,
+            new StatisticFactoryImpl()
+                .createCharacterStatistic(LIFE, ATTACK, SPEED, SIZE, MANA, ATTACK_SPEED),
+            "rogue.png"
+        );
         this.canDoubleJump = false;
         this.canUsePassive = true;
         this.equipWeapon(new Dagger(this));
@@ -57,8 +62,8 @@ public class Rogue extends BaseCharacter {
                 if (this.canUsePassive) {
                     final TimerManager tm = this.getLevel().getTimerManager();
                     final String passiveCooldownTimerName = "rogue-passive-cooldown";
-                    final Buff speedBuff = new SpeedBuff(STATS, 0.5);
-                    final String name = "buff" + this.hashCode();
+                    final Buff speedBuff = new SpeedBuff(this.getStats(), 0.5);
+                    final String name = "rogue-buff" + speedBuff.hashCode();
                     this.getBuffManager().addBuff(speedBuff, PASSIVE_DURATION, name);
                     this.canUsePassive = false;
                     if (!tm.searchTimer(passiveCooldownTimerName)) {
