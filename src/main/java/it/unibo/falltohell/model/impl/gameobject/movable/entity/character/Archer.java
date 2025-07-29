@@ -39,8 +39,7 @@ public class Archer extends BaseCharacter {
     private static final Vector2 PROJECTILE_SPEED = new Vector2(5.0,0.0);
     private final StatisticPassiveAbility bonusDamage;
     private final SpecialActiveAbility returnAbility;
-    private static final CharacterStatistics STATISTICS = new StatisticFactoryImpl()
-            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED);
+
 
 
     /**
@@ -51,7 +50,9 @@ public class Archer extends BaseCharacter {
      * @param bow      the ranged weapon used to shoot arrows
      */
     public Archer(final Level level, final Vector2 position) {
-        super(level, position, STATISTICS, "archer.png");
+        super(level, position, new StatisticFactoryImpl()
+            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED)
+            , "archer.png");
         this.bow = new Bow(this, 5, COOLDOWN, "bow.png", PROJECTILE_SPEED);
         final AbilityFactory factory = new AbilityFactoryImpl();
         bonusDamage = factory.createPassiveAbility

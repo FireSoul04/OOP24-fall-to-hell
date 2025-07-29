@@ -13,7 +13,6 @@ public class Start {
                 fallToHell.getView().requestFocusOnWindow();
                 new Thread(fallToHell :: run).start();
                 }, 
-            null, 
             e -> {
                 System.exit(0);
             });

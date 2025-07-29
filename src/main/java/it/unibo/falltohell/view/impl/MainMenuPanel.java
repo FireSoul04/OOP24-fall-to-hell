@@ -11,23 +11,23 @@ public class MainMenuPanel extends JPanel {
 
     private final Image background;
 
-    public MainMenuPanel(final ActionListener startListener, final ActionListener settingsListener,
-                         final ActionListener exitListener) {
+    public MainMenuPanel(final ActionListener startListener, final ActionListener exitListener) {
         this.setLayout(new GridBagLayout());
 
         
         this.background = new ImageControllerImpl().loadImage("background.png");
 
         final JButton startButton = new JButton("Start Game");
-        final JButton settingsButton = new JButton("Settings");
         final JButton exitButton = new JButton("Exit");
 
         
         Color buttonBackground = new Color(30, 30, 30);
         Color buttonText = Color.WHITE;
         Font buttonFont = new Font("Arial", Font.BOLD, 18);
+        JLabel titleLabel = new JLabel("Fall To Hell");
+        
 
-        for (JButton b : new JButton[]{startButton, settingsButton, exitButton}) {
+        for (JButton b : new JButton[]{startButton, exitButton}) {
             
             b.setForeground(buttonText);
             b.setFont(buttonFont);
@@ -37,16 +37,19 @@ public class MainMenuPanel extends JPanel {
         }
 
         startButton.addActionListener(startListener);
-        settingsButton.addActionListener(settingsListener);
         exitButton.addActionListener(exitListener);
+
+        titleLabel.setForeground(Color.RED);
+        titleLabel.setFont(new Font("Serif", Font.BOLD, 48));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
         gbc.gridy = 0;
-        this.add(startButton, gbc);
+        this.add(titleLabel, gbc);
         gbc.gridy = 1;
-        this.add(settingsButton, gbc);
+        this.add(startButton, gbc);
         gbc.gridy = 2;
         this.add(exitButton, gbc);
 
