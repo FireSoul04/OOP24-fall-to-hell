@@ -19,8 +19,6 @@ public class LabelRenderableController extends BaseRenderableController {
      */
     public LabelRenderableController(final Label label) {
         super(label, new LabelRenderable(label.isVisible(), label.getPosition(), label.getText()));
-        
-
     }
 
     /**
@@ -32,8 +30,5 @@ public class LabelRenderableController extends BaseRenderableController {
         final Label label = (Label)this.getDrawable();
         labelRenderable.setText(label.getText());
         labelRenderable.setVisibility(label.isVisible());
-
     }
-    
-
 }

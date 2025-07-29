@@ -34,6 +34,10 @@ public class Potion extends BaseItem {
         this.buff = buff;
     }
 
+    /**
+     * {@inheritDoc}
+     * It gives to the character that interacts with the potion a buff.
+     */
     @Override
     protected void onInteract(final Character character) {
         final String name = "potion_buff" + this.hashCode();

@@ -29,7 +29,6 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
         BaseCollidableBlock.class
     );
     
-
     /**
      * Creates a projectile with a certain speed.
      * @param level the game level this projectile belongs to
@@ -49,6 +48,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isHit() {
         return hit;
     }
@@ -56,6 +56,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setHit(final boolean hit) {
         this.hit = hit;
     }
@@ -82,7 +83,6 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
     protected void onUpdate(final double deltaTime) {
         // Default: do nothing
     }
-
 
     /**
      * {@inheritDoc}

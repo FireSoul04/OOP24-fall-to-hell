@@ -9,19 +9,20 @@ import it.unibo.falltohell.util.Vector2;
  * Class that represents a caster's tome used to evoke fireballs.
  * @author Martina Malagoli
  */
-public class Tome extends BaseRangedWeapon{
+public class Tome extends BaseRangedWeapon {
 
     private static final long COOLDOWN = 500;
     private static final int MAX_AMMO = 1;
     private static final Vector2 OFFSET = new Vector2(10.0, 5.0);
 
     private final Caster caster;
+
     /**
      * Constructs a tome which can evoke fireballs with a certain cooldown time.
      *
      * @param caster is the caster user of the tome
      */
-    public Tome(Caster caster) {
+    public Tome(final Caster caster) {
         super(caster, MAX_AMMO, COOLDOWN, "tome.png", OFFSET);
         this.caster = caster;
     }

@@ -62,7 +62,7 @@ public class SaveFileControllerImpl implements SaveFileController {
      */
     @Override
     public GameData load(final Map<CharacterID, Character> characters) {
-        if(this.checkExistenceOfFile()) {
+        if (this.checkExistenceOfFile()) {
             final List<String> fileLines = new FileControllerImpl().read(DIR_PATH + FILE_NAME);
             final long points = Long.parseLong(fileLines.get(0));
             final CharacterID currentCharacterID = Enum.valueOf(CharacterID.class, fileLines.get(1));

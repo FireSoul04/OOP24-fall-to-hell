@@ -3,13 +3,13 @@ package it.unibo.falltohell.model.api;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Represents a game camera that follows the player and determines the visible area of the level
+ * Represents a game camera that follows the player and determines the visible area of the level.
  * @author Casadei Lorenzo
  */
 public interface GameCamera {
     /**
      * set the size of the level.
-     * @param position a vector with width and height of the level.
+     * @param size a vector with width and height of the level.
      */
     void setLevelSize(Vector2 size);
     /**

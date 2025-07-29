@@ -36,6 +36,7 @@ public class MovableImpl extends GameObjectImpl implements Movable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void update(final double deltaTime) {
         final Vector2 displacement = speed.multiply(deltaTime);
         setPosition(getPosition().add(displacement));
@@ -44,6 +45,7 @@ public class MovableImpl extends GameObjectImpl implements Movable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Vector2 getSpeed() {
         return this.speed;
     }
@@ -51,6 +53,7 @@ public class MovableImpl extends GameObjectImpl implements Movable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setSpeed(final Vector2 speed) {
         this.speed = speed;
     }

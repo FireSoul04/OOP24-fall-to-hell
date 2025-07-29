@@ -24,28 +24,31 @@ public class ArcherTest {
     private Archer archer;
     private LevelImpl level;
 
+    /**
+     * set up for the test.
+     */
     @BeforeEach
     void setUp() {
-
-        GameCameraImpl camera = new GameCameraImpl(Vector2.zero(), 10, 10, 1.0);
+        final GameCameraImpl camera = new GameCameraImpl(Vector2.zero(), 10, 10, 1.0);
         camera.setLevelSize(new Vector2(100, 100));
         level = new LevelImpl(camera);
-
-
         archer = new Archer(level, Vector2.zero());
-
-
-
     }
+
+    /**
+     * Test if the archer consume ammo after shooting.
+     */
     @Test
-    void testShootArrowConsumesAmmoAndAddsToList() {
-        int initialAmmo = archer.getBow().getAmmo();
+    void testConsumesAmmo() {
+        final int initialAmmo = archer.getBow().getAmmo();
         archer.attack();
 
         assertEquals(initialAmmo - 1, archer.getBow().getAmmo());
         assertEquals(1, archer.getShotedArrows().size());
     }
-
+    /**
+     * Test if the arrows came back after activate the ability. 
+     */
     @Test
     void testReturnArrowAbility() {
 
@@ -53,32 +56,36 @@ public class ArcherTest {
             archer.attack();
         }
 
-        ReturnArrowAbility ability = new ReturnArrowAbility(archer);
+        final ReturnArrowAbility ability = new ReturnArrowAbility(archer);
         ability.activate();
 
-        for (Projectile p : archer.getShotedArrows()) {
+        for (final Projectile p : archer.getShotedArrows()) {
             assertTrue(((ReturnableArrow) p).isReturning());
         }
     }
+    /**
+     * Test if the ammo are restored after the arrows came back.
+     */
     @Test
-    void testArrowReturnRestoresAmmoAndRemovesArrow() {
-        int initialAmmo = archer.getBow().getAmmo();
+    void testArrowReturnRestoresAmmo() {
+        final int initialAmmo = archer.getBow().getAmmo();
 
         archer.setPosition(new Vector2(0.0, 1.0));
         archer.attack();
-        ReturnableArrow arrow;
-        if(archer.getBow().getShotProjectile().isPresent()){
-            arrow = (ReturnableArrow)archer.getBow().getShotProjectile().get();
+        final ReturnableArrow arrow;
+        if (archer.getBow().getShotProjectile().isPresent()) {
+            arrow = (ReturnableArrow) archer.getBow().getShotProjectile().get();
             archer.setPosition(new Vector2(0.0, 1.0));
 
             arrow.startReturn();
-
-            for (int i = 0; i < 60; i++) {
-                arrow.update(0.016);
+            final int frames = 60;
+            final double deltaTime = 0.016;
+            for (int i = 0; i < frames; i++) {
+                arrow.update(deltaTime);
             }
             assertEquals(initialAmmo, archer.getBow().getAmmo());
             assertFalse(archer.getShotedArrows().contains(arrow));
-        }else {
+        } else {
             assertEquals(initialAmmo, archer.getBow().getAmmo());
         }
 

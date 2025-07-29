@@ -36,7 +36,7 @@ public class GameCameraImpl implements GameCamera {
      * {@inheritDoc}
      */
     @Override
-    public void setLevelSize(final Vector2 size){
+    public void setLevelSize(final Vector2 size) {
         this.levelSize = size;
     }
 

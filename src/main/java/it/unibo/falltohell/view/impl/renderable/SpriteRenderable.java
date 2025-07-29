@@ -8,11 +8,22 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
+/**
+ * Class that represents a sprite to be rendered.
+ * @author Martina Malagoli
+ */
 public class SpriteRenderable extends BaseRenderable {
 
     private final Image sprite;
     private final Priority priority;
 
+    /**
+     * Initialization of the SpriteRenderable class.
+     * @param visibility tells if the sprite to be rendered should be visible
+     * @param position where the sprite should be rendered
+     * @param sprite associated to the sprite renderable object
+     * @param priority is the priority of the sprite associated with the sprite renderable object
+     */
     public SpriteRenderable(final boolean visibility, final Vector2 position,
                             final Image sprite, final Priority priority) {
         super(visibility, position);
@@ -20,6 +31,10 @@ public class SpriteRenderable extends BaseRenderable {
         this.priority = priority;
     }
 
+    /**
+     * {@inheritDoc}
+     * Renders the renderable sprite object according to its characteristic.
+     */
     @Override
     public void render(final Graphics graphics) {
         if (this.isVisible()) {
@@ -32,6 +47,9 @@ public class SpriteRenderable extends BaseRenderable {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Priority getPriority() {
         return this.priority;

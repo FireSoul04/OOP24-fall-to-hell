@@ -76,7 +76,10 @@ public abstract class BaseRangedWeapon extends BaseWeapon {
         this.onShoot(p);
         this.shotProjectile = Optional.of(p);
     }
-
+    /**
+     * Get the projectile that has been shoot.
+     * @return the Optional of the porjectile.
+     */
     public Optional<Projectile> getShotProjectile() {
         return this.shotProjectile;
     }
