@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.test.util.LevelTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
-import it.unibo.falltohell.model.impl.GameCameraImpl;
-import it.unibo.falltohell.model.impl.level.LevelImpl;
 import it.unibo.falltohell.model.impl.ability.active.ReturnArrowAbility;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Archer;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableArrow;
@@ -22,14 +22,11 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class ArcherTest {
     private Archer archer;
-    private LevelImpl level;
+    private Level level;
 
     @BeforeEach
     void setUp() {
-
-        GameCameraImpl camera = new GameCameraImpl(Vector2.zero(), 10, 10, 1.0);
-        camera.setLevelSize(new Vector2(100, 100));
-        level = new LevelImpl(camera);
+        level = new LevelTest();
 
 
         archer = new Archer(level, Vector2.zero());
