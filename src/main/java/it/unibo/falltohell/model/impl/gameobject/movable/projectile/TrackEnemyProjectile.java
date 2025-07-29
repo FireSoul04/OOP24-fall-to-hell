@@ -31,12 +31,12 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class TrackEnemyProjectile extends BaseEnemyProjectile {
 
-    private static final int DISTANCE_BUFF = (int) (20 * TILE_SIZE);
-    private static final int DISTANCE_DEBUFF = (int)(10 *TILE_SIZE);
-    private static final long DISTANCE_TIME = 1000;
+    private static final int DISTANCE_BUFF = (int) (3 * TILE_SIZE);
+    private static final int DISTANCE_DEBUFF = (int)(5 *TILE_SIZE);
+    private static final long DISTANCE_TIME = 500;
     private static final double DISTANCE_MIN = TILE_SIZE;
-    private static final double MAX_ACCEL = 6;
-    private static final double MAX_SPEED = 10;
+    private static final double MAX_ACCEL = 1.5;
+    private static final double MAX_SPEED = 2;
     private double distance;
     private final String name = "SubDistance" + UUID.randomUUID();
 

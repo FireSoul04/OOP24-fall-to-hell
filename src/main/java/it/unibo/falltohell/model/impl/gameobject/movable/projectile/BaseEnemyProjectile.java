@@ -4,6 +4,8 @@ import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
+import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -59,17 +61,21 @@ public class BaseEnemyProjectile extends ProjectileImpl {
      */
     @Override
     protected void onUpdate(final double deltaTime) {
-        super.setPosition(getPosition().add(new Vector2(0, super.getSpeed().y() * deltaTime)));
+        super.setPosition(getPosition().subtract(Vector2.up().multiply(deltaTime)));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void onProjectileHit(final GameObject other) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         if (other instanceof Character character) {
+            super.setHit(true);
             character.setDamagedLife(damage);
+            super.getLevel().removeGameObject(this);
+        }else if(other instanceof BaseCollidableBlock || other instanceof BaseEntrance){
+            super.setHit(true);
+            super.getLevel().removeGameObject(this);
         }
-        super.getLevel().removeGameObject(this);
     }
 }
