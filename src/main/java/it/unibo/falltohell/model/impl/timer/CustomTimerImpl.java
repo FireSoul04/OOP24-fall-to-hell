@@ -118,6 +118,7 @@ public class CustomTimerImpl implements CustomTimer {
     /**
      * {@inheritDoc}
      */
+    @Override
     public CountDownLatch getLatch() {
         return this.latch;
     }

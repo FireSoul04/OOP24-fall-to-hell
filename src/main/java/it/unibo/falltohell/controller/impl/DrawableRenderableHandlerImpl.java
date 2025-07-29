@@ -37,7 +37,7 @@ public class DrawableRenderableHandlerImpl implements DrawableRenderableHandler 
         final Image image = new ImageControllerImpl().loadImage(fileName);
         this.renderableControllers.put(drawable, new SpriteRenderableController(drawable, image, drawable.getPriority()));
     }
-    
+
     /**
      * {@inheritDoc}
      */

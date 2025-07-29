@@ -18,9 +18,9 @@ import java.util.Set;
  * Class that represents a fireball evoked by a caster.
  * @author Martina Malagoli
  */
-public class Fireball extends ProjectileImpl{
+public class Fireball extends ProjectileImpl {
 
-    private static final Dimensions DIMENSIONS = new Dimensions(5.0,5.0);
+    private static final Dimensions DIMENSIONS = new Dimensions(5.0, 5.0);
     private static final double SPEED = 5;
     private final Caster caster;
 
@@ -38,7 +38,7 @@ public class Fireball extends ProjectileImpl{
      * @param direction of the fireball
      * @param caster   associated with this projectile
      */
-    public Fireball(Vector2 direction, final Caster caster) {
+    public Fireball(final Vector2 direction, final Caster caster) {
         super(caster.getLevel(), caster.getPosition(), direction.multiply(SPEED), new BoxCollider(DIMENSIONS), "fireball.png");
         this.caster = caster;
     }
@@ -49,7 +49,7 @@ public class Fireball extends ProjectileImpl{
      * the fireball will hit.
      */
     @Override
-    public void onCollision(GameObject other, Vector2 direction) {
+    public void onCollision(final GameObject other, final Vector2 direction) {
         final boolean isOtherCollidable = ignoreCollisionsObjects.stream()
                 .noneMatch(t -> t.isInstance(other));
         if (isOtherCollidable && other.isSolid() && !this.isHit()) {

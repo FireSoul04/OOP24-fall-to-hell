@@ -13,7 +13,7 @@ public class Staff extends BaseMeleeWeapon {
 
     private static final double DAMAGE_MULTIPLIER = 0.7;
     private static final Dimensions DIMENSIONS = new Dimensions(24.0, 20.0);
-    private static final Vector2 OFFSET = new Vector2(8.0,8.0);
+    private static final Vector2 OFFSET = new Vector2(8.0, 8.0);
     private static final long COOLDOWN = 1000;
 
     /**
@@ -22,6 +22,6 @@ public class Staff extends BaseMeleeWeapon {
      * @param caster   associated to the staff
      */
     public Staff(final Caster caster) {
-        super(caster, new BoxCollider(DIMENSIONS), DAMAGE_MULTIPLIER, COOLDOWN ,"staff.png", OFFSET);
+        super(caster, new BoxCollider(DIMENSIONS), DAMAGE_MULTIPLIER, COOLDOWN, "staff.png", OFFSET);
     }
 }
