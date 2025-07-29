@@ -6,8 +6,10 @@ import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.manager.TimerManager;
+import it.unibo.falltohell.model.api.manager.StaticCollisionManager;
+
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
-import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
+
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.List;
@@ -32,11 +34,12 @@ public interface Level {
 
     /**
      * add a gameObject to the level.
+     *
      * @param gameObject to be added in the level
      */
     void addGameObject(GameObject gameObject);
 
-     /**
+    /**
      * Removes a game object from the level.
      *
      * @param gameObject the game object to remove
@@ -115,6 +118,7 @@ public interface Level {
 
     /**
      * set the size of the level.
+     *
      * @param size the size of the level.
      */
     void setLevelSize(Vector2 size);

@@ -21,13 +21,15 @@ import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
+import it.unibo.falltohell.model.api.manager.StaticCollisionManager;
+
 import it.unibo.falltohell.model.impl.drawable.Label;
 import it.unibo.falltohell.model.impl.drawable.Sprite;
 import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
-import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
+import it.unibo.falltohell.model.impl.manager.StaticCollisionManagerImpl;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
@@ -81,7 +83,7 @@ public class LevelImpl implements Level {
         this.characters = new EnumMap<>(CharacterID.class);
         this.drh = new DrawableRenderableHandlerImpl();
         this.gameData = Optional.empty();
-        this.jumpCollisionManager = new StaticCollisionManager();
+        this.jumpCollisionManager = new StaticCollisionManagerImpl();
 
         for (final GameObject go : this.gameObjects) {
             if (go instanceof BaseCollidableBlock || go instanceof BaseEntrance) {
