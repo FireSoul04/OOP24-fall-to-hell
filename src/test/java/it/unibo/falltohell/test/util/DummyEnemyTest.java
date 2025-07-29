@@ -5,7 +5,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy;
 import it.unibo.falltohell.model.impl.manager.EnemyTimeManagerImpl;
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
+import it.unibo.falltohell.model.impl.manager.SafeZoneManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 
 /**
@@ -19,7 +19,7 @@ public class DummyEnemyTest extends BaseEnemy {
      * @param stats of the enemy
      */
     public DummyEnemyTest(final Level level, final BaseEnemyStatistics stats) {
-        super(level, stats, new EnemyTimeManagerImpl(), new SafeZoneManager(), "test.png");
+        super(level, stats, new EnemyTimeManagerImpl(), new SafeZoneManagerImpl(), "test.png");
     }
 
     /**

@@ -11,7 +11,8 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
 import it.unibo.falltohell.model.api.manager.CollisionsManager;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
-import it.unibo.falltohell.model.impl.manager.StaticCollisionManager;
+import it.unibo.falltohell.model.api.manager.StaticCollisionManager;
+import it.unibo.falltohell.model.impl.manager.StaticCollisionManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
@@ -51,7 +52,7 @@ public class LevelTest implements Level {
         this.eventManager = new GameEventManagerImpl<>();
         this.gameData = Optional.empty();
         this.characters = new EnumMap<>(CharacterID.class);
-        this.jumpCollisionManager = new StaticCollisionManager();
+        this.jumpCollisionManager = new StaticCollisionManagerImpl();
 
         this.eventManager.addCondition("ActiveAbility", () -> false);
         this.eventManager.addCondition("NormalAttack", () -> false);

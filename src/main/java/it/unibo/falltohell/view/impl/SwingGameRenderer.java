@@ -28,6 +28,7 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
      * Create a renderer implemented with Java Swing.
      *
      * @param window of the game
+     * @param drh handler for renderables
      */
     public SwingGameRenderer(final GameWindow window, final DrawableRenderableHandler drh) {
         super();
@@ -65,7 +66,7 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
 
         this.drh.getAllRenderables()
             .stream()
-			.sorted((a, b) -> Integer.compare(b.getPriority().ordinal(), a.getPriority().ordinal()))
+            .sorted((a, b) -> Integer.compare(b.getPriority().ordinal(), a.getPriority().ordinal()))
             .map(t -> (BaseRenderable) t)
             .forEach(t -> t.render(g));
 
