@@ -1,10 +1,19 @@
 package it.unibo.falltohell.view.impl;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.GridBagLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Graphics;
 
 import it.unibo.falltohell.controller.impl.ImageControllerImpl;
 
-import java.awt.*;
 import java.awt.event.ActionListener;
 /**
  * Main menu panel of the game, extends {@code JPanel}, it use {@code GridBagLayout} to create 
@@ -13,27 +22,22 @@ import java.awt.event.ActionListener;
  * it also display a background and the title of the game.
  */
 public class MainMenuPanel extends JPanel {
-
     private final Image background;
 
     public MainMenuPanel(final ActionListener startListener, final ActionListener exitListener) {
         this.setLayout(new GridBagLayout());
 
-        
         this.background = new ImageControllerImpl().loadImage("background.png");
 
         final JButton startButton = new JButton("Start Game");
         final JButton exitButton = new JButton("Exit");
 
-        
-        Color buttonBackground = new Color(30, 30, 30);
-        Color buttonText = Color.WHITE;
-        Font buttonFont = new Font("Arial", Font.BOLD, 18);
-        JLabel titleLabel = new JLabel("Fall To Hell");
-        
+        final Color buttonBackground = new Color(30, 30, 30);
+        final Color buttonText = Color.WHITE;
+        final Font buttonFont = new Font("Arial", Font.BOLD, 18);
+        final JLabel titleLabel = new JLabel("Fall To Hell");
 
         for (JButton b : new JButton[]{startButton, exitButton}) {
-            
             b.setForeground(buttonText);
             b.setFont(buttonFont);
             b.setFocusPainted(false);

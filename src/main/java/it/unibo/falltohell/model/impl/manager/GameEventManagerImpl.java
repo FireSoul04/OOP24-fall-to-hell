@@ -17,7 +17,7 @@ import it.unibo.falltohell.model.api.manager.GameEventManager;
  * @param <K> the type of key used to identify events
  * @author Casadei Lorenzo
  */
-public class GameEventManagerImpl<K> implements GameEventManager<K>{
+public class GameEventManagerImpl<K> implements GameEventManager<K> {
     private final Map<K, GameEventCondition> conditions = new HashMap<>();
     private final Map<K, GameEvent> actions = new HashMap<>();
 

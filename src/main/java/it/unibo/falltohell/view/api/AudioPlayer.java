@@ -1,6 +1,11 @@
 package it.unibo.falltohell.view.api;
-
+/**
+ * Interface for manipulate a track audio.
+ */
 public interface AudioPlayer {
+    /**
+     * the path to the sounds directory.
+     */
     String PATH_TO_AUDIO = "src/main/resources/sounds/";
     /**
      * Plays the audio once or with loop if configured.

@@ -6,10 +6,11 @@ import java.util.Map;
  * A class that manage the sounds for the app, it use the Singleton pattern to
  * ensure that this class has only one global instance.
  */
-public class AudioManager {
+public final class AudioManager {
     private static final AudioManager INSTANCE = new AudioManager();
     private final Map<String, SoundPlayerView> soundMap = new HashMap<>();
-    private boolean muted = false;
+    private boolean muted;
+    private static final int NUMBER_OF_LOOP = 15;
 
     /**
      * Private constructor to prevent external instantiation.
@@ -17,12 +18,13 @@ public class AudioManager {
      */
     private AudioManager() {
         this.loadSounds();
+        this.muted = false;
     }
 
     /**
      * Returns the singleton instance of AudioManager.
      *
-     * @return the single instance of AudioManager
+     * @return the single instance of AudioManager.
      */
     public static AudioManager getInstance() {
         return INSTANCE;
@@ -32,13 +34,13 @@ public class AudioManager {
      * This method can be extended to load multiple sound effects.
      */
     private void loadSounds() {
-        this.soundMap.put("Music", new SoundPlayerView("beep-boop.wav", 15));
+        this.soundMap.put("Music", new SoundPlayerView("beep-boop.wav", NUMBER_OF_LOOP));
     }
     /**
      * play the sound.
      * @param name the name of the sound to be played.
      */
-    public void play(String name) {
+    public void play(final String name) {
         if (!muted && soundMap.containsKey(name)) {
             soundMap.get(name).play();
         }
@@ -47,7 +49,7 @@ public class AudioManager {
      * stop the sound.
      * @param name the name of the sound to be stopped.
      */
-    public void stop(String name) {
+    public void stop(final String name) {
         if (soundMap.containsKey(name)) {
             soundMap.get(name).stop();
         }
@@ -56,7 +58,7 @@ public class AudioManager {
      * pause all the sounds.
      */
     public void pauseAll() {
-        if(muted){
+        if (muted) {
             soundMap.values().forEach(SoundPlayerView::pause);
         }
     }
@@ -76,7 +78,7 @@ public class AudioManager {
         pauseAll();
     }
     /**
-     * unmute all the sounds
+     * unmute all the sounds.
      */
     public void unmute() {
         muted = false;
