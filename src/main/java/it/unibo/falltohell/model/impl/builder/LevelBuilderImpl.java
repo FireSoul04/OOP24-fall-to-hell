@@ -2,23 +2,22 @@ package it.unibo.falltohell.model.impl.builder;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.api.LevelLoader;
+import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import it.unibo.falltohell.controller.impl.LevelLoaderImpl;
 import it.unibo.falltohell.controller.impl.SaveFileControllerImpl;
-import it.unibo.falltohell.model.api.Game;
-import it.unibo.falltohell.model.api.builder.GameBuilder;
+import it.unibo.falltohell.model.api.builder.LevelBuilder;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character.CharacterID;
-import it.unibo.falltohell.model.impl.GameDataImpl;
-import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
-import it.unibo.falltohell.model.impl.GameImpl;
+import it.unibo.falltohell.model.api.manager.GameEventManager;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Archer;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Rogue;
 import it.unibo.falltohell.model.impl.level.LevelImpl;
+import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 
 import java.util.EnumMap;
@@ -29,19 +28,19 @@ import java.util.Optional;
  * Builder used to build the class containing core information for the game.
  * @author Davide Mancini
  */
-public class GameBuilderImpl implements GameBuilder {
+public class LevelBuilderImpl implements LevelBuilder {
 
     private final Map<CharacterID, Character> characters;
     private Optional<Level> level;
     private Optional<GameData> gameData;
     private Optional<GameCamera> camera;
-    private Optional<GameEventManagerImpl<String>> eventManager;
+    private Optional<GameEventManager<String>> eventManager;
     private Optional<DrawableRenderableHandler> drh;
 
     /**
      * Creates a game builder with all parameters empty.
      */
-    public GameBuilderImpl() {
+    public LevelBuilderImpl() {
         this.characters = new EnumMap<>(CharacterID.class);
         this.level = Optional.empty();
         this.gameData = Optional.empty();
@@ -55,13 +54,15 @@ public class GameBuilderImpl implements GameBuilder {
      * Adds the event manager and drawable-renderable handler if already linked.
      */
     @Override
-    public GameBuilder createLevel() {
+    public LevelBuilder createLevel() {
         if (this.camera.isEmpty()) {
             throw new IllegalStateException("Cannot create a level without a camera");
         }
-        this.level = Optional.of(new LevelImpl(this.camera.get()));
-        this.eventManager.ifPresent(this.level.get()::setGameEventManager);
-        this.drh.ifPresent(this.level.get()::setDrawableRenderableHandler);
+        this.level = Optional.of(new LevelImpl(
+            this.camera.get(),
+            this.eventManager.orElse(new GameEventManagerImpl<>()),
+            this.drh.orElse(new DrawableRenderableHandlerImpl())
+        ));
         return this;
     }
 
@@ -69,7 +70,7 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilder loadGameData() {
+    public LevelBuilder loadGameData() {
         if (this.level.isEmpty()) {
             throw new IllegalStateException("The characters needs a level to stay inside");
         }
@@ -84,7 +85,7 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilder attachGameEventManager(final GameEventManagerImpl<String> eventManager) {
+    public LevelBuilder attachGameEventManager(final GameEventManager<String> eventManager) {
         this.eventManager = Optional.of(eventManager);
         return this;
     }
@@ -93,7 +94,7 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilder attachDrawableRenderableHandlerToLevel(final DrawableRenderableHandler drh) {
+    public LevelBuilder attachDrawableRenderableHandlerToLevel(final DrawableRenderableHandler drh) {
         this.drh = Optional.of(drh);
         return this;
     }
@@ -102,7 +103,7 @@ public class GameBuilderImpl implements GameBuilder {
      * {@inheritDoc}
      */
     @Override
-    public GameBuilder attachCamera(final GameCamera camera) {
+    public LevelBuilder attachCamera(final GameCamera camera) {
         this.camera = Optional.of(camera);
         return this;
     }
@@ -112,7 +113,7 @@ public class GameBuilderImpl implements GameBuilder {
      * @throws IllegalStateException if level is not created
      */
     @Override
-    public GameBuilder loadCharacters() {
+    public LevelBuilder loadCharacters() {
         if (this.level.isEmpty()) {
             throw new IllegalStateException("The characters needs a level to stay inside");
         }
@@ -131,7 +132,7 @@ public class GameBuilderImpl implements GameBuilder {
      * @throws IllegalStateException if level nor game data are created
      */
     @Override
-    public GameBuilder linkGameDataToLevel() {
+    public LevelBuilder linkGameDataToLevel() {
         if (this.level.isEmpty() || this.gameData.isEmpty()) {
             throw new IllegalStateException("Game data and level needs to be created to link them");
         }
@@ -145,13 +146,13 @@ public class GameBuilderImpl implements GameBuilder {
      * @throws IllegalStateException if level is not created
      */
     @Override
-    public Game build() {
+    public Level build() {
         if (this.level.isEmpty()) {
-            throw new IllegalStateException("Cannot create a game without a level");
+            throw new IllegalStateException("Cannot build the level without creating it");
         }
         final LevelLoader ll = new LevelLoaderImpl("level.txt", this.level.get());
         ll.loadLevel();
         this.camera.ifPresent(t -> t.setLevelSize(this.level.get().getLevelSize()));
-        return new GameImpl(this.level.get(), this.gameData.orElse(new GameDataImpl(this.characters)), this.characters);
+        return this.level.get();
     }
 }

@@ -1,8 +1,8 @@
 package it.unibo.falltohell.model.api.builder;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
-import it.unibo.falltohell.model.api.Game;
 import it.unibo.falltohell.model.api.GameCamera;
+import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.manager.GameEventManager;
 
 /**
@@ -10,55 +10,55 @@ import it.unibo.falltohell.model.api.manager.GameEventManager;
  *
  * @author Davide Mancini
  */
-public interface GameBuilder {
+public interface LevelBuilder {
 
     /**
-     * Creates a level inside game.
-     * @return this builder with the level
+     * Creates a level to build.
+     * @return this builder with the level initialized
      */
-    GameBuilder createLevel();
+    LevelBuilder createLevel();
 
     /**
      * Loads from the save file the game data for the game.
      * @return this builder with the game data
      */
-    GameBuilder loadGameData();
+    LevelBuilder loadGameData();
 
     /**
      * Attach the event manager to the game.
      * @param eventManager to handle event like key presses
      * @return this builder with an event manager
      */
-    GameBuilder attachGameEventManager(GameEventManager<String> eventManager);
+    LevelBuilder attachGameEventManager(GameEventManager<String> eventManager);
 
     /**
      * Attach the DrawableRenderableHandler to the level.
      * @param drh handler to attach to
      * @return this builder with the handler
      */
-    GameBuilder attachDrawableRenderableHandlerToLevel(DrawableRenderableHandler drh);
+    LevelBuilder attachDrawableRenderableHandlerToLevel(DrawableRenderableHandler drh);
 
     /**
-     * Attach a camera to the game.
+     * Attach a camera to the level.
      * @param camera that follows the player
      * @return this builder with the camera
      */
-    GameBuilder attachCamera(GameCamera camera);
+    LevelBuilder attachCamera(GameCamera camera);
 
     /**
-     * Loads the characters into the game.
+     * Loads the characters into the level.
      * @return this builder with the characters
      */
-    GameBuilder loadCharacters();
+    LevelBuilder loadCharacters();
 
     /**
      * Links game data to the level for game objects that need a reference to it.
      * @return this builder with game data inside level
      */
-    GameBuilder linkGameDataToLevel();
+    LevelBuilder linkGameDataToLevel();
 
     /**
      * @return build the game
      */
-    Game build();
+    Level build();
 }
