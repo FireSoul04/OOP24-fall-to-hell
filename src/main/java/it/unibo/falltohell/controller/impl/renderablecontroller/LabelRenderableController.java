@@ -6,7 +6,7 @@ import it.unibo.falltohell.view.impl.renderable.LabelRenderable;
 
 /**
  * Controller for managing the label model and its view.
- * It updates the view based on the model's state and camera position.
+ * It updates the view based on the model's state.
  * 
  * @author Casadei Lorenzo
  */
@@ -15,7 +15,7 @@ public class LabelRenderableController extends BaseRenderableController {
     /**
      * Constructor for the LabelController.
      * 
-     * @param label the model object associated with this controller
+     * @param label the model object associated with this controller.
      */
     public LabelRenderableController(final Label label) {
         super(label, new LabelRenderable(label.isVisible(), label.getPosition(), label.getText()));

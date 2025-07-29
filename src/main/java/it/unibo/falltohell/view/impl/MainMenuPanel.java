@@ -6,7 +6,12 @@ import it.unibo.falltohell.controller.impl.ImageControllerImpl;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-
+/**
+ * Main menu panel of the game, extends {@code JPanel}, it use {@code GridBagLayout} to create 
+ * two {@code JButton} on the center of the screen, it requires two {@code ActionListener}
+ * for the buttons.
+ * it also display a background and the title of the game.
+ */
 public class MainMenuPanel extends JPanel {
 
     private final Image background;
@@ -39,8 +44,8 @@ public class MainMenuPanel extends JPanel {
         startButton.addActionListener(startListener);
         exitButton.addActionListener(exitListener);
 
-        titleLabel.setForeground(Color.RED);
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 48));
+        titleLabel.setForeground(Color.darkGray);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 48));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         final GridBagConstraints gbc = new GridBagConstraints();
@@ -55,7 +60,9 @@ public class MainMenuPanel extends JPanel {
 
         this.setOpaque(false);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

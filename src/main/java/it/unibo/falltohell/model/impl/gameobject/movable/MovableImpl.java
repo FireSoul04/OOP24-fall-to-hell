@@ -8,12 +8,10 @@ import it.unibo.falltohell.util.Vector2;
 
 /**
  * Implementation of the {@link Movable} interface.
- * <p>
  * Represents a game object that can move within the level, with horizontal and
  * vertical speed.
  * Provides methods to update its position based on speed and elapsed time, and
  * to get or set its speed.
- * </p>
  *
  * @author Casadei Lorenzo
  */
@@ -65,6 +63,7 @@ public class MovableImpl extends GameObjectImpl implements Movable {
     }
 
     /**
+     * set the facing of this movable.
      * @param facingRight tells if an object is facing right
      */
     protected final void setFacingRight(final boolean facingRight) {

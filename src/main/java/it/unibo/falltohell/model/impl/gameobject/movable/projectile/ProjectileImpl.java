@@ -15,13 +15,11 @@ import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
 
 /**
  * Implementation of the {@link Projectile} interface.
- * <p>
  * Represents a projectile in the game world that moves and can interact with
  * other objects.
  * The projectile moves according to its speed, can be marked as "hit" when it
- * collides with something solid,
+ * collides with something,
  * and provides hooks for subclasses to customize update and collision behavior.
- * </p>
  * @author Casadei Lorenzo
  */
 public class ProjectileImpl extends MovableImpl implements Projectile {

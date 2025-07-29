@@ -8,7 +8,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
 import it.unibo.falltohell.view.api.AudioPlayer;
-
+/**
+ * A class that consent to manipulate the file Audio for the game.
+ */
 public class SoundPlayerView implements AudioPlayer{
     private final int loop;
     private final String filePath;
@@ -43,7 +45,7 @@ public class SoundPlayerView implements AudioPlayer{
      * {@inheritDoc}
      */
     @Override
-    public void playOnce() {
+    public void playInLoop() {
         this.clip.loop(this.loop);
     }
     /**
@@ -71,7 +73,7 @@ public class SoundPlayerView implements AudioPlayer{
         this.clip.close();
         this.reset();
         this.clip.setMicrosecondPosition(this.currentFrame);
-        this.playOnce();
+        this.playInLoop();
     }
     /**
      * {@inheritDoc}
@@ -79,7 +81,7 @@ public class SoundPlayerView implements AudioPlayer{
     @Override
     public void play() {
         this.reset();
-        this.playOnce();
+        this.playInLoop();
     }
     /**
      * {@inheritDoc}

@@ -18,7 +18,7 @@ public interface SaveFileController {
     void save(GameData data);
 
     /**
-     * @param @param characters a map of character IDs to  objects used to restore character-related state
+     * @param characters a map of character IDs to  objects used to restore character-related state
      * @return the game data loaded from the save file.
      */
     GameData load(Map<Character.CharacterID, Character> characters);

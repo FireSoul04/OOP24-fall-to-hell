@@ -58,7 +58,6 @@ public abstract class BaseRangedWeapon extends BaseWeapon {
 
     /**
      * {@inheritDoc}
-     * Shoot a projectile.
      */
     @Override
     public void attack() {
@@ -143,7 +142,7 @@ public abstract class BaseRangedWeapon extends BaseWeapon {
     }
 
     /**
-     * Creates a projectile. By default, returns a ProjectileImpl.
+     * Creates a projectile.
      * @return projectile
      */
     protected abstract Projectile createProjectile();

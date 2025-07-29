@@ -5,7 +5,7 @@ public interface AudioPlayer {
     /**
      * Plays the audio once or with loop if configured.
      */
-    void playOnce();
+    void playInLoop();
     /**
      * Stops the audio playback.
      */

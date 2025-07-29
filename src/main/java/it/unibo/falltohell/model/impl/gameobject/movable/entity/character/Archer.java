@@ -69,21 +69,16 @@ public class Archer extends BaseCharacter {
     }
 
     /**
-     * Shoots an arrow in the given direction if possible.
-     *
-     * @param direction the direction to shoot (normalized vector)
-     * @param speed     the speed of the arrow
-     * @param collider  the collider for the arrow
+     * Shoots the arrow with the bow.
      */
     public void attack() {
         super.attack();
         bow.getShotProjectile().ifPresent(shotedArrows :: add);
-        System.out.println(shotedArrows.size());
         bonusDamage.carryOut();
     }
 
     /**
-     * Gets the ranged weapon used by this archer.
+     * Gets the bow used by this archer.
      *
      * @return the bow
      */
@@ -117,13 +112,12 @@ public class Archer extends BaseCharacter {
         this.shotedArrows.remove(arrow);
         this.bonusDamage.carryOut();
     }
+    
     @Override
     public void update(double deltatime){
         super.update(deltatime);
         if(this.getLevel().getGameEventManager().checkCondition("ActiveAbility")){
             this.returnAbility.activate();
         }
-
     }
-
 }
