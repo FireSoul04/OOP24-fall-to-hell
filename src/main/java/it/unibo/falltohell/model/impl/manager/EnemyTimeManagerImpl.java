@@ -84,7 +84,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
                 final double fullLife = stats.getFullLife();
                 if (life + regenLife > fullLife) {
                     stats.setLife(fullLife);
-                } else {
+                } else if (life > 0) {
                     stats.addLife(regenLife);
                 }
             }
