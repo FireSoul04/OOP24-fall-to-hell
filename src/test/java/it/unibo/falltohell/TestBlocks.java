@@ -11,6 +11,7 @@ import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster
 import it.unibo.falltohell.test.util.LavaBlockTest;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.util.Vector2;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +28,21 @@ class TestBlocks {
     private CollidableBlockFactory blockFactory;
 
     /**
-     * Method to initialize the class' variables before each test.
+     * Initialization of the variables used in each test.
      */
     @BeforeEach
     void initialization() {
         final Level level = new LevelTest();
         this.entity = new Caster(level, Vector2.zero());
         this.blockFactory = new CollidableBlockFactoryImpl();
+    }
+
+    /**
+     * Removes all present timers.
+     */
+    @AfterEach
+    void finish() {
+        this.entity.getLevel().getTimerManager().removeAllTimers();
     }
 
     /**
