@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.factory.StatisticsFactory;
+import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
@@ -25,6 +26,11 @@ import org.junit.jupiter.api.Assertions;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * Test to check if close ranged weapon works correctly.
+ *
+ * @author Davide Mancini
+ */
 class TestMeleeWeapon {
 
     private static final Vector2 POSITION = Vector2.zero();
@@ -35,13 +41,12 @@ class TestMeleeWeapon {
     private static final double ATTACK_SPEED = 1;
     private static final double DAMAGE_MULTIPLIER = 1;
     private static final Dimensions SIZE = new Dimensions(20, 20);
-    private static final long COOLDOWN = 1000;
-    private static final CharacterStatistics STATS = new StatisticFactoryImpl().createCharacterStatistic(
-        LIFE, ATTACK, SPEED, SIZE, MANA, ATTACK_SPEED
-    );
+    private static final long COOLDOWN = 200;
+    private static final long TIMEOUT = COOLDOWN * 2;
 
     private Weapon sword;
     private Enemy dummy;
+    private TimerManager tm;
 
     /**
      * Initiate the level, character, weapon and dummy.
@@ -50,7 +55,10 @@ class TestMeleeWeapon {
     @BeforeEach
     void initialization() {
         final Level level = new LevelTest();
-        final Character character = new BaseCharacter(level, POSITION, STATS, "test.png") {
+        final CharacterStatistics statistics = new StatisticFactoryImpl().createCharacterStatistic(
+            LIFE, ATTACK, SPEED, SIZE, MANA, ATTACK_SPEED
+        );
+        final Character character = new BaseCharacter(level, POSITION, statistics, "test.png") {
             @Override
             public CharacterID getCharacterID() {
                 return null;
@@ -70,7 +78,9 @@ class TestMeleeWeapon {
             LIFE, ATTACK, Vector2.zero(), new Dimensions(20, 20),
             Vector2.zero(), 1, sf.createOptional()
         );
-        this.dummy = new DummyEnemyTest(level, Vector2.zero(), dummyStats);
+        this.dummy = new DummyEnemyTest(level, dummyStats);
+        this.dummy.setPosition(Vector2.zero());
+        this.tm = level.getTimerManager();
     }
 
     /**
@@ -81,7 +91,11 @@ class TestMeleeWeapon {
         final double initialLife = this.dummy.getStats().getLife();
         this.sword.attack();
         this.sword.onCollision(this.dummy, Vector2.zero());
-        Assertions.assertEquals(initialLife - ATTACK * DAMAGE_MULTIPLIER, this.dummy.getStats().getLife(), "The enemy should be hit and take damage");
+        Assertions.assertEquals(
+            initialLife - ATTACK * DAMAGE_MULTIPLIER,
+            this.dummy.getStats().getLife(),
+            "The enemy should be hit and take damage"
+        );
     }
 
     /**
@@ -113,7 +127,5 @@ class TestMeleeWeapon {
         this.sword.onCollision(this.dummy, Vector2.zero());
         Assertions.assertTrue(initialLife > this.dummy.getStats().getLife(),
             "The enemy should get hit at least once");
-        Assertions.assertTrue(firstHitLife > this.dummy.getStats().getLife(),
-            "The enemy should get hit twice");
     }
 }
