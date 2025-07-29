@@ -6,9 +6,6 @@ import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Archer
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableArrow;
 
 import java.util.ArrayList;
-
-
-
 /**
  * A special ability that causes all arrows previously shot by the archer to
  * return to them.
@@ -18,7 +15,7 @@ import java.util.ArrayList;
  * Arrows in return mode:
  * - become non-solid (pass through walls),
  * - can hit enemies during the return,
- * - replenish the archer's ammo when they reach him.
+ * - refill the archer's ammo when they reach him.
  * 
  * @author Casadei Lorenzo
  */
@@ -31,7 +28,6 @@ public class ReturnArrowAbility implements SpecialActiveAbility {
      * Creates a new ReturnArrowAbility for a specific archer in a given level.
      *
      * @param archer the archer who can activate this ability
-     * @param level  the current game level
      */
     public ReturnArrowAbility(final Archer archer) {
         this.archer = archer;

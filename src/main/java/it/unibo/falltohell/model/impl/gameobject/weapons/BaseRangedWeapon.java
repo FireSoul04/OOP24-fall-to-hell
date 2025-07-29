@@ -14,37 +14,42 @@ import java.util.Optional;
  * - Ammo management (current and max)
  * - Cooldown timing between shots
  * - Projectile creation (can be overridden)
- * 
+ *
  * @author Lorenzo Casadei
  */
-public abstract class BaseRangedWeapon extends BaseWeapon  {
+public abstract class BaseRangedWeapon extends BaseWeapon {
 
     private final int maxAmmo;
     private int ammo;
     private Optional<Projectile> shotProjectile;
 
     /**
-     * Constructs a ranged weapon with offset zero and with specified maximum ammo and cooldown time.
+     * Constructs a ranged weapon with offset zero and with specified maximum ammo
+     * and cooldown time.
      *
+     * @param owner        of the weapon
      * @param maxAmmo      the maximum ammo the weapon can carry
      * @param cooldownTime the cooldown time between attacks, in seconds
      * @param fileName     is the name of the image file associated to the ranged
      *                     weapon
      */
-    protected BaseRangedWeapon(final Character owner, final int maxAmmo, final long cooldownTime, final String fileName) {
+    protected BaseRangedWeapon(final Character owner, final int maxAmmo, final long cooldownTime,
+            final String fileName) {
         this(owner, maxAmmo, cooldownTime, fileName, Vector2.zero());
     }
 
     /**
      * Constructs a ranged weapon with specified maximum ammo and cooldown time.
      *
+     * @param owner        of the weapon
      * @param maxAmmo      the maximum ammo the weapon can carry
      * @param cooldownTime the cooldown time between attacks, in seconds
      * @param fileName     is the name of the image file associated to the ranged
      *                     weapon
      * @param offset       where to set the position based on the owner's position
      */
-    protected BaseRangedWeapon(final Character owner, final int maxAmmo, final long cooldownTime, final String fileName, final Vector2 offset) {
+    protected BaseRangedWeapon(final Character owner, final int maxAmmo, final long cooldownTime, final String fileName,
+            final Vector2 offset) {
         super(owner, Optional.empty(), cooldownTime, fileName, offset);
         this.maxAmmo = maxAmmo;
         this.ammo = maxAmmo;
@@ -53,7 +58,6 @@ public abstract class BaseRangedWeapon extends BaseWeapon  {
 
     /**
      * {@inheritDoc}
-     * Shoot a projectile.
      */
     @Override
     public void attack() {
@@ -73,9 +77,6 @@ public abstract class BaseRangedWeapon extends BaseWeapon  {
         this.shotProjectile = Optional.of(p);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Optional<Projectile> getShotProjectile() {
         return this.shotProjectile;
     }
@@ -116,6 +117,7 @@ public abstract class BaseRangedWeapon extends BaseWeapon  {
 
     /**
      * Refills the weapon's ammo to the specified amount.
+     * @param ammo the amount to refill
      */
     public void setAmmo(final int ammo) {
         if (ammo >= 0 && ammo <= maxAmmo) {
@@ -140,7 +142,8 @@ public abstract class BaseRangedWeapon extends BaseWeapon  {
     }
 
     /**
-     * Creates a projectile. By default, returns a ProjectileImpl.
+     * Creates a projectile.
+     * @return projectile
      */
     protected abstract Projectile createProjectile();
 

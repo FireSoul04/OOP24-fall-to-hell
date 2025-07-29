@@ -1,46 +1,102 @@
 package it.unibo.falltohell.view.impl;
 
-import it.unibo.falltohell.model.api.AudioPlayer;
+import java.io.File;
 
-public class SoundPlayerView {
-    private final AudioPlayer player;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
+import it.unibo.falltohell.view.api.AudioPlayer;
+/**
+ * A class that consent to manipulate the file Audio for the game.
+ */
+public class SoundPlayerView implements AudioPlayer{
+    private final int loop;
+    private final String filePath;
+    private long currentFrame = 0;
+    private AudioInputStream audioInputStream;
+    private Clip clip;
     /**
-     * Constructor for the SoundPlayerView.
-     * @param player the audio player to be controlled by this view
+     * Constructor for the SoundPlayer.
+     * @param name the name of the audio file
+     * @param loop the number of times to loop the audio 
      */
-    public SoundPlayerView(final AudioPlayer player) {
-        this.player = player;
+    public SoundPlayerView(final String name, final int loop) {
+        this.filePath = AudioPlayer.PATH_TO_AUDIO + name;
+        this.loop = loop;
+        this.resetAudio();
     }
-
     /**
-     * Plays the sound once or with loop if configured.
+     * Resets the audio player by reloading the audio file.
      */
-    public void play() {
-        player.play();
+     private void resetAudio() {
+        try {
+            this.audioInputStream = AudioSystem.getAudioInputStream(new File(this.filePath).getAbsoluteFile());
+            this.clip = AudioSystem.getClip();
+            this.clip.open(this.audioInputStream);
+            FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-10.0f);
+        } catch (Exception e) {
+            System.exit(0);
+        }
     }
-
     /**
-     * Stops the sound.
+     * {@inheritDoc}
      */
+    @Override
+    public void playInLoop() {
+        this.clip.loop(this.loop);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void stop() {
-        player.stop();
+        this.currentFrame = 0;
+        this.clip.stop();
+        this.clip.close();
     }
     /**
-     * pause the sound.
+     * {@inheritDoc}
      */
+    @Override
     public void pause() {
-        player.pause();
+        this.currentFrame = this.clip.getMicrosecondPosition();
+        this.clip.stop();
     }
     /**
-     * resume the sound.
+     * {@inheritDoc}
      */
+    @Override
     public void resume() {
-        player.resume();
+        this.clip.close();
+        this.reset();
+        this.clip.setMicrosecondPosition(this.currentFrame);
+        this.playInLoop();
     }
     /**
-     * Resets the sound player.
+     * {@inheritDoc}
      */
+    @Override
+    public void play() {
+        this.reset();
+        this.playInLoop();
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void reset() {
-        player.reset();
+        this.stop();
+        this.clip.setMicrosecondPosition(0);
+        this.resetAudio();
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean alreadyPlaying() {
+        return this.currentFrame > 0;
     }
 }

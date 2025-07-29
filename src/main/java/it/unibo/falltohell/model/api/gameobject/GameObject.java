@@ -9,10 +9,8 @@ import java.util.Optional;
 
 /**
  * Represents a game object in the game world.
- * <p>
  * This interface defines the basic properties and behaviors of a game object,
  * including its position, collider, solidity, and interactions with other game objects.
- * </p>
  *
  * @author Casadei Lorenzo
  */

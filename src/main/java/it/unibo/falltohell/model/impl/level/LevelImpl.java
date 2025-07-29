@@ -2,6 +2,8 @@ package it.unibo.falltohell.model.impl.level;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
@@ -34,13 +36,11 @@ import it.unibo.falltohell.util.Vector2;
 
 /**
  * Implementation of the {@link Level} interface.
- * <p>
  * Manages the game objects present in the level and handles collision
  * detection.
  * Provides methods to add, remove, and retrieve game objects, as well as to
  * update
  * the state of the level and its objects.
- * </p>
  *
  * @author Lorenzo Casadei
  * @author Davide Mancini
@@ -101,13 +101,11 @@ public class LevelImpl implements Level {
      * @param camera that follows the player
      */
     public LevelImpl(final GameCamera camera) {
-        this(camera, List.of());
+        this(camera, new ArrayList<>());
     }
 
     /**
-     * Adds a game object to the level.
-     *
-     * @param gameObject the game object to add
+     * {@inheritDoc}
      */
     @Override
     public void addGameObject(final GameObject gameObject) {
@@ -119,9 +117,7 @@ public class LevelImpl implements Level {
     }
 
     /**
-     * Removes a game object from the level.
-     *
-     * @param gameObject the game object to remove
+     * {@inheritDoc}
      */
     @Override
     public void removeGameObject(final GameObject gameObject) {
@@ -130,9 +126,7 @@ public class LevelImpl implements Level {
     }
 
     /**
-     * Returns a copy of the list of all game objects in the level.
-     *
-     * @return a new list containing all game objects
+     * {@inheritDoc}
      */
     @Override
     public List<GameObject> getGameObjects() {
@@ -140,10 +134,7 @@ public class LevelImpl implements Level {
     }
 
     /**
-     * Updates all game objects in the level and checks for collisions.
-     * Only the selected character is updated.
-     *
-     * @param deltaTime the time elapsed since the last update
+     * {@inheritDoc}
      */
     @Override
     public void update(final double deltaTime) {

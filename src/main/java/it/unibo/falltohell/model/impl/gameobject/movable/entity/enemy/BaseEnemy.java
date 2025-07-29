@@ -17,6 +17,7 @@ import java.util.stream.IntStream;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEnemy;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
@@ -141,7 +142,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
         this.manager = manager;
-        this.manager.createNoAggroTimer(level, this, this.stats.getNoAggro());
+        this.manager.createNoAggroTimer(this);
         this.safeZoneManager = safeZoneManager;
         this.safeZoneManager.addEnemyCall(this::resetEnemy);
         this.initDrawable(Priority.VERY_LOW, fileName);
@@ -176,7 +177,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
             this.dropBuff();
             super.removeEntity();
         } else {
-            this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
+            this.manager.restartEnemyTimer(this, TimerType.NO_AGGRO);
         }
     }
 
@@ -194,9 +195,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     /**
      * Executes the attack behavior specific to the enemy.
      */
-    protected void attack(){
-        this.manager.restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
-    };
+    protected void attack() {
+        this.manager.restartEnemyTimer(this, TimerType.NO_AGGRO);
+    }
 
     /**
      * {@inheritDoc}
@@ -312,6 +313,10 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
     private void resetEnemy() {
         this.stats.setLife(this.stats.getFullLife());
         super.setPosition(this.stats.getInitialPos());
+        this.manager.restartEnemyTimer(this, TimerType.NO_AGGRO);
+        if(this instanceof LongRangeEnemy ){
+            this.manager.restartEnemyTimer(this, TimerType.ATTACK);
+        }
     }
 
     /**

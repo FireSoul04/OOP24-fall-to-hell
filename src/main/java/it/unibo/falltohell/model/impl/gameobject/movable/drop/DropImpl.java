@@ -38,8 +38,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class DropImpl extends MovableImpl implements Drop {
 
-    private static final int EXPIRE_TIME = 10000;
-    private static final long BUFF_DURATION = 15000;
+    private static final int EXPIRE_TIME = 10_000;
+    private static final long BUFF_DURATION = 15_000;
     private static final Vector2 VELOCITY = Vector2.down().multiply(1);
     private static final Dimensions DIMENSIONS = new Dimensions(10, 10);
     private final String name;

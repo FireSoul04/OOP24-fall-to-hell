@@ -5,10 +5,11 @@ import java.util.Optional;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEnemy;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.RestrictedLongRangeEnemyStatistics;
+
 import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
-import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
@@ -32,10 +33,10 @@ import it.unibo.falltohell.util.Vector2;
  * @see BaseEnemyProjectile
  * @see EnemyTimerManager
  */
-public class Tengu extends BaseEnemy {
+public class Tengu extends BaseEnemy implements LongRangeEnemy {
     private static final int POINTS = 10;
     private static final double CHAR_DISTANCE = 15 * TILE_SIZE;
-    private static final int ATTACK_TIME = 4000;
+    private static final int ATTACK_TIME = 1000;
     private static final double REGEN_STAT = 0.1;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final Dimensions DIMENSIONS_ARROW = new Dimensions(15, 15);
@@ -43,7 +44,7 @@ public class Tengu extends BaseEnemy {
     private static final double DAMAGE = 1; // Physical damage
     private static final double DAMAGE_A = 3; // Damage of projectile
     private static final Vector2 VELOCITY = new Vector2(0.1, 0.1);
-    private static final Vector2 VELOCITY_ARROW = new Vector2(1, 2);
+    private static final Vector2 VELOCITY_ARROW = new Vector2(0, 0.001);
     private static final double DISTANCE = 10 * TILE_SIZE;
 
     private final RestrictedLongRangeEnemyStatistics stats;
@@ -79,11 +80,7 @@ public class Tengu extends BaseEnemy {
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
-        final String name = super.getEnemyTimerManager().getNextAttackName(this);
-        super.getLevel().getTimerManager().addTimer(name, new CustomTimerImpl(this.stats.getTimeAttack(), () -> {
-            this.attack();
-            super.getLevel().getTimerManager().restartTimer(name);
-        }));
+        super.getEnemyTimerManager().createAttackTimer(this, Optional.of(() -> this.attack()));
         ingage.addEnemy(this, "tengu.png");
     }
 
@@ -107,7 +104,7 @@ public class Tengu extends BaseEnemy {
             }
         } else if (other instanceof Character) {
             super.getCharacter().setDamagedLife(DAMAGE);
-            super.getEnemyTimerManager().restartEnemyTimer(super.getLevel(), this, TimerType.NO_AGGRO);
+            super.getEnemyTimerManager().restartEnemyTimer(this, TimerType.NO_AGGRO);
         }
     }
 
@@ -118,7 +115,7 @@ public class Tengu extends BaseEnemy {
     protected void attack() {
         if (super.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new BaseEnemyProjectile(super.getLevel(),
-                    super.getPosition().subtract(new Vector2(0, this.stats.getDimensions().width() + 1)),
+                    super.getPosition().add(Vector2.down().multiply(this.stats.getDimensions().height() / 2)),
                     this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
                     "base_enemy_projectile.png");

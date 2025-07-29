@@ -35,15 +35,18 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Druid extends BaseCharacter {
 
-    private static final CharacterStatistics STATS = new StatisticFactoryImpl().createCharacterStatistic(30, 10,
-            new Vector2(2.5, 2), new Dimensions(20, 25), 80, 4);
+    private static final int ATTACK_SPEED = 4;
+    private static final int MANA = 80;
+    private static final Dimensions DIMENSIONS = new Dimensions(20, 25);
+    private static final Vector2 SPEED = new Vector2(2.5, 2);
+    private static final int ATTACK = 10;
+    private static final int LIFE = 30;
     private static final int END_KILL = 5;
     private static final long KILL_RESET = 10_000;
     private static final double CREATION_COST = 30;
     private static final double ATTACK_COST = 10;
     private static final long ATTACK_COOLDOWN = 500;
     private final CharacterStatistics stats;
-    private final AbilityFactoryImpl factory = new AbilityFactoryImpl();
     private final StatisticPassiveAbility sPa;
     private final GameEventManagerImpl<String> input = super.getLevel().getGameEventManager();
     private final ManagerFamiliars manager = new ManagerFamiliars();
@@ -60,10 +63,11 @@ public class Druid extends BaseCharacter {
      * @param position the initial spawn position
      */
     public Druid(final Level level, final Vector2 position) {
-        super(level, position, STATS, "druid.png");
+        super(level, position, new StatisticFactoryImpl().createCharacterStatistic(LIFE, ATTACK,
+            SPEED, DIMENSIONS, MANA, ATTACK_SPEED), "druid.png");
         this.stats = (CharacterStatistics) super.getStats();
         this.equipWeapon(new WarScythe(this, ATTACK_COOLDOWN));
-        this.sPa = this.factory.createPassiveAbility(this, (character) -> {
+        this.sPa = new AbilityFactoryImpl().createPassiveAbility(this, (character) -> {
             final double[][] lifeManaGains = {
                     {}, // 0 kill
                     { 0.05, 0.0 }, // 1 kill
@@ -124,7 +128,7 @@ public class Druid extends BaseCharacter {
         this.sPa.carryOut();
 
         final String resetTimerName = "Druid_ResetKills";
-        this.restartOrAddTimer(resetTimerName, new CustomTimerImpl(KILL_RESET, () -> this.setZeroKill()));
+        this.restartOrAddTimer(resetTimerName, new CustomTimerImpl(KILL_RESET, this::setZeroKill));
     }
 
     /**
@@ -153,7 +157,7 @@ public class Druid extends BaseCharacter {
     private void handleAttackInput() {
         if (this.input.checkCondition("SpecialAbility") && super.subManaIfEnough(CREATION_COST)) {
             this.sAactive = true;
-            this.factory.createGhostActiveAbility(this.manager::createFamiliar, this).action();
+            new AbilityFactoryImpl().createGhostActiveAbility(this.manager::createFamiliar, this).action();
         }
 
         if (this.sAactive && this.spAtkCalled() && this.manager.isFree() && super.subManaIfEnough(ATTACK_COST)) {

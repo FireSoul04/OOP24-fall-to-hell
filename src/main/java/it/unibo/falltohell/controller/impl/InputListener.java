@@ -10,11 +10,9 @@ import java.awt.event.KeyListener;
 
 /**
  * InputListener class to handle keyboard input in the game.
- * <p>
  * It tracks which keys are pressed and allows checking if a key is currently
  * pressed
  * or has been pressed once.
- * </p>
  * 
  * @author Casadei Lorenzo
  */
@@ -47,7 +45,7 @@ public class InputListener {
     /**
      * Checks if a key is currently pressed.
      * 
-     * @param keyCode the key code (e.g. KeyEvent.VK_SPACE)
+     * @param keyCode the key code.
      * @return true if pressed, false otherwise
      */
     public boolean isKeyPressed(final int keyCode) {

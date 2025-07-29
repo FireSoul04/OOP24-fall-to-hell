@@ -2,10 +2,8 @@ package it.unibo.falltohell.model.api.gameobject.movable;
 
 /**
  * Represents a projectile in the game that can move and hit with other game objects.
- * <p>
  * This interface extends the {@link Movable} interface and adds methods for handling
  * hit status and collision with other game objects.
- * </p>
  *
  * @author Casadei Lorenzo
  */

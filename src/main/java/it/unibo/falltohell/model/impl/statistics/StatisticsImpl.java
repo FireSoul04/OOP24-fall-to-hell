@@ -183,7 +183,7 @@ public class StatisticsImpl implements Statistics {
      * @param amount to check
      * @throws IllegalStateException if amount is not positive
      */
-    protected void checkPositiveAmountOrThrow(final double amount) {
+    protected final void checkPositiveAmountOrThrow(final double amount) {
         this.checkFiniteAmountOrThrow(amount);
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount should be positive");
@@ -196,7 +196,7 @@ public class StatisticsImpl implements Statistics {
      * @param amount to check
      * @throws IllegalStateException if amount is negative
      */
-    protected void checkNonNegativeAmountOrThrow(final double amount) {
+    protected final void checkNonNegativeAmountOrThrow(final double amount) {
         this.checkFiniteAmountOrThrow(amount);
         if (amount < 0) {
             throw new IllegalArgumentException("Amount should be non-negative");
@@ -209,7 +209,7 @@ public class StatisticsImpl implements Statistics {
      * @param amount to check
      * @throws IllegalStateException if amount is negative
      */
-    protected void checkFiniteAmountOrThrow(final double amount) {
+    protected final void checkFiniteAmountOrThrow(final double amount) {
         if (!Double.isFinite(amount)) {
             throw new IllegalArgumentException("Amount should be finite");
         }

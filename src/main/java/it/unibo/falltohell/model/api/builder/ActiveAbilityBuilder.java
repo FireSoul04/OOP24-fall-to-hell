@@ -45,7 +45,7 @@ public interface ActiveAbilityBuilder {
      * @param level the level where the ability is spawned
      * @return this builder
      */
-    ActiveAbilityBuilder setLevel(Level level);
+    ActiveAbilityBuilder withLevel(Level level);
 
     /**
      * Sets the position.
@@ -53,7 +53,7 @@ public interface ActiveAbilityBuilder {
      * @param position the initial position
      * @return this builder
      */
-    ActiveAbilityBuilder setPosition(Vector2 position);
+    ActiveAbilityBuilder withPosition(Vector2 position);
 
     /**
      * Sets the damage dealt by the ability.
@@ -61,7 +61,7 @@ public interface ActiveAbilityBuilder {
      * @param damage the damage value
      * @return this builder
      */
-    ActiveAbilityBuilder setDamage(double damage);
+    ActiveAbilityBuilder withDamage(double damage);
 
     /**
      * Sets the collider used for collision detection.
@@ -69,7 +69,7 @@ public interface ActiveAbilityBuilder {
      * @param collider the collider
      * @return this builder
      */
-    ActiveAbilityBuilder setCollider(Collider collider);
+    ActiveAbilityBuilder withCollider(Collider collider);
 
     /**
      * Sets the initial velocity.
@@ -77,7 +77,7 @@ public interface ActiveAbilityBuilder {
      * @param velocity the speed in x and y
      * @return this builder
      */
-    ActiveAbilityBuilder setVelocity(Vector2 velocity);
+    ActiveAbilityBuilder withVelocity(Vector2 velocity);
 
     /**
      * Sets the attack logic.
@@ -85,7 +85,7 @@ public interface ActiveAbilityBuilder {
      * @param attack the lambda defining update behavior
      * @return this builder
      */
-    ActiveAbilityBuilder setAttack(ActiveAbilityUpdate attack);
+    ActiveAbilityBuilder withAttack(ActiveAbilityUpdate attack);
 
     /**
      * Optionally sets the collision handler.
@@ -93,7 +93,7 @@ public interface ActiveAbilityBuilder {
      * @param collided an optional collision logic lambda
      * @return this builder
      */
-    ActiveAbilityBuilder setCollision(Optional<OptionalCollision> collided);
+    ActiveAbilityBuilder withCollision(Optional<OptionalCollision> collided);
 
     /**
      * Builds and returns a new {@link ActiveAbilityImpl} instance.

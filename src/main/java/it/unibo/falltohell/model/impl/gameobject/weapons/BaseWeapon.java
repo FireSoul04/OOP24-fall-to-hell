@@ -1,6 +1,5 @@
 package it.unibo.falltohell.model.impl.gameobject.weapons;
 
-import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
@@ -15,6 +14,22 @@ import it.unibo.falltohell.util.Vector2;
 
 import java.util.Optional;
 
+/**
+ * Base class for all weapons in the game.
+ *
+ * <p>
+ * This class provides default behavior for weapons that can be attached to a
+ * {@link Character}, including attack handling with a cooldown mechanism and
+ * automatic positioning based on the owner's location.
+ * </p>
+ *
+ * <p>
+ * Weapons are {@link GameObjectImpl game objects} and implement the
+ * {@link Weapon} interface.
+ * </p>
+ *
+ * @author Davide Mancini
+ */
 public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
 
     private static final long MINIMUM_ATTACK_TIME = 100;
@@ -26,14 +41,15 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
 
     /**
      * Creates an abstract weapon.
-     * @param owner of the weapon
-     * @param collider of the weapon if it has one
+     *
+     * @param owner        of the weapon
+     * @param collider     of the weapon if it has one
      * @param cooldownTime time to elapse between every attack
-     * @param fileName of the weapon's drawable
-     * @param offset where to set the position based on the owner's position
+     * @param fileName     of the weapon's drawable
+     * @param offset       where to set the position based on the owner's position
      */
     public BaseWeapon(final Character owner, final Optional<Collider> collider,
-                      final long cooldownTime, final String fileName, final Vector2 offset) {
+            final long cooldownTime, final String fileName, final Vector2 offset) {
         super(owner.getLevel(), owner.getPosition(), collider.orElse(new BoxCollider(new Dimensions(0, 0))));
         this.owner = owner;
         this.offset = offset;
@@ -67,6 +83,13 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
             final double reduceTimeMultiplier = 1 / stats.getAttackSpeed();
             final long attackCooldownTime = Math.max(MINIMUM_ATTACK_TIME, (long) (this.cooldownTime * reduceTimeMultiplier));
             tm.restartIfPresent(name, new CustomTimerImpl(attackCooldownTime, () -> this.attacking = false));
+            final long attackCooldownTime = Math.max(MINIMUM_ATTACK_TIME,
+                    (long) (this.cooldownTime * reduceTimeMultiplier));
+            if (!tm.searchTimer(name)) {
+                tm.addTimer(name, new CustomTimerImpl(attackCooldownTime, () -> this.attacking = false));
+            } else {
+                tm.restartTimer(name);
+            }
         }
     }
 
