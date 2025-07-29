@@ -5,7 +5,6 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.factory.StatisticsFactory;
-import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
@@ -16,6 +15,7 @@ import it.unibo.falltohell.model.impl.gameobject.weapons.BaseMeleeWeapon;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.test.util.DummyEnemyTest;
 import it.unibo.falltohell.test.util.LevelTest;
+import it.unibo.falltohell.test.util.TimerManagerTest;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Test to check if close ranged weapon works correctly.
@@ -42,11 +41,11 @@ class TestMeleeWeapon {
     private static final double DAMAGE_MULTIPLIER = 1;
     private static final Dimensions SIZE = new Dimensions(20, 20);
     private static final long COOLDOWN = 200;
-    private static final long TIMEOUT = COOLDOWN * 2;
+    private static final long TIMEOUT = 1000;
 
     private Weapon sword;
     private Enemy dummy;
-    private TimerManager tm;
+    private TimerManagerTest tm;
 
     /**
      * Initiate the level, character, weapon and dummy.
@@ -80,7 +79,7 @@ class TestMeleeWeapon {
         );
         this.dummy = new DummyEnemyTest(level, dummyStats);
         this.dummy.setPosition(Vector2.zero());
-        this.tm = level.getTimerManager();
+        this.tm = (TimerManagerTest) level.getTimerManager();
     }
 
     /**
@@ -117,12 +116,7 @@ class TestMeleeWeapon {
         final double initialLife = this.dummy.getStats().getLife();
         this.sword.attack();
         this.sword.onCollision(this.dummy, Vector2.zero());
-        final double firstHitLife = this.dummy.getStats().getLife();
-        try {
-            Thread.sleep(COOLDOWN);
-        } catch (final InterruptedException e) {
-            Logger.getLogger("TestMeleeWeaponLogger").severe("Thread interrupted: " + e);
-        }
+        this.tm.waitForTimer("weapon-cooldown" + this.sword.hashCode(), TIMEOUT);
         this.sword.attack();
         this.sword.onCollision(this.dummy, Vector2.zero());
         Assertions.assertTrue(initialLife > this.dummy.getStats().getLife(),
