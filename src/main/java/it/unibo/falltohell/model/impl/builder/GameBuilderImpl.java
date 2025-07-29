@@ -25,6 +25,10 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Builder used to build the class containing core information for the game.
+ * @author Davide Mancini
+ */
 public class GameBuilderImpl implements GameBuilder {
 
     private final Map<CharacterID, Character> characters;
@@ -34,6 +38,9 @@ public class GameBuilderImpl implements GameBuilder {
     private Optional<GameEventManagerImpl<String>> eventManager;
     private Optional<DrawableRenderableHandler> drh;
 
+    /**
+     * Creates a game builder with all parameters empty.
+     */
     public GameBuilderImpl() {
         this.characters = new EnumMap<>(CharacterID.class);
         this.level = Optional.empty();
