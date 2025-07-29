@@ -51,10 +51,10 @@ class TestPhysics {
             @Override
             public void update(final double deltaTime) {
                 super.update(deltaTime);
-                if (level.getGameEventManager().checkCondition(MOVE_RIGHT_EVENT)) {
+                if (level.checkCondition(MOVE_RIGHT_EVENT)) {
                     this.setPosition(this.getPosition().add(Vector2.right()));
                 }
-                if (level.getGameEventManager().checkCondition(MOVE_LEFT_EVENT)) {
+                if (level.checkCondition(MOVE_LEFT_EVENT)) {
                     this.setPosition(this.getPosition().add(Vector2.left()));
                 }
             }
@@ -116,13 +116,13 @@ class TestPhysics {
      */
     @Test
     void testGoingToTargetsWithObstacles() {
-        this.level.getGameEventManager().addCondition(MOVE_RIGHT_EVENT, () -> true);
+        this.level.addCondition(MOVE_RIGHT_EVENT, () -> true);
         final Vector2 rightObstaclePosition = Vector2.right().multiply(MAX_UPDATES).divide(2);
         new BaseCollidableBlock(this.level, rightObstaclePosition, new BoxCollider(), "test.png");
         this.updateTest();
         Assertions.assertFalse(this.collision, "The entity should not reach the target on the right");
-        this.level.getGameEventManager().addCondition(MOVE_RIGHT_EVENT, () -> false);
-        this.level.getGameEventManager().addCondition(MOVE_LEFT_EVENT, () -> true);
+        this.level.addCondition(MOVE_RIGHT_EVENT, () -> false);
+        this.level.addCondition(MOVE_LEFT_EVENT, () -> true);
         this.entity.setPosition(ENTITY_POSITION);
         final Vector2 leftObstaclePosition = Vector2.left().multiply(MAX_UPDATES).divide(2);
         new BaseCollidableBlock(this.level, leftObstaclePosition, new BoxCollider(), "test.png");
@@ -136,11 +136,11 @@ class TestPhysics {
      */
     @Test
     void testGoingToTargetsWithoutObstacles() {
-        this.level.getGameEventManager().addCondition(MOVE_RIGHT_EVENT, () -> true);
+        this.level.addCondition(MOVE_RIGHT_EVENT, () -> true);
         this.updateTest();
         Assertions.assertTrue(this.collision, "The entity should reach the target on the right");
-        this.level.getGameEventManager().addCondition(MOVE_RIGHT_EVENT, () -> false);
-        this.level.getGameEventManager().addCondition(MOVE_LEFT_EVENT, () -> true);
+        this.level.addCondition(MOVE_RIGHT_EVENT, () -> false);
+        this.level.addCondition(MOVE_LEFT_EVENT, () -> true);
         this.entity.setPosition(ENTITY_POSITION);
         this.updates = 0;
         this.updateTest();

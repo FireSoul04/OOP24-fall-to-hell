@@ -1,5 +1,6 @@
 package it.unibo.falltohell.view.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.view.api.GameRenderer;
 import it.unibo.falltohell.view.api.GameWindow;
@@ -9,7 +10,6 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.Serial;
 
 /**
  * Swing implementation of the renderer for the game.
@@ -17,9 +17,6 @@ import java.io.Serial;
  * @author Davide Mancini
  */
 public class SwingGameRenderer extends JPanel implements GameRenderer {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     private final GameWindow window;
     private final DrawableRenderableHandler drh;
@@ -30,6 +27,11 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
      * @param window of the game
      * @param drh handler for renderables
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Window has to notify for any scaling of the window and drawable-renderable handler has to"
+            + "update what to render to the screen"
+    )
     public SwingGameRenderer(final GameWindow window, final DrawableRenderableHandler drh) {
         super();
         this.window = window;

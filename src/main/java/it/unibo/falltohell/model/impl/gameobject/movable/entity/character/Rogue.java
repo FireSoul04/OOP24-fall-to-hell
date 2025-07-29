@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.level.Level;
@@ -46,6 +47,10 @@ public class Rogue extends BaseCharacter {
      * @param level where it belongs
      * @param position where is it in the level
      */
+    @SuppressFBWarnings(
+        value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
+        justification = "Using a factory method to create the ability"
+    )
     public Rogue(final Level level, final Vector2 position) {
         super(
             level,
@@ -81,13 +86,13 @@ public class Rogue extends BaseCharacter {
     public void update(final double deltaTime) {
         super.update(deltaTime);
         this.doubleJump();
-        if (this.getLevel().getGameEventManager().checkCondition("ActiveAbility")) {
+        if (this.getLevel().checkCondition("ActiveAbility")) {
             this.knifeAbility.activate();
         }
     }
 
     private void doubleJump() {
-        if (this.getLevel().getGameEventManager().checkCondition("Jump") && !this.isJumping() && this.canDoubleJump) {
+        if (this.getLevel().checkCondition("Jump") && !this.isJumping() && this.canDoubleJump) {
             this.resetJump();
             this.canDoubleJump = false;
         }
