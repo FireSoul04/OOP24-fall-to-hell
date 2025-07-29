@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.weapons;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
@@ -48,6 +49,10 @@ public abstract class BaseWeapon extends GameObjectImpl implements Weapon {
      * @param fileName     of the weapon's drawable
      * @param offset       where to set the position based on the owner's position
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The weapon follows the owner by taking its position"
+    )
     public BaseWeapon(final Character owner, final Optional<Collider> collider,
             final long cooldownTime, final String fileName, final Vector2 offset) {
         super(owner.getLevel(), owner.getPosition(), collider.orElse(new BoxCollider(new Dimensions(0, 0))));

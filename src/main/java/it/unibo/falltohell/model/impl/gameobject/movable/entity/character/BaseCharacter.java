@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.weapon.Weapon;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.EntityImpl;
 import it.unibo.falltohell.util.Priority;
@@ -41,6 +42,10 @@ public abstract class BaseCharacter extends EntityImpl implements Character {
      * @param stats of the character
      * @param fileName is the name of the image file associated to the character
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The character must know which stats to use"
+    )
     public BaseCharacter(final Level level, final Vector2 position, final CharacterStatistics stats,
                          final String fileName) {
         super(level, position, stats);

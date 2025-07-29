@@ -1,8 +1,8 @@
 package it.unibo.falltohell.model.impl.level;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
@@ -71,12 +71,19 @@ public class LevelImpl implements Level {
      * the view.
      * If no event manager is linked, it will use a new not linked to the game.
      *
-     * @param camera      that follows the player
-     * @param gameObjects the initial list of game objects in the level
+     * @param camera       that follows the player
+     * @param eventManager of the game events
+     * @param drh          handler for the drawables
      */
+    @SuppressFBWarnings(
+        value = { "EI_EXPOSE_REP", "EI_EXPOSE_REP2" },
+        justification = "The camera must be accessed by the renderables, the "
+            + "event manager should be updated in the controller and the "
+            + "drawable renderable handler must be used to link any drawable"
+    )
     public LevelImpl(final GameCamera camera, final GameEventManager<String> eventManager,
-                     final DrawableRenderableHandler drh, final List<GameObject> gameObjects) {
-        this.gameObjects = new CopyOnWriteArrayList<>(gameObjects);
+                     final DrawableRenderableHandler drh) {
+        this.gameObjects = new CopyOnWriteArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
         this.characters = new EnumMap<>(CharacterID.class);
@@ -85,13 +92,6 @@ public class LevelImpl implements Level {
         this.eventManager = eventManager;
         this.drh = drh;
         this.gameData = Optional.empty();
-
-        for (final GameObject go : this.gameObjects) {
-            if (go instanceof BaseCollidableBlock || go instanceof BaseEntrance) {
-                this.jumpCollisionManager.addObstacle(go);
-            }
-        }
-
         this.pointsLabel = new Label("Points: 0", Vector2.zero(), true);
         this.statsLabel = new Label("HP: 0+0", Vector2.down().multiply(LABEL_OFFSET_Y), true);
         this.manaLabel = new Label("Mana: 0+0", Vector2.down().multiply(LABEL_OFFSET_Y * 2), true);
@@ -111,19 +111,6 @@ public class LevelImpl implements Level {
             }, Priority.BACKGROUND),
             "background.png"
         );
-    }
-
-    /**
-     * Constructs a new empty LevelImpl.
-     * If no drawable-renderable handler is linked, it will use a new not linked to
-     * the view.
-     * If no event manager is linked, it will use a new not linked to the game.
-     *
-     * @param camera that follows the player
-     */
-    public LevelImpl(final GameCamera camera, final GameEventManager<String> eventManager,
-            final DrawableRenderableHandler drh) {
-        this(camera, eventManager, drh, new ArrayList<>());
     }
 
     /**
@@ -186,6 +173,10 @@ public class LevelImpl implements Level {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Any game object can add, remove and check for timers"
+    )
     @Override
     public TimerManager getTimerManager() {
         return this.timerManager;
@@ -228,6 +219,10 @@ public class LevelImpl implements Level {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value="EI_EXPOSE_REP",
+        justification="This is the only way to link any drawable from the game objects"
+    )
     @Override
     public DrawableRenderableHandler getDrawableRenderableHandler() {
         return this.drh;

@@ -1,5 +1,6 @@
 package it.unibo.falltohell.test.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import it.unibo.falltohell.model.api.GameData;
@@ -113,6 +114,10 @@ public class LevelTest implements Level {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Any game object can add, remove and check for timers"
+    )
     @Override
     public TimerManager getTimerManager() {
         return this.timerManager;

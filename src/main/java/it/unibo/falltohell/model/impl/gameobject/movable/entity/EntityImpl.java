@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobject.movable.entity;
 
 import java.util.UUID;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.Entity;
@@ -48,6 +49,10 @@ public class EntityImpl extends MovableImpl implements Entity {
      * @param stats    the {@link Statistics} defining attributes like life and
      *                 speed
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Entity must have access to its statistics"
+    )
     public EntityImpl(final Level level, final Vector2 position, final Statistics stats) {
         super(level, position, stats.getSpeed(), new BoxCollider(Vector2.zero(), stats.getDimensions()));
         this.stats = stats;
@@ -60,6 +65,10 @@ public class EntityImpl extends MovableImpl implements Entity {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Any external object can read and modify the entity's stats"
+    )
     @Override
     public final Statistics getStats() {
         return this.stats;
@@ -254,6 +263,10 @@ public class EntityImpl extends MovableImpl implements Entity {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "This must be accessible to add and remove buffs when using passive abilities, drops and potions"
+    )
     @Override
     public BuffManager getBuffManager() {
         return this.buffManager;
