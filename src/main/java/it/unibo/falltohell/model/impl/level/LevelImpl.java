@@ -1,7 +1,6 @@
 package it.unibo.falltohell.model.impl.level;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
-import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,10 +11,12 @@ import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 
+import it.unibo.falltohell.model.api.GameEventCondition;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.manager.GameEventManager;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.gameobject.movable.Movable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -28,7 +29,6 @@ import it.unibo.falltohell.model.impl.drawable.Sprite;
 import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
-import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.manager.StaticCollisionManagerImpl;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
 import it.unibo.falltohell.model.impl.manager.AABBCollisionsManager;
@@ -56,8 +56,8 @@ public class LevelImpl implements Level {
     private final CollisionsManager collisionsManager;
     private final TimerManager timerManager;
     private final StaticCollisionManager jumpCollisionManager;
-    private Map<CharacterID, Character> characters;
-    private GameEventManagerImpl<String> eventManager;
+    private final Map<CharacterID, Character> characters;
+    private GameEventManager<String> eventManager;
     private DrawableRenderableHandler drh;
     private Optional<GameData> gameData;
     private Vector2 levelSize;
@@ -74,16 +74,17 @@ public class LevelImpl implements Level {
      * @param camera      that follows the player
      * @param gameObjects the initial list of game objects in the level
      */
-    public LevelImpl(final GameCamera camera, final List<GameObject> gameObjects) {
+    public LevelImpl(final GameCamera camera, final GameEventManager<String> eventManager,
+                     final DrawableRenderableHandler drh, final List<GameObject> gameObjects) {
         this.gameObjects = new CopyOnWriteArrayList<>(gameObjects);
-        this.camera = camera;
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
-        this.eventManager = new GameEventManagerImpl<>();
         this.characters = new EnumMap<>(CharacterID.class);
-        this.drh = new DrawableRenderableHandlerImpl();
-        this.gameData = Optional.empty();
         this.jumpCollisionManager = new StaticCollisionManagerImpl();
+        this.camera = camera;
+        this.eventManager = eventManager;
+        this.drh = drh;
+        this.gameData = Optional.empty();
 
         for (final GameObject go : this.gameObjects) {
             if (go instanceof BaseCollidableBlock || go instanceof BaseEntrance) {
@@ -94,6 +95,22 @@ public class LevelImpl implements Level {
         this.pointsLabel = new Label("Points: 0", Vector2.zero(), true);
         this.statsLabel = new Label("HP: 0+0", Vector2.down().multiply(LABEL_OFFSET_Y), true);
         this.manaLabel = new Label("Mana: 0+0", Vector2.down().multiply(LABEL_OFFSET_Y * 2), true);
+
+        drh.linkLabel(pointsLabel);
+        drh.linkLabel(statsLabel);
+        drh.linkLabel(manaLabel);
+        drh.linkSprite(
+            new Sprite(new GameObjectImpl(this, Vector2.zero()) {
+                @Override
+                public void update() {
+                    this.setPosition(camera.getCameraPosition()
+                        .add(new Vector2(camera.getCameraWidth(), camera.getCameraHeight()).multiply(2))
+                        .divide(2)
+                    );
+                }
+            }, Priority.BACKGROUND),
+            "background.png"
+        );
     }
 
     /**
@@ -104,8 +121,9 @@ public class LevelImpl implements Level {
      *
      * @param camera that follows the player
      */
-    public LevelImpl(final GameCamera camera) {
-        this(camera, new ArrayList<>());
+    public LevelImpl(final GameCamera camera, final GameEventManager<String> eventManager,
+            final DrawableRenderableHandler drh) {
+        this(camera, eventManager, drh, new ArrayList<>());
     }
 
     /**
@@ -195,39 +213,16 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void setGameEventManager(final GameEventManagerImpl<String> eventManager) {
-        this.eventManager = eventManager;
+    public boolean checkCondition(String name) {
+        return false;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public GameEventManagerImpl<String> getGameEventManager() {
-        return this.eventManager;
-    }
+    public void addCondition(String name, GameEventCondition event) {
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDrawableRenderableHandler(final DrawableRenderableHandler drh) {
-        this.drh = drh;
-        drh.linkLabel(pointsLabel);
-        drh.linkLabel(statsLabel);
-        drh.linkLabel(manaLabel);
-        drh.linkSprite(
-            new Sprite(new GameObjectImpl(this, Vector2.zero()) {
-                @Override
-                public void update() {
-                    this.setPosition(camera.getCameraPosition()
-                        .add(new Vector2(camera.getCameraWidth(), camera.getCameraHeight()).multiply(2))
-                        .divide(2)
-                    );
-                }
-            }, Priority.BACKGROUND),
-            "background.png"
-        );
     }
 
     /**
@@ -243,7 +238,8 @@ public class LevelImpl implements Level {
      */
     @Override
     public void loadCharacters(final Map<CharacterID, Character> characters) {
-        this.characters = Collections.unmodifiableMap(characters);
+        this.characters.clear();
+        this.characters.putAll(characters);
     }
 
     /**
