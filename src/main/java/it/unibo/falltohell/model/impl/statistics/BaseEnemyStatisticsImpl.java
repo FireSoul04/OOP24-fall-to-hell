@@ -24,12 +24,13 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemyStatistics {
 
+    private static final int MIN_NO_AGGRO = 5000;
     private static final double STANDARD_MULTIPLIER = 0.3;
     private static final double MIN_R = 0.05;
     private static final double MAX_R = 0.9;
     private static final double STANDARD_SENSE = 10 * 20;
     private static final double STANDARD_REGEN = 0.1;
-    private static final int STANDARD_NO_AGGRO = 1000;
+    private static final int STANDARD_NO_AGGRO = 8500;
     private static final Map<BuffNames, Double> BUFF = Map.of(
             BuffNames.LIFE, 12.0,
             BuffNames.MANA, 15.0,
@@ -71,7 +72,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
             final long points, final Optional<Map<BuffNames, Double>> buff) {
         super(life, attack, speed, dimension);
         this.initialPosition = position;
-        this.noAggro = noAggro.filter(a -> a >= 0).orElse(STANDARD_NO_AGGRO);
+        this.noAggro = noAggro.filter(a -> a > MIN_NO_AGGRO).orElse(STANDARD_NO_AGGRO);
         this.regen = regen.filter(r -> r >= MIN_R && r <= MAX_R).orElse(STANDARD_REGEN);
         this.senseDistance = senseDistance.filter(d -> d > 0).orElse(STANDARD_SENSE);
         this.points = points;

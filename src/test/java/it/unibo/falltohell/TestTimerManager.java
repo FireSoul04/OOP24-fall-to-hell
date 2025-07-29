@@ -21,6 +21,7 @@ class TestTimerManager {
 
     private static final long DURATION = 500;
     private static final String TIMER_NAME = "Timer";
+    private CustomTimer timer;
     private TimerManager timerManager;
     private Logger logger;
 
@@ -29,6 +30,7 @@ class TestTimerManager {
      */
     @BeforeEach
     void initialization() {
+        this.timer = new CustomTimerImpl(DURATION, () -> {});
         this.timerManager = new TimerManagerImpl();
         this.logger = Logger.getLogger("TimerManagerLogger");
     }
@@ -39,10 +41,10 @@ class TestTimerManager {
      */
     @Test
     void testAddTimer() {
-        this.timerManager.addTimer(TIMER_NAME, new CustomTimerImpl(DURATION, () -> {}));
+        this.timerManager.addTimer(TIMER_NAME, this.timer);
         assertTrue(this.timerManager.searchTimer(TIMER_NAME), "The timer was not added correctly");
         try {
-            this.timerManager.addTimer(TIMER_NAME, new CustomTimerImpl(DURATION, () -> {}));
+            this.timerManager.addTimer(TIMER_NAME, this.timer);
             Assertions.fail("An already existent timer should not be replaced");
         } catch (final IllegalArgumentException e) {
             this.logger.info("The IllegalArgumentException was thrown correctly");
@@ -55,7 +57,7 @@ class TestTimerManager {
      */
     @Test
     void testRemoveTimer() {
-        this.timerManager.addTimer(TIMER_NAME, new CustomTimerImpl(DURATION, () -> {}));
+        this.timerManager.addTimer(TIMER_NAME, this.timer);
         this.timerManager.removeTimer(TIMER_NAME);
         assertFalse(this.timerManager.searchTimer(TIMER_NAME));
         try {
@@ -71,12 +73,11 @@ class TestTimerManager {
      */
     @Test
     void testPauseAndResumeTimer() {
-        final CustomTimer timer = new CustomTimerImpl(DURATION, () -> {});
-        this.timerManager.addTimer(TIMER_NAME, timer);
+        this.timerManager.addTimer(TIMER_NAME, this.timer);
         this.timerManager.pauseTimer(TIMER_NAME);
-        assertTrue(timer.isPaused(), "The timer was not paused correctly");
+        assertTrue(this.timer.isPaused(), "The timer was not paused correctly");
         this.timerManager.resumeTimer(TIMER_NAME);
-        assertFalse(timer.isPaused(), "The timer was not resumed correctly");
+        assertFalse(this.timer.isPaused(), "The timer was not resumed correctly");
         this.timerManager.removeTimer(TIMER_NAME);
         try {
             this.timerManager.pauseTimer(TIMER_NAME);
@@ -97,12 +98,11 @@ class TestTimerManager {
      */
     @Test
     void testRestartAndStopTimer() {
-        final CustomTimer timer = new CustomTimerImpl(DURATION, () -> {});
-        this.timerManager.addTimer(TIMER_NAME, timer);
+        this.timerManager.addTimer(TIMER_NAME, this.timer);
         this.timerManager.stopTimer(TIMER_NAME);
-        assertFalse(timer.isStarted(), "The timer was not stopped correctly");
+        assertFalse(this.timer.isStarted(), "The timer was not stopped correctly");
         this.timerManager.restartTimer(TIMER_NAME);
-        assertTrue(timer.isStarted(), "The timer was not restarted correctly");
+        assertTrue(this.timer.isStarted(), "The timer was not restarted correctly");
         this.timerManager.removeTimer(TIMER_NAME);
         try {
             this.timerManager.stopTimer(TIMER_NAME);
@@ -115,6 +115,16 @@ class TestTimerManager {
             Assertions.fail("A non existent timer should not be restarted");
         } catch (final IllegalArgumentException e) {
             this.logger.info("The IllegalArgumentException was thrown correctly");
+        }
+    }
+
+    @Test
+    void testRestartIfPresent() {
+        this.timerManager.restartIfPresent(TIMER_NAME, this.timer);
+        try {
+            this.timerManager.restartIfPresent(TIMER_NAME, this.timer);
+        } catch (IllegalArgumentException e) {
+            Assertions.fail("The timer should have been restarted but it was tried to be added");
         }
     }
 }
