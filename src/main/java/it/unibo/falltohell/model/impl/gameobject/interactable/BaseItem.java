@@ -4,7 +4,9 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.interactable.Item;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.physics.Collider;
+import it.unibo.falltohell.model.impl.drawable.Label;
 import it.unibo.falltohell.model.impl.gameobject.GameObjectImpl;
+import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
@@ -15,11 +17,14 @@ import it.unibo.falltohell.util.Vector2;
  */
 public abstract class BaseItem extends GameObjectImpl implements Item {
 
+    private static final Vector2 LABEL_POSITION = new Vector2(70.0, 100.0);
+    private static final long LABEL_DURATION = 1500;
     private boolean sold;
     private final long price;
+    private final Label label;
 
     /**
-     * Initialization of the BaseItem class
+     * Initialization of the BaseItem class.
      * @param lv is the current level
      * @param position is the position of the item in the level
      * @param collider is the collider associated with the item
@@ -31,7 +36,10 @@ public abstract class BaseItem extends GameObjectImpl implements Item {
         super(lv, position, collider);
         this.price = price;
         this.sold = false;
+        this.label = new Label("You don't have enough soul points",
+                LABEL_POSITION, false);
         this.initDrawable(Priority.VERY_LOW, fileName);
+        this.getLevel().getDrawableRenderableHandler().linkLabel(this.label);
     }
 
     /**
@@ -47,8 +55,12 @@ public abstract class BaseItem extends GameObjectImpl implements Item {
                 this.purchase(this.price);
                 this.sold = true;
                 this.onInteract(character);
-            } catch (IllegalArgumentException e) {
-                //TODO-> use label to see the message
+                this.getLevel().getDrawableRenderableHandler().removeLink(this.label);
+            } catch (final IllegalArgumentException e) {
+                this.label.setVisible(true);
+                final String timerName = "can_not_sell" + this.hashCode();
+                this.getLevel().getTimerManager().restartIfPresent(timerName, new CustomTimerImpl(LABEL_DURATION,
+                    () -> this.label.setVisible(false)));
             }
         }
     }
