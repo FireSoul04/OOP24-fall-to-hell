@@ -8,7 +8,7 @@ public class Start {
     public static void main(final String[] args) {
         final GameController fallToHell = new GameControllerImpl();
         final MainMenuPanel menu = new MainMenuPanel(
-             e -> {
+            e -> {
                 fallToHell.getView().showGame();
                 fallToHell.getView().requestFocusOnWindow();
                 new Thread(fallToHell :: run).start();
