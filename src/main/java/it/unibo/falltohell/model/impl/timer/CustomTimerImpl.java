@@ -96,10 +96,10 @@ public class CustomTimerImpl implements CustomTimer {
      */
     @Override
     public void pause() {
-        if (!this.paused && this.started) {
-            this.paused = true;
-        } else {
+        if (this.paused) {
             throw new IllegalStateException("Cannot pause a timer that is already paused");
+        } else if (this.started) {
+            this.paused = true;
         }
     }
 
@@ -108,10 +108,10 @@ public class CustomTimerImpl implements CustomTimer {
      */
     @Override
     public void resume() {
-        if (this.paused && this.started) {
-            this.paused = false;
-        } else {
+        if (!this.paused) {
             throw new IllegalStateException("Cannot resume a timer that is not paused");
+        } else if (this.started) {
+            this.paused = false;
         }
     }
 
