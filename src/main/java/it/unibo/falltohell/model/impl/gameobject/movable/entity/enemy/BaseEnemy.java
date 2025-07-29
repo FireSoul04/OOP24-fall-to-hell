@@ -1,9 +1,7 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
 
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.EntityImpl;
-import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
-import it.unibo.falltohell.model.impl.manager.SafeZoneManager;
 import it.unibo.falltohell.model.impl.builder.BuffBuilderImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 
@@ -13,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
+import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.util.Priority;
 
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -21,7 +21,8 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEn
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
-import it.unibo.falltohell.util.Vector2;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
+
 
 /**
  * Abstract base class for all {@link Enemy} implementations.
