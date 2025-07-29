@@ -26,6 +26,11 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 
+/**
+ * Class for testing the abilities of the character rogue.
+ *
+ * @author Davide Mancini
+ */
 class TestRogueAbilities {
 
     private static final Vector2 ROGUE_POSITION = Vector2.zero();
@@ -36,15 +41,11 @@ class TestRogueAbilities {
     private static final int DUMMY_POINTS = 1;
     private static final Dimensions DUMMY_SIZE = new Dimensions(20, 20);
     private static final StatisticsFactory SF = new StatisticFactoryImpl();
-    private static final BaseEnemyStatistics stats = SF.createBaseEnemyStatistic(
-        DUMMY_LIFE, DUMMY_ATTACK, DUMMY_SPEED, DUMMY_SIZE,
-        DUMMY_POSITION, DUMMY_POINTS, SF.createOptional()
-    );
 
     private Character rogue;
-    private Enemy dummy;
     private Level level;
     private boolean canShoot;
+    private BaseEnemyStatistics enemyStats;
 
     /**
      * Initiate all variables for the test.
@@ -63,6 +64,10 @@ class TestRogueAbilities {
         );
         this.level.linkGameData(new GameDataImpl(Map.of(this.rogue.getCharacterID(), this.rogue)));
         this.canShoot = true;
+        this.enemyStats = SF.createBaseEnemyStatistic(
+            DUMMY_LIFE, DUMMY_ATTACK, DUMMY_SPEED, DUMMY_SIZE,
+            DUMMY_POSITION, DUMMY_POINTS, SF.createOptional()
+        );
     }
 
     /**
@@ -84,18 +89,18 @@ class TestRogueAbilities {
             .map(GameObject::getPosition)
             .toList();
         Assertions.assertTrue(
-            knives.get(0).x() > startingKnivesPositions.get(0).x() &&
-                Double.compare(knives.get(0).y(), startingKnivesPositions.get(0).y()) == 0,
+            knives.get(0).x() > startingKnivesPositions.get(0).x()
+                && Double.compare(knives.get(0).y(), startingKnivesPositions.get(0).y()) == 0,
             "First knife should move only in the x axes"
         );
         Assertions.assertTrue(
-            knives.get(1).x() > startingKnivesPositions.get(1).x() &&
-                knives.get(1).y() > startingKnivesPositions.get(1).y(),
+            knives.get(1).x() > startingKnivesPositions.get(1).x()
+                && knives.get(1).y() > startingKnivesPositions.get(1).y(),
             "Second knife should move down and right"
         );
         Assertions.assertTrue(
-            knives.get(2).x() > startingKnivesPositions.get(2).x() &&
-                knives.get(2).y() < startingKnivesPositions.get(2).y(),
+            knives.get(2).x() > startingKnivesPositions.get(2).x()
+                && knives.get(2).y() < startingKnivesPositions.get(2).y(),
             "Third knife should move up and right"
         );
     }
@@ -105,10 +110,11 @@ class TestRogueAbilities {
      */
     @Test
     void testKnifeDamageOnEnemy() {
-        this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), stats);
-        final double initialLife = this.dummy.getStats().getLife();
+        final Enemy dummy = new DummyEnemyTest(this.level, enemyStats);
+        dummy.setPosition(Vector2.zero());
+        final double initialLife = dummy.getStats().getLife();
         this.level.update(1.0);
-        Assertions.assertTrue(this.dummy.getStats().getLife() < initialLife, "The enemy should be hit and take damage");
+        Assertions.assertTrue(dummy.getStats().getLife() < initialLife, "The enemy should be hit and take damage");
     }
 
     /**
@@ -116,8 +122,8 @@ class TestRogueAbilities {
      */
     @Test
     void testEvadePassiveAbilityWithEnemy() {
-        this.dummy = new DummyEnemyTest(this.level, Vector2.zero(), stats);
-        this.rogue.onCollision(this.dummy, Vector2.zero());
+        final Enemy dummy = new DummyEnemyTest(this.level, enemyStats);
+        this.rogue.onCollision(dummy, Vector2.zero());
         Assertions.assertTrue(
             this.rogue.getStats().getInitialSpeed().magnitude() < this.rogue.getStats().getSpeed().magnitude(),
             "The rogue should have his speed buffed"
