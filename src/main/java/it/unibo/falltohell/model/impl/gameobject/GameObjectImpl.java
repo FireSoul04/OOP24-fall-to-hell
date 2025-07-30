@@ -14,7 +14,7 @@ import it.unibo.falltohell.model.api.level.Level;
  * Default implementation of the {@link GameObject} interface.
  * Represents a generic object in the game world, with position, size, solidity,
  * collider, and a reference to the level it belongs to. Upon creation, the
- * object<
+ * object
  * is automatically added to the specified level.
  * @author Casadei Lorenzo
  */

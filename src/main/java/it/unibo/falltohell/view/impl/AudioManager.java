@@ -8,10 +8,9 @@ import java.util.Map;
  */
 public final class AudioManager {
     private static final AudioManager INSTANCE = new AudioManager();
+    private static final int NUMBER_OF_LOOP = 15;
     private final Map<String, SoundPlayerView> soundMap = new HashMap<>();
     private boolean muted;
-    private static final int NUMBER_OF_LOOP = 15;
-
     /**
      * Private constructor to prevent external instantiation.
      * Loads the available sounds.

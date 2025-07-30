@@ -159,7 +159,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      */
     @Override
     public void setDamagedLife(final double damage) {
-        if(this.removed){
+        if (this.removed) {
             return;
         }
         super.setDamagedLife(damage);
@@ -321,7 +321,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
         super.setPosition(this.stats.getInitialPos());
         this.removed = false;
         this.manager.restartEnemyTimer(this, TimerType.NO_AGGRO);
-        if(this instanceof LongRangeEnemy ){
+        if (this instanceof LongRangeEnemy) {
             this.manager.restartEnemyTimer(this, TimerType.ATTACK);
         }
     }

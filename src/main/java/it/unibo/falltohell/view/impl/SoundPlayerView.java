@@ -11,9 +11,10 @@ import it.unibo.falltohell.view.api.AudioPlayer;
 /**
  * A class that consent to manipulate the file Audio for the game.
  */
-public class SoundPlayerView implements AudioPlayer{
+public class SoundPlayerView implements AudioPlayer {
     private final int loop;
     private final String filePath;
+    private final float volume = -10.0f;
     private long currentFrame;
     private Clip clip;
     /**
@@ -36,9 +37,9 @@ public class SoundPlayerView implements AudioPlayer{
             this.clip = AudioSystem.getClip();
             this.clip.open(audioInputStream);
             final FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-10.0f);
-        } catch (Exception e) {
-            
+            gainControl.setValue(volume);
+        } catch (final Exception e) {
+
         }
     }
     /**
