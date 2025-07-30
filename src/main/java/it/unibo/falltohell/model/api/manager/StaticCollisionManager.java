@@ -35,13 +35,15 @@ public interface StaticCollisionManager {
      * Checks if the specified rectangular area at a given position
      * collides with any managed obstacle.
      * <p>
-     * The rectangular area is defined by its center position and its width and height.
+     * The rectangular area is defined by its center position and its width and
+     * height.
      * </p>
      *
      * @param position the center {@link Vector2} position of the area to check
      * @param width    the width of the rectangular area
      * @param height   the height of the rectangular area
-     * @return {@code true} if the area collides with any obstacle, {@code false} otherwise
+     * @return {@code true} if the area collides with any obstacle, {@code false}
+     *         otherwise
      */
     boolean isBlocked(Vector2 position, double width, double height);
 

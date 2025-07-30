@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.ability.passive;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.ability.passive.PassiveAbilityDo;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -27,6 +28,8 @@ public class StatisticPassiveAbilityImpl implements StatisticPassiveAbility {
      * @param lambda    the {@link PassiveAbilityDo} that defines the behavior of
      *                  this passive ability
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+    justification = "Character is only stored as a reference and not mutated")
     public StatisticPassiveAbilityImpl(final Character character, final PassiveAbilityDo lambda) {
         this.character = character;
         this.event = lambda;

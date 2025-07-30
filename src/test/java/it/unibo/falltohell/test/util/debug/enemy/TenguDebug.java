@@ -1,19 +1,19 @@
-package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
+package it.unibo.falltohell.test.util.debug.enemy;
 
 import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
-import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEnemy;
+import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
-import it.unibo.falltohell.model.api.statistic.RestrictedLongRangeEnemyStatistics;
 import it.unibo.falltohell.model.api.manager.SafeZoneManager;
-
+import it.unibo.falltohell.model.api.statistic.RestrictedLongRangeEnemyStatistics;
+import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
-import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.TimerType;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.BaseEnemyProjectile;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
@@ -21,21 +21,19 @@ import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Concrete implementation of a long-range enemy type named Tengu.
+ * A debug implementation of an enemy for testing purposes.
  * <p>
- * This enemy extends {@link BaseEnemy} and implements behavior such as
- * movement,
- * attacking with projectiles, collision handling, and health regeneration.
- * It uses timers to manage attack intervals and regenerates health over time.
- * </p>
+ * Provides visual representation, movement patterns (patrol and chase),
+ * collision handling, and interaction with the {@link EnemyTimerManager}
+ * and {@link SafeZoneManager}.
+ * <p>
+ * Used in test environments to simulate enemy behavior without affecting
+ * the core game logic.
  *
  * @author Sara Visani
- * @see BaseEnemy
- * @see RestrictedLongRangeEnemyStatistics
- * @see BaseEnemyProjectile
- * @see EnemyTimerManager
  */
-public class Tengu extends BaseEnemy implements LongRangeEnemy {
+public class TenguDebug extends BaseEnemyDebug implements LongRangeEnemy {
+
     private static final int POINTS = 10;
     private static final double CHAR_DISTANCE = 15 * TILE_SIZE;
     private static final int ATTACK_TIME = 1000;
@@ -71,12 +69,9 @@ public class Tengu extends BaseEnemy implements LongRangeEnemy {
      * @see RestrictedLongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
-    @SuppressFBWarnings (value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
-    justification = "Calling attack() in constructor is safe because "
-                    + "the object is fully initialized and the method "
-                    + "does not depend on subclass state"
-                    )
-    public Tengu(final Level level, final Vector2 initialCord,
+    @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
+    justification = "attack() is safe in constructor; object fully initialized")
+    public TenguDebug(final Level level, final Vector2 initialCord,
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeRestrictedStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
@@ -119,7 +114,7 @@ public class Tengu extends BaseEnemy implements LongRangeEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void attack() {
+    public void attack() {
         if (super.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new BaseEnemyProjectile(super.getLevel(),
                     super.getPosition().add(Vector2.down().multiply(this.stats.getDimensions().height() / 2)),
@@ -133,7 +128,7 @@ public class Tengu extends BaseEnemy implements LongRangeEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void patrol(final Vector2 currentPos, final Vector2 speed) {
+    public void patrol(final Vector2 currentPos, final Vector2 speed) {
         final double speedX = speed.x();
         final double y = currentPos.y();
         final Vector2 target = currentPos.add(new Vector2(speedX * this.direction, 0));
@@ -159,7 +154,7 @@ public class Tengu extends BaseEnemy implements LongRangeEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed) {
+    public void chase(final Vector2 charaPos, final Vector2 currentPos, final Vector2 speed) {
         final double speedX = speed.x();
         final double y = currentPos.y();
         super.setFacingRight(charaPos.x() - currentPos.x() > 0);
@@ -215,7 +210,7 @@ public class Tengu extends BaseEnemy implements LongRangeEnemy {
      * @return true if the enemy would collide at the given position, false
      *         otherwise
      */
-    private boolean isBlocked(final Vector2 target) {
+    public boolean isBlocked(final Vector2 target) {
         return this.collided.isPresent()
                 && ((this.direction > 0
                         && target.x() > this.collided.get().x())
@@ -225,7 +220,27 @@ public class Tengu extends BaseEnemy implements LongRangeEnemy {
     /**
      * Sets the enemy's position to the last known collision point, if present.
      */
-    private void setPositionToCollision() {
+    public void setPositionToCollision() {
         this.collided.ifPresent(super::setPosition);
+    }
+
+    /**
+     * Returns the current movement direction of the enemy.
+     *
+     * @return an integer representing the enemy's direction
+     */
+    public int getDirection() {
+        return direction;
+    }
+
+    /**
+     * Returns the position where the enemy last collided, if any.
+     *
+     * @return an {@link Optional} containing the collision position as a
+     *         {@link Vector2},
+     *         or an empty Optional if no collision has occurred
+     */
+    public Optional<Vector2> getCollided() {
+        return collided;
     }
 }

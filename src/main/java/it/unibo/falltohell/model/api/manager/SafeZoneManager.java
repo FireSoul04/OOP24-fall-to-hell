@@ -4,7 +4,6 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.listener.EnemyRespawnListener;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 
-
 /**
  * <p>
  * Manages the logic related to safe zones in the game. This class coordinates
@@ -42,7 +41,7 @@ public interface SafeZoneManager {
     /**
      * Adds an {@link Enemy} to be affected by the listener.
      *
-     * @param enemy the enemy to be added
+     * @param enemy    the enemy to be added
      * @param filename the name of the file representing the enemy's sprite
      */
     void addEnemy(Enemy enemy, String filename);

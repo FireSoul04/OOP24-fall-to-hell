@@ -1,40 +1,37 @@
-package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
-
-import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
-import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
-import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
-import it.unibo.falltohell.model.api.manager.SafeZoneManager;
+package it.unibo.falltohell.test.util.debug.enemy;
 
 import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.falltohell.model.api.gameobject.GameObject;
+import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.level.Level;
+import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
+import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
+import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
-import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.Centaur;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Concrete implementation of {@link BaseEnemy}, representing a specific type of
- * enemy: a {@code Centaur}.
+ * A debug implementation of an enemy for testing purposes.
  * <p>
- * This enemy has predefined statistics such as:
- * <ul>
- * <li>{@link #FULL_LIFE}</li>
- * <li>{@link #DAMAGE}</li>
- * <li>{@link #VELOCITY}</li>
- * <li>{@link #DIMENSIONS}</li>
- * <li>others specified into {@link #stats}</li>
- * </ul>
- * It can detect and attack a {@link Character} and regenerates health when not
- * in combat.
- * </p>
+ * Provides visual representation, movement patterns (patrol and chase),
+ * collision handling, and interaction with the {@link EnemyTimerManager}
+ * and {@link SafeZoneManager}.
+ * <p>
+ * Used in test environments to simulate enemy behavior without affecting
+ * the core game logic.
  *
  * @author Sara Visani
  */
-public class Centaur extends BaseEnemy {
+public class CentaurDebug extends BaseEnemyDebug {
+
+    private static final double EPSILON = 1e-6;
     private static final int POINTS = 30;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
     private static final double FULL_LIFE = 60;
@@ -46,8 +43,6 @@ public class Centaur extends BaseEnemy {
             BuffNames.LIFE, 30.0,
             BuffNames.MANA, 40.0,
             BuffNames.SPEED, 50.0);
-    private static final double EPSILON = 1e-9;
-
     private final BaseEnemyStatistics stats;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
@@ -68,7 +63,7 @@ public class Centaur extends BaseEnemy {
      * @param ingage      the {@link SafeZoneManager} used to handle if the player
      *                    enter a safe zone
      */
-    public Centaur(final Level level, final Vector2 initialCord,
+    public CentaurDebug(final Level level, final Vector2 initialCord,
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level, new StatisticFactoryImpl().createBaseEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
                 initialCord, POINTS, new StatisticFactoryImpl().createOptional().withBuff(BUFF)), manager,
@@ -102,7 +97,7 @@ public class Centaur extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void attack() {
+    public void attack() {
         super.attack();
         super.getCharacter().setDamagedLife(this.stats.getAttack());
     }
@@ -111,7 +106,7 @@ public class Centaur extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void patrol(final Vector2 current, final Vector2 speed) {
+    public void patrol(final Vector2 current, final Vector2 speed) {
         final double speedX = speed.x();
         final Vector2 step = new Vector2(speedX * direction, 0);
         final Vector2 target = current.add(step);
@@ -124,7 +119,7 @@ public class Centaur extends BaseEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void chase(final Vector2 target, final Vector2 current, final Vector2 speed) {
+    public void chase(final Vector2 target, final Vector2 current, final Vector2 speed) {
         final Vector2 diff = target.subtract(current).normalize();
         final Vector2 moveStep = diff.multiply(speed);
         final var manager = super.getLevel().getJumpCollisionManager();
@@ -148,5 +143,25 @@ public class Centaur extends BaseEnemy {
 
         this.setPosition(tryMove);
         super.setFacingRight(moveStep.x() > 0);
+    }
+
+    /**
+     * Returns the current movement direction of the enemy.
+     *
+     * @return an integer representing the enemy's direction
+     */
+    public int getDirection() {
+        return direction;
+    }
+
+    /**
+     * Returns the position where the enemy last collided, if any.
+     *
+     * @return an {@link Optional} containing the collision position as a
+     *         {@link Vector2},
+     *         or an empty Optional if no collision has occurred
+     */
+    public Optional<Vector2> getCollided() {
+        return collided;
     }
 }

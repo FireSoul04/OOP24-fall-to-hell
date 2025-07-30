@@ -1,9 +1,4 @@
-package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
-
-import it.unibo.falltohell.model.impl.gameobject.movable.entity.EntityImpl;
-import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
-import it.unibo.falltohell.model.impl.builder.BuffBuilderImpl;
-import it.unibo.falltohell.model.impl.physics.BoxCollider;
+package it.unibo.falltohell.test.util.debug.enemy;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,115 +8,54 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.falltohell.util.Vector2;
-import it.unibo.falltohell.util.Priority;
-
-import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEnemy;
+import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
+import it.unibo.falltohell.model.api.manager.SafeZoneManager;
 import it.unibo.falltohell.model.api.statistic.BaseEnemyStatistics;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.api.manager.SafeZoneManager;
-
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.EntityImpl;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.TimerType;
+import it.unibo.falltohell.test.util.debug.DropBuilderDebug;
+import it.unibo.falltohell.test.util.debug.DropDebug;
+import it.unibo.falltohell.test.util.debug.druid.DruidDebug;
+import it.unibo.falltohell.util.Priority;
+import it.unibo.falltohell.util.Vector2;
 
 /**
- * Abstract base class for all {@link Enemy} implementations.
+ * Abstract base class representing a generic enemy in the game.
  * <p>
- * Sets up the fundamental structure for enemy behavior, including movement,
- * collision, attacking logic, and stat management.
+ * Extends {@link EntityImpl} and implements the {@link Enemy} interface.
+ * Provides core functionalities such as movement, attack handling,
+ * timer management, regeneration, and interactions with both the player
+ * character and the safe zone system.
+ * </p>
+ * <p>
+ * This class also manages the enemy's removal state, handles resets
+ * when leaving a safe zone, and supports dropping random buffs
+ * based on weighted probabilities.
+ * </p>
+ * <p>
+ * Designed to be extended by specific enemy implementations that define
+ * custom patrol and chase behaviors.
  * </p>
  *
- * @see Enemy
- * @see BaseEnemyStatistics
- * @see BoxCollider
- * @see Character
- * @see Vector2
  * @author Sara Visani
  */
-public abstract class BaseEnemy extends EntityImpl implements Enemy {
-
+public abstract class BaseEnemyDebug extends EntityImpl implements Enemy {
     private static final double CHARACTER_REGEN = 0.1;
-
-    /**
-     * <p>
-     * Represents types of timers used in game logic for characters and enemies.
-     * </p>
-     */
-    public enum TimerType {
-        /**
-         * <p>
-         * Timer related to attack cooldowns.
-         * </p>
-         */
-        ATTACK,
-        /**
-         * <p>
-         * Timer preventing aggro (aggression or targeting behavior) for a period.
-         * </p>
-         */
-        NO_AGGRO
-    }
-
-    /**
-     * <p>
-     * Enumerates all the possible types of buffs that can be applied to a character
-     * or entity.
-     * </p>
-     *
-     * <p>
-     * Each value corresponds to a stat-enhancing effect:
-     * </p>
-     * <ul>
-     * <li><b>ATTACK</b>: Increases attack power</li>
-     * <li><b>ATTACK_SPEED</b>: Reduces delay between attacks</li>
-     * <li><b>LIFE</b>: Increases maximum or current life points</li>
-     * <li><b>MANA</b>: Increases maximum or current mana</li>
-     * <li><b>SPEED</b>: Boosts movement velocity</li>
-     * </ul>
-     */
-    public enum BuffNames {
-        /**
-         * <p>
-         * Increases damage dealt by the entity's attacks.
-         * </p>
-         */
-        ATTACK,
-
-        /**
-         * <p>
-         * Decreases attack cooldown for faster attack execution.
-         * </p>
-         */
-        ATTACK_SPEED,
-
-        /**
-         * <p>
-         * Increases current or maximum life.
-         * </p>
-         */
-        LIFE,
-
-        /**
-         * <p>
-         * Increases current or maximum mana.
-         * </p>
-         */
-        MANA,
-
-        /**
-         * <p>
-         * Increases movement speed.
-         * </p>
-         */
-        SPEED
-    }
+    private static final double EPSILON = 1e-6;
 
     private final BaseEnemyStatistics stats;
     private final EnemyTimerManager manager;
     private final SafeZoneManager safeZoneManager;
     private boolean removed;
+    private DropDebug drop;
+    private boolean debug;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -141,11 +75,9 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *                        safe zone
      * @param fileName        is the name of the image file associated to the enemy
      */
-    @SuppressFBWarnings(
-    value = {"EI_EXPOSE_REP2", "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR"},
-    justification = "EnemyTimerManager is immutable and safe to store directly; "
-                    + "createNoAggroTimer is safe to call during construction because it does not depend on subclass state")
-    public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
+    @SuppressFBWarnings(value = { "EI_EXPOSE_REP2",
+            "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR" }, justification = "EnemyTimerManager is immutable;createNoAggroTimer and resetEnemy are safe in constructor")
+    public BaseEnemyDebug(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
             final SafeZoneManager safeZoneManager, final String fileName) {
         super(level, stats.getInitialPos(), stats);
         this.stats = (BaseEnemyStatistics) super.getStats();
@@ -176,11 +108,11 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * {@inheritDoc}
      */
     @Override
-    protected void removeEntity() {
-        if (super.isDead()) {
+    public void removeEntity() {
+        if (super.isDead() || this.debug) {
             this.removed = true;
             if (this.getCharacter() instanceof Druid) {
-                ((Druid) this.getCharacter()).addKill();
+                ((DruidDebug) this.getCharacter()).addKill();
             }
             ((CharacterStatistics) this.getCharacter().getStats())
                     .addMana(((CharacterStatistics) this.getCharacter().getStats()).getInitialMana() * CHARACTER_REGEN);
@@ -200,15 +132,14 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @return {@code true} if the enemy is at maximum health, {@code false}
      *         otherwise
      */
-    protected boolean isFull() {
-        final double epsilon = 1e-9;
-        return Math.abs(this.stats.getLife() - this.stats.getFullLife()) < epsilon;
+    public boolean isFull() {
+        return Math.abs(this.stats.getLife() - this.stats.getFullLife()) < EPSILON;
     }
 
     /**
      * Executes the attack behavior specific to the enemy.
      */
-    protected void attack() {
+    public void attack() {
         this.manager.restartEnemyTimer(this, TimerType.NO_AGGRO);
     }
 
@@ -227,7 +158,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *
      * @param deltaTime time elapsed since the last update, in seconds
      */
-    protected void move(final double deltaTime) {
+    public void move(final double deltaTime) {
         final Vector2 speed = this.stats.getSpeed().multiply(deltaTime);
         final Vector2 currentPos = super.getPosition();
         final Vector2 charaPos = this.getCharacter().getPosition();
@@ -247,7 +178,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param currentPos the current position of the enemy
      * @param speed      the movement amount for this frame
      */
-    protected abstract void patrol(Vector2 currentPos, Vector2 speed);
+    public abstract void patrol(Vector2 currentPos, Vector2 speed);
 
     /**
      * Executes chase behavior when the player is within the enemy's detection
@@ -260,21 +191,21 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @param currentPos the current position of the enemy
      * @param speed      the movement amount for this frame
      */
-    protected abstract void chase(Vector2 charaPos, Vector2 currentPos, Vector2 speed);
+    public abstract void chase(Vector2 charaPos, Vector2 currentPos, Vector2 speed);
 
     /**
      * Checks if the enemy can detect the player within its sensing distance.
      *
      * @return true if player is within sensing distance, false otherwise
      */
-    protected boolean canSeePlayer() {
+    public boolean canSeePlayer() {
         return this.getPosition().distance(this.getCharacter().getPosition()) <= this.stats.getSenseDistance();
     }
 
     /**
      * @return the current character in the level
      */
-    protected Character getCharacter() {
+    public Character getCharacter() {
         return super.getLevel().getGameData().getCurrentCharacter();
     }
 
@@ -285,7 +216,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *
      * @return the {@link EnemyTimerManager} instance
      */
-    protected EnemyTimerManager getEnemyTimerManager() {
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "EnemyTimerManager and SafeZoneManager are safe to expose for debug purposes")
+    public EnemyTimerManager getEnemyTimerManager() {
         return this.manager;
     }
 
@@ -295,7 +227,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *
      * @return the safe zone manager
      */
-    protected SafeZoneManager getSafeZoneManager() {
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "EnemyTimerManager and SafeZoneManager are safe to expose for debug purposes")
+    public SafeZoneManager getSafeZoneManager() {
         return this.safeZoneManager;
     }
 
@@ -323,7 +256,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * @see SafeZoneManager#resetEnemy()
      * @see BaseEnemyStatistics
      */
-    private void resetEnemy() {
+    public void resetEnemy() {
         this.stats.setLife(this.stats.getFullLife());
         super.setPosition(this.stats.getInitialPos());
         this.removed = false;
@@ -357,7 +290,7 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      * functional-style operations.
      * </p>
      */
-    protected void dropBuff() {
+    public void dropBuff() {
         // Casual Percentage
         final double number = Math.round(ThreadLocalRandom.current().nextDouble(0, 100) * 10.0) / 10.0;
         // Sort the map to have the percentage intervals in order
@@ -375,10 +308,45 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
                 .findFirst();
         // Create the said buff if key was founded
         if (typeBuff.isPresent()) {
-            new BuffBuilderImpl()
+            this.drop = new DropBuilderDebug()
                     .withLevel(super.getLevel()).withPosition(super.getPosition()).withBuff(typeBuff.get(),
                             (CharacterStatistics) this.getCharacter().getStats(), this.stats.getMultiplier())
                     .build();
         }
+    }
+
+    /**
+     * Returns the character regeneration rate.
+     *
+     * @return the character regeneration rate as a double
+     */
+    public static double getCharacterRegen() {
+        return CHARACTER_REGEN;
+    }
+
+    /**
+     * Indicates whether this object has been removed.
+     *
+     * @return {@code true} if removed; {@code false} otherwise
+     */
+    public boolean isRemoved() {
+        return this.removed;
+    }
+
+    /**
+     * Returns the last drop.
+     *
+     * @return the last drop as a DropDebug in a Optional
+     */
+    public Optional<DropDebug> getDrop() {
+        return Optional.ofNullable(this.drop);
+    }
+
+    public boolean isDebug() {
+        return this.debug;
+    }
+
+    public void setDebug(final boolean debug) {
+        this.debug = debug;
     }
 }

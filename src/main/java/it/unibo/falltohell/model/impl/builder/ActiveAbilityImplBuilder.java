@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.builder;
 
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.builder.ActiveAbilityBuilder;
 import it.unibo.falltohell.model.api.ability.active.ActiveAbilityUpdate;
@@ -44,6 +45,8 @@ public class ActiveAbilityImplBuilder implements ActiveAbilityBuilder {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+    justification = "Level is managed externally and is safe to store by reference")
     public ActiveAbilityImplBuilder withLevel(final Level level) {
         this.level = level;
         return this;

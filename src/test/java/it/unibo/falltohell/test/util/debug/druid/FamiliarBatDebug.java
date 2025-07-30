@@ -1,41 +1,57 @@
-package it.unibo.falltohell.model.impl.gameobject.movable;
+package it.unibo.falltohell.test.util.debug.druid;
 
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
-import it.unibo.falltohell.model.api.gameobject.movable.FamiliarBat;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.api.listener.AttackFinishListener;
-import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
-import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
+import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
+import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
+import it.unibo.falltohell.test.util.debug.AttackFinishListenerDebug;
 import it.unibo.falltohell.util.Dimensions;
+import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Represents a FamiliarBat weapon that follows and attacks the associated
- * character.
  * <p>
- * The FamiliarBat moves towards the character when idle and performs attacks in
- * a specified direction.
- * When colliding with enemies, it applies damage based on a weighted random
- * number of hits.
- * It also regenerates the character's mana and life proportionally to the
- * attack count.
+ * A debug implementation of a familiar bat that assists a character (typically
+ * a druid) in combat.
+ * </p>
+ *
+ * <p>
+ * The FamiliarBatDebug follows the associated character, attacks enemies in
+ * range, and regenerates
+ * the character's life and mana upon hitting enemies.
+ * </p>
+ *
+ * <p>
+ * Features include:
+ * <ul>
+ * <li>Periodic attack timer (every 1000ms)</li>
+ * <li>Randomized number of attack hits per attack with weighted
+ * probabilities</li>
+ * <li>Movement following the character when idle</li>
+ * <li>Collision detection with blocks and enemies to stop attacks or apply
+ * damage</li>
+ * <li>Regeneration of the character's mana and life based on hits</li>
+ * <li>Callback listener to notify when attack finishes</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * This class is used primarily for debugging and testing purposes.
  * </p>
  *
  * @author Sara Visani
- * @see Character
- * @see Enemy
  */
-public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
+public class FamiliarBatDebug extends MovableImpl {
+
     private static final int P_30 = 30;
     private static final int P_40 = 70;
     private static final int CASE_5 = 5;
@@ -55,7 +71,8 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
     private Vector2 attackDirection;
     private boolean isAttacking;
     private boolean canAttack = true;
-    private AttackFinishListener attackFinishListener;
+
+    private AttackFinishListenerDebug attackFinishListener;
 
     /**
      * <p>
@@ -74,9 +91,13 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      * @param character the character that this FamiliarBat follows and assists
      * @param listener  the callback to invoke when the familiar finishes an attack
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
-    justification = "Character is only stored as a reference and not mutated")
-    public FamiliarBatImpl(final Character character, final AttackFinishListener listener) {
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification =
+            "Character reference stored intentionally, "
+            + "treated as immutable in this context"
+    )
+    public FamiliarBatDebug(final Character character, final AttackFinishListenerDebug listener) {
         super(character.getLevel(), character.getPosition(), VELOCITY, COLLIDER);
         this.character = character;
         this.attackFinishListener = listener;
@@ -99,7 +120,6 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      *
      * @param direction the normalized direction vector for the attack
      */
-    @Override
     public void attack(final Vector2 direction) {
         this.isAttacking = true;
         this.attackDirection = direction;
@@ -125,7 +145,6 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      *
      * @return {@code true} if idle; {@code false} if attacking
      */
-    @Override
     public boolean isIdle() {
         return !this.isAttacking;
     }
@@ -136,7 +155,6 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      *
      * @return {@code true} if within attack range; {@code false} otherwise
      */
-    @Override
     public boolean isInAttackRange() {
         final Vector2 currentPos = super.getPosition();
         final Vector2 targetPos = this.character.getPosition();
@@ -144,7 +162,6 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
     }
 
     /**
-     * {@inheritDoc}
      * <p>
      * Updates the bat's movement either towards the character (idle) or in the
      * attack direction (attacking).
@@ -159,7 +176,6 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
     }
 
     /**
-     * {@inheritDoc}
      * <p>
      * Handles collisions with blocks and enemies.
      * Stops the attack if hitting a block, or applies damage and decrements attacks
@@ -208,7 +224,7 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      * @param enemy the enemy to apply damage to
      * @see CharacterStatistics
      */
-    private void attackEffect(final Enemy enemy) {
+    public void attackEffect(final Enemy enemy) {
         enemy.setDamagedLife(DAMAGE);
 
         final var stats = (CharacterStatistics) this.character.getStats();
@@ -234,7 +250,7 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      * @param deltaTime time elapsed since the last update, used to scale movement
      * @see #attack(Vector2)
      */
-    private void move(final double deltaTime) {
+    public void move(final double deltaTime) {
         final Vector2 currentPos = super.getPosition();
         final Vector2 targetPos = this.character.getPosition();
         if (!this.isAttacking) {
@@ -297,7 +313,6 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      * Clears the attack finish listener reference.
      * Should be called when the FamiliarBat is removed.
      */
-    @Override
     public void clearListener() {
         this.attackFinishListener = null;
     }
@@ -307,33 +322,104 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      *
      * @return the unique name of the bat
      */
-    @Override
     public String getName() {
         return this.name;
     }
 
     /**
-     * Returns the character that owns this FamiliarBat, cast as a {@link Druid}.
+     * Returns the character that owns this FamiliarBat, cast as a
+     * {@link DruidDebug}.
      *
      * @return the owning druid character
      */
-    @Override
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-    justification = "Returning character reference is safe because the Character is a reference")
-    public Druid getCharacter() {
-        return (Druid) this.character;
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Character is effectively immutable in this context")
+    public DruidDebug getCharacter() {
+        return (DruidDebug) this.character;
     }
 
     /**
      * Checks if the targeted enemy is dead.
      * If he is it will resent to idle mode.
      */
-    private void checkIfEnemyisDead() {
+    public void checkIfEnemyisDead() {
         this.enemy.filter(Enemy::isDead).ifPresent(deadEnemy -> {
             this.enemy = Optional.empty();
             this.isAttacking = false;
             this.numberAttack = 0;
             this.attackFinishListener.onAttackFinished(this);
         });
+    }
+
+    /**
+     * Returns the listener that is notified when an attack finishes.
+     *
+     * @return the attack finish listener
+     */
+    public AttackFinishListenerDebug getAttackFinishListener() {
+        return this.attackFinishListener;
+    }
+
+    /**
+     * Sets whether the FamiliarBat is currently attacking.
+     *
+     * @param isAttacking true if attacking, false otherwise
+     */
+    public void setAttacking(final boolean isAttacking) {
+        this.isAttacking = isAttacking;
+    }
+
+    /**
+     * Returns the current attack direction vector.
+     *
+     * @return the normalized attack direction
+     */
+    public Vector2 getAttackDirection() {
+        return this.attackDirection;
+    }
+
+    /**
+     * Returns the number of remaining attacks (hits) in the current attack
+     * sequence.
+     *
+     * @return the number of attacks left
+     */
+    public int getNumberAttack() {
+        return numberAttack;
+    }
+
+    /**
+     * Sets the number of remaining attacks (hits) in the current attack sequence.
+     *
+     * @param numberAttack the number of attacks to set
+     */
+    public void setNumberAttack(final int numberAttack) {
+        this.numberAttack = numberAttack;
+    }
+
+    /**
+     * Returns the current enemy targeted by the FamiliarBat, if any.
+     *
+     * @return an Optional containing the targeted enemy, or empty if none
+     */
+    public Optional<Enemy> getEnemy() {
+        return enemy;
+    }
+
+    /**
+     * Returns the regeneration rate (percentage of mana and life restored per hit).
+     *
+     * @return the regeneration rate as a double
+     */
+    public static double getRegenRate() {
+        return REGEN_RATE;
+    }
+
+    /**
+     * Returns the amount of damage dealt per attack hit.
+     *
+     * @return the damage value as a double
+     */
+    public static double getDamage() {
+        return DAMAGE;
     }
 }

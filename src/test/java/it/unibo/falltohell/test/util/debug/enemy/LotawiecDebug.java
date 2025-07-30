@@ -1,20 +1,21 @@
-package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
+package it.unibo.falltohell.test.util.debug.enemy;
 
 import java.util.Map;
 import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
-import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.LongRangeEnemy;
+import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.manager.EnemyTimerManager;
-import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
 import it.unibo.falltohell.model.api.manager.SafeZoneManager;
-
+import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
+import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
-import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.TimerType;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.TrackEnemyProjectile;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
@@ -22,23 +23,18 @@ import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
 /**
- * Represents a ranged enemy ("Lotawiec") that moves horizontally,
- * attacks by shooting projectiles, and reacts to collisions with blocks and
- * characters.
+ * A debug implementation of an enemy for testing purposes.
  * <p>
- * This enemy periodically attacks the target {@link Character} by firing
- * {@link TrackEnemyProjectile}s if the character is within sensing distance.
+ * Provides visual representation, movement patterns (patrol and chase),
+ * collision handling, and interaction with the {@link EnemyTimerManager}
+ * and {@link SafeZoneManager}.
  * <p>
- * It inherits from {@link BaseEnemy} and uses {@link LongRangeEnemyStatistics}
- * for managing its stats and behavior.
+ * Used in test environments to simulate enemy behavior without affecting
+ * the core game logic.
  *
  * @author Sara Visani
- * @see BaseEnemy
- * @see TrackEnemyProjectile
- * @see LongRangeEnemyStatistics
- * @see Character
  */
-public class Lotawiec extends BaseEnemy implements LongRangeEnemy {
+public class LotawiecDebug extends BaseEnemyDebug implements LongRangeEnemy {
 
     private static final int POINTS = 25;
     private static final Dimensions DIMENSIONS = new Dimensions(20, 20);
@@ -55,7 +51,6 @@ public class Lotawiec extends BaseEnemy implements LongRangeEnemy {
             BuffNames.LIFE, 30.0,
             BuffNames.MANA, 40.0,
             BuffNames.SPEED, 50.0);
-
     private final LongRangeEnemyStatistics stats;
     private int direction = 1;
 
@@ -76,11 +71,8 @@ public class Lotawiec extends BaseEnemy implements LongRangeEnemy {
      * @see CustomTimerImpl
      */
     @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
-    justification = "Calling attack() in constructor is safe because "
-                    + "the object is fully initialized and the method "
-                    + "does not depend on subclass state"
-                    )
-    public Lotawiec(final Level level, final Vector2 initialCord, final EnemyTimerManager manager,
+    justification = "attack() is safe in constructor; object fully initialized")
+    public LotawiecDebug(final Level level, final Vector2 initialCord, final EnemyTimerManager manager,
             final SafeZoneManager ingage) {
         super(level,
                 new StatisticFactoryImpl().createLongRangeEnemyStatistic(FULL_LIFE, DAMAGE, VELOCITY, DIMENSIONS,
@@ -123,7 +115,7 @@ public class Lotawiec extends BaseEnemy implements LongRangeEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void attack() {
+    public void attack() {
         if (super.getCharacter().getPosition().distance(super.getPosition()) < this.stats.getSenseDistance()) {
             new TrackEnemyProjectile(super.getLevel(),
                     super.getPosition(),
@@ -137,7 +129,7 @@ public class Lotawiec extends BaseEnemy implements LongRangeEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void patrol(final Vector2 current, final Vector2 speed) {
+    public void patrol(final Vector2 current, final Vector2 speed) {
         final double speedX = speed.x();
         final Vector2 step = new Vector2(speedX * direction, 0);
         final Vector2 target = current.add(step);
@@ -150,7 +142,7 @@ public class Lotawiec extends BaseEnemy implements LongRangeEnemy {
      * {@inheritDoc}
      */
     @Override
-    protected void chase(final Vector2 target, final Vector2 current, final Vector2 speed) {
+    public void chase(final Vector2 target, final Vector2 current, final Vector2 speed) {
         final Vector2 diff = target.subtract(current).normalize();
         final double stoppingDistance = 4 * TILE_SIZE;
         final double verticalOffset = 2 * TILE_SIZE;
@@ -193,5 +185,14 @@ public class Lotawiec extends BaseEnemy implements LongRangeEnemy {
 
         this.setPosition(tryMove);
         super.setFacingRight(moveStep.x() > 0);
+    }
+
+    /**
+     * Returns the current movement direction of the enemy.
+     *
+     * @return an integer representing the enemy's direction
+     */
+    public int getDirection() {
+        return direction;
     }
 }

@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.projectile;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -113,6 +114,8 @@ public class ReturnableArrow extends ProjectileImpl {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",
+    justification = "Checked with instanceof in isEnemy()")
     public void onProjectileHit(final GameObject other) {
         if (isEnemy(other)) {
             ((Enemy) other).setDamagedLife(this.owner.getStats().getAttack());

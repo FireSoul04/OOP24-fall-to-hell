@@ -91,7 +91,7 @@ public class LevelTest implements Level {
      * {@inheritDoc}
      */
     @Override
-    public void removeGameObject(final GameObject gameObject) {
+    public final void removeGameObject(final GameObject gameObject) {
         this.gameObjects.remove(gameObject);
     }
 

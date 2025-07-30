@@ -25,7 +25,6 @@ import it.unibo.falltohell.util.Vector2;
 public class ActiveAbilityImpl extends MovableImpl implements PhysicalActiveAbility {
     private final double damage;
     private final ActiveAbilityUpdate attack;
-    private final Level level;
     private final Optional<OptionalCollision> collided;
 
     /**
@@ -47,7 +46,6 @@ public class ActiveAbilityImpl extends MovableImpl implements PhysicalActiveAbil
         super(level, position, velocity, collider);
         this.damage = damage;
         this.attack = attack;
-        this.level = level;
         this.collided = collided;
     }
 
@@ -72,10 +70,10 @@ public class ActiveAbilityImpl extends MovableImpl implements PhysicalActiveAbil
         if (this.collided.isEmpty()) {
             if (other instanceof Enemy) {
                 ((Enemy) other).setDamagedLife(this.damage);
-                this.level.removeGameObject(this);
+                super.getLevel().removeGameObject(this);
             }
             if (!(other instanceof Character && other instanceof Projectile)) {
-                this.level.removeGameObject(this);
+                super.getLevel().removeGameObject(this);
             }
         } else {
             this.collided.get().collided(other);

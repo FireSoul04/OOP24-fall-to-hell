@@ -3,7 +3,13 @@ package it.unibo.falltohell.model.api.gameobject.movable;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Druid;
 import it.unibo.falltohell.util.Vector2;
 
-public interface FamiliarBat extends Movable{
+/**
+ * Represents a movable bat familiar that can attack in specific directions
+ * and interact with its owning {@link Druid}.
+ *
+ * @author Sara Visani
+ */
+public interface FamiliarBat extends Movable {
 
     /**
      * Starts an attack in the given direction.
