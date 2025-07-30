@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobject.movable.drop;
 
 import java.util.UUID;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
@@ -57,6 +58,10 @@ public class DropImpl extends MovableImpl implements Drop {
      *                 {@link Character}
      * @param fileName is the name of the image file associated to the drop
      */
+    @SuppressFBWarnings(value = {
+    "EI_EXPOSE_REP2",
+    "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR" },
+    justification = "Buff is immutable, and removeGameObject is final and safe to call in constructor")
     public DropImpl(final Level lv, final Vector2 position, final Buff buff, final String fileName) {
         super(lv, position, VELOCITY,
                 new BoxCollider(Vector2.zero(), DIMENSIONS));

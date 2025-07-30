@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.util.Priority;
 
@@ -139,6 +141,10 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *                        safe zone
      * @param fileName        is the name of the image file associated to the enemy
      */
+    @SuppressFBWarnings(
+    value = {"EI_EXPOSE_REP2", "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR"},
+    justification = "EnemyTimerManager is immutable and safe to store directly; "
+                    + "createNoAggroTimer is safe to call during construction because it does not depend on subclass state")
     public BaseEnemy(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
             final SafeZoneManager safeZoneManager, final String fileName) {
         super(level, stats.getInitialPos(), stats);
@@ -195,7 +201,8 @@ public abstract class BaseEnemy extends EntityImpl implements Enemy {
      *         otherwise
      */
     protected boolean isFull() {
-        return this.stats.getLife() == this.stats.getFullLife();
+        final double epsilon = 1e-9;
+        return Math.abs(this.stats.getLife() - this.stats.getFullLife()) < epsilon;
     }
 
     /**

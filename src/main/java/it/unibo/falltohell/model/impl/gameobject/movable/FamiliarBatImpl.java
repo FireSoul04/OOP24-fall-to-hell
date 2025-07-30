@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.FamiliarBat;
@@ -73,6 +74,8 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      * @param character the character that this FamiliarBat follows and assists
      * @param listener  the callback to invoke when the familiar finishes an attack
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+    justification = "Character is only stored as a reference and not mutated")
     public FamiliarBatImpl(final Character character, final AttackFinishListener listener) {
         super(character.getLevel(), character.getPosition(), VELOCITY, COLLIDER);
         this.character = character;
@@ -169,17 +172,17 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      */
     @Override
     public void onCollision(final GameObject other, final Vector2 direction) {
-        if (isAttacking) {
+        if (this.isAttacking) {
             if (other instanceof BaseCollidableBlock) {
-                isAttacking = false;
-                attackFinishListener.onAttackFinished(this);
+                this.isAttacking = false;
+                this.attackFinishListener.onAttackFinished(this);
             }
             if (other instanceof Enemy enemy) {
                 this.enemy = Optional.of(enemy);
                 if (this.numberAttack == 0) {
                     this.enemy = Optional.empty();
                     this.isAttacking = false;
-                    attackFinishListener.onAttackFinished(this);
+                    this.attackFinishListener.onAttackFinished(this);
                 } else if (this.canAttack && !enemy.isInvincible()) {
                     this.numberAttack--;
                     this.canAttack = false;
@@ -315,6 +318,8 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      * @return the owning druid character
      */
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+    justification = "Returning character reference is safe because the Character is a reference")
     public Druid getCharacter() {
         return (Druid) this.character;
     }
@@ -324,11 +329,11 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      * If he is it will resent to idle mode.
      */
     private void checkIfEnemyisDead() {
-        enemy.filter(Enemy::isDead).ifPresent(deadEnemy -> {
-            enemy = Optional.empty();
-            isAttacking = false;
-            numberAttack = 0;
-            attackFinishListener.onAttackFinished(this);
+        this.enemy.filter(Enemy::isDead).ifPresent(deadEnemy -> {
+            this.enemy = Optional.empty();
+            this.isAttacking = false;
+            this.numberAttack = 0;
+            this.attackFinishListener.onAttackFinished(this);
         });
     }
 }

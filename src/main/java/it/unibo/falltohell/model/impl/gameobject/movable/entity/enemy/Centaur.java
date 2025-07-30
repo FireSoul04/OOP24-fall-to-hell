@@ -46,6 +46,7 @@ public class Centaur extends BaseEnemy {
             BuffNames.LIFE, 30.0,
             BuffNames.MANA, 40.0,
             BuffNames.SPEED, 50.0);
+    private static final double EPSILON = 1e-9;
 
     private final BaseEnemyStatistics stats;
     private int direction = 1;
@@ -85,7 +86,7 @@ public class Centaur extends BaseEnemy {
         super.onCollision(other, direction);
         if (other instanceof BaseCollidableBlock || other instanceof BaseEntrance) {
             if (direction.equals(Vector2.right()) || direction.equals(Vector2.left())) {
-                if (this.collided.isEmpty() || this.collided.get().x() != direction.x()) {
+                if (this.collided.isEmpty() || Math.abs(this.collided.get().x() - direction.x()) > EPSILON) {
                     this.collided = Optional.ofNullable(direction);
                 } else {
                     this.direction *= -1;

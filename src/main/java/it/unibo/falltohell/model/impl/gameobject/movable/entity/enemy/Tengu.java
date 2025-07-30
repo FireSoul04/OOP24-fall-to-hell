@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy;
 
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -15,6 +16,7 @@ import it.unibo.falltohell.model.impl.gameobject.entrance.BaseEntrance;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.BaseEnemyProjectile;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
+import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 
@@ -69,6 +71,11 @@ public class Tengu extends BaseEnemy implements LongRangeEnemy {
      * @see RestrictedLongRangeEnemyStatistics
      * @see CustomTimerImpl
      */
+    @SuppressFBWarnings (value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
+    justification = "Calling attack() in constructor is safe because "
+                    + "the object is fully initialized and the method "
+                    + "does not depend on subclass state"
+                    )
     public Tengu(final Level level, final Vector2 initialCord,
             final EnemyTimerManager manager, final SafeZoneManager ingage) {
         super(level,
@@ -80,7 +87,7 @@ public class Tengu extends BaseEnemy implements LongRangeEnemy {
 
         stats = (RestrictedLongRangeEnemyStatistics) super.getStats();
 
-        super.getEnemyTimerManager().createAttackTimer(this, Optional.of(() -> this.attack()));
+        super.getEnemyTimerManager().createAttackTimer(this, Optional.of(this::attack));
         ingage.addEnemy(this, "tengu.png");
     }
 

@@ -125,7 +125,7 @@ public class BaseEnemyStatisticsImpl extends StatisticsImpl implements BaseEnemy
      */
     @Override
     public Map<BuffNames, Double> getBuffMap() {
-        return this.buff;
+        return Map.copyOf(this.buff);
     }
 
     /**
