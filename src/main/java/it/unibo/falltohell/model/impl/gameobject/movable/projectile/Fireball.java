@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.projectile;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -38,6 +39,10 @@ public class Fireball extends ProjectileImpl {
      * @param direction of the fireball
      * @param caster   associated with this projectile
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The fireball should know the attack of the caster to scale damage"
+    )
     public Fireball(final Vector2 direction, final Caster caster) {
         super(caster.getLevel(), caster.getPosition(), direction.multiply(SPEED), new BoxCollider(DIMENSIONS), "fireball.png");
         this.caster = caster;

@@ -1,5 +1,6 @@
 package it.unibo.falltohell.controller.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.FileController;
 
 import java.io.IOException;
@@ -17,6 +18,10 @@ public class FileControllerImpl implements FileController {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "DM_EXIT",
+        justification = "If a resource is not found the application must be shut down"
+    )
     @Override
     public List<String> read(final String path) {
         try {

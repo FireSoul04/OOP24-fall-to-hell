@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.weapons;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.Fireball;
@@ -22,6 +23,10 @@ public class Tome extends BaseRangedWeapon {
      *
      * @param caster is the caster user of the tome
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The tome has to remove mana to the caster when used"
+    )
     public Tome(final Caster caster) {
         super(caster, MAX_AMMO, COOLDOWN, "tome.png", OFFSET);
         this.caster = caster;

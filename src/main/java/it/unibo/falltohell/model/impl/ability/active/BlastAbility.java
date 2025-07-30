@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.ability.active;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
@@ -25,6 +26,10 @@ public class BlastAbility implements SpecialActiveAbility {
      * Initialization of the BlastAbility class.
      * @param caster who uses this ability
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The ability must know the caster statistics to subtract mana"
+    )
     public BlastAbility(final Caster caster) {
         this.caster = caster;
     }

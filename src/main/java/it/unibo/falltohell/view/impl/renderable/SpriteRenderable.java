@@ -1,5 +1,6 @@
 package it.unibo.falltohell.view.impl.renderable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.util.Vector2;
 
@@ -24,6 +25,10 @@ public class SpriteRenderable extends BaseRenderable {
      * @param sprite associated to the sprite renderable object
      * @param priority is the priority of the sprite associated with the sprite renderable object
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The sprite renderable object must know what image to render"
+    )
     public SpriteRenderable(final boolean visibility, final Vector2 position,
                             final Image sprite, final Priority priority) {
         super(visibility, position);
@@ -39,11 +44,14 @@ public class SpriteRenderable extends BaseRenderable {
     public void render(final Graphics graphics) {
         if (this.isVisible()) {
             final AffineTransform transform = new AffineTransform();
-            final Graphics2D graphics2D = (Graphics2D) graphics;
-            transform.translate(this.getPosition().x(), this.getPosition().y());
-            transform.scale(this.isMirrored() ? -1.0 : 1.0, 1.0);
-            transform.translate(-this.sprite.getWidth(null) / 2.0, -this.sprite.getHeight(null) / 2.0);
-            graphics2D.drawImage(this.sprite, transform, null);
+            if (graphics instanceof Graphics2D graphics2D) {
+                transform.translate(this.getPosition().x(), this.getPosition().y());
+                transform.scale(this.isMirrored() ? -1.0 : 1.0, 1.0);
+                transform.translate(-this.sprite.getWidth(null) / 2.0, -this.sprite.getHeight(null) / 2.0);
+                graphics2D.drawImage(this.sprite, transform, null);
+            } else {
+                throw new IllegalArgumentException("The application needs Graphics2D to show images properly");
+            }
         }
     }
 

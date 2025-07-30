@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
@@ -61,6 +62,10 @@ public class Druid extends BaseCharacter {
      * @param level    the level this character belongs to
      * @param position the initial spawn position
      */
+    @SuppressFBWarnings(
+        value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
+        justification = "Using a factory method to create the ability"
+    )
     public Druid(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl().createCharacterStatistic(LIFE, ATTACK,
             SPEED, DIMENSIONS, MANA, ATTACK_SPEED), "druid.png");

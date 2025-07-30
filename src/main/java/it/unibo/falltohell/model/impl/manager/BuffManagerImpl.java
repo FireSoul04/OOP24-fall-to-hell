@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.manager;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.api.buff.Buff;
 import it.unibo.falltohell.model.api.manager.BuffManager;
@@ -21,6 +22,10 @@ public class BuffManagerImpl implements BuffManager {
      * Initialization of the BufferManagerClass.
      * @param timerManager of the current level
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The buff manager should have access to timer manager to add and remove timers"
+    )
     public BuffManagerImpl(final TimerManager timerManager) {
         this.timerManager = timerManager;
         this.buffs = new HashMap<>();

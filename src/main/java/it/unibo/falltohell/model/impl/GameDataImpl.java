@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -27,6 +28,10 @@ public class GameDataImpl implements GameData {
      * @param characters  is the map of characters in the game
      * @param position is the last position of the character before saving
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The game data should know the current character"
+    )
     public GameDataImpl(final long points, final CharacterID characterID,
             final Map<CharacterID, Character> characters, final Vector2 position) {
         this.points = points;
@@ -79,6 +84,10 @@ public class GameDataImpl implements GameData {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "The game data must let any game object know which is the current character"
+    )
     @Override
     public Character getCurrentCharacter() {
         return this.currentCharacter;

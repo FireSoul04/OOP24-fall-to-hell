@@ -48,11 +48,7 @@ public class ReturnableArrow extends ProjectileImpl {
      * owner.
      */
     public void startReturn() {
-        if (isFacingRight()) {
-            this.setFacingRight(false);
-        } else {
-            this.setFacingRight(true);
-        }
+        this.setFacingRight(!isFacingRight());
         this.returning = true;
         this.setSolid(false);
     }
@@ -98,7 +94,7 @@ public class ReturnableArrow extends ProjectileImpl {
     public void onCollision(final GameObject other, final Vector2 direction) {
         if (!this.returning) {
             super.onCollision(other, direction);
-        } else if (this.returning && isEnemy(other)) {
+        } else if (isEnemy(other)) {
             this.onProjectileHit(other);
         }
     }

@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.drawable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.drawable.Drawable;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.util.Vector2;
@@ -32,6 +33,10 @@ public class Sprite implements Drawable {
      * @param offset is the vector used to move a sprite from the position of its associated collider
      * @param priority of the sprite when it has to be rendered
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The sprite must know the current position of the game object"
+    )
     public Sprite(final GameObject gameObject, final Vector2 offset, final Priority priority) {
         this.mirrored = false;
         this.visible = true;

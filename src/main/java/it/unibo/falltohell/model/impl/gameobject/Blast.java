@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
@@ -23,6 +24,10 @@ public class Blast extends GameObjectImpl {
      * Initialization of the Blast class.
      * @param caster that creates the blast
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The blast has to know the current position of the caster"
+    )
     public Blast(final Caster caster) {
         super(caster.getLevel(), caster.getPosition(), new BoxCollider(DIMENSIONS));
         this.caster = caster;

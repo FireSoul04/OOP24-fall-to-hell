@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
@@ -47,6 +48,10 @@ public class Archer extends BaseCharacter {
      * @param level    the game level
      * @param position the initial position
      */
+    @SuppressFBWarnings(
+        value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
+        justification = "Using a factory method to create the ability"
+    )
     public Archer(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl()
             .createCharacterStatistic(LIFE, ATTACK, SPEED, DIMENSION, MANA, ATTACK_SPEED), 

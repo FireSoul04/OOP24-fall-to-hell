@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.ability.active;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
@@ -19,6 +20,10 @@ public class HealAbility implements SpecialActiveAbility {
      * Initialization of the HealAbility class.
      * @param caster that uses this ability
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The ability must know the caster statistics to subtract mana and add life"
+    )
     public HealAbility(final Caster caster) {
         this.caster = caster;
     }

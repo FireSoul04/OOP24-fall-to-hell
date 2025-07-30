@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.movable.entity.character;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
 import it.unibo.falltohell.model.api.factory.AbilityFactory;
 import it.unibo.falltohell.model.api.level.Level;
@@ -43,6 +44,10 @@ public class Caster extends BaseCharacter {
      * @param level where the caster actually is
      * @param position of the caster in the level
      */
+    @SuppressFBWarnings(
+        value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
+        justification = "Using a factory method to create the ability"
+    )
     public Caster(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl()
                         .createCharacterStatistic(LIFE, ATTACK, SPEED, DIMENSIONS, MANA, ATTACK_SPEED),

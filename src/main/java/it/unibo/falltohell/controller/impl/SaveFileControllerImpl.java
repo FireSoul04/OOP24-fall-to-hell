@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -51,8 +52,9 @@ public class SaveFileControllerImpl implements SaveFileController {
             this.createNewSaveFile();
         }
         try (
-                BufferedWriter saveOutput = new BufferedWriter(new FileWriter(DIR_PATH + this.fileName)
-                )
+            BufferedWriter saveOutput = new BufferedWriter(
+                new FileWriter(DIR_PATH + this.fileName, StandardCharsets.UTF_8)
+            )
         ) {
             final Character character = data.getCurrentCharacter();
             saveOutput.write(String.valueOf(data.getPoints()));
@@ -95,8 +97,11 @@ public class SaveFileControllerImpl implements SaveFileController {
         final File saveDir = new File(DIR_PATH);
         boolean existent = true;
         if (!saveDir.exists() || !saveDir.isDirectory()) {
-            saveDir.mkdir();
-            existent = false;
+            if (saveDir.mkdir()) {
+                existent = false;
+            } else {
+                this.logger.severe("The directory " + DIR_PATH + " wasn't created");
+            }
         } else {
             final File saveFile = new File(DIR_PATH + this.fileName);
             if (!saveFile.exists()) {
@@ -111,7 +116,10 @@ public class SaveFileControllerImpl implements SaveFileController {
      */
     private void createNewSaveFile() {
         try {
-            new File(DIR_PATH + this.fileName).createNewFile();
+            final boolean isNewSaveFile = new File(DIR_PATH + this.fileName).createNewFile();
+            if (!isNewSaveFile) {
+                this.logger.info("The save file was overwritten");
+            }
         } catch (final IOException e) {
             this.logger.severe("The save file was not created correctly:" + e);
         }

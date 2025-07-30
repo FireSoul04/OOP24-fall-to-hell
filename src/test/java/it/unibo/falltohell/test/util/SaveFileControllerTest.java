@@ -2,6 +2,7 @@ package it.unibo.falltohell.test.util;
 
 import it.unibo.falltohell.controller.impl.SaveFileControllerImpl;
 import java.io.File;
+import java.util.logging.Logger;
 
 /**
  * Class for a new SaveFileController dedicated to tests.
@@ -25,7 +26,9 @@ public class SaveFileControllerTest extends SaveFileControllerImpl {
     public void removeTestFile() {
         final File saveFile = new File(DIR_PATH + FILE_NAME);
         if (saveFile.exists()) {
-           saveFile.delete();
+           if (!saveFile.delete()) {
+               Logger.getLogger("testLogger").severe("The file" + DIR_PATH + FILE_NAME + "wasn't deleted");
+           }
         }
     }
 }

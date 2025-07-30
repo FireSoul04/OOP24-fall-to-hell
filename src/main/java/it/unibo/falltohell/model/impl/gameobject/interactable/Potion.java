@@ -1,5 +1,6 @@
 package it.unibo.falltohell.model.impl.gameobject.interactable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.buff.Buff;
@@ -28,6 +29,10 @@ public class Potion extends BaseItem {
      * @param buff is the buff given by the potion to the character
      * @param fileName is the name of the image file associated to the potion
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The potion must know which buff to apply"
+    )
     public Potion(final Level lv, final Vector2 position, final Collider collider,
                   final long price, final Buff buff, final String fileName) {
         super(lv, position, collider, price, fileName);
