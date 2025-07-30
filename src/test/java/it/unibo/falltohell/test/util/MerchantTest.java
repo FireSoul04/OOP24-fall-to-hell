@@ -60,9 +60,11 @@ public class MerchantTest extends GameObjectImpl implements Merchant {
      * @return  new potion item
      */
     private Potion createPotion() {
-        final CharacterStatistics statistics = (CharacterStatistics) this.getLevel().getGameData().getCurrentCharacter().getStats();
+        final CharacterStatistics statistics = (CharacterStatistics) this.getLevel()
+            .getGameData().getCurrentCharacter().getStats();
         final Buff buff = new LifeBuff(statistics, BUFF_VALUE);
-        return new Potion(this.getLevel(), this.computePosition(), new BoxCollider(POTION_DIMENSION), 100, buff, "test.png");
+        return new Potion(this.getLevel(), this.computePosition(), new BoxCollider(POTION_DIMENSION), 
+            100, buff, "test.png");
     }
 
     /**

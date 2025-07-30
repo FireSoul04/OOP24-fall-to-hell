@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Class to test if the blocks work as expected.
@@ -41,13 +41,13 @@ class TestBlocks {
      * a collision with an entity.
      */
     @Test
-    void TestLavaBlock() {
+    void TestLavaBlocks() {
         final BaseCollidableBlock lavaBlock = this.blockFactory.createLavaBlock(this.entity.getLevel(), Vector2.zero());
         lavaBlock.onCollision(this.entity, Vector2.up());
         final Statistics statistics = this.entity.getStats();
         final double currentLife = statistics.getLife();
-        assertTrue(currentLife < statistics.getFullLife(), "When there is a collision " +
-                "with a lava block life should be subtracted");
+        assertTrue(currentLife < statistics.getFullLife(), "When there is a collision " 
+                + "with a lava block life should be subtracted");
     }
 
     /**
@@ -56,7 +56,7 @@ class TestBlocks {
      * another vines block and if it repristinate correctly the entity speed on exit.
      */
     @Test
-    void TestVinesBlock() {
+    void TestVinesBlocks() {
         final BaseCollidableBlock vinesBlock1 = this.blockFactory.createVinesBlock(entity.getLevel(), entity.getPosition());
         final BaseCollidableBlock vinesBlock2 = this.blockFactory.createVinesBlock(entity.getLevel(), entity.getPosition());
         final CharacterStatistics statistics = (CharacterStatistics) this.entity.getStats();
@@ -70,7 +70,7 @@ class TestBlocks {
                 "When vines debuff is already present it must not be reapplied");
         vinesBlock1.onCollisionExit(this.entity, Vector2.up());
         Assertions.assertEquals(statistics.getSpeed().magnitude(), initialSpeed.magnitude(),
-                "When the collision ends the vines debuff is removed and the" +
-                        "speed is reset to the one that should have been without vines");
+                "When the collision ends the vines debuff is removed and the" 
+                        + "speed is reset to the one that should have been without vines");
     }
 }

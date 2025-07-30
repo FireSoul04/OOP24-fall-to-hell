@@ -7,11 +7,15 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import it.unibo.falltohell.view.api.AudioPlayer;
 /**
  * A class that consent to manipulate the file Audio for the game.
  */
 public class SoundPlayerView implements AudioPlayer {
+    private static final Logger LOGGER = Logger.getLogger(SoundPlayerView.class.getName());
     private final int loop;
     private final String filePath;
     private final float volume = -10.0f;
@@ -39,7 +43,7 @@ public class SoundPlayerView implements AudioPlayer {
             final FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(volume);
         } catch (final Exception e) {
-
+            LOGGER.log(Level.WARNING, "an error has occured while trying to open this file: " + this.filePath);
         }
     }
     /**

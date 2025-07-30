@@ -6,6 +6,9 @@ import it.unibo.falltohell.model.api.GameEvent;
 import it.unibo.falltohell.model.api.GameEventCondition;
 import it.unibo.falltohell.model.api.manager.GameEventManager;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Manages game events and their associated conditions and actions.
  * Allows registration of conditions (when an event should trigger) and actions
@@ -18,6 +21,7 @@ import it.unibo.falltohell.model.api.manager.GameEventManager;
  * @author Casadei Lorenzo
  */
 public class GameEventManagerImpl<K> implements GameEventManager<K> {
+    private static final Logger LOGGER = Logger.getLogger(GameEventManagerImpl.class.getName());
     private final Map<K, GameEventCondition> conditions = new HashMap<>();
     private final Map<K, GameEvent> actions = new HashMap<>();
 
@@ -55,7 +59,7 @@ public class GameEventManagerImpl<K> implements GameEventManager<K> {
                 try {
                     this.actions.get(key).execute();
                 } catch (final RuntimeException e) {
-                    e.printStackTrace();
+                    LOGGER.log(Level.WARNING, "An error as occured during the execution of the event associated to key: " + key);
                 }
             }
         });
