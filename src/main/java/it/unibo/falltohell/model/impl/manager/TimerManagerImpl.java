@@ -68,7 +68,7 @@ public class TimerManagerImpl implements TimerManager {
     @Override
     public void pauseAllTimers() {
         for (final CustomTimer timer : this.timers.values()) {
-            if (!timer.isPaused()) {
+            if (!timer.isPaused() && timer.isStarted()) {
                 timer.pause();
             }
         }
@@ -91,7 +91,7 @@ public class TimerManagerImpl implements TimerManager {
     @Override
     public void resumeAllTimers() {
         for (final CustomTimer timer : this.timers.values()) {
-            if (timer.isPaused()) {
+            if (timer.isPaused() && timer.isStarted()) {
                 timer.resume();
             }
         }
