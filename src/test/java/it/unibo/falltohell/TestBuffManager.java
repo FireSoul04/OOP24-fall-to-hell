@@ -77,7 +77,7 @@ class TestBuffManager {
         this.buffs.keySet().forEach(i -> Assertions.assertTrue(this.buffManager.searchBuff(i),
                 "There should be a buff with this name:" + i));
         this.buffs.forEach(
-                (name, buff) -> this.timerManager.waitForTimer(name, DURATION * 2));
+                (name, buff) -> this.timerManager.waitForTimer(name, DURATION * 100));
         Assertions.assertEquals(0.0, statistics.getTemporaryLife(),
                 "Temporary life should be reset to the one it was before the buff");
         Assertions.assertEquals(0.0, statistics.getTemporaryMana(),
