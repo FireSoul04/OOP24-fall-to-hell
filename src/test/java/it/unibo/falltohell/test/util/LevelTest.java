@@ -40,7 +40,7 @@ public class LevelTest implements Level {
     private final TimerManagerTest timerManager;
     private final Map<CharacterID, Character> characters;
     private final StaticCollisionManager jumpCollisionManager;
-    private GameEventManager<String> eventManager;
+    private final GameEventManager<String> eventManager;
     private Optional<GameData> gameData;
 
     /**
