@@ -5,6 +5,7 @@ import java.util.Map;
 /**
  * A class that manage the sounds for the app, it use the Singleton pattern to
  * ensure that this class has only one global instance.
+ * @author Casadei Lorenzo.
  */
 public final class AudioManager {
     private static final AudioManager INSTANCE = new AudioManager();
