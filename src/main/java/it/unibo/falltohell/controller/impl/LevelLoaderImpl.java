@@ -79,16 +79,16 @@ public class LevelLoaderImpl implements LevelLoader {
         switch (identifier) {
             case 'o' -> this.enemyFactory.createImp(this.level, position);
             case 'k' -> this.enemyFactory.createCentaur(this.level, position);
-            case 't' -> this.enemyFactory.createTengu(level, position);
-            case 'x' -> this.enemyFactory.createLotawiec(level, position);
-            case '#' -> this.collidableBlockFactory.createCollidableBaseBlock(level, position);
-            case 'l' -> this.collidableBlockFactory.createLavaBlock(level, position);
-            case 'v' -> this.collidableBlockFactory.createVinesBlock(level, position);
-            case '-' -> new BaseNonCollidableBlock(level, position);
-            case 'e' -> new SpringsEntrance(level, position);
-            case 'p' -> new ShopEntrance(level, position).setMerchant(this.merchant);
-            case 'c' -> new CharacterChanger(level, position, collider, level.getCharacters());
-            case 's' -> new SavePoint(level, position, collider);
+            case 't' -> this.enemyFactory.createTengu(this.level, position);
+            case 'x' -> this.enemyFactory.createLotawiec(this.level, position);
+            case '#' -> this.collidableBlockFactory.createCollidableBaseBlock(this.level, position);
+            case 'l' -> this.collidableBlockFactory.createLavaBlock(this.level, position);
+            case 'v' -> this.collidableBlockFactory.createVinesBlock(this.level, position);
+            case '-' -> new BaseNonCollidableBlock(this.level, position);
+            case 'e' -> new SpringsEntrance(this.level, position);
+            case 'p' -> new ShopEntrance(this.level, position).setMerchant(this.merchant);
+            case 'c' -> new CharacterChanger(this.level, position, collider, this.level.getCharacters());
+            case 's' -> new SavePoint(this.level, position, collider);
             case 'm' -> this.merchant.setPosition(position);
             case ' ' -> { }
             default -> throw new IllegalStateException("Cannot recognize a character in the file:" + identifier);
