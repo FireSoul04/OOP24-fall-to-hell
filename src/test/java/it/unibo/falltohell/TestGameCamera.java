@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Unit tests for the GameCameraImpl class.
+ * Tests for the GameCameraImpl class.
  * These tests verify that the camera:
  * Follows the player and moves towards the expected target position.
  * Is correctly clamped within the level boundaries.

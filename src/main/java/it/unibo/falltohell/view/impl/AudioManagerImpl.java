@@ -2,13 +2,15 @@ package it.unibo.falltohell.view.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import it.unibo.falltohell.view.api.AudioManager;
 /**
  * A class that manage the sounds for the app, it use the Singleton pattern to
  * ensure that this class has only one global instance.
  * @author Casadei Lorenzo.
  */
-public final class AudioManager {
-    private static final AudioManager INSTANCE = new AudioManager();
+public final class AudioManagerImpl implements AudioManager{
+    private static final AudioManagerImpl INSTANCE = new AudioManagerImpl();
     private static final int NUMBER_OF_LOOP = 15;
     private final Map<String, SoundPlayerView> soundMap = new HashMap<>();
     private boolean muted;
@@ -16,7 +18,7 @@ public final class AudioManager {
      * Private constructor to prevent external instantiation.
      * Loads the available sounds.
      */
-    private AudioManager() {
+    private AudioManagerImpl() {
         this.loadSounds();
         this.muted = false;
     }
@@ -26,9 +28,10 @@ public final class AudioManager {
      *
      * @return the single instance of AudioManager.
      */
-    public static AudioManager getInstance() {
+    public static AudioManagerImpl getInstance() {
         return INSTANCE;
     }
+    
     /**
      * Loads all the sounds into the sound map.
      * This method can be extended to load multiple sound effects.
@@ -37,58 +40,67 @@ public final class AudioManager {
         this.soundMap.put("Music", new SoundPlayerView("the-darkness-of-eternity.wav", NUMBER_OF_LOOP));
     }
     /**
-     * play the sound.
-     * @param name the name of the sound to be played.
+     * {@inheritDoc}
      */
+    @Override
     public void play(final String name) {
         if (!muted && soundMap.containsKey(name)) {
             soundMap.get(name).play();
         }
     }
+
     /**
-     * stop the sound.
-     * @param name the name of the sound to be stopped.
+     * {@inheritDoc}
      */
+    @Override
     public void stop(final String name) {
         if (soundMap.containsKey(name)) {
             soundMap.get(name).stop();
         }
     }
+
     /**
-     * pause all the sounds.
+     * {@inheritDoc}
      */
+    @Override
     public void pauseAll() {
         if (muted) {
             soundMap.values().forEach(SoundPlayerView::pause);
         }
     }
+
     /**
-     * pause all the sounds.
+     * {@inheritDoc}
      */
+    @Override
     public void resumeAll() {
         if (!muted) {
             soundMap.values().forEach(SoundPlayerView::resume);
         }
     }
+
     /**
-     * mute all the sounds.
+     * {@inheritDoc}
      */
+    @Override
     public void mute() {
         muted = true;
         pauseAll();
     }
+
     /**
-     * unmute all the sounds.
+     * {@inheritDoc}
      */
+    @Override
     public void unmute() {
         muted = false;
         resumeAll();
     }
+
     /**
-     * tell if the sound is muted.
-     * @return {@code true} if all the sound are muted,
-     * {@code false} otherwise.
+     * {@inheritDoc}
      */
+    @Override
     public boolean isMuted() {
         return muted;
     }

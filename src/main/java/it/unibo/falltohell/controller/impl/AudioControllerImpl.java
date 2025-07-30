@@ -1,17 +1,17 @@
 package it.unibo.falltohell.controller.impl;
 
 import it.unibo.falltohell.controller.api.AudioController;
-import it.unibo.falltohell.view.impl.AudioManager;
+import it.unibo.falltohell.view.impl.AudioManagerImpl;
 /**
  * A simple class that provides a controller for the AudioManager.
  */
-public class AudioControllerImpl implements AudioController{
-    private final AudioManager audioManager;
+public class AudioControllerImpl implements AudioController {
+    private final AudioManagerImpl audioManager;
     /**
      * The constructor for the AudioController, it takes the single instance of the AudioManager.
      */
     public AudioControllerImpl() {
-        this.audioManager = AudioManager.getInstance();
+        this.audioManager = AudioManagerImpl.getInstance();
     }
 
     /**
