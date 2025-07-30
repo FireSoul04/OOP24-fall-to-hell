@@ -20,15 +20,25 @@ import java.awt.event.ActionListener;
  * two {@code JButton} on the center of the screen, it requires two {@code ActionListener}
  * for the buttons.
  * it also display a background and the title of the game.
+ * @author Casadei Lorenzo.
  */
 public class MainMenuPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
     private final Image background;
 
     public MainMenuPanel(final ActionListener startListener, final ActionListener exitListener) {
-        this.setLayout(new GridBagLayout());
-
         this.background = new ImageControllerImpl().loadImage("background.png");
+        this.initialize(startListener, exitListener);
 
+    }
+
+    /**
+     * private method to initialze the MainMenuPanel.
+     * @param startListener the action to be performed when the start button is pressed.
+     * @param exitListener the actionn to be performed when the exit button is pressed.
+     */
+    private void initialize(final ActionListener startListener, final ActionListener exitListener) {
+        this.setLayout(new GridBagLayout());
         final JButton startButton = new JButton("Start Game");
         final JButton exitButton = new JButton("Exit");
 
@@ -37,7 +47,7 @@ public class MainMenuPanel extends JPanel {
         final Font buttonFont = new Font("Arial", Font.BOLD, 18);
         final JLabel titleLabel = new JLabel("Fall To Hell");
 
-        for (JButton b : new JButton[]{startButton, exitButton}) {
+        for (final JButton b : new JButton[]{startButton, exitButton}) {
             b.setForeground(buttonText);
             b.setFont(buttonFont);
             b.setFocusPainted(false);
@@ -64,11 +74,12 @@ public class MainMenuPanel extends JPanel {
 
         this.setOpaque(false);
     }
+    
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(background,0, 0,getWidth(),getHeight(), null);
     }

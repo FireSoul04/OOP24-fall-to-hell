@@ -43,6 +43,7 @@ public class LabelRenderable extends BaseRenderable {
         this.text = text;
     }
 
+    @Override
     public void translate(final Vector2 newPosition) {
         // Labels typically do not move, but if needed, this can be implemented.
     }
@@ -57,7 +58,7 @@ public class LabelRenderable extends BaseRenderable {
      * @param g the graphics context to render the label.
      */
     @Override
-    public void render(Graphics g) {
+    public void render(final Graphics g) {
         if(isVisible()) {
             g.setColor(Color.WHITE);
             g.drawString(text, (int) getPosition().x(), (int) getPosition().y() + Y_OFFSET);

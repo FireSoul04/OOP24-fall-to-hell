@@ -28,7 +28,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
         Enemy.class,
         BaseCollidableBlock.class
     );
-    
+
     /**
      * Creates a projectile with a certain speed.
      * @param level the game level this projectile belongs to

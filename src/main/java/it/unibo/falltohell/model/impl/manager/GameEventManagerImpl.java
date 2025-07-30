@@ -54,7 +54,7 @@ public class GameEventManagerImpl<K> implements GameEventManager<K> {
             if (this.actions.containsKey(key) && cond.test()) {
                 try {
                     this.actions.get(key).execute();
-                } catch (final Exception e) {
+                } catch (final RuntimeException e) {
                     e.printStackTrace();
                 }
             }

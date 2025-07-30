@@ -5,7 +5,6 @@ import it.unibo.falltohell.model.api.ability.passive.StatisticPassiveAbility;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.manager.ManagerFamiliars;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
-import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.model.impl.manager.ManagerFamiliarsImpl;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;

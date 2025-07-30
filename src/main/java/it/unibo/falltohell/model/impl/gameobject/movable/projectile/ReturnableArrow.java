@@ -55,8 +55,6 @@ public class ReturnableArrow extends ProjectileImpl {
         }
         this.returning = true;
         this.setSolid(false);
-        this.setHit(false);
-
     }
 
     /**
@@ -112,7 +110,7 @@ public class ReturnableArrow extends ProjectileImpl {
      * @return true if the object is an enemy and not the owner
      */
     private boolean isEnemy(final GameObject obj) {
-        return obj instanceof Enemy && obj != owner;
+        return obj instanceof Enemy && !obj.equals(owner);
     }
 
     /**
