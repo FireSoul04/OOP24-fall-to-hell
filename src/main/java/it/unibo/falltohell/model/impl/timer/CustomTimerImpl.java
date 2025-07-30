@@ -46,7 +46,7 @@ public class CustomTimerImpl implements CustomTimer {
      * {@inheritDoc}
      */
     @Override
-    public void start() {
+    public synchronized void start() {
         if (!this.started) {
             this.timer = new Timer();
             this.elapsedTime = 0;
@@ -82,7 +82,7 @@ public class CustomTimerImpl implements CustomTimer {
      * {@inheritDoc}
      */
     @Override
-    public void stop() {
+    public synchronized void stop() {
         if (this.started) {
             this.timer.cancel();
             this.started = false;
@@ -95,7 +95,7 @@ public class CustomTimerImpl implements CustomTimer {
      * {@inheritDoc}
      */
     @Override
-    public void pause() {
+    public synchronized void pause() {
         if (this.paused) {
             throw new IllegalStateException("Cannot pause a timer that is already paused");
         } else if (!this.started) {
@@ -109,7 +109,7 @@ public class CustomTimerImpl implements CustomTimer {
      * {@inheritDoc}
      */
     @Override
-    public void resume() {
+    public synchronized void resume() {
         if (!this.paused) {
             throw new IllegalStateException("Cannot resume a timer that is not paused");
         } else if (!this.started) {
