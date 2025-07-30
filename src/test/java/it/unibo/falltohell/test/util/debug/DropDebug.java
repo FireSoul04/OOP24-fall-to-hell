@@ -10,6 +10,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.impl.gameobject.block.BaseCollidableBlock;
 import it.unibo.falltohell.model.impl.gameobject.movable.MovableImpl;
+import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
 import it.unibo.falltohell.model.impl.physics.BoxCollider;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.util.Dimensions;
@@ -42,6 +43,7 @@ public class DropDebug extends MovableImpl implements Drop {
     private final String name;
     private final Buff buff;
     private boolean collected;
+    private final BuffNames type;
 
     /**
      * Constructs a new drop object that carries a {@link Buff}, is placed at the
@@ -58,10 +60,11 @@ public class DropDebug extends MovableImpl implements Drop {
             "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
             "EI_EXPOSE_REP2"
     }, justification = "removeGameObject is final and Buff is immutable")
-    public DropDebug(final Level lv, final Vector2 position, final Buff buff, final String fileName) {
+    public DropDebug(final Level lv, final Vector2 position, final Buff buff, final String fileName, final BuffNames type) {
         super(lv, position, VELOCITY,
                 new BoxCollider(Vector2.zero(), DIMENSIONS));
         this.buff = buff;
+        this.type = type;
 
         this.name = "drop-timer-" + UUID.randomUUID();
         super.getLevel().getTimerManager().addTimer(this.name,
@@ -164,4 +167,7 @@ public class DropDebug extends MovableImpl implements Drop {
         return collected;
     }
 
+    public BuffNames getType() {
+        return type;
+    }
 }

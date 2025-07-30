@@ -34,7 +34,7 @@ public class EnemyTimerManagerDebug extends EnemyTimeManagerImpl {
      * Each enum constant stores a string prefix used to generate unique timer names
      * for actions like attack cycles or no-aggro periods.
      */
-    private enum TimerPrefix {
+    public enum TimerPrefix {
 
         /** Prefix for "No Aggro" timers, used when enemies are temporarily passive. */
         NO_AGGRO("NoAggro_"),
