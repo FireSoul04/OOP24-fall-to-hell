@@ -76,6 +76,10 @@ public class GameDataImpl implements GameData {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "The game data must know who is the new current character"
+    )
     @Override
     public void changeCurrentCharacter(final Character newCharacter) {
         this.currentCharacter = newCharacter;
