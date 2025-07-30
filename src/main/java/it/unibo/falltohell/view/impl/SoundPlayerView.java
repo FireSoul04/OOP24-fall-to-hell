@@ -1,11 +1,14 @@
 package it.unibo.falltohell.view.impl;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +45,7 @@ public class SoundPlayerView implements AudioPlayer {
             this.clip.open(audioInputStream);
             final FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(volume);
-        } catch (final Exception e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             LOGGER.log(Level.WARNING, "An error has occured while trying to open this file: " + this.filePath);
         }
     }

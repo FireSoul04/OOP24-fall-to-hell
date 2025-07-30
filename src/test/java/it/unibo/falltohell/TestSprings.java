@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.interactable.Interactable;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
+import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.impl.GameDataImpl;
 import it.unibo.falltohell.model.impl.gameobject.interactable.CharacterChanger;
 import it.unibo.falltohell.model.impl.gameobject.entrance.SpringsEntrance;
@@ -88,15 +89,19 @@ class TestSprings {
 
     /**
      * Tests if the spring entrance works correctly:
-     * checks if life is refilled when the character enters.
+     * checks if life and mana are refilled when the character enters.
      */
     @Test
     void testEntrance() {
         final Character character = this.data.getCurrentCharacter();
-        character.setDamagedLife(character.getStats().getFullLife() / 2);
+        final CharacterStatistics statistics = (CharacterStatistics) character.getStats();
+        character.setDamagedLife(statistics.getFullLife() / 2);
+        character.subMana(statistics.getInitialMana() / 2);
         this.entrance.onCollisionExit(character, Vector2.left());
-        Assertions.assertEquals(character.getStats().getFullLife(), character.getStats().getLife(),
-                "Life must be at max after entering the springs");
+        Assertions.assertEquals(statistics.getFullLife(), statistics.getLife(),
+            "Life must be at max after entering the springs");
+        Assertions.assertEquals(statistics.getInitialMana(), statistics.getMana(),
+            "Mana must be at max after entering the springs");
     }
 
 }

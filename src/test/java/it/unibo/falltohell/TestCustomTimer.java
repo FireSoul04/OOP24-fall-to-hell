@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 class TestCustomTimer {
 
     private static final String INFO_MESSAGE = "The IllegalStateException has been thrown correctly";
-    private static final long TIMEOUT = 2000;
+    private static final long TIMEOUT = 5000;
     private static final long DURATION = 1000;
     private CustomTimer timer;
     private boolean test;

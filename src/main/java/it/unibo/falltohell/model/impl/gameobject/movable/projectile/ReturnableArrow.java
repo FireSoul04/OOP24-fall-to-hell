@@ -49,7 +49,6 @@ public class ReturnableArrow extends ProjectileImpl {
      * owner.
      */
     public void startReturn() {
-        this.setFacingRight(!isFacingRight());
         this.returning = true;
         this.setSolid(false);
     }
@@ -73,6 +72,7 @@ public class ReturnableArrow extends ProjectileImpl {
         if (this.isReturning()) {
             final Vector2 direction = owner.getPosition().subtract(this.getPosition()).normalize();
             this.setSpeed(direction.multiply(originalSpeed));
+            this.getDrawable().ifPresent(x -> x.mirror(this.getSpeed().x() < 0));
             final Vector2 displacement = this.getSpeed().multiply(deltaTime);
             this.setPosition(this.getPosition().add(displacement));
             if (this.getPosition().distance(owner.getPosition()) < 2) {

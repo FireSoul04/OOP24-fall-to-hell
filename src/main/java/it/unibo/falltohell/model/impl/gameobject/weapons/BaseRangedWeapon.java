@@ -106,9 +106,8 @@ public abstract class BaseRangedWeapon extends BaseWeapon {
      * @param numberAmmo the amount of ammo to add
      */
     public void reload(final int numberAmmo) {
-        if (numberAmmo > 0 && numberAmmo <= this.getMaxAmmo()) {
-            this.setAmmo(Math.min(this.getAmmo() + numberAmmo, this.getMaxAmmo()));
-        }
+        this.setAmmo(Math.min(this.getAmmo() + numberAmmo, this.getMaxAmmo()));
+    
     }
 
     /**

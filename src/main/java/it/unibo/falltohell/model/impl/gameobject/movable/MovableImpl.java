@@ -39,7 +39,7 @@ public class MovableImpl extends GameObjectImpl implements Movable {
     @Override
     public void update(final double deltaTime) {
         final Vector2 displacement = speed.multiply(deltaTime);
-        setPosition(getPosition().add(displacement));
+        this.setPosition(this.getPosition().add(displacement));
     }
 
     /**
@@ -72,5 +72,4 @@ public class MovableImpl extends GameObjectImpl implements Movable {
     protected final void setFacingRight(final boolean facingRight) {
         this.facingRight = facingRight;
     }
-
 }
