@@ -20,7 +20,7 @@ import it.unibo.falltohell.util.Vector2;
  * it controlls if the projectile hit the target.
  * @author Casadei Lorenzo
  */
-public class TestProjectile {
+class TestProjectile {
     private LevelTest level;
     private Collider collider;
     private ProjectileImpl projectile;
@@ -33,8 +33,8 @@ public class TestProjectile {
         final int size = 5;
         level = new LevelTest();
         collider = new BoxCollider(new Dimensions(size, size));
-        Vector2 position = Vector2.zero();
-        Vector2 speed = Vector2.right();
+        final Vector2 position = Vector2.zero();
+        final Vector2 speed = Vector2.right();
         projectile = new ProjectileImpl(level, position, speed, collider, "projectile.png");
     }
 
@@ -55,7 +55,7 @@ public class TestProjectile {
         final GameObject block = new BaseCollidableBlock(level, Vector2.right(), collider, "test.png");
         final int frame = 60;
         final double deltaTime = 0.016;
-        for (int i = 0 ; i < frame ; i++) {
+        for (int i = 0; i < frame; i++) {
             projectile.update(deltaTime);
         }
         projectile.onCollision(block, Vector2.right());
@@ -66,7 +66,7 @@ public class TestProjectile {
      * Test if the projectile keep moving after is setted hit.
      */
     @Test
-    void testMovementAfterHit(){
+    void testMovementAfterHit() {
         projectile.setHit(true);
         final double deltaTime = 0.30;
         projectile.update(deltaTime);

@@ -23,8 +23,8 @@ import java.awt.event.ActionListener;
  * @author Casadei Lorenzo.
  */
 public class MainMenuPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
-    private final Image background;
+    private static final long serialVersionUID = 1;
+    private transient final Image background;
     /**
      * the constructor for the main menu panel.
      * @param startListener the action to be performed when the start button is pressed.

@@ -1,17 +1,21 @@
 package it.unibo.falltohell.view.api;
-
+/**
+ * An interface for the AudioManager. Consent to manipulate
+ * the sounds of this application.
+ * @author Casadei Lorenzo
+ */
 public interface AudioManager {
 
     /**
      * play the sound.
      * @param name the name of the sound to be played.
      */
-    void play(final String name);
+    void play(String name);
     /**
      * stop the sound.
      * @param name the name of the sound to be stopped.
      */
-    void stop(final String name);
+    void stop(String name);
     /**
      * pause all the sounds.
      */

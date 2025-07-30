@@ -17,6 +17,7 @@ public class AudioControllerImpl implements AudioController {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void play(final String name) {
         this.audioManager.play(name);
     }
@@ -24,6 +25,7 @@ public class AudioControllerImpl implements AudioController {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void pause(final String name) {
         this.audioManager.stop(name);
     }
@@ -31,6 +33,7 @@ public class AudioControllerImpl implements AudioController {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void mute() {
         this.audioManager.mute();
     }
@@ -38,6 +41,7 @@ public class AudioControllerImpl implements AudioController {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void unmute() {
         this.audioManager.unmute();
     }

@@ -9,7 +9,7 @@ import it.unibo.falltohell.view.api.AudioManager;
  * ensure that this class has only one global instance.
  * @author Casadei Lorenzo.
  */
-public final class AudioManagerImpl implements AudioManager{
+public final class AudioManagerImpl implements AudioManager {
     private static final AudioManagerImpl INSTANCE = new AudioManagerImpl();
     private static final int NUMBER_OF_LOOP = 15;
     private final Map<String, SoundPlayerView> soundMap = new HashMap<>();
@@ -31,7 +31,7 @@ public final class AudioManagerImpl implements AudioManager{
     public static AudioManagerImpl getInstance() {
         return INSTANCE;
     }
-    
+
     /**
      * Loads all the sounds into the sound map.
      * This method can be extended to load multiple sound effects.

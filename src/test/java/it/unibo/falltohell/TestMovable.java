@@ -19,19 +19,19 @@ import it.unibo.falltohell.util.Vector2;
  * of the speed and the position is correct.
  * @author Casadei Lorenzo
  */
-public class TestMovable {
-    private Level level;
-    private Collider collider;
+class TestMovable {
+    
     private MovableImpl movable;
     /**
      * Set up for the tests.
      */
     @BeforeEach
     void setUp() {
-        level = new LevelTest();
-        collider = new BoxCollider(new Dimensions(5, 5));
-        Vector2 position = new Vector2(0, 0);
-        Vector2 speed = new Vector2(2, 0); 
+        final int size = 5;
+        final Level level = new LevelTest();
+        final Collider collider = new BoxCollider(new Dimensions(size, size));
+        final Vector2 position = Vector2.zero();
+        final Vector2 speed = new Vector2(2, 0); 
         movable = new MovableImpl(level, position, speed, collider);
     }
     /**
@@ -49,7 +49,8 @@ public class TestMovable {
      */
     @Test
     void testMovement() {
-        movable.update(0.5);
+        final double deltaTime = 0.5;
+        movable.update(deltaTime);
         final Vector2 expectedPosition = Vector2.right();
         assertEquals(expectedPosition, movable.getPosition());
     }
