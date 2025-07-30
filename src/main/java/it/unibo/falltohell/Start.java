@@ -8,6 +8,10 @@ import it.unibo.falltohell.view.impl.MainMenuPanel;
  * Class for starting the application.
  */
 final class Start {
+    
+    private Start(){
+
+    }
     /**
      * Function called at the start of the application.
      * @param args unused
