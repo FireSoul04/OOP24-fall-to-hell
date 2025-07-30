@@ -5,6 +5,7 @@ import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
 import it.unibo.falltohell.model.api.listener.EnterSafeZoneListener;
 import it.unibo.falltohell.model.api.listener.ExitSafeZoneListener;
+import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.model.api.statistic.Statistics;
 import it.unibo.falltohell.util.Vector2;
 
@@ -25,14 +26,18 @@ public class SpringsEntrance extends BaseEntrance {
 
     /**
      *{@inheritDoc}
-     * It is used to restore all the character's life every time the character enters the springs.
+     * It is used to restore all the character's life and mana every time the character enters the springs.
      */
     @Override
     public void onCollisionExit(final GameObject other, final Vector2 direction) {
         if (other instanceof Character) {
-            final Statistics statistics = this.getLevel().getGameData().getCurrentCharacter().getStats();
+            final CharacterStatistics statistics = (CharacterStatistics) this.getLevel()
+                    .getGameData()
+                    .getCurrentCharacter()
+                    .getStats();
             if (direction.equals(Vector2.left())) {
                 statistics.setLife(statistics.getFullLife());
+                statistics.setMana(statistics.getInitialMana());
                 this.getListenerEnter().ifPresent(EnterSafeZoneListener::call);
             } else if (direction.equals(Vector2.right())) {
                 this.getListenerExit().ifPresent(ExitSafeZoneListener::call);
