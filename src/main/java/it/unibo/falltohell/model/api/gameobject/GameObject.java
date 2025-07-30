@@ -15,7 +15,9 @@ import java.util.Optional;
  * @author Casadei Lorenzo
  */
 public interface GameObject {
-
+    /**
+     * the size of the tiles.
+     */
     double TILE_SIZE = 20.0;
 
     /**

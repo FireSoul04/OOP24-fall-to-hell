@@ -48,7 +48,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
          *
          * @param prefix the string used as a prefix for timer names
          */
-        TimerPrefix(String prefix) {
+        TimerPrefix(final String prefix) {
             this.prefix = prefix;
         }
 
@@ -162,7 +162,7 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
         final List<String> timers = enemyTimers.remove(enemy);
         if (timers != null) {
             for (final String timer : timers) {
-                if(lv.getTimerManager().searchTimer(timer)){
+                if (lv.getTimerManager().searchTimer(timer)) {
                     lv.getTimerManager().removeTimer(timer);
                 }
             }
@@ -189,9 +189,9 @@ public class EnemyTimeManagerImpl implements EnemyTimerManager {
         // Attempt to create the timer
         if (prefix.equals(TimerPrefix.NO_AGGRO)) {
             createNoAggroTimer(enemy);
-        } else if(prefix.equals(TimerPrefix.ATTACK)){
+        } else if (prefix.equals(TimerPrefix.ATTACK)) {
             createAttackTimer(enemy, Optional.empty());
-        }else{
+        } else {
             throw new IllegalStateException("Enemy stats are not of type BaseEnemyStatistics or LongRangeStatistics");
         }
 

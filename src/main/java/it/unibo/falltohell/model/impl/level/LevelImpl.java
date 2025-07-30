@@ -220,8 +220,8 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @SuppressFBWarnings(
-        value="EI_EXPOSE_REP",
-        justification="This is the only way to link any drawable from the game objects"
+        value = "EI_EXPOSE_REP",
+        justification = "This is the only way to link any drawable from the game objects"
     )
     @Override
     public DrawableRenderableHandler getDrawableRenderableHandler() {

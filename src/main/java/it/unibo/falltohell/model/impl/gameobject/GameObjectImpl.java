@@ -19,10 +19,10 @@ import it.unibo.falltohell.model.api.level.Level;
  * @author Casadei Lorenzo
  */
 public class GameObjectImpl implements GameObject {
+    private final Level level;
+    private final Optional<Collider> collider;
     private Vector2 pos;
     private boolean isSolid;
-    private Level level;
-    private Optional<Collider> collider;
     private Optional<Drawable> drawable;
 
     /**

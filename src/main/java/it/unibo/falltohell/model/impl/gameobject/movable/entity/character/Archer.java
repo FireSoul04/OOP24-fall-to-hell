@@ -29,33 +29,31 @@ public class Archer extends BaseCharacter {
 
     private static final double LIFE = 50;
     private static final double ATTACK = 10;
-    private static final double ATTACK_SPEED = 1000000;
+    private static final double ATTACK_SPEED = 100;
     private static final Vector2 SPEED = new Vector2(2.5, 2.0);
     private static final double MANA = 0.5;
     private static final long COOLDOWN = 500;
-    private static final Vector2 PROJECTILE_SPEED = new Vector2(5.0,0.0);
+    private static final Vector2 PROJECTILE_SPEED = new Vector2(5.0, 0.0);
+    private static final Dimensions DIMENSION = new Dimensions(20, 25);
+    private static final int MAX_AMMO = 5;
     private final Bow bow;
     private final Set<Projectile> shotedArrows = new HashSet<>();
     private final StatisticPassiveAbility bonusDamage;
     private final SpecialActiveAbility returnAbility;
-
-
 
     /**
      * Constructs a new ArcherCharacter.
      *
      * @param level    the game level
      * @param position the initial position
-     * @param bow      the ranged weapon used to shoot arrows
      */
     public Archer(final Level level, final Vector2 position) {
         super(level, position, new StatisticFactoryImpl()
-            .createCharacterStatistic(LIFE, ATTACK, SPEED, new Dimensions(20,25), MANA, ATTACK_SPEED)
-            , "archer.png");
-        this.bow = new Bow(this, 5, COOLDOWN, "bow.png", PROJECTILE_SPEED);
+            .createCharacterStatistic(LIFE, ATTACK, SPEED, DIMENSION, MANA, ATTACK_SPEED), 
+            "archer.png");
+        this.bow = new Bow(this, MAX_AMMO, COOLDOWN, "bow.png", PROJECTILE_SPEED);
         final AbilityFactory factory = new AbilityFactoryImpl();
-        bonusDamage = factory.createPassiveAbility
-            (this, ch -> {
+        bonusDamage = factory.createPassiveAbility(this, ch -> {
             final int arrowsInFlight = ((Archer) ch).getShotedArrows().size();
             final double baseDamage = ch.getStats().getInitialAttack();
             final double bonusPerArrow = 0.2;
@@ -63,13 +61,12 @@ public class Archer extends BaseCharacter {
         });
         this.equipWeapon(bow);
         this.returnAbility = factory.createSpecialActiveAbility(this);
-
-
     }
 
     /**
      * Shoots the arrow with the bow.
      */
+    @Override
     public void attack() {
         super.attack();
         bow.getShotProjectile().ifPresent(shotedArrows :: add);
@@ -112,10 +109,13 @@ public class Archer extends BaseCharacter {
         this.bonusDamage.carryOut();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void update(double deltatime){
+    public void update(final double deltatime) {
         super.update(deltatime);
-        if(this.getLevel().checkCondition("ActiveAbility")){
+        if (this.getLevel().checkCondition("ActiveAbility")) {
             this.returnAbility.activate();
         }
     }

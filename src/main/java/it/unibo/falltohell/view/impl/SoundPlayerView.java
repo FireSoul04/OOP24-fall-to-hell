@@ -11,11 +11,11 @@ import it.unibo.falltohell.view.api.AudioPlayer;
 /**
  * A class that consent to manipulate the file Audio for the game.
  */
-public class SoundPlayerView implements AudioPlayer{
+public class SoundPlayerView implements AudioPlayer {
     private final int loop;
     private final String filePath;
-    private long currentFrame = 0;
-    private AudioInputStream audioInputStream;
+    private final float volume = -10.0f;
+    private long currentFrame;
     private Clip clip;
     /**
      * Constructor for the SoundPlayer.
@@ -23,8 +23,9 @@ public class SoundPlayerView implements AudioPlayer{
      * @param loop the number of times to loop the audio 
      */
     public SoundPlayerView(final String name, final int loop) {
-        this.filePath = AudioPlayer.PATH_TO_AUDIO + name;
+        this.filePath = PATH_TO_AUDIO + name;
         this.loop = loop;
+        this.currentFrame = 0;
         this.resetAudio();
     }
     /**
@@ -32,13 +33,13 @@ public class SoundPlayerView implements AudioPlayer{
      */
      private void resetAudio() {
         try {
-            this.audioInputStream = AudioSystem.getAudioInputStream(new File(this.filePath).getAbsoluteFile());
+            final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(this.filePath).getAbsoluteFile());
             this.clip = AudioSystem.getClip();
-            this.clip.open(this.audioInputStream);
-            FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-10.0f);
-        } catch (Exception e) {
-            e.printStackTrace();
+            this.clip.open(audioInputStream);
+            final FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(volume);
+        } catch (final Exception e) {
+
         }
     }
     /**

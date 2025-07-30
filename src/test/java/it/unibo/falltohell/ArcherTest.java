@@ -20,7 +20,7 @@ import it.unibo.falltohell.util.Vector2;
  *
  * @author Lorenzo Casadei
  */
-public class ArcherTest {
+class ArcherTest {
     private Archer archer;
     private Level level;
 
@@ -44,19 +44,17 @@ public class ArcherTest {
         assertEquals(initialAmmo - 1, archer.getBow().getAmmo());
         assertEquals(1, archer.getShotedArrows().size());
     }
+
     /**
      * Test if the arrows came back after activate the ability.
      */
     @Test
     void testReturnArrowAbility() {
-
         for (int i = 0; i < 2; i++) {
             archer.attack();
         }
-
         final ReturnArrowAbility ability = new ReturnArrowAbility(archer);
         ability.activate();
-
         for (final Projectile p : archer.getShotedArrows()) {
             assertTrue(((ReturnableArrow) p).isReturning());
         }
@@ -67,14 +65,12 @@ public class ArcherTest {
     @Test
     void testArrowReturnRestoresAmmo() {
         final int initialAmmo = archer.getBow().getAmmo();
-
         archer.setPosition(new Vector2(0.0, 1.0));
         archer.attack();
         final ReturnableArrow arrow;
         if (archer.getBow().getShotProjectile().isPresent()) {
             arrow = (ReturnableArrow) archer.getBow().getShotProjectile().get();
             archer.setPosition(new Vector2(0.0, 1.0));
-
             arrow.startReturn();
             final int frames = 60;
             final double deltaTime = 0.016;
