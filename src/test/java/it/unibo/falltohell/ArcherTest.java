@@ -22,14 +22,13 @@ import it.unibo.falltohell.util.Vector2;
  */
 class ArcherTest {
     private Archer archer;
-    private Level level;
 
     /**
      * set up for the test.
      */
     @BeforeEach
     void setUp() {
-        level = new LevelTest();
+        final Level level = new LevelTest();
         archer = new Archer(level, Vector2.zero());
     }
 
@@ -40,7 +39,6 @@ class ArcherTest {
     void testConsumesAmmo() {
         final int initialAmmo = archer.getBow().getAmmo();
         archer.attack();
-
         assertEquals(initialAmmo - 1, archer.getBow().getAmmo());
         assertEquals(1, archer.getShotedArrows().size());
     }
@@ -82,7 +80,6 @@ class ArcherTest {
         } else {
             assertEquals(initialAmmo, archer.getBow().getAmmo());
         }
-
     }
 }
 

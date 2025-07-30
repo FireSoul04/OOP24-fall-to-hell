@@ -43,7 +43,7 @@ public class SoundPlayerView implements AudioPlayer {
             final FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(volume);
         } catch (final Exception e) {
-            LOGGER.log(Level.WARNING, "an error has occured while trying to open this file: " + this.filePath);
+            LOGGER.log(Level.WARNING, "An error has occured while trying to open this file: " + this.filePath);
         }
     }
     /**

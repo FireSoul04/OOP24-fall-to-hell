@@ -77,7 +77,8 @@ public class GameControllerImpl implements GameController {
         this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener(), drh);
         this.state = GameState.RUNNING;
         this.logger = Logger.getLogger("GameLogger");
-        AudioManager.getInstance().play("Music");
+        final AudioControllerImpl audioController = new AudioControllerImpl();
+        audioController.play("Music");
     }
 
     /**
