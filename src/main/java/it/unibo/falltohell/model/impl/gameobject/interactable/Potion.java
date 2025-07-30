@@ -15,8 +15,8 @@ import it.unibo.falltohell.util.Vector2;
  */
 public class Potion extends BaseItem {
 
-    private static final long POTION_DURATION = 12000;
-    private static final long LIFE_MANA_POTION_DURATION = 60000;
+    private static final long POTION_DURATION = 12 * 1000;
+    private static final long LIFE_MANA_POTION_DURATION = 60 * 1000;
     private final Buff buff;
 
     /**

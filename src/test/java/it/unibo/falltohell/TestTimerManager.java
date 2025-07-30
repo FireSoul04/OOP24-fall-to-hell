@@ -128,4 +128,5 @@ class TestTimerManager {
             Assertions.fail("The timer should have been restarted but it was tried to be added");
         }
     }
+
 }

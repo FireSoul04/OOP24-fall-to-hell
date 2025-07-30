@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Class to test if the blocks work as expected.
  * @author Martina Malagoli
@@ -41,13 +39,13 @@ class TestBlocks {
      * a collision with an entity.
      */
     @Test
-    void TestLavaBlock() {
+    void testLavaBlock() {
         final BaseCollidableBlock lavaBlock = this.blockFactory.createLavaBlock(this.entity.getLevel(), Vector2.zero());
         lavaBlock.onCollision(this.entity, Vector2.up());
         final Statistics statistics = this.entity.getStats();
         final double currentLife = statistics.getLife();
-        assertTrue(currentLife < statistics.getFullLife(), "When there is a collision " +
-                "with a lava block life should be subtracted");
+        Assertions.assertTrue(currentLife < statistics.getFullLife(), "When there is a collision "
+                + "with a lava block life should be subtracted");
     }
 
     /**
@@ -56,21 +54,21 @@ class TestBlocks {
      * another vines block and if it repristinate correctly the entity speed on exit.
      */
     @Test
-    void TestVinesBlock() {
+    void testVinesBlock() {
         final BaseCollidableBlock vinesBlock1 = this.blockFactory.createVinesBlock(entity.getLevel(), entity.getPosition());
         final BaseCollidableBlock vinesBlock2 = this.blockFactory.createVinesBlock(entity.getLevel(), entity.getPosition());
         final CharacterStatistics statistics = (CharacterStatistics) this.entity.getStats();
         final Vector2 initialSpeed = statistics.getInitialSpeed();
         vinesBlock1.onCollision(this.entity, Vector2.up());
         final Vector2 currentSpeed = statistics.getSpeed();
-        assertTrue(currentSpeed.magnitude() < initialSpeed.magnitude(),
+        Assertions.assertTrue(currentSpeed.magnitude() < initialSpeed.magnitude(),
                 "The current speed must be lesser than initial speed");
         vinesBlock2.onCollision(this.entity, Vector2.up());
         Assertions.assertEquals(currentSpeed.magnitude(), statistics.getSpeed().magnitude(),
                 "When vines debuff is already present it must not be reapplied");
         vinesBlock1.onCollisionExit(this.entity, Vector2.up());
         Assertions.assertEquals(statistics.getSpeed().magnitude(), initialSpeed.magnitude(),
-                "When the collision ends the vines debuff is removed and the" +
-                        "speed is reset to the one that should have been without vines");
+                "When the collision ends the vines debuff is removed and the"
+                        + "speed is reset to the one that should have been without vines");
     }
 }

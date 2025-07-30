@@ -25,6 +25,7 @@ public class GameDataImpl implements GameData {
      * @param points      saved on the save file
      * @param characterID is the ID of last character used before saving
      * @param characters  is the map of characters in the game
+     * @param position is the last position of the character before saving
      */
     public GameDataImpl(final long points, final CharacterID characterID,
             final Map<CharacterID, Character> characters, final Vector2 position) {
@@ -35,6 +36,7 @@ public class GameDataImpl implements GameData {
 
     /**
      * Initialization of GameData when starting a new game.
+     * @param characters is the map of characters in the game
      */
     public GameDataImpl(final Map<CharacterID, Character> characters) {
         this(0, CharacterID.ROGUE, characters, Vector2.one().multiply(GameObject.TILE_SIZE * 3));
@@ -112,4 +114,5 @@ public class GameDataImpl implements GameData {
             throw new IllegalArgumentException("The amount should be lesser or equal to the points");
         }
     }
+
 }

@@ -2,7 +2,10 @@ package it.unibo.falltohell;
 
 import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -13,6 +16,9 @@ import java.util.logging.Logger;
  */
 class TestCustomTimer {
 
+    private static final String INFO_MESSAGE = "The IllegalStateException has been thrown correctly";
+    private static final long TIMEOUT = 2000;
+    private static final long DURATION = 1000;
     private CustomTimer timer;
     private boolean test;
     private Logger logger;
@@ -22,7 +28,7 @@ class TestCustomTimer {
      */
     @BeforeEach
     void initialization() {
-        this.timer = new CustomTimerImpl(1000, () -> this.test = true);
+        this.timer = new CustomTimerImpl(DURATION, () -> this.test = true);
         this.test = false;
         this.logger = Logger.getLogger("TestLogger");
     }
@@ -46,7 +52,7 @@ class TestCustomTimer {
             this.timer.start();
             Assertions.fail("The timer should not be started when it is already running");
         } catch (final IllegalStateException e) {
-            this.logger.info("The IllegalStateException has been thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -69,7 +75,7 @@ class TestCustomTimer {
             this.timer.stop();
             Assertions.fail("The timer should not be stopped when it is already not running");
         } catch (final IllegalStateException e) {
-            this.logger.info("The IllegalStateException has been thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -93,7 +99,7 @@ class TestCustomTimer {
             this.timer.pause();
             Assertions.fail("The timer should not be paused when it is not running yet");
         } catch (final IllegalStateException e) {
-            this.logger.info("The IllegalStateException has been thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -109,7 +115,7 @@ class TestCustomTimer {
             this.timer.pause();
             Assertions.fail("The timer should not be paused when it is already paused");
         } catch (final IllegalStateException e) {
-            this.logger.info("The IllegalStateException has been thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -134,7 +140,7 @@ class TestCustomTimer {
             this.timer.resume();
             Assertions.fail("The timer should not be resumed when it is not running yet");
         } catch (final IllegalStateException e) {
-            this.logger.info("The IllegalStateException has been thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -151,7 +157,7 @@ class TestCustomTimer {
             this.timer.resume();
             Assertions.fail("The timer should not be resumed when it is already running");
         } catch (final IllegalStateException e) {
-            this.logger.info("The IllegalStateException has been thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -159,7 +165,7 @@ class TestCustomTimer {
      * Tests if an event is executed correctly at the end of a timer.
      */
     @Test
-    @Timeout(value = 2000, unit = TimeUnit.MILLISECONDS)
+    @Timeout(value = TIMEOUT, unit = TimeUnit.MILLISECONDS)
     void testCorrectExecutionOfEvent() {
         this.timer.start();
         try {

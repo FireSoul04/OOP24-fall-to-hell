@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Logger;
+
 /**
  * Class to test the caster character.
  * @author Martina Malagoli
@@ -24,6 +26,8 @@ import org.junit.jupiter.api.Test;
 class TestCaster {
 
     private static final String TIMER_NAME = "mana_recharge";
+    private static final long TIMEOUT = 9500;
+    private static final long SLEEP_TIME = 5500;
     private static final double STAT = 60;
 
     private Caster caster;
@@ -54,14 +58,14 @@ class TestCaster {
     void testPassiveAbility() {
         this.caster.subMana(this.statistics.getInitialMana() / 2);
         double currentMana = this.statistics.getMana();
-        this.timerManager.waitForTimer(TIMER_NAME, 10000);
+        this.timerManager.waitForTimer(TIMER_NAME, TIMEOUT);
         Assertions.assertTrue(this.statistics.getMana() > currentMana, "Mana should have been added");
         currentMana = this.statistics.getMana();
         this.caster.disable();
         try {
-            Thread.sleep(5500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.sleep(SLEEP_TIME);
+        } catch (final InterruptedException e) {
+            Logger.getLogger("testLogger").severe("Something went wrong: " + e);
         }
         Assertions.assertEquals(0, Double.compare(currentMana, this.statistics.getMana()),
                 "Mana shouldn't have been added");

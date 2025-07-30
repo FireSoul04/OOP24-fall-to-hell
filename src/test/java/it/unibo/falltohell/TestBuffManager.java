@@ -5,7 +5,11 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.manager.BuffManager;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.impl.buff.*;
+import it.unibo.falltohell.model.impl.buff.LifeBuff;
+import it.unibo.falltohell.model.impl.buff.ManaBuff;
+import it.unibo.falltohell.model.impl.buff.AttackBuff;
+import it.unibo.falltohell.model.impl.buff.AttackSpeedBuff;
+import it.unibo.falltohell.model.impl.buff.SpeedBuff;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Caster;
 import it.unibo.falltohell.test.util.LevelTest;
 import it.unibo.falltohell.test.util.TimerManagerTest;
@@ -37,7 +41,7 @@ class TestBuffManager {
     @BeforeEach
     void initialization() {
         final Level level = new LevelTest();
-        Character character = new Caster(level, Vector2.zero());
+        final Character character = new Caster(level, Vector2.zero());
         this.statistics = (CharacterStatistics) character.getStats();
         this.buffManager = character.getBuffManager();
         this.timerManager = (TimerManagerTest) level.getTimerManager();
@@ -59,12 +63,12 @@ class TestBuffManager {
         this.buffs.forEach((key, value) -> this.buffManager.addBuff(value, DURATION, key));
         Assertions.assertEquals(statistics.getFullLife() * MULTIPLIER,
                 statistics.getTemporaryLife(),
-                "Temporary life should be its initial value plus the the full life of " +
-                        " the character multiplied with the multiplier");
+                "Temporary life should be its initial value plus the the full life of "
+                        + " the character multiplied with the multiplier");
         Assertions.assertEquals(statistics.getInitialMana() * MULTIPLIER,
                 statistics.getTemporaryMana(),
-                "Temporary mana should be its initial value plus the full mana of" +
-                        " the character multiplied with the multiplier");
+                "Temporary mana should be its initial value plus the full mana of"
+                        + " the character multiplied with the multiplier");
         Assertions.assertEquals(statistics.getInitialAttack() * (1 + MULTIPLIER),
                 statistics.getAttack(),
                 "Attack should be the initial attack plus itself multiplied with the multiplier");
@@ -113,13 +117,13 @@ class TestBuffManager {
      */
     @Test
     void testDuplicatedBuffs() {
-        this.buffManager.addBuff(this.buffs.get("life"), DURATION * 3, "life");
+        final String buffName = "life";
+        this.buffManager.addBuff(this.buffs.get(buffName), DURATION * 3, buffName);
         try {
-            this.buffManager.addBuff(this.buffs.get("life"), DURATION, "life");
+            this.buffManager.addBuff(this.buffs.get(buffName), DURATION, buffName);
             Assertions.fail("A duplicate buff should not be added");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             Logger.getLogger("buffLogger").info("The IllegalArgumentException was thrown correctly");
         }
     }
-
 }
