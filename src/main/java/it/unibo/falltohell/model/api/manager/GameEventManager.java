@@ -4,7 +4,7 @@ import it.unibo.falltohell.model.api.GameEvent;
 import it.unibo.falltohell.model.api.GameEventCondition;
 /**
  * The manager for the game event.
- * @param K the type of the key used to identify events.
+ * @param <K> the type of the key used to identify events.
  */
 public interface GameEventManager<K> {
     /**
