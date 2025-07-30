@@ -18,8 +18,10 @@ import java.awt.Graphics2D;
  */
 public class SwingGameRenderer extends JPanel implements GameRenderer {
 
-    private final GameWindow window;
-    private final DrawableRenderableHandler drh;
+    private static final long serialVersionUID = 1L;
+
+    private transient final GameWindow window;
+    private transient final DrawableRenderableHandler drh;
 
     /**
      * Create a renderer implemented with Java Swing.
