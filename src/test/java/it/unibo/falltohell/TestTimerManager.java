@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  */
 class TestTimerManager {
 
+    private static final String INFO_MESSAGE = "The IllegalArgumentException was thrown correctly";
     private static final long DURATION = 500;
     private static final String TIMER_NAME = "Timer";
     private CustomTimer timer;
@@ -30,7 +31,7 @@ class TestTimerManager {
      */
     @BeforeEach
     void initialization() {
-        this.timer = new CustomTimerImpl(DURATION, () -> {});
+        this.timer = new CustomTimerImpl(DURATION, () -> { });
         this.timerManager = new TimerManagerImpl();
         this.logger = Logger.getLogger("TimerManagerLogger");
     }
@@ -47,7 +48,7 @@ class TestTimerManager {
             this.timerManager.addTimer(TIMER_NAME, this.timer);
             Assertions.fail("An already existent timer should not be replaced");
         } catch (final IllegalArgumentException e) {
-            this.logger.info("The IllegalArgumentException was thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -64,7 +65,7 @@ class TestTimerManager {
             this.timerManager.removeTimer(TIMER_NAME);
             Assertions.fail("A non existent timer should not be removed");
         } catch (final IllegalArgumentException e) {
-            this.logger.info("The IllegalArgumentException was thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -83,13 +84,13 @@ class TestTimerManager {
             this.timerManager.pauseTimer(TIMER_NAME);
             Assertions.fail("A non existent timer should not be paused");
         } catch (final IllegalArgumentException e) {
-            this.logger.info("The IllegalArgumentException was thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
         try {
             this.timerManager.resumeTimer(TIMER_NAME);
             Assertions.fail("A non existent timer should not be resumed");
         } catch (final IllegalArgumentException e) {
-            this.logger.info("The IllegalArgumentException was thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -108,13 +109,13 @@ class TestTimerManager {
             this.timerManager.stopTimer(TIMER_NAME);
             Assertions.fail("A non existent timer should not be stopped");
         } catch (final IllegalArgumentException e) {
-            this.logger.info("The IllegalArgumentException was thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
         try {
             this.timerManager.restartTimer(TIMER_NAME);
             Assertions.fail("A non existent timer should not be restarted");
         } catch (final IllegalArgumentException e) {
-            this.logger.info("The IllegalArgumentException was thrown correctly");
+            this.logger.info(INFO_MESSAGE);
         }
     }
 
@@ -123,7 +124,7 @@ class TestTimerManager {
         this.timerManager.restartIfPresent(TIMER_NAME, this.timer);
         try {
             this.timerManager.restartIfPresent(TIMER_NAME, this.timer);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             Assertions.fail("The timer should have been restarted but it was tried to be added");
         }
     }
