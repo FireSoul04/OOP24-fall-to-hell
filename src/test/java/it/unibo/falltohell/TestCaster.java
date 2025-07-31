@@ -26,8 +26,7 @@ import java.util.logging.Logger;
 class TestCaster {
 
     private static final String TIMER_NAME = "mana_recharge";
-    private static final long TIMEOUT = 9500;
-    private static final long SLEEP_TIME = 5500;
+    private static final long TIMEOUT = 5500;;
     private static final double STAT = 60;
 
     private Caster caster;
@@ -62,11 +61,7 @@ class TestCaster {
         Assertions.assertTrue(this.statistics.getMana() > currentMana, "Mana should have been added");
         currentMana = this.statistics.getMana();
         this.caster.disable();
-        try {
-            Thread.sleep(SLEEP_TIME);
-        } catch (final InterruptedException e) {
-            Logger.getLogger("testLogger").severe("Something went wrong: " + e);
-        }
+        this.timerManager.waitUntilTimeout(TIMEOUT);
         Assertions.assertEquals(0, Double.compare(currentMana, this.statistics.getMana()),
                 "Mana shouldn't have been added");
     }
