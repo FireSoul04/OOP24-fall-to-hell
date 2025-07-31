@@ -64,7 +64,7 @@ public final class AudioManagerImpl implements AudioManager {
      */
     @Override
     public void pauseAll() {
-        if (muted) {
+        if (isMuted()) {
             soundMap.values().forEach(SoundPlayerView::pause);
         }
     }
@@ -74,7 +74,7 @@ public final class AudioManagerImpl implements AudioManager {
      */
     @Override
     public void resumeAll() {
-        if (!muted) {
+        if (!isMuted()) {
             soundMap.values().forEach(SoundPlayerView::resume);
         }
     }

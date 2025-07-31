@@ -20,6 +20,10 @@ import it.unibo.falltohell.model.api.level.Level;
  * @author Casadei Lorenzo
  */
 public class GameObjectImpl implements GameObject {
+    private static final String EXPOSE_REP = "EI_EXPOSE_REP2";
+    private static final String OVERRIDABLE_IN_CONSTRUCCTOR = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR";
+    private static final String JUSTIFICATION = "Level is passed and stored for controlled access within game logic"
+        + "The level must add the GameObject here.";
     private final Level level;
     private final Optional<Collider> collider;
     private Vector2 pos;
@@ -27,23 +31,38 @@ public class GameObjectImpl implements GameObject {
     private Optional<Drawable> drawable;
 
     /**
+     * Base constructs for the GameObject.
+     * @param lv the level of this GameObject.
+     * @param position the position of this GameObject.
+     * @param isSolid if the GameObject is solid.
+     * @param collider the collider of this GameObject.
+     * @param drawable the drawable of this GameObject.
+     */
+    @SuppressFBWarnings(
+    value = { EXPOSE_REP, OVERRIDABLE_IN_CONSTRUCCTOR },
+    justification = JUSTIFICATION
+    )
+    public GameObjectImpl(final Level lv, final Vector2 position, final boolean isSolid,
+                          final Optional<Collider> collider, final Optional<Drawable> drawable) {
+        this.level = lv;
+        this.pos = position;
+        this.isSolid = isSolid;
+        this.collider = collider;
+        this.drawable = drawable;
+        lv.addGameObject(this);
+    }
+    /**
      * Constructs a solid GameObject and adds it to the specified level.
      *
      * @param lv       the level to which this object will be added
      * @param position the position of the object
      */
     @SuppressFBWarnings(
-    value = "EI_EXPOSE_REP2",
-    justification = "Level is passed and stored for controlled access within game logic"
+    value = { EXPOSE_REP, OVERRIDABLE_IN_CONSTRUCCTOR },
+    justification = JUSTIFICATION
     )
     public GameObjectImpl(final Level lv, final Vector2 position) {
-        this.pos = position;
-        this.isSolid = true; // Default
-        lv.addGameObject(this);
-        this.level = lv;
-        this.collider = Optional.empty();
-        this.drawable = Optional.empty();
-
+        this(lv, position, true, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -54,17 +73,11 @@ public class GameObjectImpl implements GameObject {
      * @param collider the collider for this object
      */
     @SuppressFBWarnings(
-    value = "EI_EXPOSE_REP2",
-    justification = "Level is passed and stored for controlled access within game logic"
+    value = { EXPOSE_REP, OVERRIDABLE_IN_CONSTRUCCTOR },
+    justification = JUSTIFICATION
     )
     public GameObjectImpl(final Level lv, final Vector2 position, final Collider collider) {
-        this.pos = position;
-        this.isSolid = true; // Default
-        this.collider = Optional.of(collider);
-        lv.addGameObject(this);
-        this.level = lv;
-        this.drawable = Optional.empty();
-
+        this(lv, position, true, Optional.of(collider), Optional.empty());
     }
 
     /**
@@ -77,16 +90,11 @@ public class GameObjectImpl implements GameObject {
      * @param collider the collider for this object
      */
     @SuppressFBWarnings(
-    value = "EI_EXPOSE_REP2",
-    justification = "Level is passed and stored for controlled access within game logic"
+    value = { EXPOSE_REP, OVERRIDABLE_IN_CONSTRUCCTOR },
+    justification = JUSTIFICATION
     )
     public GameObjectImpl(final Level lv, final Vector2 position, final boolean isSolid, final Collider collider) {
-        this.pos = position;
-        this.isSolid = isSolid;
-        this.collider = Optional.of(collider);
-        lv.addGameObject(this);
-        this.level = lv;
-        this.drawable = Optional.empty();
+        this(lv, position, isSolid, Optional.of(collider), Optional.empty());
     }
 
     /**
