@@ -1,7 +1,5 @@
 package it.unibo.falltohell.controller.api;
 
-import it.unibo.falltohell.view.api.GameWindow;
-
 /**
  * Interface for an MVC controller dedicated to a game.
  *
