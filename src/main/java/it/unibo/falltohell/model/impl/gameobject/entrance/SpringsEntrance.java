@@ -6,7 +6,6 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Charact
 import it.unibo.falltohell.model.api.listener.EnterSafeZoneListener;
 import it.unibo.falltohell.model.api.listener.ExitSafeZoneListener;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
-import it.unibo.falltohell.model.api.statistic.Statistics;
 import it.unibo.falltohell.util.Vector2;
 
 /**
