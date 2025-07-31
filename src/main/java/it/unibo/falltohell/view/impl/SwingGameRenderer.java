@@ -20,8 +20,8 @@ public class SwingGameRenderer extends JPanel implements GameRenderer {
 
     private static final long serialVersionUID = 1L;
 
-    private transient final GameWindow window;
-    private transient final DrawableRenderableHandler drh;
+    private final transient GameWindow window;
+    private final transient DrawableRenderableHandler drh;
 
     /**
      * Create a renderer implemented with Java Swing.
