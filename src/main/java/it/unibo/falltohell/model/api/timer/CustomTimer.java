@@ -1,7 +1,5 @@
 package it.unibo.falltohell.model.api.timer;
 
-import java.util.concurrent.CountDownLatch;
-
 /**
  * Customized timer to schedule game events.
  * @author Martina Malagoli
@@ -41,7 +39,18 @@ public interface CustomTimer {
     void resume();
 
     /**
-     * @return the timer's latch that signals the end of the timer.
+     * Updates the timer countdown if it is started and not paused.
+     * @param deltaTime is the amount of time passed in a frame
      */
-    CountDownLatch getLatch();
+    void update(double deltaTime);
+
+    /**
+     * @return the timer's duration
+     */
+    long getDuration();
+
+    /**
+     * @return the time already elapsed
+     */
+    long getElapsedTime();
 }

@@ -3,22 +3,17 @@ package it.unibo.falltohell.model.impl.timer;
 import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.api.timer.CustomTimerEvent;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.CountDownLatch;
-
 /**
  * A timer that works as a cooldown but can be paused and resumed anytime.
  * @author Martina Malagoli
  */
 public class CustomTimerImpl implements CustomTimer {
 
-    private Timer timer;
-    private long elapsedTime;
+    private final long duration;
+    private double elapsedTime;
     private boolean started;
     private boolean paused;
     private final CustomTimerEvent eventOnFinish;
-    private final CountDownLatch latch;
 
     /**
      * Initialization of the new CustomTimer.
@@ -26,36 +21,19 @@ public class CustomTimerImpl implements CustomTimer {
      * @param event is what has to happen when the timer ends
      */
     public CustomTimerImpl(final long duration, final CustomTimerEvent event) {
-        this.timer = new Timer();
         this.started = false;
         this.paused = false;
-        this.latch = new CountDownLatch(1);
-        this.eventOnFinish = () -> {
-                if (!paused) {
-                    elapsedTime++;
-                }
-                if (elapsedTime >= duration) {
-                    stop();
-                    event.execute();
-                    latch.countDown();
-                }
-        };
+        this.eventOnFinish = event;
+        this.duration = duration;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public synchronized void start() {
+    public void start() {
         if (!this.started) {
-            this.timer = new Timer();
             this.elapsedTime = 0;
-            this.timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    eventOnFinish.execute();
-                }
-            }, 0, 1);
             this.started = true;
         } else {
             throw new IllegalStateException("Cannot start a timer that is already running");
@@ -82,9 +60,8 @@ public class CustomTimerImpl implements CustomTimer {
      * {@inheritDoc}
      */
     @Override
-    public synchronized void stop() {
+    public void stop() {
         if (this.started) {
-            this.timer.cancel();
             this.started = false;
         } else {
             throw new IllegalStateException("Cannot stop a timer that is not running");
@@ -95,7 +72,7 @@ public class CustomTimerImpl implements CustomTimer {
      * {@inheritDoc}
      */
     @Override
-    public synchronized void pause() {
+    public void pause() {
         if (this.paused) {
             throw new IllegalStateException("Cannot pause a timer that is already paused");
         } else if (!this.started) {
@@ -109,7 +86,7 @@ public class CustomTimerImpl implements CustomTimer {
      * {@inheritDoc}
      */
     @Override
-    public synchronized void resume() {
+    public void resume() {
         if (!this.paused) {
             throw new IllegalStateException("Cannot resume a timer that is not paused");
         } else if (!this.started) {
@@ -123,8 +100,30 @@ public class CustomTimerImpl implements CustomTimer {
      * {@inheritDoc}
      */
     @Override
-    public CountDownLatch getLatch() {
-        return this.latch;
+    public void update(final double deltaTime) {
+        if (this.started && !this.paused) {
+            this.elapsedTime = this.elapsedTime + deltaTime;
+            if (this.elapsedTime >= this.duration) {
+                this.started = false;
+                this.eventOnFinish.execute();
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getDuration() {
+        return this.duration;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long getElapsedTime() {
+        return (long) this.elapsedTime;
     }
 
 }

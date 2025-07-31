@@ -1,5 +1,6 @@
 package it.unibo.falltohell.controller.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.LevelLoader;
 import it.unibo.falltohell.model.api.factory.EnemyFactory;
 import it.unibo.falltohell.model.api.level.Level;
@@ -41,6 +42,11 @@ public class LevelLoaderImpl implements LevelLoader {
      * @param fileName is the name of the file
      * @param level    corresponding to the level in the file
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "The level loader must be able to tell the level what there is inside it"
+            + " and where to place it"
+    )
     public LevelLoaderImpl(final String fileName, final Level level) {
         this.level = level;
         this.levelFromFile = new ArrayList<>();
