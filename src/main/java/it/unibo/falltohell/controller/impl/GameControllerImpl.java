@@ -4,12 +4,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.api.GameController;
 import it.unibo.falltohell.model.api.GameCamera;
+import it.unibo.falltohell.model.api.builder.LevelBuilder;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.manager.GameEventManager;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.impl.builder.LevelBuilderImpl;
 import it.unibo.falltohell.model.impl.GameCameraImpl;
+import it.unibo.falltohell.model.impl.drawable.Label;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
+import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.GameWindow;
 import it.unibo.falltohell.view.impl.GameWindowImpl;
@@ -32,14 +35,20 @@ public class GameControllerImpl implements GameController {
     private static final int WIDTH = 320;
     private static final int HEIGHT = WIDTH * 9 / 16;
 
+    private static final String MUSIC = "Music";
+    private static final Vector2 GAME_OVER_LABEL_OFFSET = new Vector2(20, 10);
+    private static final Vector2 GAME_OVER_LABEL_POSITION =
+        new Vector2(WIDTH, HEIGHT).divide(2).subtract(GAME_OVER_LABEL_OFFSET);
+
     private final Logger logger;
 
     private final GameWindow view;
     private final MainMenuPanel mainMenu;
     private final AudioControllerImpl audioController;
-    private final Level model;
     private final GameEventManager<String> eventManager;
-    private final TimerManager timerManager;
+    private final DrawableRenderableHandler drh;
+    private Level model;
+    private TimerManager timerManager;
     private GameState state;
 
     /**
@@ -51,8 +60,23 @@ public class GameControllerImpl implements GameController {
     )
     public GameControllerImpl() {
         final InputListener inputListener = new InputListener();
-        final DrawableRenderableHandler drh = new DrawableRenderableHandlerImpl();
+        this.drh = new DrawableRenderableHandlerImpl();
         this.eventManager = this.addEvents(inputListener);
+        this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener(), drh);
+        this.logger = Logger.getLogger("GameLogger");
+        this.audioController = new AudioControllerImpl();
+        this.mainMenu = new MainMenuPanel(
+            e -> this.goToGame(),
+            e -> this.exit()
+        );
+        this.goToMainMenu();
+    }
+
+    private void goToGame() {
+        this.view.showGame();
+        this.view.requestFocusOnWindow();
+        this.state = GameState.RUNNING;
+        this.audioController.play(MUSIC);
         // Testing a camera with level width and height based on the virtual screen width and height
         final GameCamera camera = new GameCameraImpl(Vector2.zero(), WIDTH, HEIGHT, 1.0);
         this.model = new LevelBuilderImpl(this)
@@ -64,23 +88,30 @@ public class GameControllerImpl implements GameController {
             .loadGameData()
             .linkGameDataToLevel()
             .build();
-        this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener(), drh);
         this.timerManager = this.model.getTimerManager();
+        new Thread(this::run).start();
+    }
+
+    private void goToMainMenu() {
+        this.view.showMenu(this.mainMenu);
         this.state = GameState.START;
-        this.logger = Logger.getLogger("GameLogger");
-        this.audioController = new AudioControllerImpl();
-        mainMenu = new MainMenuPanel(
-            e -> {
-                this.view.showGame();
-                this.view.requestFocusOnWindow();
-                this.state = GameState.RUNNING;
-                this.audioController.play("Music");
-                new Thread(this::run).start();
-            },
-            e -> {
-                System.exit(0);
-            });
-        this.view.showMenu(mainMenu);
+        this.audioController.pause(MUSIC);
+        this.drh.removeAllLinks();
+    }
+
+    private void gameOver() {
+        if (!this.timerManager.searchTimer("game_over")) {
+            final Label gameOverLabel = new Label("Game Over", GAME_OVER_LABEL_POSITION, true);
+            this.drh.linkLabel(gameOverLabel);
+            this.timerManager.addTimer(
+                "game_over",
+                new CustomTimerImpl(2000, () -> this.state = GameState.START)
+            );
+        }
+    }
+
+    private void exit() {
+        System.exit(0);
     }
 
     /**
@@ -119,14 +150,14 @@ public class GameControllerImpl implements GameController {
             if (this.isRunning()) {
                 this.model.getTimerManager().pauseAllTimers();
                 this.state = GameState.PAUSE;
-                this.audioController.pause("Music");
+                this.audioController.pause(MUSIC);
             }
         });
         eventManager.addAction("ResumeGame", () -> {
             if (!this.isRunning()) {
                 this.model.getTimerManager().resumeAllTimers();
                 this.state = GameState.RUNNING;
-                this.audioController.play("Music");
+                this.audioController.play(MUSIC);
             }
         });
 
@@ -145,15 +176,20 @@ public class GameControllerImpl implements GameController {
         long lastTime = System.currentTimeMillis();
         long frameRateStartTime = lastTime;
         double deltaTime;
-        while (!this.isOver()) {
+        while (!this.isMenu()) {
             final long now = System.currentTimeMillis();
             // Gives a difference in time using milliseconds
             final double deltaTimeMilliseconds = now - lastTime;
             deltaTime = deltaTimeMilliseconds / PERIOD;
-            this.eventManager.update();
-            this.timerManager.updateAll(deltaTimeMilliseconds);
+            if (!this.isOver()) {
+                this.eventManager.update();
+            }
+            System.out.println(deltaTimeMilliseconds);
+            this.timerManager.updateAllTimers(deltaTimeMilliseconds);
             if (this.isRunning()) {
                 this.update(deltaTime);
+            } else if (this.isOver()) {
+                this.gameOver();
             }
             this.render();
             this.waitForNextFrame(deltaTime);
@@ -178,12 +214,6 @@ public class GameControllerImpl implements GameController {
         }
     }
 
-    private void goToMainMenu() {
-        this.view.showMenu(mainMenu);
-        this.state = GameState.START;
-        this.audioController.pause("Music");
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -198,6 +228,14 @@ public class GameControllerImpl implements GameController {
     @Override
     public boolean isRunning() {
         return this.state == GameState.RUNNING;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isMenu() {
+        return this.state == GameState.START;
     }
 
     /**
