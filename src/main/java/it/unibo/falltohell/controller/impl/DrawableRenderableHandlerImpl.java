@@ -59,7 +59,7 @@ public class DrawableRenderableHandlerImpl implements DrawableRenderableHandler 
      */
     @Override
     public void updateAll(final GameCamera camera) {
-        this.renderableControllers.forEach((k, v) -> v.updateRenderable(camera));
+        this.renderableControllers.values().forEach((rc) -> rc.updateRenderable(camera));
     }
 
     /**
@@ -71,5 +71,13 @@ public class DrawableRenderableHandlerImpl implements DrawableRenderableHandler 
                 .stream()
                 .map(RenderableController::getRenderable)
                 .toList();
+    }
+
+    /**
+     *{@inheritDoc}
+     */
+    @Override
+    public void removeAllLinks() {
+        this.renderableControllers.keySet().forEach(this::removeLink);
     }
 }
