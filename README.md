@@ -27,7 +27,7 @@
 
 - Drop (Bottino): quando il nemico muore c'è una possibilità che lascia un bottino che, se recuperato in tempo, applica un buff (potenziamento) a una caratteristica del personaggio.
 - Potion (Pozione): oggetto acquistabile nel negozio con i punti del giocatore in grado di dare potenziamenti temporanei al personaggio corrente.
-- Save Point (Lapido): oggetto che permette di salvare la partita quando interagisci.
+- Save Point (Lapide): oggetto che permette di salvare la partita quando interagisci.
 - Character Changer (Cristallo): oggetto che permette di cambiare il personaggio interagendoci.
 
 #### Nemici
