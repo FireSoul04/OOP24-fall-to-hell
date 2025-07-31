@@ -12,6 +12,8 @@ import it.unibo.falltohell.util.Vector2;
 
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Class that represents a base entrance.
  * @author Martina Malagoli
@@ -28,6 +30,8 @@ public abstract class BaseEntrance extends GameObjectImpl implements Entrance {
      * @param lv is the level of the entrance
      * @param position is the position of the entrance in the level
      */
+    @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
+    justification = "It doesn't change entrance. It's needed as a reference'")
     public BaseEntrance(final Level lv, final Vector2 position) {
         super(lv, position, new BoxCollider(Vector2.up().multiply(OFFSET), DIMENSIONS));
         this.listenerEnter = Optional.empty();

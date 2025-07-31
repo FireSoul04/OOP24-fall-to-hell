@@ -17,16 +17,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.logging.Logger;
-
 /**
  * Class to test the caster character.
+ *
  * @author Martina Malagoli
  */
 class TestCaster {
 
     private static final String TIMER_NAME = "mana_recharge";
-    private static final long TIMEOUT = 5500;;
+    private static final long TIMEOUT = 5500;
     private static final double STAT = 60;
 
     private Caster caster;
@@ -51,7 +50,8 @@ class TestCaster {
     }
 
     /**
-     * Tests if the caster passive ability to refill mana gradually works as expected.
+     * Tests if the caster passive ability to refill mana gradually works as
+     * expected.
      */
     @Test
     void testPassiveAbility() {

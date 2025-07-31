@@ -19,6 +19,7 @@ import it.unibo.falltohell.TestDruid.Move;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 import it.unibo.falltohell.test.util.LevelTest;
+import it.unibo.falltohell.test.util.TimerManagerTest;
 import it.unibo.falltohell.test.util.debug.EnemyFactoryDebug;
 import it.unibo.falltohell.test.util.debug.druid.DruidDebug;
 import it.unibo.falltohell.test.util.debug.druid.FamiliarBatDebug;
@@ -45,6 +46,7 @@ class TestManagerAndFamiliar {
     private static final int OFFSET_TIMER_1 = 100;
     private static final int OFFSET_TIMER_2 = 500;
     private static final double OFFSET_DOUBLE = 0.0001;
+    private TimerManagerTest time;
     private Level lv;
     private DruidDebug druid;
     private CharacterStatistics stats;
@@ -67,6 +69,7 @@ class TestManagerAndFamiliar {
         this.lv.linkGameData(new GameDataImpl(
                 Map.of(this.druid.getCharacterID(), this.druid)));
         this.lv.getGameData().changeCurrentCharacter(this.druid);
+        this.time = (TimerManagerTest) lv.getTimerManager();
         this.stats = (CharacterStatistics) druid.getStats();
         this.manager = (FamiliarManagerDebug) this.druid.getManager();
     }
@@ -86,11 +89,9 @@ class TestManagerAndFamiliar {
      * removed.</li>
      * </ul>
      * </p>
-     *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void creationAndRemoveWithoutTimer() throws InterruptedException {
+    void creationAndRemoveWithoutTimer() {
         // Step 1: Create a familiar and ensure it is added to the level
         FamiliarBatDebug bat = this.manager.createFamiliar(this.druid);
         List<GameObject> gameObjects = this.lv.getGameObjects();
@@ -135,8 +136,6 @@ class TestManagerAndFamiliar {
      * ensuring removal is deferred until attack finishes.</li>
      * </ul>
      * </p>
-     *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
     void creationAndRemoveTimer() throws InterruptedException {
@@ -147,7 +146,7 @@ class TestManagerAndFamiliar {
 
         // Step 2: Wait for its life duration to expire and verify it is removed
         // automatically
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER_1);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER_1);
         gameObjects = this.lv.getGameObjects();
         assertFalse(gameObjects.contains(bat));
 
@@ -155,11 +154,11 @@ class TestManagerAndFamiliar {
         bat = this.manager.createFamiliar(this.druid);
 
         // Step 4: Wait until shortly before expiration, then make it attack
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() - OFFSET_TIMER_2);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() - OFFSET_TIMER_2);
         this.manager.attack(Move.MOVE_RIGHT.toVector2());
 
         // Step 5: Wait until after its original lifespan finishes
-        Thread.sleep(OFFSET_TIMER_2);
+        this.time.waitUntilTimeout(OFFSET_TIMER_2);
 
         // At this point, the familiar should still be in the level but pending removal
         gameObjects = this.lv.getGameObjects();
@@ -191,11 +190,9 @@ class TestManagerAndFamiliar {
      * <li>Automatic removal of remaining familiars after lifespan expires.</li>
      * </ul>
      * </p>
-     *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void createRemoveMultiFamiliarPlusControlOrderOfAttack() throws InterruptedException {
+    void createRemoveMultiFamiliarPlusControlOrderOfAttack() {
         // Step 1: Create two familiars and ensure they are in the level
         FamiliarBatDebug bat1 = this.manager.createFamiliar(this.druid);
         FamiliarBatDebug bat2 = this.manager.createFamiliar(this.druid);
@@ -237,7 +234,7 @@ class TestManagerAndFamiliar {
         assertTrue(gameObjects.contains(bat2)); // bat2 still alive
 
         // Step 7: Wait for the life duration of bat2 to expire automatically
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER_1);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER_1);
         gameObjects = this.lv.getGameObjects();
         assertFalse(gameObjects.contains(bat2));
     }
@@ -353,11 +350,9 @@ class TestManagerAndFamiliar {
      * <li>Checks that enemy health is reduced by the expected damage amount.</li>
      * </ul>
      * </p>
-     *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void effectAttack() throws InterruptedException {
+    void effectAttack() {
         final int maxAttack = MAX_BAT_ATTACK;
         final Enemy enemy = new EnemyFactoryDebug().createImp(lv, Vector2.left());
 
@@ -366,7 +361,7 @@ class TestManagerAndFamiliar {
             this.druid.subMana(this.stats.getInitialMana());
             enemy.getStats().setLife(enemy.getStats().getFullLife());
 
-            Thread.sleep(1000 + OFFSET_TIMER_1);
+            this.time.waitUntilTimeout(1000 + OFFSET_TIMER_1);
 
             final List<Double> expectedGains = this.computeRegen();
             final var bat = this.manager.createFamiliar(this.druid);
@@ -418,11 +413,9 @@ class TestManagerAndFamiliar {
      * <li>The familiar clears its attack target and resets attack counters.</li>
      * </ul>
      * </p>
-     *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void stopAttack() throws InterruptedException {
+    void stopAttack() {
         // Create an enemy with known health
         final FamiliarBatDebug bat = this.manager.createFamiliar(this.druid);
         final Enemy enemy = new EnemyFactoryDebug().createImp(lv, Vector2.left());
@@ -446,7 +439,7 @@ class TestManagerAndFamiliar {
             assertFalse(bat.isIdle(), "Familiar should not be idle until the enemy is dead");
             assertFalse(bat.getEnemy().isEmpty(), "Familiar should still have a target until enemy dies");
 
-            Thread.sleep(1000 + OFFSET_TIMER_1);
+            this.time.waitUntilTimeout(1000 + OFFSET_TIMER_1);
         }
 
         // Final attack that kills the enemy
