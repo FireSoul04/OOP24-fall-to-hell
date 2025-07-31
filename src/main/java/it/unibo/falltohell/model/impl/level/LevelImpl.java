@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 
+import it.unibo.falltohell.controller.api.GameController;
+import it.unibo.falltohell.controller.api.GameController.GameState;
 import it.unibo.falltohell.model.api.GameEventCondition;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.GameCamera;
@@ -60,6 +62,7 @@ public class LevelImpl implements Level {
     private final Map<CharacterID, Character> characters;
     private final GameEventManager<String> eventManager;
     private final DrawableRenderableHandler drh;
+    private final GameController controller;
     private Optional<GameData> gameData;
     private Vector2 levelSize;
     private final Label pointsLabel;
@@ -72,6 +75,7 @@ public class LevelImpl implements Level {
      * the view.
      * If no event manager is linked, it will use a new not linked to the game.
      *
+     * @param controller   that handle the flow of the game
      * @param camera       that follows the player
      * @param eventManager of the game events
      * @param drh          handler for the drawables
@@ -82,13 +86,14 @@ public class LevelImpl implements Level {
             + "event manager should be updated in the controller and the "
             + "drawable renderable handler must be used to link any drawable"
     )
-    public LevelImpl(final GameCamera camera, final GameEventManager<String> eventManager,
-                     final DrawableRenderableHandler drh) {
+    public LevelImpl(final GameController controller, final GameCamera camera,
+                     final GameEventManager<String> eventManager, final DrawableRenderableHandler drh) {
         this.gameObjects = new CopyOnWriteArrayList<>();
         this.collisionsManager = new AABBCollisionsManager();
         this.timerManager = new TimerManagerImpl();
         this.characters = new EnumMap<>(CharacterID.class);
         this.jumpCollisionManager = new StaticCollisionManagerImpl();
+        this.controller = controller;
         this.camera = camera;
         this.eventManager = eventManager;
         this.drh = drh;
@@ -149,9 +154,13 @@ public class LevelImpl implements Level {
     @Override
     public void update(final double deltaTime) {
         this.gameData.ifPresent(d -> {
-            final CharacterStatistics stats = (CharacterStatistics) d.getCurrentCharacter().getStats();
-            d.getCurrentCharacter().update(deltaTime);
-            this.camera.updateCamera(d.getCurrentCharacter().getPosition(), deltaTime);
+            final Character currentCharacter = d.getCurrentCharacter();
+            if (currentCharacter.isDead()) {
+                this.controller.changeState(GameState.OVER);
+            }
+            final CharacterStatistics stats = (CharacterStatistics) currentCharacter.getStats();
+            currentCharacter.update(deltaTime);
+            this.camera.updateCamera(currentCharacter.getPosition(), deltaTime);
             this.pointsLabel.setText("Points: " + d.getPoints());
             this.statsLabel.setText("Life: " + (int) (stats.getLife() * 10)
                 + (stats.getTemporaryLife() > 0 ? "+" + (int) (stats.getTemporaryLife() * 10) : "")

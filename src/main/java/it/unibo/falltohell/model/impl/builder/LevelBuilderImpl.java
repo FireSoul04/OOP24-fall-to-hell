@@ -1,6 +1,7 @@
 package it.unibo.falltohell.model.impl.builder;
 
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
+import it.unibo.falltohell.controller.api.GameController;
 import it.unibo.falltohell.controller.api.LevelLoader;
 import it.unibo.falltohell.controller.impl.DrawableRenderableHandlerImpl;
 import it.unibo.falltohell.controller.impl.LevelLoaderImpl;
@@ -30,6 +31,7 @@ import java.util.Optional;
  */
 public class LevelBuilderImpl implements LevelBuilder {
 
+    private final GameController controller;
     private final Map<CharacterID, Character> characters;
     private Optional<Level> level;
     private Optional<GameData> gameData;
@@ -39,8 +41,11 @@ public class LevelBuilderImpl implements LevelBuilder {
 
     /**
      * Creates a game builder with all parameters empty.
+     *
+     * @param controller handler of the flow of the game, needed for the level to work
      */
-    public LevelBuilderImpl() {
+    public LevelBuilderImpl(final GameController controller) {
+        this.controller = controller;
         this.characters = new EnumMap<>(CharacterID.class);
         this.level = Optional.empty();
         this.gameData = Optional.empty();
@@ -59,6 +64,7 @@ public class LevelBuilderImpl implements LevelBuilder {
             throw new IllegalStateException("Cannot create a level without a camera");
         }
         this.level = Optional.of(new LevelImpl(
+            this.controller,
             this.camera.get(),
             this.eventManager.orElse(new GameEventManagerImpl<>()),
             this.drh.orElse(new DrawableRenderableHandlerImpl())
