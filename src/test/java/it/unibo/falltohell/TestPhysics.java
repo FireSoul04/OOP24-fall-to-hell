@@ -16,6 +16,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test to check if physics of entities works correctly.
+ *
+ * @author Davide Mancini
+ */
 class TestPhysics {
 
     private static final int MAX_UPDATES = 100;

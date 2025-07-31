@@ -40,7 +40,7 @@ class TestMeleeWeapon {
     private static final double ATTACK_SPEED = 1;
     private static final double DAMAGE_MULTIPLIER = 1;
     private static final Dimensions SIZE = new Dimensions(20, 20);
-    private static final long COOLDOWN = 200;
+    private static final long COOLDOWN = 400;
     private static final long TIMEOUT = 1000;
 
     private Weapon sword;
@@ -105,12 +105,18 @@ class TestMeleeWeapon {
         final double initialLife = this.dummy.getStats().getLife();
         this.sword.attack();
         this.sword.onCollision(this.dummy, Vector2.zero());
+        Assertions.assertTrue(initialLife > this.dummy.getStats().getLife(),
+            "The enemy should take a hit");
+        final double lifeAfterAttack = this.dummy.getStats().getLife();
         this.sword.attack();
         this.sword.onCollision(this.dummy, Vector2.zero());
-        Assertions.assertTrue(initialLife > this.dummy.getStats().getLife(),
+        Assertions.assertEquals(0, Double.compare(lifeAfterAttack, this.dummy.getStats().getLife()),
             "The enemy should get hit just once");
     }
 
+    /**
+     * Test if the weapon can attack only after its cooldown.
+     */
     @Test
     void testCanAttackOnlyAfterCooldown() {
         final double initialLife = this.dummy.getStats().getLife();
