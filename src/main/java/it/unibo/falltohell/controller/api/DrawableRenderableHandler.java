@@ -42,4 +42,9 @@ public interface DrawableRenderableHandler {
      * @return a list with all the renderable objects
      */
     List<Renderable> getAllRenderables();
+
+    /**
+     * Method to remove all links between drawable and renderable objects.
+     */
+    void removeAllLinks();
 }
