@@ -1,16 +1,19 @@
 package it.unibo.falltohell.controller.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.api.GameController;
 import it.unibo.falltohell.model.api.GameCamera;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.manager.GameEventManager;
+import it.unibo.falltohell.model.api.manager.TimerManager;
 import it.unibo.falltohell.model.impl.builder.LevelBuilderImpl;
 import it.unibo.falltohell.model.impl.GameCameraImpl;
 import it.unibo.falltohell.model.impl.manager.GameEventManagerImpl;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.view.api.GameWindow;
 import it.unibo.falltohell.view.impl.GameWindowImpl;
+import it.unibo.falltohell.view.impl.MainMenuPanel;
 
 import java.awt.event.KeyEvent;
 import java.util.logging.Logger;
@@ -26,45 +29,33 @@ import java.util.logging.Logger;
  */
 public class GameControllerImpl implements GameController {
 
-    /**
-     * How many frames per seconds the game will run.
-     */
-    private static final double MAX_FRAMES = 60.0;
-
-    /**
-     * Frequency of every frame in milliseconds.
-     */
-    private static final double PERIOD = 1000 / MAX_FRAMES;
     private static final int WIDTH = 320;
     private static final int HEIGHT = WIDTH * 9 / 16;
 
     private final Logger logger;
 
-    /**
-     * State machine for the game.
-     * It can represent running state, starting state and game over state.
-     */
-    private enum GameState {
-        RUNNING,
-        OVER,
-        PAUSE
-    }
-
     private final GameWindow view;
+    private final MainMenuPanel mainMenu;
+    private final AudioControllerImpl audioController;
     private final Level model;
     private final GameEventManager<String> eventManager;
+    private final TimerManager timerManager;
     private GameState state;
 
     /**
      * Creates the controller with a new model and view, setting the state to start.
      */
+    @SuppressFBWarnings(
+        value = "DM_EXIT",
+        justification = "If the exit button is pressed the application must be shut down"
+    )
     public GameControllerImpl() {
         final InputListener inputListener = new InputListener();
         final DrawableRenderableHandler drh = new DrawableRenderableHandlerImpl();
         this.eventManager = this.addEvents(inputListener);
         // Testing a camera with level width and height based on the virtual screen width and height
         final GameCamera camera = new GameCameraImpl(Vector2.zero(), WIDTH, HEIGHT, 1.0);
-        this.model = new LevelBuilderImpl()
+        this.model = new LevelBuilderImpl(this)
             .attachGameEventManager(this.eventManager)
             .attachDrawableRenderableHandlerToLevel(drh)
             .attachCamera(camera)
@@ -74,10 +65,22 @@ public class GameControllerImpl implements GameController {
             .linkGameDataToLevel()
             .build();
         this.view = new GameWindowImpl(WIDTH, HEIGHT, inputListener.getKeyListener(), drh);
-        this.state = GameState.RUNNING;
+        this.timerManager = this.model.getTimerManager();
+        this.state = GameState.START;
         this.logger = Logger.getLogger("GameLogger");
-        final AudioControllerImpl audioController = new AudioControllerImpl();
-        audioController.play("Music");
+        this.audioController = new AudioControllerImpl();
+        mainMenu = new MainMenuPanel(
+            e -> {
+                this.view.showGame();
+                this.view.requestFocusOnWindow();
+                this.state = GameState.RUNNING;
+                this.audioController.play("Music");
+                new Thread(this::run).start();
+            },
+            e -> {
+                System.exit(0);
+            });
+        this.view.showMenu(mainMenu);
     }
 
     /**
@@ -116,12 +119,14 @@ public class GameControllerImpl implements GameController {
             if (this.isRunning()) {
                 this.model.getTimerManager().pauseAllTimers();
                 this.state = GameState.PAUSE;
+                this.audioController.pause("Music");
             }
         });
         eventManager.addAction("ResumeGame", () -> {
             if (!this.isRunning()) {
                 this.model.getTimerManager().resumeAllTimers();
                 this.state = GameState.RUNNING;
+                this.audioController.play("Music");
             }
         });
 
@@ -142,8 +147,11 @@ public class GameControllerImpl implements GameController {
         double deltaTime;
         while (!this.isOver()) {
             final long now = System.currentTimeMillis();
-            deltaTime = (now - lastTime) / PERIOD;
+            // Gives a difference in time using milliseconds
+            final double deltaTimeMilliseconds = now - lastTime;
+            deltaTime = deltaTimeMilliseconds / PERIOD;
             this.eventManager.update();
+            this.timerManager.updateAll(deltaTimeMilliseconds);
             if (this.isRunning()) {
                 this.update(deltaTime);
             }
@@ -157,6 +165,7 @@ public class GameControllerImpl implements GameController {
                 frameRateStartTime = System.currentTimeMillis();
             }
         }
+        this.goToMainMenu();
     }
 
     private void waitForNextFrame(final double deltaTime) {
@@ -167,6 +176,12 @@ public class GameControllerImpl implements GameController {
                 this.logger.warning("The wait for next frame in game loop interrupted: " + e);
             }
         }
+    }
+
+    private void goToMainMenu() {
+        this.view.showMenu(mainMenu);
+        this.state = GameState.START;
+        this.audioController.pause("Music");
     }
 
     /**
@@ -189,6 +204,14 @@ public class GameControllerImpl implements GameController {
      * {@inheritDoc}
      */
     @Override
+    public void changeState(final GameState state) {
+        this.state = state;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void update(final double deltaTime) {
         this.model.update(deltaTime);
     }
@@ -204,9 +227,9 @@ public class GameControllerImpl implements GameController {
     /**
      * {@inheritDoc}
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-    value = "EI_EXPOSE_REP",
-    justification = "The GameWindow is part of the MVC view layer and is accessed only for rendering purposes"
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "The GameWindow is part of the MVC view layer and is accessed only for rendering purposes"
     )
     @Override
     public GameWindow getView() {
