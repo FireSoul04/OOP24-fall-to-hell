@@ -145,7 +145,7 @@ public class TimerManagerImpl implements TimerManager {
      * {@inheritDoc}
      */
     @Override
-    public void updateAll(double deltaTime) {
+    public void updateAllTimers(final double deltaTime) {
         Set.copyOf(this.timers.values()).forEach(timer -> timer.update(deltaTime));
     }
 
