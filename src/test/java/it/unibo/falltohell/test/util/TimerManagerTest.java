@@ -1,9 +1,7 @@
 package it.unibo.falltohell.test.util;
 
+import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.impl.manager.TimerManagerImpl;
-
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 /**
  * Class to handle multiple timer for tests.
@@ -11,8 +9,10 @@ import java.util.logging.Logger;
  */
 public class TimerManagerTest extends TimerManagerImpl {
 
+    private static final double VIRTUAL_MILLISECONDS = 1.0;
+
     /**
-     * Method to block the execution of the current thread until the timer has run out
+     * Method to block the execution of the code until the timer has run out
      * (or it has been stopped) or until it has passed a certain specified amount of time (timeout).
      * @param name of the timer to be waited
      * @param timeout to wait until the signaling
@@ -20,14 +20,15 @@ public class TimerManagerTest extends TimerManagerImpl {
      */
     public void waitForTimer(final String name, final long timeout) {
         this.checkExists(name);
-        final Logger logger = Logger.getLogger("TimerLogger");
-        try {
-            final boolean finished = this.getTimer(name).getLatch().await(timeout, TimeUnit.MILLISECONDS);
-            if (!finished) {
+        final CustomTimer timer = this.getTimer(name);
+        long frames = 0;
+        while (timer.getElapsedTime() < timer.getDuration()) {
+            if (frames >= timeout) {
                 throw new IllegalStateException("Timer " + name + " has not finished before " + timeout + " ms");
             }
-        } catch (final InterruptedException e) {
-            logger.severe("Timer " + name + " interrupted: " + e);
+            // Simulates the passage of a real amount of milliseconds everytime update is called
+            timer.update(VIRTUAL_MILLISECONDS);
+            frames++;
         }
     }
 
