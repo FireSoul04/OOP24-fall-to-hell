@@ -5,9 +5,6 @@ import it.unibo.falltohell.model.impl.timer.CustomTimerImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
-
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /**
@@ -17,8 +14,8 @@ import java.util.logging.Logger;
 class TestCustomTimer {
 
     private static final String INFO_MESSAGE = "The IllegalStateException has been thrown correctly";
-    private static final long TIMEOUT = 5000;
-    private static final long DURATION = 1000;
+    private static final long TIMEOUT = 500;
+    private static final long DURATION = 100;
     private CustomTimer timer;
     private boolean test;
     private Logger logger;
@@ -165,13 +162,15 @@ class TestCustomTimer {
      * Tests if an event is executed correctly at the end of a timer.
      */
     @Test
-    @Timeout(value = TIMEOUT, unit = TimeUnit.MILLISECONDS)
     void testCorrectExecutionOfEvent() {
         this.timer.start();
-        try {
-            this.timer.getLatch().await();
-        } catch (final InterruptedException e) {
-            Assertions.fail("The timer has been interrupted: " + e);
+        long frames = 0;
+        while (frames <= this.timer.getDuration()) {
+            if (frames > TIMEOUT) {
+                Assertions.fail("The timer has timed out");
+            }
+            this.timer.update(1.0);
+            frames++;
         }
         Assertions.assertTrue(this.test, "The event is not executed as expected");
     }
