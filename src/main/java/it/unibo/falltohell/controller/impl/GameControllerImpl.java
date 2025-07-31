@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.DrawableRenderableHandler;
 import it.unibo.falltohell.controller.api.GameController;
 import it.unibo.falltohell.model.api.GameCamera;
-import it.unibo.falltohell.model.api.builder.LevelBuilder;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.manager.GameEventManager;
 import it.unibo.falltohell.model.api.manager.TimerManager;
@@ -30,12 +29,17 @@ import java.util.logging.Logger;
  * @author Sara Visani
  * @author Lorenzo Casadei
  */
-public class GameControllerImpl implements GameController {
+@SuppressFBWarnings(
+    value = "AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD",
+    justification = "The communication between model and view is handled safely"
+)
+public final class GameControllerImpl implements GameController {
 
     private static final int WIDTH = 320;
     private static final int HEIGHT = WIDTH * 9 / 16;
 
     private static final String MUSIC = "Music";
+    private static final long GAME_OVER_LABEL_DURATION = ONE_SECOND * 2;
     private static final Vector2 GAME_OVER_LABEL_OFFSET = new Vector2(20, 10);
     private static final Vector2 GAME_OVER_LABEL_POSITION =
         new Vector2(WIDTH, HEIGHT).divide(2).subtract(GAME_OVER_LABEL_OFFSET);
@@ -105,7 +109,7 @@ public class GameControllerImpl implements GameController {
             this.drh.linkLabel(gameOverLabel);
             this.timerManager.addTimer(
                 "game_over",
-                new CustomTimerImpl(2000, () -> this.state = GameState.START)
+                new CustomTimerImpl(GAME_OVER_LABEL_DURATION, () -> this.state = GameState.START)
             );
         }
     }
@@ -184,7 +188,6 @@ public class GameControllerImpl implements GameController {
             if (!this.isOver()) {
                 this.eventManager.update();
             }
-            System.out.println(deltaTimeMilliseconds);
             this.timerManager.updateAllTimers(deltaTimeMilliseconds);
             if (this.isRunning()) {
                 this.update(deltaTime);
@@ -195,7 +198,7 @@ public class GameControllerImpl implements GameController {
             this.waitForNextFrame(deltaTime);
             lastTime = now;
             frames++;
-            if (System.currentTimeMillis() - frameRateStartTime >= 1000) {
+            if (System.currentTimeMillis() - frameRateStartTime >= ONE_SECOND) {
                 this.view.setGameTitle("FTH: " + frames + " fps");
                 frames = 0;
                 frameRateStartTime = System.currentTimeMillis();
@@ -260,17 +263,5 @@ public class GameControllerImpl implements GameController {
     @Override
     public void render() {
         this.view.render();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP",
-        justification = "The GameWindow is part of the MVC view layer and is accessed only for rendering purposes"
-    )
-    @Override
-    public GameWindow getView() {
-        return this.view;
     }
 }

@@ -86,9 +86,4 @@ public interface GameController {
      * Tell the controller to update the game window (view).
      */
     void render();
-
-    /**
-     * @return the game window.
-     */
-    GameWindow getView();
 }
