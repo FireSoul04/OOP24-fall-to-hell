@@ -16,6 +16,10 @@ public interface GameController {
      * How many frames per seconds the game will run.
      */
     double MAX_FRAMES = 60.0;
+
+    /**
+     * One second in milliseconds for timing calculations.
+     */
     long ONE_SECOND = 1000;
 
     /**
@@ -28,9 +32,21 @@ public interface GameController {
      * It can represent running state, starting state and game over state.
      */
     enum GameState {
+        /**
+         * Main menu, the start of the application.
+         */
         START,
+        /**
+         * The main game when it is started.
+         */
         RUNNING,
+        /**
+         * When the player dies, go to main menu.
+         */
         OVER,
+        /**
+         * Pause the game.
+         */
         PAUSE
     }
 
@@ -49,6 +65,11 @@ public interface GameController {
      * @return true when the game is running, false otherwise
      */
     boolean isRunning();
+
+    /**
+     * @return true when the application is on main menu, false otherwise
+     */
+    boolean isMenu();
 
     /**
      * @param state to change
