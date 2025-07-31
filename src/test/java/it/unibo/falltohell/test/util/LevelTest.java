@@ -183,6 +183,11 @@ public class LevelTest implements Level {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "The jumpCollisionManager must be exposed to allow game objects to register"
+            + "and remove static obstacles for jump collision detection"
+    )
     @Override
     public StaticCollisionManager getJumpCollisionManager() {
         return this.jumpCollisionManager;
