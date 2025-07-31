@@ -35,7 +35,7 @@ public class BaseCollidableBlock extends GameObjectImpl {
     public BaseCollidableBlock(final Level lv, final Vector2 position,
                                final Collider collider, final String fileName, final Vector2 offset) {
         super(lv, position, collider);
-        initDrawable(offset, Priority.HIGH, fileName);
+        super.initDrawable(offset, Priority.HIGH, fileName);
     }
 
 }
