@@ -60,9 +60,9 @@ class TestEnemy {
     private static final int OFFSET_3 = 700;
     private static final int OFFSET_2 = 400;
     private static final int OFFSET_1 = 200;
-    private static final double TOLL_2 = 0.15;
-    private static final double TOLL_1 = 0.1;
-    private static final int ITERATION = 10_000;
+    private static final double TOLL_2 = 0.2;
+    private static final double TOLL_1 = 0.15;
+    private static final int ITERATION = 100_000;
     private Level lv;
     private BaseEnemyDebug centaur, imp, tengu, lotawiec;
     private DruidDebug druid;
