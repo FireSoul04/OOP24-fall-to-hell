@@ -32,7 +32,7 @@ import java.util.Collections;
  */
 public class MerchantImpl extends GameObjectImpl implements Merchant {
 
-    private static final String PATH = "src/main/resources/merchant/potions.txt";
+    private static final String PATH = "/merchant/potions.txt";
     private static final Dimensions POTION_DIMENSION = new Dimensions(10.0, 10.0);
     private static final double DISTANCE_FROM_ITEMS = 3.0;
     private static final int NUMBER_ITEMS_AVAILABLE = 3;

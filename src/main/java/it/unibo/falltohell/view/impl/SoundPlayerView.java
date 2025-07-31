@@ -1,6 +1,5 @@
 package it.unibo.falltohell.view.impl;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
@@ -10,6 +9,7 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +17,7 @@ import it.unibo.falltohell.view.api.AudioPlayer;
 /**
  * A class that consent to manipulate the file Audio for the game.
  */
-public class SoundPlayerView implements AudioPlayer {
+public final class SoundPlayerView implements AudioPlayer {
     private static final Logger LOGGER = Logger.getLogger(SoundPlayerView.class.getName());
     private static final float DEFAULT_VOLUME = -10.0f;
     private final int loop;
@@ -40,7 +40,9 @@ public class SoundPlayerView implements AudioPlayer {
      */
      private void resetAudio() {
         try {
-            final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(this.filePath).getAbsoluteFile());
+            final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                Objects.requireNonNull(this.getClass().getResource(this.filePath))
+            );
             this.clip = AudioSystem.getClip();
             this.clip.open(audioInputStream);
             final FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);

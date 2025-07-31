@@ -1,5 +1,6 @@
 package it.unibo.falltohell.controller.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.controller.api.SaveFileController;
 import it.unibo.falltohell.model.api.GameData;
 import it.unibo.falltohell.model.api.gameobject.movable.entity.character.Character;
@@ -12,6 +13,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -74,10 +78,20 @@ public class SaveFileControllerImpl implements SaveFileController {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "DM_EXIT",
+        justification = "The save point is already checked, if it is not found, the file might be deleted after the check"
+    )
     @Override
     public GameData load(final Map<CharacterID, Character> characters) {
         if (this.checkExistenceOfFile()) {
-            final List<String> fileLines = new FileControllerImpl().read(DIR_PATH + fileName);
+            final List<String> fileLines = new ArrayList<>();
+            try {
+                fileLines.addAll(Files.readAllLines(Path.of(DIR_PATH + fileName)));
+            } catch (final IOException e) {
+                Logger.getLogger("SaveFileLogger").severe("There is no save file");
+                System.exit(1);
+            }
             final long points = Long.parseLong(fileLines.get(0));
             final CharacterID currentCharacterID = Enum.valueOf(CharacterID.class, fileLines.get(1));
             final Vector2 position = new Vector2(

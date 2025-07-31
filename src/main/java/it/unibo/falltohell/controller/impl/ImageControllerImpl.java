@@ -5,17 +5,17 @@ import it.unibo.falltohell.controller.api.ImageController;
 
 import javax.imageio.ImageIO;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
  * Controller that handles the loading of an image from the file system.
  * @author Martina Malagoli
  */
-public class ImageControllerImpl implements ImageController {
+public final class ImageControllerImpl implements ImageController {
 
-    private static final String IMAGE_DIR_PATH = "src/main/resources/images/";
+    private static final String IMAGE_DIR_PATH = "/images/";
 
     /**
      *{@inheritDoc}
@@ -27,7 +27,7 @@ public class ImageControllerImpl implements ImageController {
     @Override
     public Image loadImage(final String fileName) {
         try {
-            return ImageIO.read(new File(IMAGE_DIR_PATH + fileName));
+            return ImageIO.read(Objects.requireNonNull(this.getClass().getResource(IMAGE_DIR_PATH + fileName)));
         } catch (final IOException e) {
             Logger.getLogger("FileLevelLogger").severe("There is no file with the given name:" + fileName);
             System.exit(1);

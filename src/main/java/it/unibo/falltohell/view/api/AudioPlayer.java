@@ -6,7 +6,7 @@ public interface AudioPlayer {
     /**
      * the path to the sounds directory.
      */
-    String PATH_TO_AUDIO = "src/main/resources/sounds/";
+    String PATH_TO_AUDIO = "/sounds/";
     /**
      * Plays the audio once or with loop if configured.
      */
