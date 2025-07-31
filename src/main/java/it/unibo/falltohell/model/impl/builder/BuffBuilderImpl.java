@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.builder;
 
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.buff.Buff;
 import it.unibo.falltohell.model.api.builder.BuffBuilder;
 import it.unibo.falltohell.model.impl.gameobject.movable.drop.DropImpl;
@@ -36,6 +37,12 @@ public class BuffBuilderImpl implements BuffBuilder {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification =
+        "Level reference is intentionally stored in BuffBuilderImpl. "
+        + "The builder pattern assumes external Level state management."
+    )
     @Override
     public BuffBuilderImpl withLevel(final Level level) {
         this.level = level;

@@ -53,6 +53,7 @@ public class LotawiecDebug extends BaseEnemyDebug implements LongRangeEnemy {
             BuffNames.SPEED, 50.0);
     private final LongRangeEnemyStatistics stats;
     private int direction = 1;
+    private int numberAttack;
 
     /**
      * Constructs a new Lotawiec enemy with specified initial position, target
@@ -122,7 +123,9 @@ public class LotawiecDebug extends BaseEnemyDebug implements LongRangeEnemy {
                     this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
                     this.stats.getSenseDistance());
+            this.numberAttack++;
         }
+
     }
 
     /**
@@ -194,5 +197,17 @@ public class LotawiecDebug extends BaseEnemyDebug implements LongRangeEnemy {
      */
     public int getDirection() {
         return direction;
+    }
+
+    /**
+     * Returns the total number of attacks performed by this enemy.
+     *
+     * <p>This counter is typically incremented each time the enemy executes
+     * an attack action (e.g., during its attack timer cycle).
+     *
+     * @return the number of attacks executed so far
+     */
+    public int getNumberAttack() {
+        return this.numberAttack;
     }
 }

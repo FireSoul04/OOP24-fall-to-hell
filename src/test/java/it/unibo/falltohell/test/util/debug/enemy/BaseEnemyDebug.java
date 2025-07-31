@@ -54,8 +54,7 @@ public abstract class BaseEnemyDebug extends EntityImpl implements Enemy {
     private final EnemyTimerManager manager;
     private final SafeZoneManager safeZoneManager;
     private boolean removed;
-    private DropDebug drop;
-    private boolean debug;
+    private Optional<DropDebug> drop;
 
     /**
      * Constructs a BaseEnemy instance with the specified {@link Level},
@@ -76,7 +75,8 @@ public abstract class BaseEnemyDebug extends EntityImpl implements Enemy {
      * @param fileName        is the name of the image file associated to the enemy
      */
     @SuppressFBWarnings(value = { "EI_EXPOSE_REP2",
-            "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR" }, justification = "EnemyTimerManager is immutable;createNoAggroTimer and resetEnemy are safe in constructor")
+            "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR" },
+            justification = "EnemyTimerManager is immutable;createNoAggroTimer and resetEnemy are safe in constructor")
     public BaseEnemyDebug(final Level level, final BaseEnemyStatistics stats, final EnemyTimerManager manager,
             final SafeZoneManager safeZoneManager, final String fileName) {
         super(level, stats.getInitialPos(), stats);
@@ -109,7 +109,7 @@ public abstract class BaseEnemyDebug extends EntityImpl implements Enemy {
      */
     @Override
     public void removeEntity() {
-        if (super.isDead() || this.debug) {
+        if (super.isDead()) {
             this.removed = true;
             if (this.getCharacter() instanceof Druid) {
                 ((DruidDebug) this.getCharacter()).addKill();
@@ -216,7 +216,8 @@ public abstract class BaseEnemyDebug extends EntityImpl implements Enemy {
      *
      * @return the {@link EnemyTimerManager} instance
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "EnemyTimerManager and SafeZoneManager are safe to expose for debug purposes")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+    justification = "EnemyTimerManager and SafeZoneManager are safe to expose for debug purposes")
     public EnemyTimerManager getEnemyTimerManager() {
         return this.manager;
     }
@@ -227,7 +228,8 @@ public abstract class BaseEnemyDebug extends EntityImpl implements Enemy {
      *
      * @return the safe zone manager
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "EnemyTimerManager and SafeZoneManager are safe to expose for debug purposes")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+    justification = "EnemyTimerManager and SafeZoneManager are safe to expose for debug purposes")
     public SafeZoneManager getSafeZoneManager() {
         return this.safeZoneManager;
     }
@@ -308,10 +310,16 @@ public abstract class BaseEnemyDebug extends EntityImpl implements Enemy {
                 .findFirst();
         // Create the said buff if key was founded
         if (typeBuff.isPresent()) {
-            this.drop = new DropBuilderDebug()
-                    .withLevel(super.getLevel()).withPosition(super.getPosition()).withBuff(typeBuff.get(),
-                            (CharacterStatistics) this.getCharacter().getStats(), this.stats.getMultiplier())
-                    .build();
+            this.drop = Optional.of(new DropBuilderDebug()
+                    .withLevel(super.getLevel())
+                    .withPosition(super.getPosition())
+                    .withBuff(
+                            typeBuff.get(),
+                            (CharacterStatistics) this.getCharacter().getStats(),
+                            this.stats.getMultiplier())
+                    .build());
+        } else {
+            this.drop = Optional.empty();
         }
     }
 
@@ -339,14 +347,6 @@ public abstract class BaseEnemyDebug extends EntityImpl implements Enemy {
      * @return the last drop as a DropDebug in a Optional
      */
     public Optional<DropDebug> getDrop() {
-        return Optional.ofNullable(this.drop);
-    }
-
-    public boolean isDebug() {
-        return this.debug;
-    }
-
-    public void setDebug(final boolean debug) {
-        this.debug = debug;
+        return this.drop;
     }
 }

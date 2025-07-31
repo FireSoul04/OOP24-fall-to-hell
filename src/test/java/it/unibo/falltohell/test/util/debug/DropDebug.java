@@ -55,12 +55,14 @@ public class DropDebug extends MovableImpl implements Drop {
      * @param buff     the {@link Buff} to be applied when collected by a
      *                 {@link Character}
      * @param fileName is the name of the image file associated to the drop
+     * @param type of the wrapped buff
      */
     @SuppressFBWarnings(value = {
             "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
             "EI_EXPOSE_REP2"
     }, justification = "removeGameObject is final and Buff is immutable")
-    public DropDebug(final Level lv, final Vector2 position, final Buff buff, final String fileName, final BuffNames type) {
+    public DropDebug(final Level lv, final Vector2 position, final Buff buff, final String fileName,
+            final BuffNames type) {
         super(lv, position, VELOCITY,
                 new BoxCollider(Vector2.zero(), DIMENSIONS));
         this.buff = buff;
@@ -167,6 +169,16 @@ public class DropDebug extends MovableImpl implements Drop {
         return collected;
     }
 
+    /**
+     * Returns the type of buff associated with this drop.
+     *
+     * <p>
+     * The type corresponds to one of the {@link BuffNames} values used when
+     * this drop was created (e.g., {@link BuffNames#ATTACK},
+     * {@link BuffNames#SPEED}, etc.).
+     *
+     * @return the {@link BuffNames} type of this drop
+     */
     public BuffNames getType() {
         return type;
     }

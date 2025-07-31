@@ -92,10 +92,9 @@ public class FamiliarBatDebug extends MovableImpl {
      * @param listener  the callback to invoke when the familiar finishes an attack
      */
     @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP2",
-        justification =
-            "Character reference stored intentionally, "
-            + "treated as immutable in this context"
+    value = "EI_EXPOSE_REP2",
+    justification =
+        "Character reference is stored intentionally and treated as immutable in this context. "
     )
     public FamiliarBatDebug(final Character character, final AttackFinishListenerDebug listener) {
         super(character.getLevel(), character.getPosition(), VELOCITY, COLLIDER);

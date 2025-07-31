@@ -50,6 +50,7 @@ public class TenguDebug extends BaseEnemyDebug implements LongRangeEnemy {
     private final RestrictedLongRangeEnemyStatistics stats;
     private int direction = 1;
     private Optional<Vector2> collided = Optional.empty();
+    private int numberAttack;
 
     /**
      * Constructs a new Tengu enemy with configured statistics, timers, and target
@@ -121,6 +122,7 @@ public class TenguDebug extends BaseEnemyDebug implements LongRangeEnemy {
                     this.stats.getProjectileSpeed(),
                     new BoxCollider(Vector2.zero(), this.stats.getProjectileDimensions()), DAMAGE_A,
                     "base_enemy_projectile.png");
+            this.numberAttack++;
         }
     }
 
@@ -230,7 +232,7 @@ public class TenguDebug extends BaseEnemyDebug implements LongRangeEnemy {
      * @return an integer representing the enemy's direction
      */
     public int getDirection() {
-        return direction;
+        return this.direction;
     }
 
     /**
@@ -241,6 +243,18 @@ public class TenguDebug extends BaseEnemyDebug implements LongRangeEnemy {
      *         or an empty Optional if no collision has occurred
      */
     public Optional<Vector2> getCollided() {
-        return collided;
+        return this.collided;
+    }
+
+    /**
+     * Returns the total number of attacks performed by this enemy.
+     *
+     * <p>This counter is typically incremented each time the enemy executes
+     * an attack action (e.g., during its attack timer cycle).
+     *
+     * @return the number of attacks executed so far
+     */
+    public int getNumberAttack() {
+        return this.numberAttack;
     }
 }

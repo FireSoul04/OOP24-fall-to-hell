@@ -74,8 +74,11 @@ public class FamiliarBatImpl extends MovableImpl implements FamiliarBat {
      * @param character the character that this FamiliarBat follows and assists
      * @param listener  the callback to invoke when the familiar finishes an attack
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
-    justification = "Character is only stored as a reference and not mutated")
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification =
+        "Character is only stored as a reference and not mutated"
+    )
     public FamiliarBatImpl(final Character character, final AttackFinishListener listener) {
         super(character.getLevel(), character.getPosition(), VELOCITY, COLLIDER);
         this.character = character;

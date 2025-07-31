@@ -46,8 +46,7 @@ public class ManagerFamiliarsImpl implements ManagerFamiliars {
     private static final int LIFE_DURATION = 15_000;
     private final List<FamiliarBat> list = new ArrayList<>();
     private final Set<FamiliarBat> pendingRemoval = new HashSet<>();
-    @SuppressFBWarnings(value = "UwF_UNWRITTEN_FIELD",
-    justification = "Callback is initialized before usage externally")
+    @SuppressFBWarnings(value = "UwF_UNWRITTEN_FIELD", justification = "Callback is initialized before usage externally")
     private NoFamiliarsCallback callback;
 
     /**
@@ -73,15 +72,14 @@ public class ManagerFamiliarsImpl implements ManagerFamiliars {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(value = "UwF_UNWRITTEN_FIELD",
-    justification = "Callback is initialized before usage externally")
+    @SuppressFBWarnings(value = "UwF_UNWRITTEN_FIELD", justification = "Callback is initialized before usage externally")
     public void removeFamiliar(final FamiliarBat familiar) {
         if (familiar.isIdle()) {
             familiar.clearListener();
             this.list.remove(familiar);
             familiar.getLevel().getTimerManager().removeTimer(familiar.getName());
             familiar.getLevel().removeGameObject(familiar);
-            if (this.list.isEmpty()) {
+            if (this.list.isEmpty() && this.callback != null) {
                 callback.onNoFamiliarsLeft();
             }
         } else {
