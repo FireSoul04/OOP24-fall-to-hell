@@ -5,7 +5,6 @@ package it.unibo.falltohell.view.api;
  * @author Casadei Lorenzo
  */
 public interface AudioManager {
-
     /**
      * play the sound.
      * @param name the name of the sound to be played.
@@ -16,15 +15,6 @@ public interface AudioManager {
      * @param name the name of the sound to be stopped.
      */
     void stop(String name);
-    /**
-     * pause all the sounds.
-     */
-    void pauseAll();
-
-    /**
-     * pause all the sounds.
-     */
-    void resumeAll();
 
     /**
      * mute all the sounds.

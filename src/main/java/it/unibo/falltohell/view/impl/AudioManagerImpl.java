@@ -58,22 +58,18 @@ public final class AudioManagerImpl implements AudioManager {
             soundMap.get(name).stop();
         }
     }
-
     /**
-     * {@inheritDoc}
+     * pause all the sounds.
      */
-    @Override
-    public void pauseAll() {
+    private void pauseAll() {
         if (isMuted()) {
             soundMap.values().forEach(SoundPlayerView::pause);
         }
     }
-
     /**
-     * {@inheritDoc}
+     * resume all the sounds.
      */
-    @Override
-    public void resumeAll() {
+    private void resumeAll() {
         if (!isMuted()) {
             soundMap.values().forEach(SoundPlayerView::resume);
         }
