@@ -1,0 +1,800 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage{alltt, fancyvrb, url}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage[italian]{babel}
+
+\usepackage[italian]{cleveref}
+
+\title{Relazione per\\``Programmazione ad Oggetti''}
+
+\author {
+Lorenzo Casadei
+\\Martina Malagoli
+\\Davide Mancini
+\\Sara Visani
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\chapter{Analisi}
+
+\section{Descrizione e requisiti}
+
+L’applicazione consiste in un gioco platformer, ispirato a vari cult del genere come Castlevania, Kid Icarus, Super Mario e Spelunky. Un platformer è un gioco a scorrimento dove i personaggi si muovono su piattaforme. Nel caso dell’applicazione lo scorrimento sarà di tipo verticale.
+Lo scopo del gioco consiste nel raggiungere il fondo degli Inferi per recuperare Persefone dalla prigionia di Ade.
+Il giocatore può selezionare un personaggio fra cinque, ciascuno dei quali è distinto da abilità e caratteristiche speciali. Ogni personaggio si ispira ad una classe del gioco Dungeons\&Dragons, ovvero: mago, ladro, druido e arciere.
+
+La maggior parte delle abilità speciali dei personaggi richiede una certa quantità di mana per poter essere utilizzata. Con mana s’intende del potere spirituale che si consuma usando le abilità e che si recupera uccidendo i nemici.
+
+Il personaggio può essere cambiato nel corso del gioco facendo ingresso all’interno di una particolare stanza del livello: le terme. All’interno delle terme, inoltre, è possibile salvare i progressi di gioco e recuperare punti vita e mana eventualmente persi precedentemente.
+%
+Gli Inferi stessi sono considerati una stanza del gioco, in quanto parte dello stesso livello.
+Un ulteriore tipo di stanza è il negozio, dove il giocatore ha la possibilità di comprare degli oggetti che forniscono potenziamenti temporanei (pozioni) a consumo immediato come:
+
+\begin{itemize}
+    \item Acquisizione punti vita temporanei;
+    \item Acquisizione di mana temporaneo;
+    \item Aumento della velocità di attacco;
+    \item Aumento della velocità di movimento;
+    \item Aumento della potenza di attacco.
+\end{itemize}
+
+All'interno del negozio saranno sempre presenti tre pozioni di tipologie diverse fra quelle disponibili, che si resettano uscendo e rientrando nella stanza.
+
+La valuta tramite cui è possibile eseguire l’acquisto è lo stesso punteggio del giocatore, chiamato punti anima, che aumenta eliminando i nemici incontrati durante la partita.
+%
+I nemici possono essere di quattro tipologie, due volanti e due terreni. Dei due nemici volanti il primo attacca il personaggio sparando fuoco che insegue il giocatore, l'altro invece attacca con proiettili con traiettoria fissa orientata verso il basso. I due nemici di terra, d'altra parte, attaccano entrambi con colpi fisici, ma se uno si muove lentamente l'altro rincorre il giocatore. 
+\\
+Una volta che un nemico viene sconfitto, oltre ad aumentare i punti del giocatore, esso ha una certa probabilità di lasciare un oggetto che può essere raccolto dal giocatore per guadagnare un potenziamento della stessa tipologia delle pozioni, sebbene di più breve durata.
+
+Il terreno di gioco del livello può essere di tre tipologie. La prima, quella base, non condiziona in alcun modo il giocatore o i nemici, le altre due invece comportano delle difficoltà aggiuntive: la lava toglie vita, senza considerare eventuali punti vita temporanei, ogni volta che viene toccata, mentre le liane riducono la capacità di movimento. 
+
+\subsubsection{Requisiti funzionali}
+
+\begin{itemize}
+    \item Il progresso del giocatore può essere salvato;
+    \item Devono essere presenti diverse tipologie di nemici;
+    \item Devono esserci più personaggi giocabili;
+    \item Devono essere gestite le collisioni tra entità;
+    \item Il movimento dei nemici deve essere autonomo;
+    \item Corretta gestione del punteggio e del negozio per gli acquisti;
+    \item Corretta gestione del recupero del mana e dei punti vita;
+    \item I personaggi devono poter essere cambiati nel corso del gioco;
+\end{itemize}
+
+\subsubsection{Requisiti non funzionali}
+\begin{itemize}
+    \item La finestra di gioco potrà essere ridimensionabile;
+    \item La lettura dell’input da tastiera dovrà essere reattiva;
+    \item L’interfaccia di gioco funzionerà allo stesso modo in diversi sistemi operativi.
+\end{itemize}
+
+\section{Modello del Dominio}
+
+Il gioco prevede un livello all’interno del quale vi sono tre stanze, ovvero Hell, Springs e Shop.
+All’interno di esse sono contenute delle entità (game objects), le quali possono essere:
+
+\begin{itemize}
+    \item Entità mobili: suddivise in giocatore (uno dei quattro personaggi giocabili), nemici (possono essere di diverse tipologie e in base ad esse varia il comportamento) e proiettili (possono variare in base all’entità sparante)
+    \item Blocchi: ovvero le piattaforme su cui si possono muovere il personaggio e i nemici;
+    \item Potenziamenti: ottenuti dall’eliminazione dei nemici o acquistati nello shop.
+    \item Oggetti interagibili: distinguibili in potions (acquistate nello shop), il character changer (un cristallo) e save point (una lapide);
+    \item Mercante;
+    \item Armi, che possono essere ravvicinate o a lungo raggio.
+\end{itemize}
+
+In particolare, Hell è caratterizzato dalla presenza di nemici e di bonus, Springs dal save point e dal character changer, e Shop da pozioni e mercante.
+I game objects devono poter collidere fra loro tramite l’utilizzo di collider.
+I progressi del giocatore vengono salvati in un game data dove verranno salvati il punteggio, il personaggio attuale e la sua posizione al momento del salvataggio.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/project-uml.png}
+    \caption{Schema UML dell’analisi del problema, con rappresentate le entità principali ed i rapporti fra loro}
+    \label{fig:game_uml}
+\end{figure}
+
+\chapter{Design}
+
+\section{Architettura}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/mvc.png}
+    \caption{Schema UML che rappresenta l'architettura MVC del progetto}
+    \label{fig:mvc}
+\end{figure}
+
+L'architettura dell'applicazione Fall to Hell segue il pattern architetturale \textit{Model-View-Controller}. Fall to Hell implementa l'interfaccia \texttt{GameController} come controller del sistema e funge da cuore per la comunicazione tra il Model e la View.
+\\
+La logica è data dall'interfaccia \texttt{Level}, che gestisce ogni funzione del modello di gioco. Il gioco contiene multipli game objects che posseggono informazioni inerenti a come dovrebbero essere mostrati a schermo e che, se necessario, possono richiedere al controller eventuali pulsanti della tastiera premuti tramite l'interfaccia \texttt{GameEventManager}. Quest'ultima astrae gli input da tastiera in eventi utilizzando l'interfaccia funzionale \texttt{GameEvent}. Per essere mostrati a schermo, i game objects possono eventualmente contenere un'interfaccia \texttt{Drawable} che salva informazioni su come essere disegnati su schermo.
+\\
+La lettura di input da tastiera, l'output mostrato a schermo e l'audio del gioco sono parte della View e sono assegnati all'interfaccia \texttt{GameWindow}. Per permettere al giocatore di sfruttare la tastiera per muovere il suo personaggio, il \texttt{GameController} legge l'input della tastiera dalla View tramite la classe \texttt{InputListener}, la quale potrà passare le informazioni appena ricevute al Model utilizzando l'interfaccia \texttt{GameEventManager}. L'audio del gioco è semplicemente una musica che inizia quando il giocatore avvia il gioco, la quale viene caricata dalla View e avviata nel Controller.
+
+Ogni game object da mostrare a schermo deve avere un mezzo di comunicazione con la View, quindi l'applicazione utilizza l'interfaccia \texttt{RenderableController} per passare le informazioni di \texttt{Drawable} alla View, la quale utilizza l'interfaccia \texttt{Renderable} per mostrare a schermo le informazioni apprese da \texttt{Drawable}. Tutti i \texttt{RenderableController} sono salvati e gestiti da
+\\\texttt{DrawableRenderableHandler} che controlla la comunicazione tra \texttt{Drawable} e \texttt{Renderable}.
+\\
+Il modello richiede anche accesso a file di testo, contenenti informazioni per salvare il gioco e risorse come il livello e gli oggetti del negozio. Per questo motivo l'interfaccia \texttt{FileController} viene utilizzata per interfacciarsi con il sistema operativo e legge un file in un certo percorso relativo. Per salvare il gioco viene utilizzata l'interfaccia \texttt{SaveFileController} per salvare e caricare un file che mantiene le informazioni della sessione di gioco corrente che viene salvato all'interno della cartella utente del giocatore. Per leggere un'immagine da file si utilizza l'interfaccia \texttt{ImageController} che restituisce un'immagine che verrà successivamente utilizzata dalla View, mentre per leggere un file audio si utilizza la classe \texttt{SoundPlayerView}. L'interfaccia \texttt{AudioManager} mantiene le informazioni sulla musica per poterla avviare e fermare dal Controller.
+L'applicazione offre anche la possibilità di mettere in pausa il gioco.
+
+\section{Design dettagliato}
+
+\subsection{Davide Mancini}
+
+\subsubsection{Costruire un livello contenente informazioni facoltative}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/mancini-davide/level-builder.png}
+    \caption{Schema UML rappresentante l'uso di Builder per costruire un livello con parametri di base oppure scelti in base alle richieste di utilizzo}
+    \label{fig:level_builder}
+\end{figure}
+
+\paragraph{Problema}
+Si deve poter costruire un livello senza tutte le sue componenti per funzionare.
+
+\paragraph{Soluzione}
+La soluzione propone di utilizzare il \textit{pattern Builder}, come da \Cref{fig:level_builder}, per costruire un \texttt{Level} con più componenti opzionali, i quali, se non inseriti, verranno sostituiti con parametri di base.
+
+\subsubsection{Multiple classi dei personaggi}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/mancini-davide/character-strategy.png}
+    \caption{Schema UML rappresentante l'uso di Builder per costruire un livello con parametri di base oppure scelti in base alle richieste di utilizzo}
+    \label{fig:character_strategy}
+\end{figure}
+
+\paragraph{Problema}
+Il giocatore deve poter utilizzare personaggi di diverse classi, con armi e abilità diverse.
+
+\paragraph{Soluzione}
+Nell'implementazione si è scelto di applicare il \textit{pattern Strategy}, come da \Cref{fig:character_strategy}, dove la strategia è \texttt{Character} e la classe che utilizza la strategia è il livello che lo contiene. Per evitare ripetizioni di codice per funzionalità comuni, si è utilizzata una classe astratta \texttt{BaseCharacter} per gestire l'equipaggiamento dell'arma, il suo attacco e il movimento (in base ai comandi del giocatore), che sono comuni ad ogni personaggio.
+
+\subsubsection{Equipaggiamento di armi da parte dei personaggi}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/mancini-davide/character-weapon-strategy.png}
+    \caption{Schema UML rappresentante l'uso di Strategy per permettere più tipologie di armi da equipaggiare}
+    \label{fig:weapon_strategy}
+\end{figure}
+
+\paragraph{Problema}
+Il personaggio del giocatore appartiene ad una classe. La classe determina l'arma posseduta, che può essere di più tipologie.
+
+\paragraph{Soluzione}
+La soluzione adottata è quella di utilizzare il \textit{pattern Strategy}, come da \Cref{fig:weapon_strategy}. La strategia è \texttt{Weapon}, che può essere \texttt{RangedWeapon} o \texttt{MeleeWeapon}, mentre la classe che utilizza la strategia è \texttt{Character}. Questa scelta permette di aggiungere in futuro nuove tipologie di armi e classi.
+
+\subsubsection{Collisioni tra GameObjects}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/mancini-davide/collisions-manager-observer.png}
+    \caption{Schema UML rappresentante l'uso di Observer per notificare la collisione di due oggetti}
+    \label{fig:collisions_observer}
+\end{figure}
+
+\paragraph{Problema}
+Ogni \texttt{GameObject} può andare in contatto con altri \texttt{GameObject} in un qualsiasi momento del gioco. Deve essere possibile gestire ogni collisione tra game objects individualmente nella loro implementazione.
+
+\paragraph{Soluzione}
+Per permettere di lasciare al \texttt{CollisionsManager} il compito di controllare quando dei game objects collidono e di avvisarli della collisione, la soluzione proposta utilizza il \textit{pattern Observer}, come da \Cref{fig:collisions_observer}. L'observer è \texttt{GameObject} e il subject è \texttt{CollisionsManager}, il quale avviserà quando due \texttt{GameObject} andranno in contatto tra loro. Sarà il \texttt{GameObject} stesso a decidere cosa fare, una volta notificato, all'interno del metodo onCollision(). Inoltre, il \texttt{CollisionsManager}, per avere una maggiore flessibilità, viene implementato in \texttt{AbstractCollisionsManager} utilizzando il \texttt{pattern Strategy}. La strategia è \textit{CollisionsManager}, mentre la classe che la utilizza è \texttt{AbstractCollisionsManager}.
+
+\subsubsection{Algoritmi diversificati in base alla tipologia di collider}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/mancini-davide/collisions-manager-template.png}
+    \caption{Schema UML rappresentante l'uso di Template per utilizzare un algoritmo in base alla tipologia dei collider}
+    \label{fig:collisions_template}
+\end{figure}
+
+\paragraph{Problema}
+I \texttt{Collider} devono essere di più tipologie, quindi devono essere possibili più implementazioni dell'algoritmo per controllare le collisioni.
+
+\paragraph{Soluzione}
+Poiché i \texttt{Collider} possono essere di più tipologie, la classe astratta \texttt{AbstractCollisionsManager} può avere più implementazioni seguendo il \textit{pattern Template method}, come da \Cref{fig:collisions_template}. Il metodo template è checkCollisions(), che chiama un metodo astratto e protetto determineCollision().
+
+\subsection{Martina Malagoli}
+
+\subsubsection{Gestione dei timer}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/martina-malagoli/timer.png}
+    \caption{Schema UML rappresentante l'uso di Strategy per la realizzazione di CustomTimer}
+    \label{fig:custom_timer}
+\end{figure}
+
+\paragraph{Problema} 
+Vari eventi all'interno dell'applicazione sono legati al tempo e dipendono da specifiche scadenze. Deve quindi essere possibile avere una gestione dello scorrere del tempo.
+
+\paragraph{Soluzione}
+La soluzione proposta è quella dell'utilizzo di timer, \texttt{CustomTimer}. Essa consiste nell'utilizzo del \textit{pattern Strategy}. Infatti, sebbene sia stato implementato una sola tipologia di \texttt{CustomTimer}, tale scelta permette di avere più flessibilità e di poter agilmente realizzare ed utilizzare diverse tipologie di timer che utilizzano diversi algoritmi, rendendoli potenzialmente interscambiabili per le classi che ne fanno utilizzo. In questo caso la strategia utilizzata è quindi \texttt{CustomTimer} e l'utilizzatore della strategia è chiunque decida di utilizzare \texttt{CustomTimer}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/martina-malagoli/TimerManager.PNG}
+    \caption{Schema UML rappresentante l'uso di Strategy e Observer per la realizzazione di TimerManager}
+    \label{fig:timer_manager}
+\end{figure}
+
+\paragraph{Problema}
+Il gioco per poter funzionare deve poter utilizzare timer multipli per gestire scadenze ed eventi dipendenti dal tempo.
+Dunque deve essere possibile gestire sia un unico timer che il loro insieme.
+
+\paragraph{Soluzione}
+Per facilitare l'utilizzo dei timer e la loro gestione è stato utilizzato il \texttt{TimerManager}. Esso ha il compito di salvare tutti i timer utilizzati per poterli inizializzare, bloccare, mettere in pausa, riavviarli e rimuoverli. La soluzione proposta utilizza in parte il \textit{pattern Observer}: \texttt{TimerManager} è il subject, mentre i vari \texttt{CustomTimer} sono gli observer. \texttt{TimerManager}, infatti, notifica i vari \texttt{CustomTimer}, riuscendoli a gestire contemporaneamente, facendo il loro update ed eventualmente mettendoli tutti in pausa o riavviandoli. D'altra parte è stata però resa possibile anche la gestione singola dei timer.
+\texttt{TimerManager}, inoltre, sfrutta anche il \textit{pattern Strategy}, in quanto è possibile implementare diversi tipi di timer manager che possono essere utilizzati dal livello \texttt{Level}. In questo caso \texttt{TimerManager} è la strategia e chi usa la strategia è \texttt{Level}. 
+
+\subsubsection{Item del negozio}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/martina-malagoli/Items.PNG}
+    \caption{Schema UML rappresentante l'uso di Strategy e Template method per la gestione degli oggetti del negozio}
+    \label{fig:items}
+\end{figure}
+
+\paragraph{Problema}
+All'interno del negozio dell'applicazione possono essere presenti diverse tipologie di oggetti acquistabili, con caratteristiche fra loro differenti ma con vari elementi comuni, come il fatto di poter essere o meno acquistabili e il fatto di essere interagibili.
+
+\paragraph{Soluzione}
+Per risolvere il problema della creazione di diverse tipologie di oggetti del negozio si è proposta come soluzione l'utilizzo del \textit{pattern Template method}. La classe \texttt{BaseItem} è la classe astratta, il cui metodo astratto \texttt{onInterct} può essere sovrascritto dalle sue sottoclassi, come per esempio \texttt{Potion}. Questa scelta permette di aggiungere nuovi item con diverse caratteristiche sfruttando la struttura di \texttt{BaseItem}. Qui il metodo template è \texttt{interact()}, quale chiama il metodo \texttt{onInterct()}.
+
+\paragraph{Problema}
+Un personaggio durante il gioco può potenzialmente interagire con diverse tipologie di oggetti del negozio.
+
+\paragraph{Soluzione}
+Per risolvere questo problema è possibile utilizzare il \texttt{pattern Strategy}, dove \texttt{Item} è la strategia e \texttt{Character} è chi utilizza la strategia. In questo modo si ha che un \texttt{Character} può interagire con vari \texttt{Item} in modo flessibile, permettendo in futuro anche l'aggiunta di nuovi \texttt{Item}.
+
+
+\subsubsection{Gestione dei potenziamenti}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/martina-malagoli/Buff.PNG}
+    \caption{Schema UML rappresentante l'uso di Strategy per la realizzazione di diversi tipi di Buff}
+    \label{fig:buff}
+\end{figure}
+
+\paragraph{Problema} I potenziamenti all'interno del gioco possono essere di varia natura e presentano caratteristiche peculiari.
+
+\paragraph{Soluzione} Per risolvere i problemi causati dal fatto di avere differenti tipologie di \texttt{Buff} si è scelto di utilizzare il \textit{pattern Strategy}. In questo caso la strategia è \texttt{Buff} e l'utilizzatore della strategia diventa chiunque decida di utilizzare \texttt{Buff}, come per esempio \texttt{Potion} o \texttt{BuffManager}. Ciò permette una maggior estendibilità, infatti sarà possibile decidere di utilizzare diverse e nuove tipologie di \texttt{Buff} senza dover modificare la struttura delle classi che sfruttano tale strategia.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/martina-malagoli/BuffManager.PNG}
+    \caption{Schema UML rappresentante la gestione dei Buff tramite il BuffManager}
+    \label{fig:items}
+\end{figure}
+
+\paragraph{Problema}
+Durante il gioco possono venir applicati vari potenziamenti al personaggio corrente i quali devono essere gestiti nella loro aggiunta e successiva rimozione.
+
+\paragraph{Soluzione}
+Per poter gestire i vari \texttt{Buff} viene utilizzato un \texttt{BuffManager}. Tale soluzione non rispetta un particolare pattern specifico, ma mantiene al suo interno l'insieme dei \texttt{Buff} gestendone l'attivazione e la rimozione. Per quanto riguarda l'attivazione di un \texttt{Buff}, il \texttt{BuffManager} oltre che salvare tale elemento si occupa eventualmente di notificare il \texttt{TimerManager} di avviarne un timer per la scadenza. Per quanto riguarda la rimozione essa può essere gestita dal \texttt{BuffManager} sia a livello dei singoli \texttt{Buff} nel caso in cui essi non siano vincolati da un timer, che del loro insieme, è infatti resa possibile la rimozione di tutti i \texttt{Buff} contemporaneamente.
+
+\subsection{Sara Visani}
+
+\subsubsection{Creazione e gestione dei nemici}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/sara-visani/enemy-factory.png}
+    \caption{UML che mostra l'Abstract Factory Pattern}
+    \label{fig:enemy_factory}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/sara-visani/enemy-strategy.png}
+    \caption{UML che mostra come BaseEnemy è collegato}
+    \label{fig:enemy_strategy}
+\end{figure}
+
+\paragraph{Problema}
+Creazione di vari tipi di nemici.
+
+\paragraph{Soluzione}
+Tutti i nemici sono sotto l'interfaccia \texttt{Enemy} e per evitare ripetizione di codice dei metodi comuni c'è una classe astratta \texttt{BaseEnemy} la quale può essere implementata come uno desidera. In questo caso sono stati implementati quattro tipi di nemici, i quali vengono creati mediante una abstract factory. Questa classe seguendo il pattern \textit{Abstract Factory} ha all'interno una cache, lazy-loaded singleton per livello, per dare ai nemici due manager i cui sono comuni a tutti i nemici di un livello. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/sara-visani/enemy-manager.png}
+    \caption{Questa immagine mette in evidenzia il pattern listener tra gli Enemy e i managers}
+    \label{fig:enemy_manager}
+\end{figure}
+
+\paragraph{Problema}
+Maneggiare le identificazioni e la vita dei timer di N nemici qualsiasi e farli scomparire e ricomparire quando il giocatore entra in una zona sicura.
+
+\paragraph{Soluzione}
+Per questo problema sono presenti due manager per livello. \texttt{EnemyTimerManager} prende il compito di creare, eliminare, startare e cercare un qualsiasi timer inerente ai nemici. Invece \texttt{SafeZoneManager} ha il compito di avvertire i nemici quando il giocatore entra o esce da una area sicura.
+Per far questo entrambi hanno dei listener o lambde da richimare. Questa soluzione usa il \textit{Pattern Listener}.
+
+\subsubsection{Creazione e Gestione dei Famigli del Druido}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/sara-visani/manager-familiars.png}
+    \caption{La figura mette in evidenza le relazioni tra le classi nominate a fianco con il pattern Listener}
+    \label{fig:familiar_manager}
+\end{figure}
+
+\paragraph{Problema}
+Creazione e gestione dei famigli (attacco, movimento e vita) inoltre avvertire il druido quando può ordinare l'attacco e quando non ha più famigli a disposizione.
+
+\paragraph{Soluzione}
+Anche in questa soluzione è stato introdotto un manager con due listener. Uno per avvertire il \texttt{Druid} che non ha più famigli e l'altro chiamato da \texttt{FamiliarBat}, il quale informa al \texttt{ManagerFamiliars} che ha finito di attaccare. Questo serve perché i famigli hanno una vita dettata da timer ma se stanno attaccando prima finiscono l'attacco e poi scompaiono. Inoltre il motivo per il \texttt{Druid} va avvertito se non ha famigli è per non sprecare mana per un attacco che non si può attivare.
+
+\subsubsection{Creazione delle Abilità}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/sara-visani/statistic-passive-ability-strategy.png}
+    \caption{La figura mette in evidenza il Pattern Strategy nel ramo delle abilità passive}
+    \label{fig:ability_factory}
+\end{figure}
+
+\paragraph{Problema}
+Creazione di abilità con comportamenti diversi.
+
+\paragraph{Soluzione}
+Per risolvere questo problema ho sfruttato il \textit{pattern Strategy}. Il quale è perfetto per questo caso proprio perché è solo l'azione che la \texttt{PassiveAbility} che cambia.
+\texttt{PassiveAbilityDo} è l'interfaccia Strategy le cui varie implementazioni si trovano dentro i vari personaggi, io ho implementato la strategy solo del druido.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/sara-visani/ability-factory.png}
+    \caption{Rappresenta la Factory + Strategy usate per le abilità}
+    \label{fig:ability_factory}
+\end{figure}
+
+\paragraph{Problema}
+Creazione di diversi tipi di abilità anche di classi specifiche per sottoclassi di personaggio.
+
+\paragraph{Soluzione}
+Uso del \textit{pattern Factory} con una modifica, all'interno è presente un \texttt{Register} che si occupa a dare alla factory l'abilità giusta se la factory non la sa, quindi è il pattern \textit{Factory + Strategy}.
+Questa classe register serve per salvare al suo interno una mappa delle classi con il corrispondente oggetto richiesto. Quando la factory lo chiama gli dice la classe del \texttt{Character} che ha e viene restituito l'abilità giusta (questo solo per la \texttt{SpecialAbility}).
+
+\subsubsection{Creazione e Gestione delle Statistiche delle Entità}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/sara-visani/statistics-factory.png}
+    \caption{Rappresenta il Pattern ibrido Factory + Builder}
+    \label{fig:statistics_factory}
+\end{figure}
+
+\paragraph{Problema}
+Creazione delle statistiche.
+
+\paragraph{Soluzione}
+La gestione delle statistiche è stata portata fuori dalle entità in una serie di oggetti gerarchici che costruiscono i necessari tipi di statistiche per le varie sottoclassi di \texttt{Entity}. Oltre a questo le alcune statistiche possono contenere dei campi opzionali per questo motivo serve un costruttore che controlla che vengono messi tutti i campi obbligatori, ma che sia abbastanza fluido per i campi non obbligatori. Per questo problema ho deciso di usare un pattern ibrido \textit{Factory + Builder}, quest'ultimo è in forma gerarchica e fluida \textit{Fluent Builder} usando CRTP.
+
+\subsection{Lorenzo Casadei}
+
+\subsubsection{Movable e GameObject}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/GameObject_and_Movable.png}
+    \caption{Schema UML rappresentante GameObject e Movable}
+    \label{fig:GameObject_and_Movable}
+\end{figure}
+
+\paragraph{Problema}
+Nel contesto di un platform 2D, alcuni oggetti devono essere in grado di muoversi nel mondo di gioco con una velocità variabile. Inoltre, ogni oggetto deve conoscere la propria posizione e poter rilevare eventuali collisioni. Era necessario creare una gerarchia di oggetti che permettesse di distinguere tra oggetti statici e oggetti mobili, riutilizzando il più possibile la logica comune (es. gestione posizione, livello, disegni).
+
+\paragraph{Soluzione}
+La soluzione adottata è stata creare una classe \texttt{GameObjectImpl}, che rappresenta un generico oggetto di gioco e implementa l'interfaccia \texttt{GameObject}. Essa incapsula proprietà comuni a tutti gli oggetti del mondo (posizione, collider, livello, solidità, ecc.) e gestisce automaticamente l’aggiunta al livello.
+Per gli oggetti mobili, è stata creata una sottoclasse \texttt{MovableImpl}, che estende \texttt{GameObjectImpl} e implementa l'interfaccia \texttt{Movable}. Tale classe aggiunge un vettore velocità e sovrascrive il metodo \texttt{update()} che aggiorna la posizione in base alla velocità e al tempo trascorso.
+Questa struttura permette un'estensione modulare: ad esempio, \texttt{Player}, \texttt{Enemy} o altri tipi di entità mobili possono derivare da \texttt{MovableImpl} e personalizzarne il comportamento. Non è stato applicato un design pattern formale per questa parte. Tuttavia, la struttura segue i principi di programmazione orientata agli oggetti.
+
+\subsubsection{Gestione del mondo di gioco}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/Level.png}
+    \caption{Schema UML rappresentante Level e LevelImpl}
+    \label{fig:Level_and_LevelImpl}
+\end{figure}
+
+\paragraph{Problema}
+Era necessario creare un contenitore per tutti gli oggetti di gioco, che fosse responsabile dell’aggiornamento degli oggetti mobili, del controllo delle collisioni e dell’interazione con altri componenti come la telecamera, gli eventi e l’interfaccia grafica.
+In particolare:
+\begin{itemize}
+    \item Gli oggetti devono potersi registrare nel livello.
+    \item La camera deve seguire il giocatore.
+    \item Devono avvenire collisioni tra gli oggetti.
+    \item Le entità devono poter ricevere eventi di gioco.
+\end{itemize}
+
+\paragraph{Soluzione}
+È stata sviluppata la classe \texttt{LevelImpl}, che implementa l’interfaccia Level. Essa mantiene una lista degli oggetti di gioco, gestisce le collisioni usando un \texttt{CollisionsManager}, aggiorna lo stato degli oggetti tramite il metodo \texttt{update()} e integra il sistema eventi (\texttt{GameEventManager}) e la gestione dei disegni (\texttt{DrawableRenderableHandler}).
+Il livello funge da “centro di controllo” del gioco, delegando ad altri componenti funzionalità specifiche.
+
+
+\subsubsection{GameCamera}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/GameCamera.png}
+    \caption{Schema UML rappresentante GameCamera}
+    \label{fig:GameCamera}
+\end{figure}
+
+\paragraph{Problema}
+In un platform 2D, è necessario che la “camera” segua il giocatore, mantenendolo al centro dello schermo quando possibile, ma senza uscire dai limiti del livello. Il movimento della camera deve essere fluido e adattabile.
+
+\paragraph{Soluzione}
+È stata implementata la classe \texttt{GameCameraImpl}, che tiene traccia della posizione, dimensioni visibili e velocità di inseguimento. Il metodo \texttt{updateCamera()} sposta la camera gradualmente verso la posizione del giocatore, limitandone lo spostamento ai bordi del livello.
+Questa separazione consente di usare la camera in modo riusabile e testabile, svincolandola dalla logica del personaggio o del livello.
+
+\subsubsection{GameEventManager}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/GameEvent.png}
+    \caption{Schema UML rappresentante GameEvent}
+    \label{fig:GameEvent}
+\end{figure}
+
+\paragraph{Problema}
+Il gioco richiede la possibilità di reagire a condizioni che si verificano durante esso, come "è stato raccolto un oggetto". Era necessario un sistema generico che permettesse di associare a ogni condizione un'azione da eseguire.
+
+\paragraph{Soluzione}
+È stato progettato \texttt{GameEventManager<K>}, una classe parametrica che utilizza due mappe:
+\begin{itemize}
+    \item Una per le condizioni (\texttt{GameEventCondition}, con metodo \texttt{test()}).
+    \item Una per le azioni (\texttt{GameEvent}, con metodo \texttt{execute()}).
+\end{itemize}
+Nel metodo update() vengono iterate tutte le condizioni e, se vere, viene eseguita l’azione corrispondente. 
+
+\subsubsection{Sistema di armi a distanza e gestione proiettili}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/Armi_e_proiettili.png}
+    \caption{Schema UML rappresentante il sistema di armi a distanza e proiettili}
+    \label{fig:armi_e_proiettili}
+\end{figure}
+
+\paragraph{Problema}
+Nel gioco era necessario dotare i personaggi di armi a distanza, capaci di:
+\begin{itemize}
+    \item sparare proiettili personalizzati (es. frecce);
+    \item gestire munizioni limitate;
+    \item rispettare tempi di ricarica (cooldown) tra un colpo e l’altro;
+    \item creare meccanismi personalizzabili (es. frecce che ritornano all’arciere).
+\end{itemize}
+Inoltre, i proiettili stessi dovevano essere entità autonome e aggiornabili nel tempo, capaci di reagire alle collisioni.
+
+\paragraph{Soluzione}
+Il sistema è stato progettato in maniera modulare:
+\begin{itemize}
+    \item \texttt{BaseRangedWeapon}: classe astratta che gestisce logica comune delle armi a distanza (cooldown, ammo, attack, onAttack), delegando a sottoclassi la creazione del proiettile (createProjectile).
+    \item \texttt{Bow}: arma concreta usata dall’arciere, che produce oggetti \texttt{ReturnableArrow} alla pressione del comando di attacco.
+    \item \texttt{ProjectileImpl}: implementazione generica di proiettile con logica di movimento, disegno, e reazione alle collisioni.
+    \item \texttt{ReturnableArrow}: estensione di \texttt{ProjectileImpl} con comportamento speciale che consente alla freccia di tornare al mittente.
+\end{itemize}
+Questo design permette l’aggiunta di nuove armi e proiettili con comportamenti diversi, mantenendo separata la logica di \texttt{Weapon} e di \texttt{Projectile}.
+
+\subsubsection{Gestione delle abilità e comportamento avanzato del personaggio: Archer}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/Archer.png}
+    \caption{Schema UML rappresentante la classe Archer}
+    \label{fig:archer}
+\end{figure}
+
+\paragraph{Problema}
+Era necessario rappresentare un personaggio giocabile capace di:
+\begin{itemize}
+    \item utilizzare armi a distanza;
+    \item interagire attivamente con i proiettili dopo averli lanciati (farli ritornare);
+    \item beneficiare di effetti passivi basati sullo stato di gioco (es. numero di frecce attive);
+    \item supportare un sistema flessibile di abilità attive e passive legate allo stile di gioco.
+\end{itemize}
+
+\paragraph{Soluzione}
+È stata creata la classe \texttt{Archer}, estensione di \texttt{BaseCharacter}, che:
+\begin{itemize}
+    \item equipaggia un \texttt{Bow} come arma;
+    \item tiene traccia delle frecce lanciate;
+    \item gestisce un’abilità attiva \texttt{ReturnArrowAbility}, che attiva il ritorno delle frecce (richiamando \texttt{startReturn()} su ogni \texttt{ReturnableArrow});
+    \item integra una abilità passiva \texttt{StatisticPassiveAbilityImpl}, che aumenta l’attacco proporzionalmente al numero di frecce in gioco.
+\end{itemize}
+
+\subsubsection{Etichette grafiche per interfaccia utente}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/Label_.png}
+    \caption{Schema UML rappresentante la classe Label}
+    \label{fig:label}
+\end{figure}
+
+\paragraph{Problema}
+Nel gioco era necessario un sistema per mostrare a schermo:
+\begin{itemize}
+    \item messaggi testuali (es. statistiche, notifiche);
+    \item etichette statiche o temporanee che non dipendono dal mondo di gioco, ma dalla GUI;
+    \item un modo per tenere sincronizzato il contenuto dell’etichetta tra Model e View.
+\end{itemize}
+Il sistema doveva essere leggero, modulare e riutilizzabile, e compatibile con l’architettura MVC già adottata nel gioco.
+
+\paragraph{Soluzione}
+Sono stati progettati tre componenti distinti, secondo il \textit{pattern Model-View-Controller}:
+\begin{itemize}
+    \item \texttt{Label}: rappresenta una semplice etichetta con posizione, visibilità, e contenuto testuale.
+    \item \texttt{LabelRenderable} (\textit{View}): si occupa di disegnare il testo usando Java 2D, con un offset verticale. 
+    \item \texttt{LabelRenderableController}: sincronizza \textit{View} e \textit{Model}, aggiornando il testo e la visibilità ogni frame.
+\end{itemize}
+
+\subsubsection{Suoni di gioco}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/Audio.png}
+    \caption{Schema UML rappresentante il sistema di audio}
+    \label{fig:audio}
+\end{figure}
+
+\paragraph{Problema}
+Bisognava implementare un sistema per poter gestire la musica del gioco ma anche che potesse essere efficiente, e soggetto a poche modifiche, per l’implementazione futura di altri suoni quali: 
+\begin{itemize}
+    \item Suoni dei nemici.
+    \item Suono per il movimento del personaggio. 
+    \item Suono delle armi. 
+\end{itemize}
+
+\paragraph{Soluzione}
+Si è deciso di adottare un sistema strutturato su più classi cercando di attenersi il più possibile al \textit{pattern MVC}. 
+La struttura è la seguente: 
+\begin{itemize}
+    \item Una classe SoundPlayerView che implementando AudioPlayer permette la manipolazione delle tracce audio(es. play, pause, reset). Garantendo inoltre la possibilità di riprodurre tali tracce per un numero di Loop a scelta.
+    \item Una classe AudioManagerImpl, che implementa AudioManger, che può gestire tutte le tracce audio del gioco, permettendo di caricarle in una mappa assegnando a ciascuna traccia una chiave che la identifica. Dato che per ora il programma presenta solo la musica, ho scelto di adottare il pattern Singleton, in modo che non possano essere create più istanze del manager cosi che non ci sia il rischio di far partire involontariamente la stessa traccia più volte e sovrapporle.
+    \item Una classe AudioController che permetta di controllare il manager cosi da rispettare il più possibile il pattern MVC.
+\end{itemize}
+
+\subsubsection{Menu del gioco}
+
+\paragraph{Problema}
+Serviva un menu che si aprisse all’apertura del gioco, con la possibilità di uscire da esso o di avviare la partita.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/lorenzo-casadei/MainMenuPanel.png}
+    \caption{Schema UML rappresentante il menù di gioco}
+    \label{fig:main_menu}
+\end{figure}
+
+\paragraph{Soluzione}
+È stata introdotta la classe \texttt{MainMenuPanel} che estende \texttt{JPanel}, utilizza un \texttt{GridBagLayout}  per posizionare una \texttt{JLabel} col titolo del gioco e dei \texttt{JButton} per i bottoni start e exit al centro dello schermo.
+Dopo di che usa \texttt{paintComponent} per disegnare uno sfondo per il menu. 
+All’avvio del gioco vengono creati degli \texttt{ActionListener} per i bottoni che permettono di avviare la partita oppure uscire dall’applicazione. 
+
+\chapter{Sviluppo}
+
+\section{Test automatizzati}
+
+Per utilizzare Test senza interazione dell'utente per le classi del model, l'applicazione utilizza la suite \textit{JUnit}. La maggior parte degli elementi del Controller e la View non sono stati testati per problemi di complessità. Riportiamo brevemente delle descrizioni i componenti sottoposti ai test:
+
+\begin{itemize}
+    \item \texttt{ArcherTest}: testa il funzionamento dell'arciere;
+    \item \texttt{TestBlocks}: testa i blocchi di lava e i blocchi di liane;
+    \item \texttt{TestBuffManager}: testa la gestione dell'applicazione e della rimozione dei potenziamenti;
+    \item \texttt{TestCaster}: testa il funzionamento del mago;
+    \item \texttt{TestCollisions}: testa le collisioni fra oggetti;
+    \item \texttt{TestCustomTimer}: testa il funzionamento dei timer;
+    \item \texttt{TestDruid}: testa il funzionamento del druido;
+    \item \texttt{TestEnemy}: testa il funzionamento dei nemici tranne il loro movimento;
+    \item \texttt{GameCamera}: testa il corretto posizionamento della telecamera;
+    \item \texttt{TestManagerAndFamiliar}: testa il corretto funzionamento del manager e famiglio, sopprattutto controllando la communicazione tra le classi;
+    \item \texttt{TestMeleeWeapon}: testa il funzionamento delle armi da mischia;
+    \item \texttt{TestMerchant}: testa il funzionamento del negozio e della sua entrata;
+    \item \texttt{TestMovable}: testa il movimento degli oggetti;
+    \item \texttt{TestPhysics}: testa la fisica del gioco, applicazione di gravità e risoluzioni di collisioni tra entità e blocchi;
+    \item \texttt{TestProjectile}: testa il movimento e la capacità di colpire altri oggetti dei proiettili;
+    \item \texttt{TestRogueAbility}: testa il funzionamento del ladro;
+    \item \texttt{TestSprings}: testa il salvataggio del gioco, il cambio del personaggio e la ricarica completa di vita e mana;
+    \item \texttt{TestTemporaryStatistics}: testa le statistiche temporanee;
+    \item \texttt{TestTimerManager}: testa la gestione dei timer;
+\end{itemize}
+
+\section{Note di sviluppo}
+
+\subsection{Davide Mancini}
+
+Molte parti di codice sono state prese da vecchi progetti personali.
+Il game loop è stato costruito prendendo ispirazione da Game as Lab del Professor Ricci.
+
+\subsubsection{Utilizzo di Pair dalla libreria Apache Commons}
+Utilizzato solo in AbstractCollisionsManager per ottenere una chiave per identificare due game objects che stanno collidendo, utilizzata per la mappa delle collisioni nel frame precedente. Viene utilizzata per notificare i game objects con onCollisionExit() dopo aver concluso una collisione. Viene utilizzato in \url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/5c96d0e56249127deaab86c80ed66cda7a4dce2b/src/main/java/it/unibo/falltohell/model/impl/manager/AbstractCollisionsManager.java#L26C1-L26C101}
+
+\subsubsection{Utilizzo di Optional e Lambda expressions}
+Utilizzato in molteplici punti. Un esempio è \url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/5c96d0e56249127deaab86c80ed66cda7a4dce2b/src/main/java/it/unibo/falltohell/model/impl/gameobject/weapons/BaseWeapon.java#L71}
+
+\subsubsection{Utilizzo di Reflection}
+Utilizzato nel coltello lanciabile dal ladro. Serve per controllare quale game object può fermare e distruggere il coltello mentre è in lancio e cosa invece sarà ignorato e passato attraverso. Viene utilizzato in \url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/5c96d0e56249127deaab86c80ed66cda7a4dce2b/src/main/java/it/unibo/falltohell/model/impl/gameobject/movable/projectile/Knife.java#L21}
+
+\subsection{Martina Malagoli}
+
+\subsubsection{Utilizzo di Optional}
+Gli Optional sono stati utilizzati varie volte. Un esempio è:
+\url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/5c96d0e56249127deaab86c80ed66cda7a4dce2b/src/main/java/it/unibo/falltohell/model/impl/gameobject/entrance/ShopEntrance.java#L19}
+
+\subsubsection{Utilizzo di Stream e Lambda expressions}
+Streams e lambda expressions sono stati utilizzati più volte. Un esempio è:
+\url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/5c96d0e56249127deaab86c80ed66cda7a4dce2b/src/main/java/it/unibo/falltohell/model/impl/gameobject/MerchantImpl.java#L70}
+
+\subsubsection{Utilizzo di Reflection}
+Utilizzata nelle Fireball per determinare con quali oggetti ignorare la collisione in:
+\url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/5c96d0e56249127deaab86c80ed66cda7a4dce2b/src/main/java/it/unibo/falltohell/model/impl/gameobject/movable/projectile/Fireball.java#L28}
+
+\subsection{Sara Visani}
+
+\subsubsection{Utilizzo di Lambda expressions, Stream e Optional}
+Le lambda, gli stream e gli Optional sono usate spesso. Un esempio è in Base enemy: \url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/00f50d2cf307756b051d06d7b87207078f0ddd94/src/main/java/it/unibo/falltohell/model/impl/gameobject/movable/entity/enemy/BaseEnemy.java#L360}
+
+\subsubsection{Utilizzo del Generico}
+Il generico è stato utilizzato in varie classi separate all'interno della gerarchia dei Builder delle statisctiche: \url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/00f50d2cf307756b051d06d7b87207078f0ddd94/src/main/java/it/unibo/falltohell/model/impl/builder/GroundEnemyStatBuilderImpl.java#L23}
+
+\subsection{Lorenzo Casadei}
+
+\subsubsection{Utilizzo di Optional}
+Uso di Optional con method reference, usato per aggiungere dinamicamente un proiettile alla lista delle frecce in volo. Permalink: \url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/ea2e77ac831004d138e6898449eec7c2f60e9299/src/main/java/it/unibo/falltohell/model/impl/gameobject/movable/entity/character/Archer.java#L77}
+
+\subsubsection{Utilizzo di Lambda expression}
+Uso di lambda expression, utilizzato per definire un abilità passiva il cui effetto dipende dallo stato runtime dell’arciere. Permalink: \url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/ea2e77ac831004d138e6898449eec7c2f60e9299/src/main/java/it/unibo/falltohell/model/impl/gameobject/movable/entity/character/Archer.java#L61}
+
+\subsubsection{Utilizzo di Stream e Lambda expression}
+Uso di stream con lambda expression per poter determinare se l’oggetto presenta le collisioni. Permalink: \url{https://github.com/FireSoul04/OOP24-fall-to-hell/blob/ea2e77ac831004d138e6898449eec7c2f60e9299/src/main/java/it/unibo/falltohell/model/impl/gameobject/movable/projectile/ProjectileImpl.java#L95}
+
+Inoltre ci terrei a precisare che le classi InputListener e SoundPlayerView sono state prese da un vecchio progetto di un altro membro del gruppo, tali classi sono state opportunamente modificate per evitare errori e gli sono stati aggiunti i commenti per spiegarne il funzionamento.
+
+\chapter{Commenti finali}
+
+\section{Autovalutazione e lavori futuri}
+
+\subsection{Davide Mancini}
+
+Personalmente, ritengo un progetto con cui inizialmente sono riuscito a progettare, successivamente il progetto si è ingrandito, rendendo delle scelte di design difficili da tornare indietro. Penso di aver trascurato una buona progettazione iniziale ed è finita in una malprogettazione delle classi verso la conclusione dello sviluppo. Una cosa che considero un fallimento nella mia parte è stato l'utilizzo dell'algoritmo AABB (Axis-Aligned Bounding Box) per i controlli della collisione, poiché è molto semplice, ma che mi ha reso più difficile implementare la risoluzione delle collisioni tra entità e oggetti solidi, specialmente gestire la gravità. Poteva essere migliorata utilizzando una variante del suo algoritmo chiamata Swept AABB, che permette di bloccare completamente i movimenti successivi a una collisione e spinge un'entità nella direzione opposta alla collisione, anche se eventualmente è possibile implementare un collisions manager con quell'algoritmo in futuro. Ho imparato con questo progetto meglio il funzionamento di MVC e i suoi punti forza, anche se non sono sicuro che sia stato architettato bene e flessibile. Un'altra cosa che poteva essere sviluppata meglio è il \texttt{LevelBuilder}, che richiede un ordine preciso per funzionare. Ho notato come i test possono salvare tempo durante lo sviluppo.
+Nonostante non sia molto soddisfatto di come sia uscito il design del codice, sono soddisfatto del risultato e sarei volenteroso a portare avanti il progetto.
+
+\subsection{Martina Malagoli}
+
+All'inizio del progetto avevo grandi aspettative sulla sua riuscita, pensando che avremmo potuto e inserire tantissime diverse funzionalità senza alcun problema. Nel corso del lavoro mi sono però resa conto delle difficoltà e delle complessità che possono sorgere anche nel fare cose che possono sembrare inizialmente semplici e come, spesso, sia meglio partire a piccoli passi e poi ampliare le vedute. 
+Inoltre ho riscontrato diverse difficoltà nel riuscire ad avere una visione d'insieme e di capire tutti i collegamenti fra le varie classi. 
+Ho visto però che per superare questi problemi lavorare in gruppo è molto utile, in quanto comunicando si riescono a chiarire molti dubbi e insicurezze rispetto al lavoro che si sta svolgendo insieme.
+Allo stesso tempo, per quanto ci siano state difficoltà, fare questo progetto è stato molto stimolante e mi ha dimostrato come sia in grado di gestire un lavoro di gruppo e di portare a termine i compiti che mi vengono assegnati.
+Quindi in generale, per quanto penso che avrei potuto fare meglio alcune parti (cosa di cui mi sono resa conto in corso d'opera) mi ritengo abbastanza soddisfatta del lavoro svolto.
+
+\subsection{Sara Visani}
+
+Nel corso di questo progetto, mi sono impegnato al massimo, affrontando le diverse sfide con dedizione, nonostante la difficoltà. È stata un'esperienza di apprendimento intensa che mi ha permesso di esplorare e implementare diverse logiche di programmazione.
+Un'area in cui ritengo di aver incontrato le maggiori difficoltà è stata la gestione e l'implementazione delle classi relative alle Abilità. Credo che la loro struttura e il loro comportamento avrebbero potuto essere gestiti in modo più efficiente e pulito.
+Per quanto riguarda il movimento autonomo dei mostri, essendo stata la mia prima volta nell'affrontare un problema del genere, il risultato è rimasto leggermente "buggato". Nonostante ciò, sono soddisfatto del fatto che la logica di base funzioni e rappresenti un solido punto di partenza per futuri miglioramenti.
+Ritengo di aver svolto un buon lavoro, invece, nell'implementazione dei proiettili, del sistema di drop dai mostri e dei vari pattern Factory, in particolare quelli per la creazione di statistiche e mostri. La loro architettura mi sembra solida e ben strutturata.
+Sono particolarmente soddisfatto dell'implementazione del mio personaggio e, soprattutto, del sistema del famiglio. Ho investito molto tempo e attenzione in questi aspetti e credo che il risultato finale sia riuscito a cogliere appieno le mie intenzioni di design.
+In generale, nonostante le sfide e le aree in cui avrei potuto fare di meglio, mi sento soddisfatto per il lavoro che ho svolto. Questo progetto mi ha permesso di crescere, sia come programmatore che nella gestione di un compito complesso.
+
+\subsection{Lorenzo Casadei}
+
+Per quanto riguarda l’autovalutazione del mio lavoro sono soddisfatto fino a un certo punto, avevo già provato a programmare dei piccoli giochi da solo ma mai usando il pattern MVC che per me è stata la sfida più grande. Ho avuto difficoltà a capire come disporre le classi e come farle “comunicare” le une con le altre. Inoltre, nonostante le classi funzionassero, mi sono accorto verso la fine di non avere usato nessun tipo di pattern. Un problema che avrei potuto evitare se mi fossi concentrato di più sullo stile delle classi piuttosto che il loro semplice funzionamento. 
+Come ultima cosa esattamente come quando feci l’esame di OOP faccio ancora molta fatica ad utilizzare le funzionalità avanzate del linguaggio, soprattutto gli stream.
+La mia intenzione sarebbe quella di continuare il progetto. Mi piacerebbe aggiungere più suoni sfruttando l’audio manager, vorrei implementare le animazioni (cosa che verso la fine stavo provando a fare ma che ho interrotto a causa della mancanza di sprite). 
+Vorrei espandere il livello e magari aggiungerne altri, facendo anche un boss che possa avere un comportamento complesso, con diversi attacchi. 
+
+\section{Difficoltà incontrate e commenti per i docenti}
+
+\subsection{Davide Mancini}
+
+Una maggior difficoltà è stata recuperare il lavoro risultato dall'abbandono di un compagno di gruppo. Principalmente, mi aspettavo di affrontare meno difficoltà, però ho notato con il passare del tempo di aver dedicato molto più tempo al debug del previsto nonostante una piccola esperienza nel campo dei videogiochi. Una sfida è stata anche attendere la conclusione delle parti degli altri compagni di progetto e adattarmi al codice scritto da altre persone.
+
+\subsection{Martina Malagoli}
+
+Una delle difficoltà più grandi è stata essere in grado di gestire il tempo e di comprendere i vari collegamenti fra le diverse parti del lavoro.
+Inoltre l'assenza di un compagno di gruppo ha reso sicuramente più complessa tutta la realizzazione del progetto.
+
+\appendix
+\chapter{Guida utente}
+
+\section{Obiettivo del Gioco}
+L'obiettivo del gioco è scendere in profondità per salvare Persefone, attraversando i vari pericoli e sopravvivere. In questa demo è di semplicemente uccidere i nemici senza morire. 
+
+\paragraph{Glossario dei Tasti}
+\begin{itemize} 
+    \item W: muovere verso l'alto il famiglio
+    \item A: muovere verso sinistra il personaggio e il famiglio
+    \item S: muovere verso basso il famiglio
+    \item D: muovere verso destra il personaggio e il famiglio
+    \item SHIFT: utilizzare l'abilità speciale per tutte le classi tranne quella del druido
+    \item SPACE: per saltare
+    \item Q: utilizzare la speciale del druido e del mago
+    \item E: per usare l'attacco base
+    \item F: per interagire con gli oggetti
+    \item P: per  mettere in pausa
+    \item O: per togliere la pausa
+    \item C + direzione: serve per attivare l'attacco del famiglio insieme ad una direzione (inoltre se è verso il basso vale anche dove il personaggio sta guardando)
+\end{itemize}
+
+\paragraph Glossario Entità
+\begin{itemize}
+    \item Giocabili
+    \begin{itemize}
+        \item Rogue (Ladro): è un personaggio che sfrutta una daga per attaccare i nemici a distanza ravvicinata, presenta una abilita attiva che gli permette di lanciare tre coltelli in tre direzioni differenti (orizzontale e obliqua verso alto e basso). Presenta anche due abilità passive, una è il doppio salto che gli permette di raggiungere altezze più elevate. Mentre la seconda gli permette di ottenere più velocità di movimento nel momento in cui viene colpito da un nemico.
+        \item Archer (Arcere): è l'unico personaggio del gioco che non utilizza mana,  in quanto la sua abilità è parte integrante del suo stile di gioco. Il personaggio utilizza un arco per sparare delle frecce, di cui ha un numero massimo, ognuna delle quali poi può essere richiamata attraverso l'abilità. Le frecce richiamate seguono il giocatore fino a tornare da lui e ricaricare le sue munizioni. Ogni freccia fa danno anche nel momento in cui sta tornando e per incentivare l'utilizzo dell'abilità è stata aggiunta un abilità passiva che aumenta il danno sulla base di quante frecce sono già state lanciate. Quindi nel momento in cui le frecce ritornano dal personaggio fanno più danno ai nemici.
+        \item Caster (Mago): è il personaggio che basa tutto il suo gioco sull'utilizzo del mana. Egli infatti è in grado di lanciare palle di fuoco e fare un potente attacco esplosivo che danneggia i nemici vicini. Inoltre può curare sé stesso. L'utilizzo costante di mana è facilitato dalla sua capacità di recuperarlo col passare del tempo. Nel caso in cui questo però non sia più sufficiente per utilizzare gli attacchi magici, il caster può attaccare con la sua staffa i nemici.
+        \item Druid (Druido): questo personaggio è un'attaccante ravvicinato. Come abilità passiva ha una rigenerazione ogni volta che uccide dei nemici, più ne uccide più la percentuale si alza, ma se non uccide per un periodo le uccisioni si resettano. La speciale invece evoca un famiglio che vola vicino ad esso e quando comandato attacca nella direzione indicata, se ne possono evocare finché si ha mana e attaccare con loro finché si ha mana. Verso il basso conta anche dove il giocatore sta guardando perché prima si muove di lato poi in basso.
+    \end{itemize}
+    \item Interagibili
+    \begin{itemize}
+        \item Drop (Bottino): quando il nemico muore c'è una possibilità che lascia un bottino che, se recuperato in tempo, applica un buff (potenziamento) a una caratteristica del personaggio.
+        \item Potion (Pozione): oggetto acquistabile nel negozio con i punti del giocatore in grado di dare potenziamenti temporanei al personaggio corrente.
+        \item Save Point (Lapide): oggetto che permette di salvare la partita quando ci interagisci.
+        \item Character Changer (Cristallo): oggetto che permette di cambiare il personaggio interagendoci.
+    \end{itemize}
+    \item Nemici
+    \begin{itemize}
+        \item Imp (Folletto Maligno): nemico di base di terra come i vari nemici insegue il giocatore. (Colore giallo)
+        \item Centaur (Centauro): nemico avanzato di terra come i vari nemici insegue il giocatore. (Colore blu)
+        \item Lotawiec: nemico avanzato volante, spara proiettili che inseguono il giocatore, come i vari nemici insegue il giocatore. (Colore rosso)
+        \item Tengu: nemico di base volante, spara proiettili verso il basso senza nessuna mira, come i vari nemici insegue il giocatore. (Colore viola)
+    \end{itemize}
+    \item Blocchi e Aree Speciali
+    \begin{itemize}
+        \item Lava Block (Blocco di lava): blocco che toglie vita (senza considerare eventuale vita temporanea) al personaggio e ai nemici ogni volta che viene toccato.
+        \item Vine Block (Blocco di liane): blocco che riduce la velocità di movimento del personaggio e dei nemici una volta toccato.
+        \item Zone Sicure: stanze in cui il giocatore è al sicuro. Queste sono il negozio dove il mercante vende le pozioni e le terme dove il giocatore ricupera vita e mana, e dove può cambiare personaggio e salvare.
+    \end{itemize}
+    \item NPC (Personaggi non Giocabili)
+    \begin{itemize}
+        \item Merchant (Mercante): è un personaggio non giocabile che è presente nel mercato con cui non si può interagire.
+          \end{itemize}
+        \item Punteggio
+        \begin{itemize}
+        \item Punti Anima: sono i punti guadagnati uccidendo i nemici. Questi punti servono per comprare le pozioni dal mercante.
+    \end{itemize}
+\end{itemize}
+
+\chapter{Esercitazioni di laboratorio}
+
+\section{davide.mancini10@studio.unibo.it}
+
+\begin{itemize}
+	\item Laboratorio 07: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=177162#p246021}
+	\item Laboratorio 08: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=178723#p247194}
+	\item Laboratorio 09: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=179154#p248089}
+	\item Laboratorio 10: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=180101#p249551}
+	\item Laboratorio 11: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=181206#p250874}
+\end{itemize}
+
+\section{martina.malagoli4@studio.unibo.it}
+
+\begin{itemize}
+	\item Laboratorio 07: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=177162#p246175}
+	\item Laboratorio 08: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=178723#p247282}
+	\item Laboratorio 09: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=179154#p248356}
+	\item Laboratorio 10: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=180101#p249552}
+	\item Laboratorio 11: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=181206#p250909}
+\end{itemize}
+
+\end{document}
