@@ -7,6 +7,7 @@ import it.unibo.falltohell.model.api.gameobject.movable.entity.enemy.Enemy;
 
 import java.util.Set;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.physics.Collider;
@@ -37,12 +38,13 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
      * @param collider the collider used for collision detection
      * @param fileName is the name of the image file associated to the projectile
      */
+    @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
+    justification = "Safe usage: getDrawable is not overridden and fields are initialized")
     public ProjectileImpl(final Level level, final Vector2 position, final Vector2 speed, final Collider collider,
                           final String fileName) {
         super(level, position, speed, collider);
         this.hit = false;
         this.initDrawable(Priority.MEDIUM, fileName);
-        this.getDrawable().ifPresent(drawable -> drawable.mirror(speed.x() < 0));
     }
 
     /**
@@ -68,6 +70,7 @@ public class ProjectileImpl extends MovableImpl implements Projectile {
     public void update(final double deltaTime) {
         if (!hit) {
             super.update(deltaTime);
+            this.getDrawable().ifPresent(drawable -> drawable.mirror(this.getSpeed().x() < 0));
             this.onUpdate(deltaTime);
         } else {
             this.getLevel().removeGameObject(this);

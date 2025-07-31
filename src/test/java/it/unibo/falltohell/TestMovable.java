@@ -20,7 +20,6 @@ import it.unibo.falltohell.util.Vector2;
  * @author Casadei Lorenzo
  */
 class TestMovable {
-    
     private MovableImpl movable;
     /**
      * Set up for the tests.

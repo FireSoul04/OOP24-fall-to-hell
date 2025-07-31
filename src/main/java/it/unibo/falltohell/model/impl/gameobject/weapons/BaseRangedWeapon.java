@@ -107,7 +107,6 @@ public abstract class BaseRangedWeapon extends BaseWeapon {
      */
     public void reload(final int numberAmmo) {
         this.setAmmo(Math.min(this.getAmmo() + numberAmmo, this.getMaxAmmo()));
-    
     }
 
     /**

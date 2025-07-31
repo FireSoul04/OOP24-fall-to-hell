@@ -36,6 +36,10 @@ public class ReturnableArrow extends ProjectileImpl {
      * @param collider the collider used for collisions
      * @param owner    the archer who fired the arrow
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification = "The owner reference is used read-only to track return destination and damage source"
+    )
     public ReturnableArrow(final Level level, final Vector2 position, final Vector2 speed, final Collider collider,
             final Archer owner) {
         super(level, position, speed, collider, "returnable_arrow.png");

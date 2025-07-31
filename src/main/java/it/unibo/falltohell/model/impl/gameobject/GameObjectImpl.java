@@ -2,6 +2,7 @@ package it.unibo.falltohell.model.impl.gameobject;
 
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.drawable.Drawable;
 import it.unibo.falltohell.util.Priority;
 import it.unibo.falltohell.model.api.gameobject.GameObject;
@@ -31,6 +32,10 @@ public class GameObjectImpl implements GameObject {
      * @param lv       the level to which this object will be added
      * @param position the position of the object
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification = "Level is passed and stored for controlled access within game logic"
+    )
     public GameObjectImpl(final Level lv, final Vector2 position) {
         this.pos = position;
         this.isSolid = true; // Default
@@ -48,6 +53,10 @@ public class GameObjectImpl implements GameObject {
      * @param position the position of the object
      * @param collider the collider for this object
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification = "Level is passed and stored for controlled access within game logic"
+    )
     public GameObjectImpl(final Level lv, final Vector2 position, final Collider collider) {
         this.pos = position;
         this.isSolid = true; // Default
@@ -67,6 +76,10 @@ public class GameObjectImpl implements GameObject {
      * @param isSolid  whether the object is solid
      * @param collider the collider for this object
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification = "Level is passed and stored for controlled access within game logic"
+    )
     public GameObjectImpl(final Level lv, final Vector2 position, final boolean isSolid, final Collider collider) {
         this.pos = position;
         this.isSolid = isSolid;
@@ -135,6 +148,10 @@ public class GameObjectImpl implements GameObject {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP",
+    justification = "GameObject must access its Level for logic such as registration and rendering"
+    )
     @Override
     public final Level getLevel() {
         return this.level;

@@ -19,9 +19,9 @@ import it.unibo.falltohell.view.api.AudioPlayer;
  */
 public class SoundPlayerView implements AudioPlayer {
     private static final Logger LOGGER = Logger.getLogger(SoundPlayerView.class.getName());
+    private static final float DEFAULT_VOLUME = -10.0f;
     private final int loop;
     private final String filePath;
-    private final float volume = -10.0f;
     private long currentFrame;
     private Clip clip;
     /**
@@ -44,7 +44,7 @@ public class SoundPlayerView implements AudioPlayer {
             this.clip = AudioSystem.getClip();
             this.clip.open(audioInputStream);
             final FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(volume);
+            gainControl.setValue(DEFAULT_VOLUME);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             LOGGER.log(Level.WARNING, "An error has occured while trying to open this file: " + this.filePath);
         }

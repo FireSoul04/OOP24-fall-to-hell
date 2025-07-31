@@ -204,6 +204,10 @@ public class GameControllerImpl implements GameController {
     /**
      * {@inheritDoc}
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    value = "EI_EXPOSE_REP",
+    justification = "The GameWindow is part of the MVC view layer and is accessed only for rendering purposes"
+    )
     @Override
     public GameWindow getView() {
         return this.view;

@@ -69,6 +69,9 @@ public class GameCameraImpl implements GameCamera {
      */
     @Override
     public void updateCamera(final Vector2 playerPosition, final double deltaTime) {
+        if (this.levelSize == null) {
+            throw new IllegalStateException("Level size must be set before updating the camera.");
+        }
         final Vector2 targetPosition = new Vector2(
                 playerPosition.x() - cameraWidth / 2,
                 playerPosition.y() - cameraHeight / 2);

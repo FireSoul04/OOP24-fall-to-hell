@@ -6,6 +6,8 @@ import it.unibo.falltohell.model.impl.gameobject.movable.entity.character.Archer
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableArrow;
 
 import java.util.ArrayList;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * A special ability that causes all arrows previously shot by the archer to
  * return to them.
@@ -29,6 +31,10 @@ public class ReturnArrowAbility implements SpecialActiveAbility {
      *
      * @param archer the archer who can activate this ability
      */
+    @SuppressFBWarnings(
+    value = "EI_EXPOSE_REP2",
+    justification = "The archer reference is required for ability logic and is used read-only"
+    )
     public ReturnArrowAbility(final Archer archer) {
         this.archer = archer;
     }

@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.impl.factory.AbilityFactoryImpl;
 import it.unibo.falltohell.model.impl.factory.StatisticFactoryImpl;
-import it.unibo.falltohell.model.impl.gameobject.weapons.BaseRangedWeapon;
 import it.unibo.falltohell.util.Dimensions;
 import it.unibo.falltohell.util.Vector2;
 import it.unibo.falltohell.model.api.ability.active.SpecialActiveAbility;
@@ -13,6 +12,7 @@ import it.unibo.falltohell.model.api.factory.AbilityFactory;
 import it.unibo.falltohell.model.api.gameobject.movable.Projectile;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Optional;
 
 import it.unibo.falltohell.model.impl.gameobject.weapons.Bow;
 import it.unibo.falltohell.model.impl.gameobject.movable.projectile.ReturnableArrow;
@@ -79,19 +79,26 @@ public class Archer extends BaseCharacter {
     }
 
     /**
-     * Gets the bow used by this archer.
+     * Gets the ammo count of this archer.
      *
      * @return the bow
      */
-    public BaseRangedWeapon getBow() {
-        return bow;
+    public int getBowAmmo() {
+        return bow.getAmmo();
+    }
+    /**
+     * get the last shot projectile.
+     * @return Optional of the projectile.
+     */
+    public Optional<Projectile> getBowLastProjectile() {
+        return bow.getShotProjectile();
     }
 
     /**
      * @return the list of arrows shot by this archer
      */
     public Set<Projectile> getShotedArrows() {
-        return this.shotedArrows;
+        return Set.copyOf(this.shotedArrows);
     }
 
     /**

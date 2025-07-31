@@ -37,9 +37,9 @@ class ArcherTest {
      */
     @Test
     void testConsumesAmmo() {
-        final int initialAmmo = archer.getBow().getAmmo();
+        final int initialAmmo = archer.getBowAmmo();
         archer.attack();
-        assertEquals(initialAmmo - 1, archer.getBow().getAmmo());
+        assertEquals(initialAmmo - 1, archer.getBowAmmo());
         assertEquals(1, archer.getShotedArrows().size());
     }
 
@@ -62,12 +62,12 @@ class ArcherTest {
      */
     @Test
     void testArrowReturnRestoresAmmo() {
-        final int initialAmmo = archer.getBow().getAmmo();
+        final int initialAmmo = archer.getBowAmmo();
         archer.setPosition(new Vector2(0.0, 1.0));
         archer.attack();
         final ReturnableArrow arrow;
-        if (archer.getBow().getShotProjectile().isPresent()) {
-            arrow = (ReturnableArrow) archer.getBow().getShotProjectile().get();
+        if (archer.getBowLastProjectile().isPresent()) {
+            arrow = (ReturnableArrow) archer.getBowLastProjectile().get();
             archer.setPosition(new Vector2(0.0, 1.0));
             arrow.startReturn();
             final int frames = 60;
@@ -75,10 +75,10 @@ class ArcherTest {
             for (int i = 0; i < frames; i++) {
                 arrow.update(deltaTime);
             }
-            assertEquals(initialAmmo, archer.getBow().getAmmo());
+            assertEquals(initialAmmo, archer.getBowAmmo());
             assertFalse(archer.getShotedArrows().contains(arrow));
         } else {
-            assertEquals(initialAmmo, archer.getBow().getAmmo());
+            assertEquals(initialAmmo, archer.getBowAmmo());
         }
     }
 }

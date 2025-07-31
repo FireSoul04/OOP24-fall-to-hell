@@ -50,6 +50,7 @@ import it.unibo.falltohell.util.Vector2;
 public class LevelImpl implements Level {
 
     private static final double LABEL_OFFSET_Y = 10;
+    private static final String EXPOSE_REP = "EI_EXPOSE_REP";
 
     private final List<GameObject> gameObjects;
     private final GameCamera camera;
@@ -76,7 +77,7 @@ public class LevelImpl implements Level {
      * @param drh          handler for the drawables
      */
     @SuppressFBWarnings(
-        value = { "EI_EXPOSE_REP", "EI_EXPOSE_REP2" },
+        value = { EXPOSE_REP, "EI_EXPOSE_REP2" },
         justification = "The camera must be accessed by the renderables, the "
             + "event manager should be updated in the controller and the "
             + "drawable renderable handler must be used to link any drawable"
@@ -174,7 +175,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP",
+        value = EXPOSE_REP,
         justification = "Any game object can add, remove and check for timers"
     )
     @Override
@@ -220,7 +221,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP",
+        value = EXPOSE_REP,
         justification = "This is the only way to link any drawable from the game objects"
     )
     @Override
@@ -248,6 +249,11 @@ public class LevelImpl implements Level {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+    value = EXPOSE_REP,
+    justification = "The jumpCollisionManager must be exposed to allow game objects to register"
+        + "and remove static obstacles for jump collision detection"
+    )
     @Override
     public StaticCollisionManager getJumpCollisionManager() {
         return this.jumpCollisionManager;

@@ -22,15 +22,17 @@ import java.awt.event.ActionListener;
  * it also display a background and the title of the game.
  * @author Casadei Lorenzo.
  */
-public class MainMenuPanel extends JPanel {
+public final class MainMenuPanel extends JPanel {
     private static final long serialVersionUID = 1;
-    private transient final Image background;
+    private final transient Image background;
     /**
      * the constructor for the main menu panel.
      * @param startListener the action to be performed when the start button is pressed.
      * @param exitListener the actionn to be performed when the exit button is pressed.
      */
     public MainMenuPanel(final ActionListener startListener, final ActionListener exitListener) {
+        super();
+        this.setLayout(new GridBagLayout());
         this.background = new ImageControllerImpl().loadImage("background.png");
         this.initialize(startListener, exitListener);
 
@@ -42,7 +44,6 @@ public class MainMenuPanel extends JPanel {
      * @param exitListener the actionn to be performed when the exit button is pressed.
      */
     private void initialize(final ActionListener startListener, final ActionListener exitListener) {
-        this.setLayout(new GridBagLayout());
         final JButton startButton = new JButton("Start Game");
         final JButton exitButton = new JButton("Exit");
 
