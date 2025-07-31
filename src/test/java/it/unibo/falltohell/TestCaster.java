@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 class TestCaster {
 
     private static final String TIMER_NAME = "mana_recharge";
-    private static final long TIMEOUT = 5500;;
+    private static final long TIMEOUT = 5500;
     private static final double STAT = 60;
 
     private Caster caster;
