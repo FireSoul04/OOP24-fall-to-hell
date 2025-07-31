@@ -22,12 +22,24 @@ public class TimerManagerTest extends TimerManagerImpl {
         this.checkExists(name);
         final CustomTimer timer = this.getTimer(name);
         long frames = 0;
-        while (timer.getElapsedTime() < timer.getDuration()) {
+        while (frames <= timer.getDuration()) {
             if (frames >= timeout) {
                 throw new IllegalStateException("Timer " + name + " has not finished before " + timeout + " ms");
             }
             // Simulates the passage of a real amount of milliseconds everytime update is called
             timer.update(VIRTUAL_MILLISECONDS);
+            frames++;
+        }
+    }
+
+    /**
+     * Method to block execution of code until a certain timeout.
+     * @param timeout is the time to wait
+     */
+    public void waitUntilTimeout(final long timeout) {
+        long frames = 0;
+        while (frames < timeout) {
+            this.updateAllTimers(VIRTUAL_MILLISECONDS);
             frames++;
         }
     }

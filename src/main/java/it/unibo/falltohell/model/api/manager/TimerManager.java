@@ -79,6 +79,6 @@ public interface TimerManager {
      * Method to update all timers.
      * @param deltaTime is the amount of time passed in a frame
      */
-    void updateAll(double deltaTime);
+    void updateAllTimers(double deltaTime);
 
 }
