@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.falltohell.model.api.level.Level;
 import it.unibo.falltohell.model.api.statistic.CharacterStatistics;
 import it.unibo.falltohell.test.util.LevelTest;
+import it.unibo.falltohell.test.util.TimerManagerTest;
 import it.unibo.falltohell.test.util.debug.druid.DruidDebug;
 import it.unibo.falltohell.test.util.debug.manager.FamiliarManagerDebug;
 import it.unibo.falltohell.util.Vector2;
@@ -111,6 +112,7 @@ class TestDruid {
         }
     }
 
+    private TimerManagerTest time;
     private DruidDebug druid;
     private CharacterStatistics stats;
     private final double[][] lifeManaGains = {
@@ -130,6 +132,7 @@ class TestDruid {
     void setUp() {
         final Level lv = new LevelTest();
         this.druid = new DruidDebug(lv, Vector2.zero());
+        this.time = (TimerManagerTest) lv.getTimerManager();
         this.stats = (CharacterStatistics) this.druid.getStats();
     }
 
@@ -162,14 +165,13 @@ class TestDruid {
     /**
      * Tests that kills reset automatically after a certain timer expires.
      *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void resetKillByTimer() throws InterruptedException {
+    void resetKillByTimer() {
         this.druid.addKill();
         this.druid.addKill();
         assertEquals(this.druid.getKills(), 2);
-        Thread.sleep(DruidDebug.getKillReset() + OFFSET_TIMER);
+        this.time.waitUntilTimeout(DruidDebug.getKillReset() + OFFSET_TIMER);
         assertEquals(0, this.druid.getKills());
     }
 
@@ -194,15 +196,14 @@ class TestDruid {
     /**
      * Tests that passive cycles reset properly after the kill timer expires.
      *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void checkCycleByTimer() throws InterruptedException {
+    void checkCycleByTimer() {
         assertEquals(this.druid.getPassiveCycles(), 1);
         this.druid.addKill();
         this.druid.addKill();
         this.druid.addKill();
-        Thread.sleep(DruidDebug.getKillReset() + OFFSET_TIMER);
+        this.time.waitUntilTimeout(DruidDebug.getKillReset() + OFFSET_TIMER);
         assertEquals(this.druid.getPassiveCycles(), 1);
         this.druid.addKill();
         this.druid.addKill();
@@ -214,7 +215,7 @@ class TestDruid {
         this.druid.addKill();
         this.druid.addKill();
         assertEquals(this.druid.getPassiveCycles(), 2);
-        Thread.sleep(DruidDebug.getKillReset() + OFFSET_TIMER);
+        this.time.waitUntilTimeout(DruidDebug.getKillReset() + OFFSET_TIMER);
         this.druid.addKill();
         this.druid.addKill();
         assertEquals(this.druid.getPassiveCycles(), 2);
@@ -223,17 +224,16 @@ class TestDruid {
     /**
      * Tests regeneration of life and mana after kills over multiple cycles.
      *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void checkRegen() throws InterruptedException {
+    void checkRegen() {
         final int maxKillsToTest = 10;
 
         for (int i = 1; i <= maxKillsToTest; i++) {
             this.druid.setDamagedLife(this.stats.getFullLife());
             this.druid.subMana(this.stats.getInitialMana());
 
-            Thread.sleep(1000 + OFFSET_TIMER);
+            this.time.waitUntilTimeout(1000 + OFFSET_TIMER);
 
             this.druid.addKill();
 
@@ -286,11 +286,9 @@ class TestDruid {
     /**
      * Tests activation and deactivation of the special ability (familiar creation),
      * mana consumption, and timing-based expiration of familiars.
-     *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void checkCreation() throws InterruptedException {
+    void checkCreation() {
         // Initially, the special ability should NOT be active
         assertFalse(this.druid.isSaActive());
 
@@ -314,7 +312,7 @@ class TestDruid {
 
         // Wait for the familiar’s life duration plus a small buffer; ability should
         // deactivate
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER);
         assertFalse(this.druid.isSaActive());
 
         // Activate special ability again, creating one familiar
@@ -323,7 +321,7 @@ class TestDruid {
         assertEquals(this.stats.getInitialMana() - DruidDebug.getCreationCost(), this.stats.getMana(), OFFSET_DOUBLE);
 
         // Wait half the familiar’s life duration
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() / 2);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() / 2);
 
         // Activate special ability again, creating a second familiar
         this.stats.addMana(this.stats.getInitialMana());
@@ -332,23 +330,21 @@ class TestDruid {
 
         // Wait remaining half life duration plus buffer
         // Only one familiar expired; special ability should still be active
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() / 2 + OFFSET_TIMER);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() / 2 + OFFSET_TIMER);
         assertTrue(this.druid.isSaActive());
 
         // Wait full life duration plus buffer for second familiar to expire
         // Both familiars are gone; special ability should deactivate
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER);
         assertFalse(this.druid.isSaActive());
     }
 
     /**
      * Tests special attack behavior including mana consumption, attack direction,
      * and manager availability.
-     *
-     * @throws InterruptedException if thread sleep is interrupted
      */
     @Test
-    void checkSpAttack() throws InterruptedException {
+    void checkSpAttack() {
         // Step 1: Activate special ability to create the first familiar
         this.druid.handleAttackInput(Condition.SPECIAL_ABILITY.toString(), NULL);
         assertTrue(this.druid.getManager().isFree());
@@ -360,7 +356,7 @@ class TestDruid {
         assertTrue(this.druid.getManager().isFree());
 
         // Step 3: Wait for familiar to expire
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER);
 
         // Step 4: Replenish mana and create a new familiar
         this.stats.addMana(this.stats.getInitialMana());
@@ -379,7 +375,7 @@ class TestDruid {
                 this.stats.getMana(), OFFSET_DOUBLE);
 
         // Step 7: Wait for familiar to expire, then create multiple familiars
-        Thread.sleep(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER);
+        this.time.waitUntilTimeout(FamiliarManagerDebug.getLifeDuration() + OFFSET_TIMER);
         this.stats.addMana(this.stats.getInitialMana());
         this.druid.handleAttackInput(Condition.SPECIAL_ABILITY.toString(), NULL);
         this.druid.handleAttackInput(Condition.SPECIAL_ABILITY.toString(), NULL);

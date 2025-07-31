@@ -20,6 +20,7 @@ import it.unibo.falltohell.model.api.statistic.LongRangeEnemyStatistics;
 import it.unibo.falltohell.model.impl.GameDataImpl;
 import it.unibo.falltohell.model.impl.gameobject.movable.entity.enemy.BaseEnemy.BuffNames;
 import it.unibo.falltohell.test.util.LevelTest;
+import it.unibo.falltohell.test.util.TimerManagerTest;
 import it.unibo.falltohell.test.util.debug.EnemyFactoryDebug;
 import it.unibo.falltohell.test.util.debug.druid.DruidDebug;
 import it.unibo.falltohell.test.util.debug.enemy.BaseEnemyDebug;
@@ -63,6 +64,7 @@ class TestEnemy {
     private static final double TOLL_2 = 0.2;
     private static final double TOLL_1 = 0.15;
     private static final int ITERATION = 100_000;
+    private TimerManagerTest time;
     private Level lv;
     private BaseEnemyDebug centaur, imp, tengu, lotawiec;
     private DruidDebug druid;
@@ -85,6 +87,7 @@ class TestEnemy {
         this.lv.linkGameData(new GameDataImpl(
                 Map.of(this.druid.getCharacterID(), this.druid)));
         this.lv.getGameData().changeCurrentCharacter(this.druid);
+        this.time = (TimerManagerTest) lv.getTimerManager();
         final EnemyFactory factory = new EnemyFactoryDebug();
         this.centaur = (CentaurDebug) factory.createCentaur(lv, Vector2.zero());
         this.imp = (ImpDebug) factory.createImp(lv, Vector2.zero());
@@ -245,7 +248,7 @@ class TestEnemy {
      * </ul>
      */
     @Test
-    void noAggroTimer() throws InterruptedException {
+    void noAggroTimer() {
         final var enemies = List.of(this.imp, this.centaur, this.lotawiec, this.tengu);
 
         // 1. All enemies should have NO_AGGRO timer
@@ -254,14 +257,14 @@ class TestEnemy {
         // 2. Damage all enemies and wait for full regeneration
         enemies.forEach(e -> e.setDamagedLife(1));
         final long noAggro = ((BaseEnemyStatistics) this.centaur.getStats()).getNoAggro();
-        Thread.sleep(noAggro + OFFSET_1); // extra buffer
+        this.time.waitUntilTimeout(noAggro + OFFSET_1); // extra buffer
         enemies.forEach(e -> assertTrue(e.isFull()));
 
         // 3. Damage again, but interrupt the NO_AGGRO cycle with a collision
         enemies.forEach(e -> e.setDamagedLife(1));
-        Thread.sleep(noAggro - OFFSET_2); // leave buffer
+        this.time.waitUntilTimeout(noAggro - OFFSET_2); // leave buffer
         enemies.forEach(e -> e.onCollision(this.druid, Vector2.left()));
-        Thread.sleep(OFFSET_3); // short wait, should not be full yet
+        this.time.waitUntilTimeout(OFFSET_3); // short wait, should not be full yet
         enemies.forEach(e -> assertFalse(e.isFull()));
     }
 
@@ -274,8 +277,6 @@ class TestEnemy {
      * The test waits for at least two attack cycles and checks that
      * the number of attacks reported by {@code getNumberAttack()} increases
      * accordingly.
-     *
-     * @throws InterruptedException if the thread sleep is interrupted
      */
     @Test
     void attackTimer() throws InterruptedException {
@@ -288,7 +289,7 @@ class TestEnemy {
                 .orElseThrow();
 
         // Wait for at least one attack cycle for the slowest enemy
-        Thread.sleep(maxAttackInterval + OFFSET_1);
+        this.time.waitUntilTimeout(maxAttackInterval + OFFSET_1);
 
         // Check that both enemies have triggered at least one attack
         enemies.forEach(enemy -> {
@@ -303,7 +304,7 @@ class TestEnemy {
         });
 
         // Wait for another cycle to ensure repeated triggering
-        Thread.sleep(maxAttackInterval + OFFSET_1);
+        this.time.waitUntilTimeout(maxAttackInterval + OFFSET_1);
 
         enemies.forEach(enemy -> {
             int attacks = 0;
