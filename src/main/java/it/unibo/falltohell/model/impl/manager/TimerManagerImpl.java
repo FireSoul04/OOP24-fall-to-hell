@@ -4,7 +4,8 @@ import it.unibo.falltohell.model.api.timer.CustomTimer;
 import it.unibo.falltohell.model.api.manager.TimerManager;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Class to handle multiple timers.
@@ -18,7 +19,7 @@ public class TimerManagerImpl implements TimerManager {
      * Initialization of the TimeManager.
      */
     public TimerManagerImpl() {
-        this.timers = new ConcurrentHashMap<>();
+        this.timers = new HashMap<>();
     }
 
     /**
@@ -138,6 +139,14 @@ public class TimerManagerImpl implements TimerManager {
         } else {
             this.restartTimer(name);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateAll(double deltaTime) {
+        Set.copyOf(this.timers.values()).forEach(timer -> timer.update(deltaTime));
     }
 
     /**

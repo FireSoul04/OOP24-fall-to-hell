@@ -75,4 +75,10 @@ public interface TimerManager {
      */
     void restartIfPresent(String name, CustomTimer timer);
 
+    /**
+     * Method to update all timers.
+     * @param deltaTime is the amount of time passed in a frame
+     */
+    void updateAll(double deltaTime);
+
 }
